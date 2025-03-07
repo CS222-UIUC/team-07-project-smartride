@@ -2,9 +2,9 @@
 
 ## Backend Configuration Process
 
-1. Clone the repo using the `setup`  branch.
+1. Clone the repo using the `setup` branch.
 
-2. Make sure `conda`  is correctly installed
+2. Make sure `conda` is correctly installed
 
    a. Install `anaconda` or `miniconda` from their official website, and set the following environmental variables (for windows users), `PATH_TO_CONDA` is your directory where `conda` is installed.
 
@@ -15,10 +15,9 @@
    PATH_TO_CONDA\Library\bin
    ```
 
-   b. Create the virtual environment by running `conda env create -f environment.yml` at `./backend` folder.
+   b. Create the virtual environment by running `conda env create -f environment_win.yml` / `conda env create -f environment_mac.yml` (depending on what platform you are using) at `./backend` folder.
 
    c. Initialize the environment by running `conda init` at `./backend` folder.
-
 
 3. Running the virtual environment by running `conda activate smartride-backend` at `.\backend` folder
 
