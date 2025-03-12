@@ -1,12 +1,13 @@
 from fastapi import FastAPI
-import requests
 
 app = FastAPI()
 
-@app.get("/route/")
-async def get_route(start: str, end: str):
-    return {"route": []} # Todo
+
+@app.get("/")
+async def root():
+    return {"message": "Hello From Route Service"}
+
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="127.0.0.1", port=13116)
