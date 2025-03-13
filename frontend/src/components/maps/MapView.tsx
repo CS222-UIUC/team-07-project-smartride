@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 const SetViewToLocation = ({ position }: { position: LatLngExpression }) => {
   const map = useMap();
   useEffect(() => {
-    map.setView(position, 13); // Set view when position updates
+    map.setView(position, 13);
   }, [position, map]);
   return null;
 };
