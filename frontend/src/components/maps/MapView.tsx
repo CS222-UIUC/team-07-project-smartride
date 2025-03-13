@@ -23,17 +23,15 @@ const MapView = () => {
   }, []);
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <MapContainer style={{ height: "100%", width: "100%" }}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {position && (
-          <>
-            <SetViewToLocation position={position} /> 
-            <Marker position={position} />
-          </>
-        )}
-      </MapContainer>
-    </div>
+    <MapContainer style={{ height: "100%", width: "100%"}}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {position && (
+        <>
+          <SetViewToLocation position={position} /> 
+          <Marker position={position} />
+        </>
+      )}
+    </MapContainer>
   );
 };
 

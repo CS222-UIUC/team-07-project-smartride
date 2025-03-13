@@ -5,24 +5,16 @@ const MapPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
-      <button
-        onClick={() => navigate("/")}
-        style={{
-          position: "absolute",
-          top: 10,
-          left: 10,
-          zIndex: 1000,
-          padding: "8px 12px",
-          backgroundColor: "white",
-          border: "1px solid black",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Back
-      </button>
-      <MapView />
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", margin: 0, padding: 0, overflow: "hidden" }}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "white", borderBottom: "1px solid #ccc", zIndex: 1000 }}>
+        <button onClick={() => navigate("/")} style={{ fontSize: "16px", backgroundColor: "#f0f0f0", border: "1px solid #ccc", borderRadius: "8px", cursor: "pointer"}}>
+          Back
+        </button>
+      </div>
+
+      <div style={{ position: "relative", width: "100vw", height: "90vh", overflow: "hidden" }}>
+        <MapView />
+      </div>
     </div>
   );
 };
