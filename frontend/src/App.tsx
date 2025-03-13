@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import MapPage from './components/MapPage'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [showMap, setShowMap] = useState(false)
 
   return (
     <>
@@ -28,6 +30,14 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      {showMap ? (
+        <MapPage onBack={() => setShowMap(false)} />
+      ) : (
+        <div>
+          <h1>Vite + React</h1>
+          <button onClick={() => setShowMap(true)}>Open Map</button>
+        </div>
+      )}
     </>
   )
 }
