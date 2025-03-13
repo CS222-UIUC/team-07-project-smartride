@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import MapView from "./maps/MapView";
 
-const MapPage = ({ onBack }: { onBack: () => void }) => {
+const MapPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
       <button
-        onClick={onBack}
+        onClick={() => navigate("/")}
         style={{
           position: "absolute",
           top: 10,
@@ -14,7 +17,7 @@ const MapPage = ({ onBack }: { onBack: () => void }) => {
           backgroundColor: "white",
           border: "1px solid black",
           borderRadius: "5px",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       >
         Back
