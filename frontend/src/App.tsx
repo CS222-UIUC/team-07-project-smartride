@@ -35,7 +35,6 @@ function App() {
               Click on the Vite and React logos to learn more
             </p>
             <div>
-              <h1>Vite + React</h1>
               <Link to="/map">
                 <button>Open Map</button>
               </Link>
