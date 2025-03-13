@@ -23,15 +23,18 @@ const MapView = () => {
   }, []);
 
   return (
-    <MapContainer style={{ height: "100%", width: "100%"}}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {position && (
-        <>
-          <SetViewToLocation position={position} /> 
-          <Marker position={position} />
-        </>
-      )}
-    </MapContainer>
+    // First add a wrapper div with full height and width
+    <div style={{ height: "100%", width: "100%" }}>
+      <MapContainer style={{ height: "100%", width: "100%", margin: "0", padding: "0" }} center={[0, 0]} zoom={1} scrollWheelZoom={true}>
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {position && (
+          <>
+            <SetViewToLocation position={position} /> 
+            <Marker position={position} />
+          </>
+        )}
+      </MapContainer>
+    </div>
   );
 };
 
