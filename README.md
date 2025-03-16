@@ -33,11 +33,13 @@
 
    c. Initialize the environment by running `conda init` at `./backend` folder.
 
-2. Running the virtual environment by running `conda activate smartride-backend` at `.\backend` folder
+2. Running the virtual environment by running `conda activate smartride-backend` at `.\backend` folder, and after that you shold expect to see `(smartride-backend)` before the prompt line.
 
-3. Note that there is `(smartride-backend)` before the prompt line. Finally running `python app.py` and visit `127.0.0.1:5000` in the browser.
+3. Run `python app.py` and visit `127.0.0.1:5000` in the browser to see the main database for backend with flask.
 
-4. Use `ctrl+c` to kill the process.
+4. In a separate cmd/powershell, first repeat step 2, then run `python route_service.py` and visit `127.0.0.1:13116` in the browser to see the route_service server with FastAPI and Uvicorn. Alternatively to using `python`, you may run `uvicorn route_service:app --reload --host 127.0.0.1 --port 13116` for same effect.
+
+5. For either process, use `ctrl+c` to kill the process.
 
 ## [Update] User authentication
 
@@ -67,3 +69,6 @@
    ```
 
 4. To exit the `sqlite3` environment, run `.exit`.
+
+
+
