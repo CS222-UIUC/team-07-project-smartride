@@ -40,3 +40,35 @@
 4. In a separate cmd/powershell, first repeat step 2, then run `python route_service.py` and visit `127.0.0.1:13116` in the browser to see the route_service server with FastAPI and Uvicorn. Alternatively to using `python`, you may run `uvicorn route_service:app --reload --host 127.0.0.1 --port 13116` for same effect.
 
 5. For either process, use `ctrl+c` to kill the process.
+
+## [Update] User authentication
+
+1. Make sure have `flask-login` installed. If not, run the following command in the virtual environment.
+
+   ```
+   pip install flask-login
+   ```
+
+   
+
+2. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
+
+   ```
+   sqlite3
+   .open userinfo.db
+   SELECT * from user;
+   ```
+
+3. If working correctly, following content should display
+
+   ```
+   1|Alice|alice@example.com|pbkdf2:sha256:<hash-here>
+   2|Boyang|boyangl3@illinois.edu|pbkdf2:sha256:<hash-here>
+   3|Brian|pg22@illinois.edu|pbkdf2:sha256:<hash-here>
+   
+   ```
+
+4. To exit the `sqlite3` environment, run `.exit`.
+
+
+
