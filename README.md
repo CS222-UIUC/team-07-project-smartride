@@ -38,3 +38,32 @@
 3. Note that there is `(smartride-backend)` before the prompt line. Finally running `python app.py` and visit `127.0.0.1:5000` in the browser.
 
 4. Use `ctrl+c` to kill the process.
+
+## [Update] User authentication
+
+1. Make sure have `flask-login` installed. If not, run the following command in the virtual environment.
+
+   ```
+   pip install flask-login
+   ```
+
+   
+
+2. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
+
+   ```
+   sqlite3
+   .open userinfo.db
+   SELECT * from user;
+   ```
+
+3. If working correctly, following content should display
+
+   ```
+   1|Alice|alice@example.com|pbkdf2:sha256:<hash-here>
+   2|Boyang|boyangl3@illinois.edu|pbkdf2:sha256:<hash-here>
+   3|Brian|pg22@illinois.edu|pbkdf2:sha256:<hash-here>
+   
+   ```
+
+4. To exit the `sqlite3` environment, run `.exit`.
