@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
+import { loginUser } from "./../authentication/login"
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const navigate = useNavigate(); 
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login with:", email, password);
-    // navigate("/dashboard");
+    try {
+      const data = await loginUser(email, password);
+      console.log("Login successful", data);
+      navigate("/home");
+    } catch (error) {
+      console.error("Login failed", error);
+      setErrorMsg((error as Error).message);
+    }
   };
 
   return (
@@ -25,11 +34,13 @@ const LoginPage: React.FC = () => {
 
       <form onSubmit={handleLogin}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
         </div>
         <button type="submit">Login</button>
       </form>
+
+      {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
     </div>
   );
 };
