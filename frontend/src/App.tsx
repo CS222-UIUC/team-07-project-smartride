@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 import "./index.css";
 import './App.css';
 
+const IsPhone = true;
 
 // Design a Web Mobile Phone Frame
 const PhoneFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -18,6 +19,15 @@ const PhoneFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 // Main application component. Defines the overall structure and routing.
 const App: React.FC = () => {
+  if (!IsPhone) {
+    return (
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/map" element={<MapPage />} />
+      </Routes>
+    );
+  }
   return (
     <PhoneFrame>
         <Routes>

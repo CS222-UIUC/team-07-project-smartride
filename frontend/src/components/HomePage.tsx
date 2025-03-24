@@ -3,7 +3,7 @@ import viteLogo from '/vite.svg';
 import { Link } from 'react-router-dom';
 const HomePage: React.FC = () => {
     return (
-      <div className="flex flex-col items-center justify-center h-screen text-white">
+      <div className="flex flex-col items-center justify-center h-screen w-full text-white">
         {/* Logo (Designed later) */}
         <div className="flex gap-6">
           <a href="https://vite.dev" target="_blank">

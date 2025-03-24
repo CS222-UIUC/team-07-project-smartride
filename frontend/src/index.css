@@ -1,6 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+#root{
+  width: 100vw;
+  height: 100vh;
+  flex-grow: 1;
+  overflow: auto;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -29,10 +34,13 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  flex-direction: column;
+    /* Ensures vertical stacking */
   min-width: 320px;
   min-height: 100vh;
-  width: 100%;
-  max-width: 100vw;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 h1 {

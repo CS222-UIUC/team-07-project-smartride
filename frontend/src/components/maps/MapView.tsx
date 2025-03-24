@@ -15,6 +15,7 @@ const MapView = () => {
   const [position, setPosition] = useState<LatLngExpression | null>(null);
 
   useEffect(() => {
+    /* Get the current location of the user */
     navigator.geolocation.getCurrentPosition(
       (pos) => setPosition([pos.coords.latitude, pos.coords.longitude] as LatLngExpression),
       (err) => console.error("Geolocation error:", err),
