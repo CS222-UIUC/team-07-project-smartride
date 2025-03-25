@@ -1,29 +1,12 @@
-import reactLogo from './../../assets/react.svg';
-import viteLogo from '/vite.svg';
+// import reactLogo from './../../assets/react.svg';
+// import viteLogo from '/vite.svg';
 import { Link } from 'react-router-dom';
+import AnimLogo from "./../widgets/AnimLogo.tsx";
 const StartPage: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center h-screen w-full text-white">
-        {/* Logo (Designed later) */}
-        <div className="flex gap-6">
-          <a href="https://vite.dev" target="_blank">
-            <img src={viteLogo} 
-                style={{ width: "90px", height: "auto" }} 
-                alt="Vite logo" />
-          </a>
-  
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} 
-                style={{ width: "90px", height: "auto" }}  
-                alt="React logo" />
-          </a>
-          {/* <a target="_blank">
-            <img 
-              src="https://howtodrawforkids.com/wp-content/uploads/2022/01/9-kid-on-a-bike-drawing-tutorial-step-by-step.jpg"
-              style={{ width: "90px", height: "auto" }}  
-              alt="Bike logo" />
-          </a> */}
-        </div>
+        {/* Logo */}
+        <AnimLogo onFinish={() => console.log("Animation finished")} />
   
         {/* Description */}
         <h1 className="text-5xl font-bold mt-6">Vite + React</h1>
