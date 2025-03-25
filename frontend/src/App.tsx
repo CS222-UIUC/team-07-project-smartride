@@ -1,12 +1,15 @@
 import React, {ReactNode} from "react";
 import { Routes, Route } from "react-router-dom";
-import MapPage from "./components/MapPage";
-import LoginPage from "./components/LoginPage.tsx";
-import HomePage from "./components/HomePage.tsx";
-import StartPage from "./components/StartPage.tsx"
+import MapPage from "./components/pages/MapPage.tsx";
+import LoginPage from "./components/pages/LoginPage.tsx";
+import HomePage from "./components/pages/HomePage.tsx";
+import StartPage from "./components/pages/StartPage.tsx"
 import "./index.css";
 import './App.css';
+import { PhoneContext } from "./components/context/PhoneContext.tsx";
 
+
+const IsPhone = window.innerWidth < 768; // Flag to determine if the user is on a phone
 
 // Design a Web Mobile Phone Frame
 const PhoneFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -17,17 +20,26 @@ const PhoneFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-// Main application component. Defines the overall structure and routing.
-const App: React.FC = () => {
+// Define the routes for the application
+const RouteLibrary: React.FC = () => {
   return (
-    <PhoneFrame>
-        <Routes>
-          <Route path="/" element={<StartPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/map" element={<MapPage />} />
-          <Route path="/home" element = {<HomePage/>} />
-        </Routes>
-    </PhoneFrame>
+    <Routes>
+      <Route path="/" element={<StartPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/map" element={<MapPage />} />
+      <Route path="/home" element = {<HomePage/>} />
+    </Routes>
+  );
+}
+
+// Main application component.
+const App: React.FC = () => {
+  const content = <RouteLibrary />;
+
+  return (
+    <PhoneContext.Provider value={IsPhone}>
+      {IsPhone ? <PhoneFrame>{content}</PhoneFrame> : content}
+    </PhoneContext.Provider>
   );
 };
 
