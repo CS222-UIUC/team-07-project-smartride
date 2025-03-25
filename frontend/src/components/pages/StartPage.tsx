@@ -50,19 +50,18 @@ const StartPage = () => {
             SmartRide
           </h1>
           <p className="text-sm text-gray-600 mt-2 text-center">
-            Welcome to SmartRide. Click below to Login.
+            Welcome! Please login or create a new account.
           </p>
 
           <div className="mt-6 w-full flex flex-col gap-3">
             <Link to="/login">
               <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
-                Go to Login
+                Login
               </button>
             </Link>
-
-            <Link to="/map">
+            <Link to="/register">
               <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
-                Go to Map
+                Register
               </button>
             </Link>
           </div>

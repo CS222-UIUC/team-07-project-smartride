@@ -2,6 +2,7 @@ import React, {ReactNode} from "react";
 import { Routes, Route } from "react-router-dom";
 import MapPage from "./components/pages/MapPage.tsx";
 import LoginPage from "./components/pages/LoginPage.tsx";
+import RegisterPage from "./components/pages/RegisterPage.tsx";
 import HomePage from "./components/pages/HomePage.tsx";
 import StartPage from "./components/pages/StartPage.tsx"
 import "./index.css";
@@ -26,6 +27,7 @@ const RouteLibrary: React.FC = () => {
     <Routes>
       <Route path="/" element={<StartPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
       <Route path="/map" element={<MapPage />} />
       <Route path="/home" element = {<HomePage/>} />
     </Routes>
