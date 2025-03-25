@@ -7,34 +7,37 @@ const AnimLogo = ({ onFinish }: { onFinish: () => void }) => {
   const [step, setStep] = useState<"anim" | "fadeout">("anim");
   const [fade, setFade] = useState(false);
 
+  const loopCount = 2;
+  const oneLoopDuration = 800; // in ms
+  const animDuration = loopCount * oneLoopDuration; // 6400ms = 6.4s
+  const fadeDuration = animDuration * 0.6;
+
   useEffect(() => {
-    const loopCount = 2;
-    const oneLoopDuration = 800; // in ms
-    const totalDuration = loopCount * oneLoopDuration; // 6400ms = 6.4s
 
     const t1 = setTimeout(() => {
       setStep("fadeout");
       // Let one frame render before starting fade
       requestAnimationFrame(() => setFade(true));
-    }, totalDuration);
+    }, animDuration);
 
     const t2 = setTimeout(() => {
       onFinish();
-    }, totalDuration/2);
+    }, fadeDuration);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [onFinish]);
+  }, [onFinish, animDuration, fadeDuration]);
 
   return (
-    <div className="aspect-square w-full rounded-full flex items-center justify-center overflow-hidden relative shadow-lg">
+    <div className="aspect-square w-full rounded-full flex items-center justify-center overflow-hidden relative shadow-lg p-6">
+          
       {step === "anim" && (
         <img
           src={cycleAnim}
           alt="Cycling animation"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover absolute bottom-6 left-0 z-10"
         />
       )}
 
@@ -44,19 +47,21 @@ const AnimLogo = ({ onFinish }: { onFinish: () => void }) => {
           <img
             src={cycleLastTrp}
             alt="Transparent background"
-            className="w-full h-full object-cover absolute top-0 left-0"
+            className="w-full h-full object-cover absolute bottom-6 left-0 z-10"
           />
 
           {/* Full image fading out */}
           <img
             src={cycleLast}
             alt="Full cyclist"
-            className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000 ${
+            style={{ transition: `opacity ${fadeDuration}ms ease-in-out` }}
+            className={`w-full h-full object-cover absolute bottom-6 left-0 transition-opacity z-10 ${
               fade ? "opacity-0" : "opacity-100"
             }`}
           />
         </>
       )}
+      <div className="absolute bottom-0 left-0 w-full h-[8%] bg-white z-0" />
     </div>
   );
 };
