@@ -31,9 +31,29 @@ def load_user(user_id):
 def home():
     return jsonify({"message": "SmartRide Backend Running!"})
 
-@app.route("/add_user", methods=["POST"])
-def add_user():
+# Helper function to verify register data
+def verify_register(data):
+    if not data["name"] or not data["email"] or not data["password"]:
+        return jsonify({"message": "Please fill all required fields"}), 400
+    # verify if password is too long
+    if len(data["password"]) > 150:
+        return jsonify({"message": "Password too long"}), 400
+    if len(data["name"]) > 100:
+        return jsonify({"message": "Name too long"}), 400
+    if len(data["email"]) > 120:
+        return jsonify({"message": "Email too long"}), 400
+    if User.query.filter_by(email=data["email"]).first():
+        return jsonify({"message": "Email already exists"}), 400
+    return None
+
+@app.route("/register", methods=["POST"])
+def register():
     data = request.json
+    # verify entries, as well as check if email already exists
+    error = verify_register(data)
+    if error:
+        return error
+    # hash password and create new user
     hashed_password = generate_password_hash(data["password"], method="pbkdf2:sha256")
     new_user = User(name=data["name"], email=data["email"], password=hashed_password)
     db.session.add(new_user)
