@@ -8,7 +8,7 @@ import "./index.css";
 import './App.css';
 
 // A test flag to determine if the application is running on a phone
-const IsPhone = true;
+const IsPhone = false;
 
 // Design a Web Mobile Phone Frame
 const PhoneFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
