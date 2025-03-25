@@ -7,13 +7,31 @@ interface AnimLogoProps {
   animDuration: number;
   fadeDuration: number;
   onFinish: () => void;
+  play: boolean;
 }
 
-const AnimLogo = ({ animDuration, fadeDuration, onFinish }: AnimLogoProps) => {
-  const [step, setStep] = useState<"anim" | "fadeout">("anim");
+const AnimLogo = ({ animDuration, fadeDuration, onFinish, play }: AnimLogoProps) => {
+  const [step, setStep] = useState<"anim" | "fadeout" | "complete">("anim");
   const [fade, setFade] = useState(false);
   const [circleIn, setCircleIn] = useState(false); // for future animation
   const [finalPosition, setFinalPosition] = useState(false);
+
+  
+  if (!play) {
+    useEffect(() => onFinish());
+    return (
+      <div
+        className="aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center rounded-full bg-green-800 shadow-lg scale-100 -translate-y-8"
+      >
+      <img
+        src={cycleLastTrp}
+        alt="Transparent background"
+        className="w-full h-full object-cover absolute bottom-6 left-0 z-10 opacity-100"
+      />
+      <div className="absolute bottom-0 left-0 w-full h-[15%] bg-white z-0" />
+      </div>
+    );
+  }
 
   useEffect(() => {
     const tMid = setTimeout(() => {
@@ -26,6 +44,8 @@ const AnimLogo = ({ animDuration, fadeDuration, onFinish }: AnimLogoProps) => {
       requestAnimationFrame(() => setFade(true));
     }, animDuration);
     const t2 = setTimeout(() => {
+      setStep("complete");
+      console.log("complete");
       onFinish();
     }, animDuration + fadeDuration);
 
@@ -40,7 +60,9 @@ const AnimLogo = ({ animDuration, fadeDuration, onFinish }: AnimLogoProps) => {
     <div
       className={`
     aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center
-    transition-all duration-700 ease-in-out
+    ${
+      play? "transition-all duration-700 ease-in-out": ""
+    }
     ${
       circleIn ? "rounded-full bg-green-800 shadow-lg" : "rounded-none bg-white"
     }
@@ -71,6 +93,16 @@ const AnimLogo = ({ animDuration, fadeDuration, onFinish }: AnimLogoProps) => {
             className={`w-full h-full object-cover absolute bottom-6 left-0 z-10 ${
               fade ? "opacity-0" : "opacity-100"
             }`}
+          />
+        </>
+      )}
+
+      {step === "complete" && (
+        <>
+          <img
+            src={cycleLastTrp}
+            alt="Transparent background"
+            className="w-full h-full object-cover absolute bottom-6 left-0 z-10 opacity-100"
           />
         </>
       )}

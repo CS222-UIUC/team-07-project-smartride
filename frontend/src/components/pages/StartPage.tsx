@@ -2,42 +2,20 @@
 // import viteLogo from '/vite.svg';
 import { Link } from "react-router-dom";
 import AnimLogo from "./../widgets/AnimLogo.tsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const StartPage = () => {
-  const loopCount = 2;
-  const oneLoopDuration = 800;
-  const animDuration = loopCount * oneLoopDuration;
-  const fadeDuration = animDuration * 0.6;
-  const liftDuration = animDuration * 0.5;
-
   const [showContent, setShowContent] = useState(false);
-  const [logoLifted, setLogoLifted] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setLogoLifted(true);
-    }, animDuration + fadeDuration); // adjust as needed
-
-    return () => clearTimeout(t);
-  }, [animDuration, fadeDuration]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full bg-white px-4">
       <div className="w-full max-w-xs flex flex-col justify-center">
-        <div
-          style={{
-            transitionDuration: `${liftDuration}ms`,
-          }}
-          className={`
-    transition-all ease-in-out w-[80%] max-w-[200px] mx-auto items-center justify-center
-    ${logoLifted ? "translate-y-0" : "translate-y-20"}
-  `}
-        >
+        <div className="transition-all ease-in-out w-[80%] max-w-[200px] mx-auto items-center justify-center">
           <AnimLogo
-            animDuration={animDuration}
-            fadeDuration={fadeDuration}
-            onFinish={() => setShowContent(true)}
+            animDuration={0}
+            fadeDuration={0}
+            onFinish={() => {console.log("onfinish"); setShowContent(true)}}
+            play={false}
           />
         </div>
 

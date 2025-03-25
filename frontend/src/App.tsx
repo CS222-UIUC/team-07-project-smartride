@@ -5,6 +5,7 @@ import LoginPage from "./components/pages/LoginPage.tsx";
 import RegisterPage from "./components/pages/RegisterPage.tsx";
 import HomePage from "./components/pages/HomePage.tsx";
 import StartPage from "./components/pages/StartPage.tsx"
+import LoadPage from "./components/pages/LoadPage.tsx";
 import "./index.css";
 import './App.css';
 import { PhoneContext } from "./components/context/PhoneContext.tsx";
@@ -25,7 +26,8 @@ const PhoneFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
 const RouteLibrary: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<StartPage />} />
+      <Route path="/" element={<LoadPage />} />
+      <Route path="/start" element={<StartPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/map" element={<MapPage />} />
