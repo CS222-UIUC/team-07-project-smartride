@@ -4,10 +4,11 @@ import MapView from "../maps/MapView";
 import { CSSProperties } from "react";
 import { useIsPhone } from "../context/PhoneContext";
 
-const MapWrapper: React.FC<{ IsPhone: boolean }> = ({ IsPhone }) => {
+const MapWrapper = () => {
+  const IsPhone = useIsPhone();
   const style: CSSProperties = IsPhone
-    ? { display: "flex", justifyContent: "center", alignItems: "center", position: "relative", width: "100%", height: "100%" }
-    : { display: "flex", justifyContent: "center", alignItems: "center", position: "relative", width: "60%", height: "90%" };
+    ? { width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }
+    : { width: "60%", height: "90%", display: "flex", justifyContent: "center", alignItems: "center" };
 
   return (
     <div style={style}>
@@ -16,8 +17,8 @@ const MapWrapper: React.FC<{ IsPhone: boolean }> = ({ IsPhone }) => {
   );
 };
 
+
 const MapPage = () => {
-  const IsPhone = useIsPhone();
   const navigate = useNavigate();
 
   return (
@@ -38,7 +39,7 @@ const MapPage = () => {
         </button>
       </div>
 
-      <MapWrapper IsPhone={IsPhone} />
+      <MapWrapper />
     </div>
   );
 };
