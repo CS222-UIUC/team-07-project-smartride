@@ -1,14 +1,15 @@
 import React, {ReactNode} from "react";
 import { Routes, Route } from "react-router-dom";
-import MapPage from "./components/MapPage";
-import LoginPage from "./components/LoginPage.tsx";
-import HomePage from "./components/HomePage.tsx";
-import StartPage from "./components/StartPage.tsx"
+import MapPage from "./components/pages/MapPage.tsx";
+import LoginPage from "./components/pages/LoginPage.tsx";
+import HomePage from "./components/pages/HomePage.tsx";
+import StartPage from "./components/pages/StartPage.tsx"
 import "./index.css";
 import './App.css';
+import { PhoneContext } from "./components/context/PhoneContext.tsx";
 
-// A test flag to determine if the application is running on a phone
-const IsPhone = false;
+
+const IsPhone = window.innerWidth < 768; // Flag to determine if the user is on a phone
 
 // Design a Web Mobile Phone Frame
 const PhoneFrame: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -33,15 +34,12 @@ const RouteLibrary: React.FC = () => {
 
 // Main application component.
 const App: React.FC = () => {
-  if (!IsPhone) {
-    return (
-      <RouteLibrary />
-    );
-  }
+  const content = <RouteLibrary />;
+
   return (
-    <PhoneFrame>
-      <RouteLibrary />
-    </PhoneFrame>
+    <PhoneContext.Provider value={IsPhone}>
+      {IsPhone ? <PhoneFrame>{content}</PhoneFrame> : content}
+    </PhoneContext.Provider>
   );
 };
 
