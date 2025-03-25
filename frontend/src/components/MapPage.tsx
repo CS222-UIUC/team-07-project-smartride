@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-// import MapView from "./maps/MapView";
+import MapView from "./maps/MapView";
 
 const MapPage = () => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ const MapPage = () => {
           Back
         </button>
       </div>
-{/* 
+
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", width: "100vw", height: "90vh", overflow: "hidden" }}>
         <MapView />
-      </div> */}
+      </div>
     </div>
   );
 };
