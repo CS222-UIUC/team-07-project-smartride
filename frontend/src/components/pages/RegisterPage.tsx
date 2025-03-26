@@ -28,7 +28,7 @@ const RegisterPage: React.FC = () => {
             <h2>Register</h2>
 
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
-                <button onClick={() => navigate("/")} style={{ fontSize: "16px", backgroundColor: "#f0f0f0", border: "1px solid #ccc", borderRadius: "8px", cursor: "pointer" }}>
+                <button onClick={() => navigate("/start")} style={{ fontSize: "16px", backgroundColor: "#f0f0f0", border: "1px solid #ccc", borderRadius: "8px", cursor: "pointer" }}>
                     Back
                 </button>
             </div>
