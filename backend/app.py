@@ -1,93 +1,31 @@
-from flask import Flask, jsonify, request, session
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
+from flask import Flask
 from config import Config
+from flask_cors import CORS
+
+from extensions import db, login_manager  # ✅ 从这里导入
+from models.user import User
+from routes.auth import auth_bp
+from routes.profile import profile_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.config['SECRET_KEY'] = 'secret_key_here'  # Add a secure secret key for sessions
-
-# Initialize extensions
-db = SQLAlchemy(app)
+app.config['SECRET_KEY'] = 'secret_key_here'
 CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5173"])
-login_manager = LoginManager()
-login_manager.init_app(app)
 
-# Define User Model (modified)
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(150), nullable=False)  # added password field
+db.init_app(app)
+login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Routes
+app.register_blueprint(auth_bp)
+app.register_blueprint(profile_bp)
+
 @app.route("/")
 def home():
-    return jsonify({"message": "SmartRide Backend Running!"})
+    return {"message": "SmartRide Backend Running!"}
 
-# Helper function to verify register data
-def verify_register(data):
-    if not data["name"] or not data["email"] or not data["password"]:
-        return jsonify({"message": "Please fill all required fields"}), 400
-    # verify if password is too long
-    if len(data["password"]) > 150:
-        return jsonify({"message": "Password too long"}), 400
-    if len(data["name"]) > 100:
-        return jsonify({"message": "Name too long"}), 400
-    if len(data["email"]) > 120:
-        return jsonify({"message": "Email too long"}), 400
-    if User.query.filter_by(email=data["email"]).first():
-        return jsonify({"message": "Email already exists"}), 400
-    return None
-
-@app.route("/register", methods=["POST"])
-def register():
-    data = request.json
-    # verify entries, as well as check if email already exists
-    error = verify_register(data)
-    if error:
-        return error
-    # hash password and create new user
-    hashed_password = generate_password_hash(data["password"], method="pbkdf2:sha256")
-    new_user = User(name=data["name"], email=data["email"], password=hashed_password)
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"message": f"User {new_user.name} added successfully!"}), 201
-
-@app.route("/login", methods=["POST"])
-def login():
-    data = request.json
-    user = User.query.filter_by(email=data["email"]).first()
-
-    if not user or not check_password_hash(user.password, data["password"]):
-        return jsonify({"message": "Invalid email or password"}), 401
-
-    login_user(user)
-    return jsonify({"message": f"Logged in successfully as {user.name}"}), 200
-
-@app.route('/profile')
-@login_required
-def profile():
-    return jsonify({"id": current_user.id, "name": current_user.name, "email": current_user.email})
-
-@app.route('/logout', methods=['POST'])
-@login_required
-def logout():
-    logout_user()
-    return jsonify({"message": "Logged out successfully"}), 200
-
-@app.route("/users", methods=["GET"])
-def get_users():
-    users = User.query.all()
-    return jsonify([{"id": u.id, "name": u.name, "email": u.email} for u in users])
-
-# Initialize Database
 with app.app_context():
     db.create_all()
 
