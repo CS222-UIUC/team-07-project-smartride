@@ -1,0 +1,9 @@
+[
+    { "id": 1, "coords": [41.88, -87.642], "label": "Start" },
+    { "id": 2, "coords": [41.886, -87.638], "label": "Waypoint 1" },
+    { "id": 3, "coords": [41.879, -87.635], "label": "Waypoint 2" },
+    { "id": 4, "coords": [41.885, -87.63], "label": "Waypoint 3" },
+    { "id": 5, "coords": [41.878, -87.625], "label": "Waypoint 4" },
+    { "id": 6, "coords": [41.882, -87.621], "label": "End" }
+  ]
+  

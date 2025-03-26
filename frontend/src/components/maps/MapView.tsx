@@ -1,39 +1,41 @@
-import { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
-import { LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-
-const SetViewToLocation = ({ position }: { position: LatLngExpression }) => {
-  const map = useMap();
-  useEffect(() => {
-    map.setView(position, 13);
-  }, [position, map]);
-  return null;
-};
+import WaypointMarkers from "./WaypointMarkers";
+import RoutePolyline from "./RoutePolyline";
+import UserLocationMarker from "./UserLocationMarker";
+import AutoFocusView from "./AutoFocusView";
+import { LatLngExpression } from "leaflet";
+import { useMemo, useState } from "react";
+import waypoints from "./../../assets/waypoints_test.json";
 
 const MapView = () => {
-  const [position, setPosition] = useState<LatLngExpression | null>(null);
-
-  useEffect(() => {
-    /* Get the current location of the user */
-    navigator.geolocation.getCurrentPosition(
-      (pos) => setPosition([pos.coords.latitude, pos.coords.longitude] as LatLngExpression),
-      (err) => console.error("Geolocation error:", err),
-      { enableHighAccuracy: true }
-    );
+  const [userPos, setUserPos] = useState<[number, number] | null>(null);
+  const routearr: LatLngExpression[] = useMemo(() => {
+    return waypoints.map((pt) => pt.coords as [number, number]);
   }, []);
-
   return (
-    // First add a wrapper div with full height and width
     <div style={{ height: "100%", width: "100%" }}>
-      <MapContainer style={{ height: "100%", width: "100%", margin: "0", padding: "0" }} center={[0, 0]} zoom={1} scrollWheelZoom={true}>
+      <MapContainer
+        center={[0, 0]}
+        zoom={1}
+        scrollWheelZoom={true}
+        style={{ height: "100%", width: "100%" }}
+      >
+        {/* The background Tile layer renderer */}
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {position && (
-          <>
-            <SetViewToLocation position={position} />
-            <Marker position={position} />
-          </>
-        )}
+
+        {/* Component to mark way points */}
+        <WaypointMarkers />
+
+        {/* Component to mark routes */}
+        <RoutePolyline />
+
+        {/* Show User Location */}
+        <UserLocationMarker onPosition={setUserPos} />
+        {userPos && <AutoFocusView points={[userPos]} zoom={15} />}
+
+        {/* Show Route Location */}
+        {/* <AutoFocusView points={routearr} /> */}
       </MapContainer>
     </div>
   );
