@@ -30,6 +30,7 @@ dependencies:
       - flask==3.1.0
       - flask-cors==5.0.1
       - flask-jwt-extended==4.7.1
+      - flask-login==0.6.3
       - flask-migrate==4.1.0
       - flask-sqlalchemy==3.1.1
       - greenlet==3.1.1

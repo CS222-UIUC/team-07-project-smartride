@@ -30,7 +30,7 @@ const MapView = () => {
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {position && (
           <>
-            <SetViewToLocation position={position} /> 
+            <SetViewToLocation position={position} />
             <Marker position={position} />
           </>
         )}
