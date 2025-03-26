@@ -45,7 +45,6 @@ const LoadPage = () => {
           <AnimLogo
             animDuration={animDuration}
             fadeDuration={fadeDuration}
-            onFinish={() => {}}
             play={true}
           />
         </div>

@@ -2,10 +2,12 @@
 // import viteLogo from '/vite.svg';
 import { Link } from "react-router-dom";
 import AnimLogo from "./../widgets/AnimLogo.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StartPage = () => {
   const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => setShowContent(true));
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full bg-white px-4">
@@ -14,7 +16,6 @@ const StartPage = () => {
           <AnimLogo
             animDuration={0}
             fadeDuration={0}
-            onFinish={() => {console.log("onfinish"); setShowContent(true)}}
             play={false}
           />
         </div>

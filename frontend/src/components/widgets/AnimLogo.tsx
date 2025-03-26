@@ -6,11 +6,10 @@ import cycleLastTrp from "../../assets/cycle_trp.png";
 interface AnimLogoProps {
   animDuration: number;
   fadeDuration: number;
-  onFinish: () => void;
   play: boolean;
 }
 
-const AnimLogo = ({ animDuration, fadeDuration, onFinish, play }: AnimLogoProps) => {
+const AnimLogo = ({ animDuration, fadeDuration, play }: AnimLogoProps) => {
   const [step, setStep] = useState<"anim" | "fadeout" | "complete">("anim");
   const [fade, setFade] = useState(false);
   const [circleIn, setCircleIn] = useState(false); // for future animation
@@ -18,7 +17,6 @@ const AnimLogo = ({ animDuration, fadeDuration, onFinish, play }: AnimLogoProps)
 
   
   if (!play) {
-    useEffect(() => onFinish());
     return (
       <div
         className="aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center rounded-full bg-green-800 shadow-lg scale-100 -translate-y-8"
@@ -46,7 +44,6 @@ const AnimLogo = ({ animDuration, fadeDuration, onFinish, play }: AnimLogoProps)
     const t2 = setTimeout(() => {
       setStep("complete");
       console.log("complete");
-      onFinish();
     }, animDuration + fadeDuration);
 
     return () => {
@@ -54,15 +51,12 @@ const AnimLogo = ({ animDuration, fadeDuration, onFinish, play }: AnimLogoProps)
       clearTimeout(t2);
       clearTimeout(tMid);
     };
-  }, [onFinish, animDuration, fadeDuration]);
+  }, [animDuration, fadeDuration]);
 
   return (
     <div
       className={`
-    aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center
-    ${
-      play? "transition-all duration-700 ease-in-out": ""
-    }
+    aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center transition-all duration-700 ease-in-out
     ${
       circleIn ? "rounded-full bg-green-800 shadow-lg" : "rounded-none bg-white"
     }
