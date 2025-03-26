@@ -23,8 +23,8 @@ def unauthorized():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-app.register_blueprint(auth_bp)
-app.register_blueprint(profile_bp)
+app.register_blueprint(auth_bp, url_prefix="/api")
+app.register_blueprint(profile_bp, url_prefix="/api")
 
 @app.route("/")
 def home():
