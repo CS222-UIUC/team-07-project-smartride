@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 from config import Config
 from flask_cors import CORS
 
-from extensions import db, login_manager  # ✅ 从这里导入
+from extensions import db, login_manager
 from models.user import User
 from routes.auth import auth_bp
 from routes.profile import profile_bp
