@@ -7,6 +7,7 @@ interface AnimLogoProps {
   animDuration: number;
   fadeDuration: number;
   play: boolean;
+  startTimers: boolean;
 }
 
 const StaticLogoImg: React.FC = () => {
@@ -30,7 +31,7 @@ const StaticLogo: React.FC = () => {
 };
 
 
-const AnimLogo = ({ animDuration, fadeDuration, play }: AnimLogoProps) => {
+const AnimLogo = ({ animDuration, fadeDuration, play, startTimers }: AnimLogoProps) => {
   const [step, setStep] = useState<"anim" | "fadeout" | "complete">("anim");
   const [fade, setFade] = useState(false);
   const [circleIn, setCircleIn] = useState(false); // for future animation
@@ -44,6 +45,7 @@ const AnimLogo = ({ animDuration, fadeDuration, play }: AnimLogoProps) => {
   }
 
   useEffect(() => {
+    if (!startTimers) return;
     const tMid = setTimeout(() => {
       setCircleIn(true);
       requestAnimationFrame(() => setFinalPosition(true));
@@ -60,7 +62,7 @@ const AnimLogo = ({ animDuration, fadeDuration, play }: AnimLogoProps) => {
       clearTimeout(t2);
       clearTimeout(tMid);
     };
-  }, [animDuration, fadeDuration]);
+  }, [startTimers, animDuration, fadeDuration]);
 
   return (
     <div

@@ -22,9 +22,10 @@ const StartPage = () => {
       <div className="w-full max-w-xs flex flex-col justify-center">
         <div className="transition-all ease-in-out w-[80%] max-w-[200px] mx-auto items-center justify-center">
           <AnimLogo
+            play={false}
             animDuration={0}
             fadeDuration={0}
-            play={false}
+            startTimers={false}
           />
         </div>
 

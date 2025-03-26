@@ -12,9 +12,16 @@ const LoadPage = () => {
   const liftDuration = animDuration * 0.5;
 
   const [logoLifted, setLogoLifted] = useState(false);
+  const [startTimers, setStartTimers] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const timeout = setTimeout(() => setStartTimers(true), 5000);
+    return () => clearTimeout(timeout);
+  });
+
+  useEffect(() => {
+    if (!startTimers) return;
     const t1 = setTimeout(() => setLogoLifted(true), animDuration + fadeDuration); // adjust as needed
 
     const t2 = setTimeout(() => navigate("/start"), animDuration + fadeDuration + liftDuration + 100);
@@ -23,7 +30,7 @@ const LoadPage = () => {
       clearTimeout(t1);
       clearTimeout(t2);
     }
-  }, [animDuration, fadeDuration, liftDuration]);
+  }, [startTimers, animDuration, fadeDuration, liftDuration]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full bg-white px-4">
@@ -41,6 +48,7 @@ const LoadPage = () => {
             animDuration={animDuration}
             fadeDuration={fadeDuration}
             play={true}
+            startTimers={startTimers}
           />
         </div>
 
