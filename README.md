@@ -12,7 +12,7 @@
 
 3. `cd frontend`, run first `pnpm install` then `pnpm run dev`.
 
-4. If successful, there will be a website ip address shown in the command line, which you should be able to see the frontend website upon opening.
+4. If successful, you can see the frontend website in `127.0.0.1:5173`.
 
 5. Use `ctrl+c` in the command line to kill the process.
 
