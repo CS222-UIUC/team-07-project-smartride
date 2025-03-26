@@ -24,10 +24,6 @@ const LoadPage = () => {
   });
 
   useEffect(() => {
-    console.log("isLoggedIn changed:", isLoggedIn);
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     if (isLoggedIn !== null) setStartTimers(true);
   }, [isLoggedIn]);
 

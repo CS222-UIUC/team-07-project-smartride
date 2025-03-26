@@ -2,17 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../../index.css";
 import { loginUser } from "../../authentication/login"
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const navigate = useNavigate();
-
+  const { refresh } = useAuth();
+  
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await loginUser(email, password);
+      await refresh();
       navigate("/home");
     } catch (error) {
       setErrorMsg((error as Error).message);
