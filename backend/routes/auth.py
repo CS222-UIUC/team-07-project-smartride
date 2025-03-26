@@ -1,6 +1,6 @@
 # routes/auth.py
 from flask import Blueprint, request, jsonify
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.user import User
 from extensions import db
@@ -46,6 +46,7 @@ def login():
     return jsonify({"message": f"Logged in successfully as {user.name}"}), 200
 
 @auth_bp.route("/logout", methods=["POST"])
+@login_required
 def logout():
     logout_user()
     return jsonify({"message": "Logged out successfully"}), 200

@@ -3,6 +3,7 @@
 import { useNavigate } from "react-router-dom";
 import AnimLogo from "./../widgets/AnimLogo.tsx";
 import { useEffect, useState } from "react";
+import { useAuthCheck } from "../../authentication/auth.ts";
 
 const LoadPage = () => {
   const loopCount = 2;
@@ -13,6 +14,8 @@ const LoadPage = () => {
 
   const [logoLifted, setLogoLifted] = useState(false);
   const [startTimers, setStartTimers] = useState(false);
+
+  const isLoggedIn = useAuthCheck();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,16 +24,27 @@ const LoadPage = () => {
   });
 
   useEffect(() => {
+    console.log("isLoggedIn changed:", isLoggedIn);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (isLoggedIn !== null) setStartTimers(true);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     if (!startTimers) return;
     const t1 = setTimeout(() => setLogoLifted(true), animDuration + fadeDuration); // adjust as needed
 
-    const t2 = setTimeout(() => navigate("/start"), animDuration + fadeDuration + liftDuration + 100);
+    const t2 = setTimeout(() => {
+      if (isLoggedIn === true) navigate("/home");
+      else navigate("/start");
+    }, animDuration + fadeDuration + liftDuration + 100);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     }
-  }, [startTimers, animDuration, fadeDuration, liftDuration]);
+  }, [startTimers, animDuration, fadeDuration]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full bg-white px-4">

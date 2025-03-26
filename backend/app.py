@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from config import Config
 from flask_cors import CORS
 
@@ -14,6 +14,10 @@ CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5173"])
 
 db.init_app(app)
 login_manager.init_app(app)
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return jsonify({"message": "Unauthorized"}), 401
 
 @login_manager.user_loader
 def load_user(user_id):
