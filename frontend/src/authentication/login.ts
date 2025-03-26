@@ -12,6 +12,7 @@ export async function loginUser(email: string, password: string): Promise<LoginR
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     });
     const data: LoginResponse = await response.json();
     if (!response.ok) {

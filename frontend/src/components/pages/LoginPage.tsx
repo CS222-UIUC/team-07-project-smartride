@@ -11,13 +11,10 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login with:", email, password);
     try {
-      const data = await loginUser(email, password);
-      console.log("Login successful", data);
+      await loginUser(email, password);
       navigate("/home");
     } catch (error) {
-      console.error("Login failed", error);
       setErrorMsg((error as Error).message);
     }
   };

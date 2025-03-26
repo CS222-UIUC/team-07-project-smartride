@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'secret_key_here'  # Add a secure secret key for sess
 
 # Initialize extensions
 db = SQLAlchemy(app)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5173"])
 login_manager = LoginManager()
 login_manager.init_app(app)
 
