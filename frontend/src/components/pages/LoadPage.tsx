@@ -12,7 +12,7 @@ const LoadPage = () => {
   const liftDuration = animDuration * 0.5;
 
   const [logoLifted, setLogoLifted] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const t1 = setTimeout(() => setLogoLifted(true), animDuration + fadeDuration); // adjust as needed
@@ -55,12 +55,12 @@ const LoadPage = () => {
           </p>
 
           <div className="mt-6 w-full flex flex-col gap-3">
-              <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
-                Login
-              </button>
-              <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
-                Register
-              </button>
+            <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
+              Login
+            </button>
+            <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
+              Register
+            </button>
           </div>
         </div>
       </div>

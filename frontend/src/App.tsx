@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 import { Routes, Route } from "react-router-dom";
 import MapPage from "./components/pages/MapPage.tsx";
 import LoginPage from "./components/pages/LoginPage.tsx";
@@ -31,7 +31,7 @@ const RouteLibrary: React.FC = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/map" element={<MapPage />} />
-      <Route path="/home" element = {<HomePage/>} />
+      <Route path="/home" element={<HomePage />} />
     </Routes>
   );
 }

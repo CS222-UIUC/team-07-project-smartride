@@ -29,9 +29,8 @@ const StartPage = () => {
         </div>
 
         <div
-          className={`transition-opacity duration-1000 mt-6 ${
-            showContent ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
+          className={`transition-opacity duration-1000 mt-6 ${showContent ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
         >
           <h1 className="text-2xl font-bold text-center text-green-800">
             SmartRide
