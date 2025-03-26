@@ -20,14 +20,7 @@
 
 1. Make sure `conda` is correctly installed, version should be at least `23.3.1`.
 
-   a. Install `anaconda` or `miniconda` from their official website, and set the following environmental variables (for windows users), `PATH_TO_CONDA` is your directory where `conda` is installed.
-
-   ```
-   PATH_TO_CONDA
-   PATH_TO_CONDA\Scripts
-   PATH_TO_CONDA\Library\mingw-w64\bin
-   PATH_TO_CONDA\Library\bin
-   ```
+   a. Install `anaconda` or `miniconda` from their official website, then run `conda init` inside your_conda_location/scripts folder. Then reopen the terminal will give you access to conda.
 
    b. Create the virtual environment by running `conda env create -f environment_win.yml` / `conda env create -f environment_mac.yml` (depending on what platform you are using) at `./backend` folder.
 
