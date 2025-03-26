@@ -7,7 +7,15 @@ import { useEffect, useState } from "react";
 const StartPage = () => {
   const [showContent, setShowContent] = useState(false);
 
-  useEffect(() => setShowContent(true));
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setShowContent(true)
+    }, 100);
+    return () => {
+      clearTimeout(t);
+    };
+  }
+  );
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full bg-white px-4">

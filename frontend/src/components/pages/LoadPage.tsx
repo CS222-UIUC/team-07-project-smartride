@@ -15,14 +15,9 @@ const LoadPage = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    const t1 = setTimeout(() => {
-      setLogoLifted(true);
-    }, animDuration + fadeDuration); // adjust as needed
+    const t1 = setTimeout(() => setLogoLifted(true), animDuration + fadeDuration); // adjust as needed
 
-    const t2 = setTimeout(() => {
-      console.log("anim finished");
-      navigate("/start")
-    }, animDuration + fadeDuration + liftDuration + 500);
+    const t2 = setTimeout(() => navigate("/start"), animDuration + fadeDuration + liftDuration + 100);
 
     return () => {
       clearTimeout(t1);
