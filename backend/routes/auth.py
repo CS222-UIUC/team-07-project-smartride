@@ -7,6 +7,7 @@ from extensions import db
 
 auth_bp = Blueprint("auth", __name__)
 
+
 # Helper function to verify register data
 def verify_register(data):
     if not data.get("name") or not data.get("email") or not data.get("password"):
@@ -21,6 +22,7 @@ def verify_register(data):
         return jsonify({"message": "Email already exists"}), 400
     return None
 
+
 @auth_bp.route("/register", methods=["POST"])
 def register():
     data = request.json
@@ -34,6 +36,7 @@ def register():
     db.session.commit()
     return jsonify({"message": f"User {new_user.name} added successfully!"}), 201
 
+
 @auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.json
@@ -44,6 +47,7 @@ def login():
 
     login_user(user)
     return jsonify({"message": f"Logged in successfully as {user.name}"}), 200
+
 
 @auth_bp.route("/logout", methods=["POST"])
 @login_required

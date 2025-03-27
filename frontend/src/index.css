@@ -28,7 +28,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-    /* Ensures vertical stacking */
+  /* Ensures vertical stacking */
   min-width: 320px;
   min-height: 100vh;
   width: 100vw;

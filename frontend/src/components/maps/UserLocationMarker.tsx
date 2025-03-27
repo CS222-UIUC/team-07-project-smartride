@@ -11,18 +11,25 @@ const userIcon = new L.Icon({
   shadowSize: [50, 50],
 });
 
-const UserLocationMarker = ({ onPosition }: { onPosition: (pos: [number, number]) => void }) => {
+const UserLocationMarker = ({
+  onPosition,
+}: {
+  onPosition: (pos: [number, number]) => void;
+}) => {
   const [position, setPosition] = useState<[number, number] | null>(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const coords: [number, number] = [pos.coords.latitude, pos.coords.longitude];
+        const coords: [number, number] = [
+          pos.coords.latitude,
+          pos.coords.longitude,
+        ];
         setPosition(coords);
         onPosition(coords);
       },
       (err) => console.error("Geolocation error:", err),
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: true },
     );
   }, []);
 
