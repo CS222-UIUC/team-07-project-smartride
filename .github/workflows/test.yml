@@ -22,11 +22,10 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Go into frontend
-        run: cd frontend
-
       - name: Install dependencies
         run: pnpm install
+        working-directory: frontend
 
       - name: Run tests
         run: pnpm test
+        working-directory: frontend
