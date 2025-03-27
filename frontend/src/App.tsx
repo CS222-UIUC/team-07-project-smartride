@@ -13,6 +13,9 @@ import PhoneFrame from "./components/wrappers/PhoneFrame.tsx";
 import ProtectedRoute from "./components/wrappers/ProtectedRoute.tsx";
 import { AuthProvider } from "./components/context/AuthContext.tsx";
 
+import UserProfile from "./components/pages/UserProfile.tsx";
+import RideLogPage from "./components/pages/RideLogPage.tsx";
+
 
 const IsPhone = window.innerWidth < 768; // Flag to determine if the user is on a phone
 
@@ -27,6 +30,8 @@ const RouteLibrary: React.FC = () => {
       <Route path="/register" element={<ProtectedRoute access="public"><RegisterPage /></ProtectedRoute>} />
       <Route path="/map" element={<ProtectedRoute access="auth"><MapPage /></ProtectedRoute>} />
       <Route path="/home" element={<ProtectedRoute access="auth"><HomePage /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute access="auth"><UserProfile /></ProtectedRoute>} />
+      <Route path="/ride-log" element={<ProtectedRoute access="auth"><RideLogPage /></ProtectedRoute>} />
     </Routes>
     </AuthProvider>
   );
