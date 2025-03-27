@@ -54,5 +54,5 @@ jobs:
           git checkout -B ${{ github.head_ref }} origin/${{ github.head_ref }}
           git add .
           git diff --cached --quiet || git commit -m "chore: auto-format code"
-          git pull --rebase origin ${{ github.head_ref }}
+          git pull --rebase origin ${{ github.head_ref }} || true
           git push origin ${{ github.head_ref }}
