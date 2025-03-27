@@ -36,13 +36,15 @@
 
 ## User authentication
 
-1. Make sure have `flask-login` installed. If not, run the following command in the virtual environment.
+Make sure have `flask-login` installed. If not, run the following command in the virtual environment.
 
-   ```
-   pip install flask-login
-   ```
+```
+pip install flask-login
+```
 
-2. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
+## SQLite 3 Test
+
+1. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
 
    ```
    sqlite3
@@ -50,16 +52,16 @@
    SELECT * from user;
    ```
 
-3. If working correctly, following content should display
+2. If working correctly, following content should display
 
    ```
    1|Alice|alice@example.com|pbkdf2:sha256:<hash-here>
    2|Boyang|boyangl3@illinois.edu|pbkdf2:sha256:<hash-here>
    3|Brian|pg22@illinois.edu|pbkdf2:sha256:<hash-here>
-
+   
    ```
 
-4. To exit the `sqlite3` environment, run `.exit`.
+3. To exit the `sqlite3` environment, run `.exit`.
 
 ## Test on multi-platforms
 
@@ -78,3 +80,11 @@
    d. Troubleshoot: If you still cannot see the location in map, then please check permissions for accessing location for chrome in your phone / computer.
 
 4. To set up `ngrok`, follow instructions on `https://ngrok.com/`, the free plan is enough for us.
+
+## Open Route Service API
+
+We are using Open Route Service to calculate the route. It takes the coordinates of 2 points and return a `geojson` that contains the route info. The API requires a key to limit the calling frequency, however, the free plan would be enough for our project (2000 calls per day).
+
+I stored my key in a file and I will send to you privately. Please put the file under `backend/routes` folder. Then everything should work. **Never make the API key public (including add it into the Github repo)!**
+
+You can also request a new API by registering an account at [openrouteservice.org](openrouteservice.org).
