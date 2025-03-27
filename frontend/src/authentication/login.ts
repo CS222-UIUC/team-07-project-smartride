@@ -16,7 +16,7 @@ export async function loginUser(
       body: JSON.stringify({ email, password }),
       credentials: "include",
     });
-    const data: LoginResponse = await response.json();
+    const data = (await response.json()) as LoginResponse;
     if (!response.ok) {
       throw new Error(data.message);
     }
