@@ -29,17 +29,23 @@ const LoadPage = () => {
 
   useEffect(() => {
     if (!startTimers) return;
-    const t1 = setTimeout(() => setLogoLifted(true), animDuration + fadeDuration); // adjust as needed
+    const t1 = setTimeout(
+      () => setLogoLifted(true),
+      animDuration + fadeDuration,
+    ); // adjust as needed
 
-    const t2 = setTimeout(() => {
-      if (isLoggedIn === true) navigate("/home");
-      else navigate("/start");
-    }, animDuration + fadeDuration + liftDuration + 100);
+    const t2 = setTimeout(
+      () => {
+        if (isLoggedIn === true) navigate("/home");
+        else navigate("/start");
+      },
+      animDuration + fadeDuration + liftDuration + 100,
+    );
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-    }
+    };
   }, [startTimers, animDuration, fadeDuration]);
 
   return (
@@ -62,9 +68,7 @@ const LoadPage = () => {
           />
         </div>
 
-        <div
-          className={"mt-6 opacity-0 pointer-events-none"}
-        >
+        <div className={"mt-6 opacity-0 pointer-events-none"}>
           <h1 className="text-2xl font-bold text-center text-green-800">
             SmartRide
           </h1>

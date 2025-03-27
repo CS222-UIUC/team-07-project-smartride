@@ -16,7 +16,9 @@ const AutoFocusView = ({ points, zoom = 13 }: Props) => {
     if (points.length === 1) {
       map.setView(points[0], zoom);
     } else {
-      const bounds = points.map(point => Array.isArray(point) ? point : [point.lat, point.lng]);
+      const bounds = points.map((point) =>
+        Array.isArray(point) ? point : [point.lat, point.lng],
+      );
       map.fitBounds(bounds as LatLngBoundsExpression);
     }
   }, [map, points, zoom]);

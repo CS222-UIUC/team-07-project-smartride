@@ -9,26 +9,31 @@ from routes.profile import profile_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.config['SECRET_KEY'] = 'secret_key_here'
+app.config["SECRET_KEY"] = "secret_key_here"
 CORS(app, supports_credentials=True, origins=["*"])
 
 db.init_app(app)
 login_manager.init_app(app)
 
+
 @login_manager.unauthorized_handler
 def unauthorized():
     return jsonify({"message": "Unauthorized"}), 401
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 app.register_blueprint(auth_bp, url_prefix="/api")
 app.register_blueprint(profile_bp, url_prefix="/api")
+
 
 @app.route("/")
 def home():
     return {"message": "SmartRide Backend Running!"}
+
 
 with app.app_context():
     db.create_all()
