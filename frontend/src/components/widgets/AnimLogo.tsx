@@ -42,20 +42,22 @@ const AnimLogo = ({
 
   useEffect(() => {
     if (!play || !startTimers) return;
-    if (!startTimers) return;
     const tMid = setTimeout(() => {
       setCircleIn(true);
-      requestAnimationFrame(() => setFinalPosition(true));
+      requestAnimationFrame(() => {
+        setFinalPosition(true);
+      });
     }, animDuration / 2);
 
     const t1 = setTimeout(() => {
       setStep("fadeout");
-      requestAnimationFrame(() => setFade(true));
+      requestAnimationFrame(() => {
+        setFade(true);
+      });
     }, animDuration);
-    const t2 = setTimeout(
-      () => setStep("complete"),
-      animDuration + fadeDuration,
-    );
+    const t2 = setTimeout(() => {
+      setStep("complete");
+    }, animDuration + fadeDuration);
 
     return () => {
       clearTimeout(t1);
@@ -98,7 +100,9 @@ const AnimLogo = ({
           <img
             src={cycleLast}
             alt="Full cyclist"
-            style={{ transition: `opacity ${fadeDuration}ms ease-in-out` }}
+            style={{
+              transition: `opacity ${String(fadeDuration)}ms ease-in-out`,
+            }}
             className={`w-full h-full object-cover absolute bottom-6 left-0 z-10 ${
               fade ? "opacity-0" : "opacity-100"
             }`}

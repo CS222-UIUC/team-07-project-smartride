@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { AuthContext } from "./AuthContext";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -14,14 +14,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    refresh();
+    void refresh();
   }, [refresh]);
 
-  return (
-    <AuthContext.Provider
-      value={{ isLoggedIn, loading: isLoggedIn === null, refresh }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const contextValue = useMemo(
+    () => ({ isLoggedIn, loading: isLoggedIn === null, refresh }),
+    [isLoggedIn, refresh]
   );
+
+  return <AuthContext value={contextValue}>{children}</AuthContext>;
 };

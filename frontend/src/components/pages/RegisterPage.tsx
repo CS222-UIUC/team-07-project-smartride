@@ -16,7 +16,7 @@ const RegisterPage: React.FC = () => {
     try {
       const data = await registerUser(name, email, password);
       console.log("Register successful", data);
-      navigate("/login");
+      void navigate("/login");
     } catch (error) {
       console.error("Register failed", error);
       setErrorMsg((error as Error).message);
@@ -36,7 +36,8 @@ const RegisterPage: React.FC = () => {
         }}
       >
         <button
-          onClick={() => navigate("/start")}
+          type="button"
+          onClick={() => void navigate("/start")}
           style={{
             fontSize: "16px",
             backgroundColor: "#f0f0f0",
@@ -49,27 +50,37 @@ const RegisterPage: React.FC = () => {
         </button>
       </div>
 
-      <form onSubmit={handleRegister}>
+      <form
+        onSubmit={(e) => {
+          void handleRegister(e);
+        }}
+      >
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <input
             type="text"
             placeholder="Name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
             required
           />
           <input
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
             required
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             required
           />
         </div>

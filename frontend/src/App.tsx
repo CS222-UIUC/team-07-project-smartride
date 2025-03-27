@@ -78,9 +78,9 @@ const App: React.FC = () => {
   const content = <RouteLibrary />;
 
   return (
-    <PhoneContext.Provider value={IsPhone}>
+    <PhoneContext value={IsPhone}>
       {IsPhone ? <PhoneFrame>{content}</PhoneFrame> : content}
-    </PhoneContext.Provider>
+    </PhoneContext>
   );
 };
 
