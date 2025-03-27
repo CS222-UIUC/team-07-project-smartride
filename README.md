@@ -10,29 +10,25 @@
 
 2. Download and setup `Node.js` from `https://nodejs.org/en/download`.
 
-3. `cd frontend`, run first `pnpm install` then `pnpm run dev`.
-
-4. If successful, you can see the frontend website in `127.0.0.1:5173`.
-
-5. Use `ctrl+c` in the command line to kill the process.
-
 ## Backend Configuration Process
 
 1. Make sure `conda` is correctly installed, version should be at least `23.3.1`.
 
    a. Install `anaconda` or `miniconda` from their official website, then run `conda init` inside your_conda_location/scripts folder. Then reopen the terminal will give you access to conda.
 
-   b. Create the virtual environment by running `conda env create -f environment_win.yml` / `conda env create -f environment_mac.yml` (depending on what platform you are using) at `./backend` folder.
+   b. Create the virtual environment by running `conda env create -f conda_env_win.yml` / `conda env create -f conda_env_mac.yml` (depending on what platform you are using) at `./backend` folder.
 
-   c. Initialize the environment by running `conda init` at `./backend` folder.
+   c. Initialize the environment by running `conda init` at `./backend` folder. Then reopen the terminal.
 
-2. Running the virtual environment by running `conda activate smartride-backend` at `.\backend` folder, and after that you shold expect to see `(smartride-backend)` before the prompt line.
+## Open the project
 
-3. Run `python app.py` and visit `127.0.0.1:5000` in the browser to see the main database for backend with flask.
+1. In the command line, go to the project folder, then `cd scripts`.
 
-4. Sometimes conda dependencies are not updated immediately, please install all neccessary `pip` libraries via `pip install [package]` to run the backend.
+2. If frontend and backend are not configured yet, follow instructions in the previous two paragraphs.
 
-5. For either process, use `ctrl+c` to kill the process.
+3. Run either `start-dev-win.ps1` or `start-dev-mac.sh`, depending on your platform. It will pop up 4 terminal windows while 3 of them will remain open.
+
+4. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
 
 ## User authentication
 
@@ -72,3 +68,15 @@
    d. Troubleshoot: If you still cannot see the location in map, then please check permissions for accessing location for chrome in your phone / computer.
 
 4. To set up `ngrok`, follow instructions on `https://ngrok.com/`, the free plan is enough for us.
+
+## Before pushing or pull request to github
+
+1. Run `update-conda-win/mac.ps1/sh` to update conda environments, if you have made any changes to the backend.
+
+2. Make sure you are in the correct branch by `git branch`.
+
+3. Run `git pull`, then `git add -A`, then `git commit -m "commit message"`, then `git push`.
+
+4. You should open pull requests in github website, but before merging PLEASE get all the CI tests passed.
+
+5. After you merged to main, please wait for ESLint to finish and check security tab, there may be MANY bugs that awaits you to fix.
