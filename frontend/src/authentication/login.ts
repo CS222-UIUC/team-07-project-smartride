@@ -1,11 +1,9 @@
-// login.ts
 export interface LoginResponse {
   message: string;
   user?: string;
 }
 
-export async function loginUser(
-  email: string,
+export async function loginUser(email: string,
   password: string,
 ): Promise<LoginResponse> {
   try {

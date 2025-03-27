@@ -1,4 +1,3 @@
-// login.ts
 export interface RegisterResponse {
   message: string;
   user?: string;
