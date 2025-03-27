@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children, access }: ProtectedRouteProps) => {
   const { isLoggedIn, loading } = useAuth();
 
-  if (loading) return null; // 或者加载动画
+  if (loading) return null;
 
   if (access === "auth" && !isLoggedIn) {
     return <Navigate to="/start" />;
