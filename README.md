@@ -30,19 +30,13 @@
 
 3. Run `python app.py` and visit `127.0.0.1:5000` in the browser to see the main database for backend with flask.
 
-4. In a separate cmd/powershell, first repeat step 2, then run `python route_service.py` and visit `127.0.0.1:13116` in the browser to see the route_service server with FastAPI and Uvicorn. Alternatively to using `python`, you may run `uvicorn route_service:app --reload --host 127.0.0.1 --port 13116` for same effect.
+4. Sometimes conda dependencies are not updated immediately, please install all neccessary `pip` libraries via `pip install [package]` to run the backend.
 
 5. For either process, use `ctrl+c` to kill the process.
 
 ## User authentication
 
-1. Make sure have `flask-login` installed. If not, run the following command in the virtual environment.
-
-   ```
-   pip install flask-login
-   ```
-
-2. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
+1. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
 
    ```
    sqlite3
@@ -50,7 +44,7 @@
    SELECT * from user;
    ```
 
-3. If working correctly, following content should display
+2. If working correctly, following content should display
 
    ```
    1|Alice|alice@example.com|pbkdf2:sha256:<hash-here>
@@ -59,7 +53,7 @@
 
    ```
 
-4. To exit the `sqlite3` environment, run `.exit`.
+3. To exit the `sqlite3` environment, run `.exit`.
 
 ## Test on multi-platforms
 
