@@ -1,4 +1,3 @@
-// logout.ts
 export interface LogoutResponse {
   message: string;
 }

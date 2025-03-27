@@ -1,7 +1,7 @@
 // components/context/AuthContext.tsx
 import { createContext } from "react";
 
-interface AuthContextType {
+export interface AuthContextType {
   isLoggedIn: boolean | null;
   loading: boolean;
   refresh: () => Promise<void>;
