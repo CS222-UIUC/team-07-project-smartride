@@ -1,0 +1,52 @@
+name: Auto Format Code
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  auto-format:
+    name: Format Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python formatter
+        run: |
+          pip install black
+
+      - name: Format Python code
+        run: |
+          black backend/
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: |
+          pnpm install
+
+      - name: Format frontend code
+        working-directory: frontend
+        run: |
+          pnpm prettier --write "**/*.{ts,tsx,css}"
+
+      - name: Commit changes (if any)
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "chore: auto-format code"
+          git push
