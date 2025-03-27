@@ -9,13 +9,12 @@ const StartPage = () => {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      setShowContent(true)
+      setShowContent(true);
     }, 100);
     return () => {
       clearTimeout(t);
     };
-  }
-  );
+  });
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full bg-white px-4">
@@ -30,8 +29,9 @@ const StartPage = () => {
         </div>
 
         <div
-          className={`transition-opacity duration-1000 mt-6 ${showContent ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+          className={`transition-opacity duration-1000 mt-6 ${
+            showContent ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         >
           <h1 className="text-2xl font-bold text-center text-green-800">
             SmartRide
