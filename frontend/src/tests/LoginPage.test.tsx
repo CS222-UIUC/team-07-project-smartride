@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import LoginPage from "../components/pages/LoginPage";
-import { AuthProvider } from "../components/context/AuthContext";
+import { AuthProvider } from "../components/context/AuthProvider";
 import ProtectedRoute from "../components/wrappers/ProtectedRoute";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 
@@ -26,7 +26,7 @@ vi.stubGlobal(
       });
     }
     return Promise.reject("Unknown URL");
-  }),
+  })
 );
 
 describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
@@ -54,7 +54,7 @@ describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
             />
           </Routes>
         </AuthProvider>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     fireEvent.change(screen.getByPlaceholderText(/email/i), {
