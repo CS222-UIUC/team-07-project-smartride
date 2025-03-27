@@ -34,15 +34,13 @@
 
 5. For either process, use `ctrl+c` to kill the process.
 
-## [Update] User authentication
+## User authentication
 
 1. Make sure have `flask-login` installed. If not, run the following command in the virtual environment.
 
    ```
    pip install flask-login
    ```
-
-   
 
 2. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
 
@@ -58,10 +56,25 @@
    1|Alice|alice@example.com|pbkdf2:sha256:<hash-here>
    2|Boyang|boyangl3@illinois.edu|pbkdf2:sha256:<hash-here>
    3|Brian|pg22@illinois.edu|pbkdf2:sha256:<hash-here>
-   
+
    ```
 
 4. To exit the `sqlite3` environment, run `.exit`.
 
+## Test on multi-platforms
 
+1. Currently please always test using chrome, no matter if you are testing on a computer / a phone, we have not used capacitor to transfer this project into a mobile app yet.
 
+2. To test solely on your own computer where you are hosting yourself, just visit `localhost:5173` so that geolocation can be given to the map.
+
+3. To test on a different device, first set up `ngrok` by instruction 4, then follow the following instruction:
+
+   a. Connect the hosting device and the testing device to the same LAN (Local Area Network), preferably by hotspot.
+
+   b. Do NOT use the LAN domain it gives you directly, since you will not be able to use geolocation as banned by browsers for safety reasons.
+
+   c. Run `ngrok http 5173` on the hosting device, and visit the address shown in "Forwarding", like `https://ec0f-96-63-200-99.ngrok-free.app` (it may changes all the time).
+
+   d. Don't forget to add `https` at the beginning! Now you may test and run normally.
+
+4. To set up `ngrok`, follow instructions on `https://ngrok.com/`, the free plan is enough for us.

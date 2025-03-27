@@ -10,7 +10,7 @@ from routes.profile import profile_bp
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['SECRET_KEY'] = 'secret_key_here'
-CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5173"])
+CORS(app, supports_credentials=True, origins=["*"])
 
 db.init_app(app)
 login_manager.init_app(app)
@@ -34,4 +34,4 @@ with app.app_context():
     db.create_all()
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", debug=True, port=5000)
