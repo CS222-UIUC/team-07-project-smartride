@@ -11,7 +11,7 @@ export async function logoutUser(): Promise<LogoutResponse> {
       },
       credentials: "include",
     });
-    const data = await response.json() as LogoutResponse;
+    const data = (await response.json()) as LogoutResponse;
     if (!response.ok) {
       throw new Error(data.message);
     }
