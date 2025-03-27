@@ -1,0 +1,17 @@
+{
+    // Automatically check all TypeScript files in the frontend folder for import issues
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "typescript.tsserver.maxTsServerMemory": 4096,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "files.exclude": {
+        "**/node_modules": true
+    },
+    "typescript.tsserver.watchOptions": {
+        "watchFile": "useFsEvents",
+        "watchDirectory": "useFsEvents"
+    },
+    "typescript.tsserver.log": "verbose",
+    "typescript.tsserver.pluginPaths": [
+        "./frontend"
+    ]
+}
