@@ -73,8 +73,8 @@
 
    b. Do NOT use the LAN domain it gives you directly, since you will not be able to use geolocation as banned by browsers for safety reasons.
 
-   c. Run `ngrok http 5173` on the hosting device, and visit the address shown in "Forwarding", like `https://ec0f-96-63-200-99.ngrok-free.app` (it may changes all the time).
+   c. Run `ngrok http 5173` on the hosting device, and visit the address shown in "Forwarding", like `https://ec0f-96-63-200-99.ngrok-free.app` (it may changes all the time). Don't forget to add `https` at the beginning!
 
-   d. Don't forget to add `https` at the beginning! Now you may test and run normally.
+   d. Troubleshoot: If you still cannot see the location in map, then please check permissions for accessing location for chrome in your phone / computer.
 
 4. To set up `ngrok`, follow instructions on `https://ngrok.com/`, the free plan is enough for us.
