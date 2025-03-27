@@ -13,7 +13,7 @@ vi.mock("../authentication/login", () => ({
 // Mock fetch for /profile
 vi.stubGlobal(
   "fetch",
-  vi.fn((url) => {
+  vi.fn((url: string) => {
     if (url.includes("/profile")) {
       return Promise.resolve({
         ok: true,
@@ -25,7 +25,7 @@ vi.stubGlobal(
           }),
       });
     }
-    return Promise.reject("Unknown URL");
+    return Promise.reject(new Error("Unknown URL"));
   }),
 );
 
