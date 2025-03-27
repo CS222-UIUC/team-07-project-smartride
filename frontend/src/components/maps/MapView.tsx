@@ -4,15 +4,16 @@ import WaypointMarkers from "./WaypointMarkers";
 import RoutePolyline from "./RoutePolyline";
 import UserLocationMarker from "./UserLocationMarker";
 import AutoFocusView from "./AutoFocusView";
-import { LatLngExpression } from "leaflet";
-import { useMemo, useState } from "react";
-import waypoints from "./../../assets/waypoints_test.json";
+// import { LatLngExpression } from "leaflet";
+import { useState } from "react";
+// import { useMemo } from "react";
+// import waypoints from "./../../assets/waypoints_test.json";
 
 const MapView = () => {
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
-  const routearr: LatLngExpression[] = useMemo(() => {
-    return waypoints.map((pt) => pt.coords as [number, number]);
-  }, []);
+  // const routearr: LatLngExpression[] = useMemo(() => {
+  //   return waypoints.map((pt) => pt.coords as [number, number]);
+  // }, []);
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <MapContainer

@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
     try {
       await logoutUser();
       navigate("/start");
-    } catch (error) {
+    } catch {
       alert("Logout failed. Please try again.");
     }
   };

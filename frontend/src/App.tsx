@@ -11,7 +11,7 @@ import "./App.css";
 import { PhoneContext } from "./components/context/PhoneContext.tsx";
 import PhoneFrame from "./components/wrappers/PhoneFrame.tsx";
 import ProtectedRoute from "./components/wrappers/ProtectedRoute.tsx";
-import { AuthProvider } from "./components/context/AuthContext.tsx";
+import { AuthProvider } from "./components/context/AuthProvider.tsx";
 
 const IsPhone = window.innerWidth < 768; // Flag to determine if the user is on a phone
 
