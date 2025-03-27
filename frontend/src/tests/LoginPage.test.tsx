@@ -26,7 +26,7 @@ vi.stubGlobal(
       });
     }
     return Promise.reject("Unknown URL");
-  })
+  }),
 );
 
 describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
@@ -54,7 +54,7 @@ describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
             />
           </Routes>
         </AuthProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.change(screen.getByPlaceholderText(/email/i), {
