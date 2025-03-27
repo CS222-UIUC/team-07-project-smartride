@@ -44,7 +44,8 @@ const MapPage = () => {
     >
       <div style={{ width: "100%", margin: "1rem" }}>
         <button
-          onClick={() => navigate("/home")}
+          type="button"
+          onClick={() => void navigate("/home")}
           className="w-full text-base bg-gray-100 border border-gray-300 rounded-lg cursor-pointer"
         >
           Back

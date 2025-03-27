@@ -42,12 +42,18 @@ const StartPage = () => {
 
           <div className="mt-6 w-full flex flex-col gap-3">
             <Link to="/login">
-              <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
+              <button
+                type="button"
+                className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full"
+              >
                 Login
               </button>
             </Link>
             <Link to="/register">
-              <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
+              <button
+                type="button"
+                className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full"
+              >
                 Register
               </button>
             </Link>

@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
     try {
       await loginUser(email, password);
       await refresh();
-      navigate("/home");
+      void navigate("/home");
     } catch (error) {
       setErrorMsg((error as Error).message);
     }
@@ -35,7 +35,8 @@ const LoginPage: React.FC = () => {
         }}
       >
         <button
-          onClick={() => navigate("/start")}
+          type="button"
+          onClick={() => void navigate("/start")}
           style={{
             fontSize: "16px",
             backgroundColor: "#f0f0f0",
@@ -48,20 +49,28 @@ const LoginPage: React.FC = () => {
         </button>
       </div>
 
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={(e) => {
+          void handleLogin(e);
+        }}
+      >
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <input
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
             required
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             required
           />
         </div>

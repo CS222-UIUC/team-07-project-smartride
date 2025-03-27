@@ -11,7 +11,7 @@ const AutoFocusView = ({ points, zoom = 13 }: Props) => {
   const map = useMap();
 
   useEffect(() => {
-    if (!map || points.length === 0) return;
+    if (points.length === 0) return;
 
     if (points.length === 1) {
       map.setView(points[0], zoom);

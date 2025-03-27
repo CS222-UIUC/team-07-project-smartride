@@ -24,15 +24,14 @@ const LoadPage = () => {
     }, 5000);
     if (isLoggedIn !== null) setStartTimers(true);
     if (!startTimers) return;
-    const t1 = setTimeout(
-      () => setLogoLifted(true),
-      animDuration + fadeDuration,
-    );
+    const t1 = setTimeout(() => {
+      setLogoLifted(true);
+    }, animDuration + fadeDuration);
 
     const t2 = setTimeout(
       () => {
-        if (isLoggedIn === true) navigate("/home");
-        else navigate("/start");
+        if (isLoggedIn === true) void navigate("/home");
+        else void navigate("/start");
       },
       animDuration + fadeDuration + liftDuration + 100,
     );
@@ -56,7 +55,7 @@ const LoadPage = () => {
       <div className="w-full max-w-xs flex flex-col justify-center">
         <div
           style={{
-            transitionDuration: `${liftDuration}ms`,
+            transitionDuration: `${liftDuration.toString()}ms`,
           }}
           className={`
     transition-all ease-in-out w-[80%] max-w-[200px] mx-auto items-center justify-center
@@ -80,10 +79,16 @@ const LoadPage = () => {
           </p>
 
           <div className="mt-6 w-full flex flex-col gap-3">
-            <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
+            <button
+              type="button"
+              className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full"
+            >
               Login
             </button>
-            <button className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full">
+            <button
+              type="button"
+              className="px-4 py-2 bg-white text-black text-sm font-semibold rounded-md shadow transition w-full"
+            >
               Register
             </button>
           </div>
