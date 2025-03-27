@@ -30,7 +30,7 @@ const UserLocationMarker = ({
         currentOnPosition(coords);
       },
       (err) => console.error("Geolocation error:", err),
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: true },
     );
   }, []);
 
