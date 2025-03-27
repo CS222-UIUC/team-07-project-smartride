@@ -26,7 +26,7 @@ const LoadPage = () => {
     if (!startTimers) return;
     const t1 = setTimeout(
       () => setLogoLifted(true),
-      animDuration + fadeDuration
+      animDuration + fadeDuration,
     );
 
     const t2 = setTimeout(
@@ -34,7 +34,7 @@ const LoadPage = () => {
         if (isLoggedIn === true) navigate("/home");
         else navigate("/start");
       },
-      animDuration + fadeDuration + liftDuration + 100
+      animDuration + fadeDuration + liftDuration + 100,
     );
 
     return () => {

@@ -54,7 +54,7 @@ const AnimLogo = ({
     }, animDuration);
     const t2 = setTimeout(
       () => setStep("complete"),
-      animDuration + fadeDuration
+      animDuration + fadeDuration,
     );
 
     return () => {
