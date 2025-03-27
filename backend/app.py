@@ -6,6 +6,7 @@ from extensions import db, login_manager
 from models.user import User
 from routes.auth import auth_bp
 from routes.profile import profile_bp
+from routes.route_service import route_service_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -25,6 +26,7 @@ def load_user(user_id):
 
 app.register_blueprint(auth_bp, url_prefix="/api")
 app.register_blueprint(profile_bp, url_prefix="/api")
+app.register_blueprint(route_service_bp, url_prefix="/api")
 
 @app.route("/")
 def home():
