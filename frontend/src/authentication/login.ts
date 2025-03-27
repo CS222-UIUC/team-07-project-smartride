@@ -3,7 +3,8 @@ export interface LoginResponse {
   user?: string;
 }
 
-export async function loginUser(email: string,
+export async function loginUser(
+  email: string,
   password: string,
 ): Promise<LoginResponse> {
   try {
