@@ -19,34 +19,37 @@ const LoadPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timeout = setTimeout(() => setStartTimers(true), 5000);
-    return () => clearTimeout(timeout);
-  });
-
-  useEffect(() => {
+    const t0 = setTimeout(() => {
+      setStartTimers(true);
+    }, 5000);
     if (isLoggedIn !== null) setStartTimers(true);
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     if (!startTimers) return;
     const t1 = setTimeout(
       () => setLogoLifted(true),
-      animDuration + fadeDuration,
-    ); // adjust as needed
+      animDuration + fadeDuration
+    );
 
     const t2 = setTimeout(
       () => {
         if (isLoggedIn === true) navigate("/home");
         else navigate("/start");
       },
-      animDuration + fadeDuration + liftDuration + 100,
+      animDuration + fadeDuration + liftDuration + 100
     );
 
     return () => {
+      clearTimeout(t0);
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [startTimers, animDuration, fadeDuration]);
+  }, [
+    startTimers,
+    animDuration,
+    fadeDuration,
+    liftDuration,
+    navigate,
+    isLoggedIn,
+  ]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full bg-white px-4">

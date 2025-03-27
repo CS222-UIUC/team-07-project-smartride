@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Marker } from "react-leaflet";
 import L from "leaflet";
 
@@ -17,8 +17,9 @@ const UserLocationMarker = ({
   onPosition: (pos: [number, number]) => void;
 }) => {
   const [position, setPosition] = useState<[number, number] | null>(null);
-
+  const onPositionRef = useRef(onPosition);
   useEffect(() => {
+    const currentOnPosition = onPositionRef.current;
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const coords: [number, number] = [
@@ -26,10 +27,10 @@ const UserLocationMarker = ({
           pos.coords.longitude,
         ];
         setPosition(coords);
-        onPosition(coords);
+        currentOnPosition(coords);
       },
       (err) => console.error("Geolocation error:", err),
-      { enableHighAccuracy: true },
+      { enableHighAccuracy: true }
     );
   }, []);
 

@@ -40,11 +40,8 @@ const AnimLogo = ({
   const [circleIn, setCircleIn] = useState(false); // for future animation
   const [finalPosition, setFinalPosition] = useState(false);
 
-  if (!play) {
-    return <StaticLogo />;
-  }
-
   useEffect(() => {
+    if (!play || !startTimers) return;
     if (!startTimers) return;
     const tMid = setTimeout(() => {
       setCircleIn(true);
@@ -57,7 +54,7 @@ const AnimLogo = ({
     }, animDuration);
     const t2 = setTimeout(
       () => setStep("complete"),
-      animDuration + fadeDuration,
+      animDuration + fadeDuration
     );
 
     return () => {
@@ -65,7 +62,11 @@ const AnimLogo = ({
       clearTimeout(t2);
       clearTimeout(tMid);
     };
-  }, [startTimers, animDuration, fadeDuration]);
+  }, [startTimers, animDuration, fadeDuration, play]);
+
+  if (!play) {
+    return <StaticLogo />;
+  }
 
   return (
     <div
