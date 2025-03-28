@@ -126,7 +126,6 @@
 - [Automatic Scripts](#automatic-scripts)
 - [Run the Project](#run-the-project)
 - [User Authentication](#user-authentication)
-- [Test on Multi-platforms](#test-on-multi-platforms)
 - [Working on the project](#working-on-the-project)
 - [CI/CD Workflow](#cicd-workflow)
 - [Some Useful Git Operations](#some-useful-git-operations)
@@ -171,7 +170,21 @@
 
 3. Run the `start-dev` script. It will pop up 4 terminal windows while 3 of them will remain open.
 
-4. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
+4. Please always test the frontend using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
+
+5. To test locally on the same machine that is hosting the app, visit `http://localhost:5173`. This will allow geolocation to work correctly.
+
+6. To test on a different device, follow the following instructions:
+
+   a. Connect both the hosting and testing devices to the same LAN (e.g., via hotspot).
+
+   b. Do NOT use the LAN IP address directly, as modern browsers block geolocation on non-HTTPS origins for security reasons.
+
+   c. Run `ngrok http 5173` on the hosting device, and visit the address shown in "Forwarding", like `https://ec0f-96-63-200-99.ngrok-free.app` (it may changes all the time). Be sure to use `https://`!
+
+   d. Troubleshoot: If the map still doesn't show your location, check the location permissions for Chrome on your device.
+
+7. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
 
 ### User authentication
 
@@ -195,20 +208,6 @@
 3. To exit the `sqlite3` environment, run `.exit`.
 
 ### Test on multi-platforms
-
-1. Please always test using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
-
-2. To test locally on the same machine that is hosting the app, visit `http://localhost:5173`. This will allow geolocation to work correctly.
-
-3. To test on a different device, follow the following instructions:
-
-   a. Connect both the hosting and testing devices to the same LAN (e.g., via hotspot).
-
-   b. Do NOT use the LAN IP address directly, as modern browsers block geolocation on non-HTTPS origins for security reasons.
-
-   c. Run `ngrok http 5173` on the hosting device, and visit the address shown in "Forwarding", like `https://ec0f-96-63-200-99.ngrok-free.app` (it may changes all the time). Be sure to use `https://`!
-
-   d. Troubleshoot: If the map still doesn't show your location, check the location permissions for Chrome on your device.
 
 ### Working on the project
 
