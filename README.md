@@ -26,22 +26,7 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 **Developers:**
 
 <p>
-  <span style="display: inline-block; text-align: center; margin: 0 20px;">
-    <img src="https://avatars.githubusercontent.com/u/25543974?v=4" width="80" style="border-radius: 50%;"/><br/>
-    <sub><b>ETwilight</b></sub>
-  </span>
-  <span style="display: inline-block; text-align: center; margin: 0 20px;">
-    <img src="https://avatars.githubusercontent.com/u/116575660?v=4" width="80" style="border-radius: 50%;"/><br/>
-    <sub>Zeqian-Long</sub>
-  </span>
-  <span style="display: inline-block; text-align: center; margin: 0 20px;">
-    <img src="https://avatars.githubusercontent.com/u/58096549?v=4" width="80" style="border-radius: 50%;"/><br/>
-    <sub>bobliboya</sub>
-  </span>
-  <span style="display: inline-block; text-align: center; margin: 0 20px;">
-    <img src="https://avatars.githubusercontent.com/u/173010316?v=4" width="80" style="border-radius: 50%;"/><br/>
-    <sub>DanielNi868</sub>
-  </span>
+  <img src="https://raw.githubusercontent.com/CS222-UIUC/team-07-project-smartride/main/developers.png" alt="Developers" width="400"/>
 </p>
 
 <h3>Completed Features</h3>
@@ -132,7 +117,6 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
    - See [LICENSE](./LICENSE) for details.
 
 2. Colored map markers in `frontend/public/markers` are from [Leaflet Color Markers](https://github.com/pointhi/leaflet-color-markers) by pointhi, licensed under the MIT License.
-
 3. The animation and relevant pictures
 
    ```
@@ -143,7 +127,7 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
    frontend/public/cycle_logo
    ```
 
-   are all based on a GIF from [Gifer](https://gifer.com/en/H3SO), with custom editing. This asset is used for demonstration only and may be subject to third-party copyright.  
+   are all based on a GIF from [Gifer](https://gifer.com/en/H3SO), with custom editing. This asset is used for demonstration only and may be subject to third-party copyright.
    We do **not** claim ownership or redistribution rights. See [Gifer Terms of Service](https://gifer.com/en/p/tos) for details.
 
 ---
