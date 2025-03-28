@@ -1,3 +1,4 @@
+from typing import cast
 from flask import Flask, Response, jsonify
 from flask_cors import CORS
 
@@ -23,7 +24,7 @@ def unauthorized() -> tuple[Response, int]:
 
 @login_manager.user_loader
 def load_user(user_id: str) -> User | None:
-    return User.query.get(int(user_id))
+    return cast(User | None, User.query.get(int(user_id)))
 
 
 app.register_blueprint(auth_bp, url_prefix="/api")
