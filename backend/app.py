@@ -1,4 +1,5 @@
 from typing import cast
+
 from flask import Flask, Response, jsonify
 from flask_cors import CORS
 
