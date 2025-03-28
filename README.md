@@ -26,7 +26,7 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 **Developers:**
 
 <p>
-  <img src="https://raw.githubusercontent.com/CS222-UIUC/team-07-project-smartride/refs/heads/main/developers.png" alt="Developers" width="600"/>
+  <img src="https://raw.githubusercontent.com/CS222-UIUC/team-07-project-smartride/refs/heads/main/developers.png" alt="Developers" width="500"/>
 </p>
 
 <h3>Completed Features</h3>
