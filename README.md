@@ -88,7 +88,6 @@
   </li>
 </ul>
 
-
 ## Tech Stack
 
 ### Frontend
@@ -121,19 +120,26 @@
 
 ## Documentation
 
-### Project Configuration
+### Contents
+
+- [Project Pre-Configuration](#project-pre-configuration)
+- [Automatic Scripts](#automatic-scripts)
+- [Run the Project](#run-the-project)
+- [User Authentication](#user-authentication)
+- [Test on Multi-platforms](#test-on-multi-platforms)
+- [Working on the project](#working-on-the-project)
+- [CI/CD Workflow](#cicd-workflow)
+- [Some Useful Git Operations](#some-useful-git-operations)
+
+### Project Pre-Configuration
 
 1. Clone the repo by `git clone https://github.com/CS222-UIUC/team-07-project-smartride.git`.
 
-2. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
+2. Follow the instructions at `https://pnpm.io/next/installation` to install `pnpm` command.
 
-### Pre-configuration of Libraries
+3. Download and setup `Node.js` from `https://nodejs.org/en/download`.
 
-1. Follow the instructions at `https://pnpm.io/next/installation` to install `pnpm` command.
-
-2. Download and setup `Node.js` from `https://nodejs.org/en/download`.
-
-3. Make sure `conda` is correctly installed, version should be at least `23.3.1`.
+4. Make sure `conda` is correctly installed, version should be at least `23.3.1`.
 
    a. Install `anaconda` or `miniconda` from their official website, then run `conda init` inside your_conda_location/scripts folder. Then reopen the terminal will give you access to conda.
 
@@ -141,7 +147,7 @@
 
    c. Initialize the environment by running `conda init` at `./backend` folder. Then reopen the terminal.
 
-4. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
+5. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
 
 ### Automatic Scripts
 
@@ -157,7 +163,7 @@
 
 6. Read the rest of this document for explanation of each script.
 
-### Open the project
+### Run the project
 
 1. In the command line, go to the project folder, then `cd scripts`.
 
@@ -204,13 +210,15 @@
 
    d. Troubleshoot: If the map still doesn't show your location, check the location permissions for Chrome on your device.
 
-### Before pushing or pull request to github
+### Working on the project
 
-1. Run the `update-conda` script to update conda environments, if you have made any changes to the backend.
+1. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
 
-2. Make sure you are in the correct branch by `git branch`.
+2. Run the `update-conda` script to update conda environments, if you have made any changes to the backend.
 
-3. Merge both the new updates for your branch and for main branch via:
+3. Make sure you are in the correct branch by `git branch`.
+
+4. Merge both the new updates for your branch and for main branch via:
 
    ```
    git pull
@@ -218,13 +226,13 @@
    git merge origin/main
    ```
 
-4. Run the `formatter` script to auto-format your code. The CI test will check on this, so please format beforehand to save your time.
+5. Run the `formatter` script to auto-format your code. The CI test will check on this, so please format beforehand to save your time.
 
-5. If you are developing backend, also run the `py-type-check` script to do python type checks and fix any type bugs. It is also mandatory.
+6. If you are developing backend, also run the `py-type-check` script to do python type checks and fix any type bugs. It is also mandatory.
 
-6. For more explanations on our CI/CD procedures, read the next section.
+7. For more explanations on our CI/CD procedures, read the next section.
 
-7. Now follow the standard Git workflow:
+8. Now follow the standard Git workflow:
 
    ```
    git add -A
@@ -232,11 +240,11 @@
    git push
    ```
 
-8. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
+9. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
 
-9. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+10. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
 
-10. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
+11. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
 
 ### CI/CD workflow
 
