@@ -9,6 +9,7 @@ backend/
 └── server/                             Core backend folder where the Flask and FastAPI server resides
     └── models/                         Defines data structures like User, Riding Map-routes, Activities, etc.
     └── routes/                         Defines Flask blueprints such as auth.py, profile.py for subfunctions
+    └── utils/                          Defines useful and mostly standardized helper functions such as api_response(success, data, message, status_code) to replace the previous jsonify(xxx), code explicit return
     ├── app.py                          The main program to host the Flask server
     └── config.py, extensions.py        Configuration files, e.g., config.py sets the database location
 ```
