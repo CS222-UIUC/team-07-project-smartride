@@ -10,10 +10,6 @@ def api_response(
     status_code: int = 200,
 ) -> tuple[Response, int]:
     return (
-        jsonify({
-            "success": success,
-            "data": data,
-            "message": message
-        }),
+        jsonify({"success": success, "data": data, "message": message}),
         status_code,
     )
