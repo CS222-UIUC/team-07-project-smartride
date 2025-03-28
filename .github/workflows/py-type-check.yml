@@ -28,4 +28,4 @@ jobs:
 
       - name: Mypy Type Check
         working-directory: backend
-        run: mypy server
+        run: mypy --config-file=./mypy.ini server
