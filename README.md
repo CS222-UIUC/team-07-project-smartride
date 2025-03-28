@@ -207,8 +207,6 @@
 
 3. To exit the `sqlite3` environment, run `.exit`.
 
-### Test on multi-platforms
-
 ### Working on the project
 
 1. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
