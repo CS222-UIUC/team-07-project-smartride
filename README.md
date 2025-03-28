@@ -1,9 +1,12 @@
-# SmartRide
+# 👋 Welcome to CS222-Team-07 Repo for Smartride Project.
 
+<h1>SmartRide</h1>
 <p><em>Smart Cycling App for Smarter Riders</em></p>
 <p>
   <img src="https://raw.githubusercontent.com/CS222-UIUC/team-07-project-smartride/main/frontend/src/assets/cycle_logo.png" alt="SmartRide Logo" width="100"/>
 </p>
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Repo Size](https://img.shields.io/github/repo-size/CS222-UIUC/team-07-project-smartride)](https://github.com/CS222-UIUC/team-07-project-smartride)
 
 ## Table of Contents
 
