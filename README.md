@@ -241,13 +241,13 @@
 
 4. The following workflows are auto triggered for every pull request and for every push to `main` branch.
 
-5. `eslint.yml` automatically runs ESLint on frontend code uploading results in SARIF format for GitHub's code scanning. It is also triggered every Saturday.
+5. `eslint.yml` automatically runs `ESLint` on frontend code uploading results in SARIF format for GitHub's code scanning. It is also triggered every Saturday.
 
-6. `format-check.yml` checks code formatting on both backend (with Ruff) and frontend (with Prettier).
+6. `format-check.yml` checks code formatting on both backend (with `ruff`) and frontend (with `prettier`).
 
-7. `frontend-test.yml` runs frontend unit tests with Vitest.
+7. `frontend-test.yml` runs frontend unit tests with `Vitest`.
 
-8. `py-type-check.yml` runs Ruff for linting and Mypy for type checking on the backend Python code.
+8. `py-type-check.yml` runs `ruff` for linting and `mypy` for type checking on the backend Python code.
 
 9. We do not have any CD procedure yet.
 
