@@ -75,8 +75,16 @@
 
 2. Make sure you are in the correct branch by `git branch`.
 
-3. Run `git pull`, then `git add -A`, then `git commit -m "commit message"`, then `git push`.
+3. Merge both the new updates for your branch and for main branch via:
 
-4. You should open pull requests in github website, but before merging PLEASE get all the CI tests passed.
+   ```
+   git pull
+   git fetch origin
+   git merge origin/main
+   ```
 
-5. After you merged to main, please wait for ESLint to finish and check security tab, there may be MANY bugs that awaits you to fix.
+4. Now follow the standard process of `git add -A`, then `git commit -m "commit message"`, and finally `git push`.
+
+5. You can now open pull requests in github website, but before merging **PLEASE** get all the CI tests passed.
+
+6. After you merged to main, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you to fix.
