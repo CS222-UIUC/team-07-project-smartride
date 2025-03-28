@@ -7,36 +7,42 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from server.extensions import db
 from server.models.user import User
+from server.utils.errors import (
+    EMAIL_EXISTS,
+    EMAIL_TOO_LONG,
+    INVALID_CREDENTIALS,
+    INVALID_JSON,
+    MISSING_FIELDS,
+    NAME_TOO_LONG,
+    PASSWORD_TOO_LONG,
+)
 from server.utils.response import api_response
 
 auth_bp = Blueprint("auth", __name__)
 
 
-# Helper function to verify register data
-def verify_register(data: dict[str, Any] | None) -> tuple[Response, int] | None:
+# Helper function to raise register errors
+def verify_register(data: dict[str, Any] | None) -> None:
     if not data:
-        return api_response(False, message="Invalid JSON", status_code=400)
+        raise INVALID_JSON
     if not data.get("name") or not data.get("email") or not data.get("password"):
-        return api_response(False, message="Please fill all required fields", status_code=400)
+        raise MISSING_FIELDS
     if len(data["password"]) > 150:
-        return api_response(False, message="Password too long", status_code=400)
+        raise PASSWORD_TOO_LONG
     if len(data["name"]) > 100:
-        return api_response(False, message="Name too long", status_code=400)
+        raise NAME_TOO_LONG
     if len(data["email"]) > 120:
-        return api_response(False, message="Email too long", status_code=400)
+        raise EMAIL_TOO_LONG
     if User.query.filter_by(email=data["email"]).first():
-        return api_response(False, message="Email already exists", status_code=400)
-    return None
+        raise EMAIL_EXISTS
 
 
 @auth_bp.route("/register", methods=["POST"])
 def register() -> tuple[Response, int]:
     data = request.json
     if not data:
-        return api_response(False, message="Invalid JSON", status_code=400)
-    error = verify_register(data)
-    if error:
-        return error
+        raise INVALID_JSON
+    verify_register(data)
 
     hashed_password = generate_password_hash(data["password"], method="pbkdf2:sha256")
     new_user = User(name=data["name"], email=data["email"], password=hashed_password)
@@ -49,11 +55,11 @@ def register() -> tuple[Response, int]:
 def login() -> tuple[Response, int]:
     data = request.json
     if not data:
-        return api_response(False, message="Invalid JSON", status_code=400)
+        raise INVALID_JSON
     user = User.query.filter_by(email=data["email"]).first()
 
     if not user or not check_password_hash(user.password, data["password"]):
-        return api_response(False, message="Invalid email or password", status_code=401)
+        raise INVALID_CREDENTIALS
 
     login_user(user)
     return api_response(True, message=f"Logged in successfully as {user.name}", status_code=200)

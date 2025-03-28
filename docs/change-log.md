@@ -6,7 +6,7 @@
 
 2. Refactored backend structure: moved core server files into `backend/server/` instead of directly under `backend/`, and use absolute imports throughout the files. For the new structure, python treats `backend` as a proper module. You should now use `cd backend; python -m server.app` instead of `cd backend/server; python app.py`.
 
-3. Add `utils/response` for backend, now please call `api_response` instead of directly call `jsonify` to return message.
+3. Add `utils/response` for backend, now please call `api_response` instead of directly call `jsonify` to return message. Add `utils/errors`, with many common errors defined as constants, and registered the error handler globally in `app.py`. For usage, see `auth.py`.
 
 4. Updated frontend TypeScript files to include explicit type annotations to satisfy strict ESLint rules.
 

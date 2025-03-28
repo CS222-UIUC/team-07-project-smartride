@@ -8,6 +8,7 @@ from server.extensions import db, login_manager
 from server.models.user import User
 from server.routes.auth import auth_bp
 from server.routes.profile import profile_bp
+from server.utils.errors import APIError, handle_api_error
 from server.utils.response import api_response
 
 app = Flask(__name__)
@@ -17,6 +18,11 @@ CORS(app, supports_credentials=True, origins=["*"])
 
 db.init_app(app)  # type: ignore[no-untyped-call]
 login_manager.init_app(app)
+
+
+@app.errorhandler(APIError)
+def api_error_handler(error: APIError) -> tuple[Response, int]:
+    return handle_api_error(error)
 
 
 @login_manager.unauthorized_handler
