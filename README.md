@@ -288,9 +288,15 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 
 ## External Resources and License Notices
 
-1. Colored map markers in `frontend/public/markers` are from [Leaflet Color Markers](https://github.com/pointhi/leaflet-color-markers) by pointhi, licensed under the MIT License.
+1. This project is licensed under a customized GPL v3 license.
 
-2. The animation and relevant pictures
+   - You may use, study, modify, and share the source code for **non-commercial** purposes.
+   - **Commercial use by third parties is strictly prohibited.** Only the original authors (CS222 Team 07) retain the right to use the software for commercial purposes.
+   - See [LICENSE](./LICENSE) for details.
+
+2. Colored map markers in `frontend/public/markers` are from [Leaflet Color Markers](https://github.com/pointhi/leaflet-color-markers) by pointhi, licensed under the MIT License.
+
+3. The animation and relevant pictures
 
    ```
    frontend/src/assets/cycle_anim.gif
@@ -302,9 +308,3 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 
    are all based on a GIF from [Gifer](https://gifer.com/en/H3SO), with custom editing. This asset is used for demonstration only and may be subject to third-party copyright.  
    We do **not** claim ownership or redistribution rights. See [Gifer Terms of Service](https://gifer.com/en/p/tos) for details.
-
-3. This project is licensed under a customized GPL v3 license.
-
-   - You may use, study, modify, and share the source code for **non-commercial** purposes.
-   - **Commercial use by third parties is strictly prohibited.** Only the original authors (CS222 Team 07) retain the right to use the software for commercial purposes.
-   - See [LICENSE](./LICENSE) for details.
