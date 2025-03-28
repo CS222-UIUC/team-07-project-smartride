@@ -13,9 +13,9 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Tech Stack](#tech-stack)
 - [External Resources and License Notices](#external-resources-and-license-notices)
 - [Documentation](#documentation)
+- [Tech Stack](#tech-stack)
 
 ## Introduction
 
@@ -97,29 +97,6 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
     </ul>
   </li>
 </ul>
-
-## Tech Stack
-
-### Frontend
-
-- React + Typescript + Vite
-- Tailwind CSS for styling
-- React Leaflet + OpenStreetMap for map rendering
-- ORSM (OpenRouteService Map, for turn-by-turn navigation, planned)
-- Capacitor (planned) for mobile deployment
-
-### Backend
-
-- Flask (main server)
-- FastAPI (route service) with ORS (Open Route Service) integration
-- SQLite (development database), planned migration to PostgreSQL with Docker support
-
-### DevOps & Tooling
-
-- GitHub Actions for CI/CD and testing
-- Conda for Python environment management
-- pnpm for frontend dependency management
-- Docker (planned) for deployment and backend upgrades
 
 ## External Resources and License Notices
 
@@ -301,3 +278,27 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 8. We do not have any CD procedure yet.
 
 9. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
+
+## Tech Stack
+
+### Frontend
+
+- React + Typescript + Vite
+- Tailwind CSS for styling
+- React Leaflet + OpenStreetMap for map rendering
+- ORSM (OpenRouteService Map, for turn-by-turn navigation, planned)
+- Capacitor (planned) for mobile deployment
+
+### Backend
+
+- Flask (main server)
+- FastAPI (route service) with ORS (Open Route Service) integration
+- SQLite (development database), planned migration to PostgreSQL with Docker support
+
+### DevOps & Tooling
+
+- GitHub Actions for CI/CD and testing
+- Conda for Python environment management
+- pnpm for frontend dependency management
+- ngrok for exposing local servers for remote testing
+- Docker (planned) for deployment and backend upgrades
