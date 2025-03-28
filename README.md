@@ -1,5 +1,12 @@
 # team-07-project-smartride
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Tech Stack](#tech-stack)
+- [Documentation](#documentation)
+- [External Resources and License Notices](#external-resources-and-license-notices)
+
 ## Introduction
 
 **SmartRide** is a smart cycling app that integrates route planning, turn-by-turn navigating, health tracking, and intelligent ride suggestions. It is designed with a robust backend, a dynamic frontend, and rich features tailored to every cyclist's needs.
