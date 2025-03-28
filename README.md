@@ -14,8 +14,8 @@
 
 - [Introduction](#introduction)
 - [Tech Stack](#tech-stack)
-- [Documentation](#documentation)
 - [External Resources and License Notices](#external-resources-and-license-notices)
+- [Documentation](#documentation)
 
 ## Introduction
 
@@ -127,6 +127,29 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 - Conda for Python environment management
 - pnpm for frontend dependency management
 - Docker (planned) for deployment and backend upgrades
+
+## External Resources and License Notices
+
+1. This project is licensed under a customized GPL v3 license.
+
+   - You may use, study, modify, and share the source code for **non-commercial** purposes.
+   - **Commercial use by third parties is strictly prohibited.** Only the original authors (CS222 Team 07) retain the right to use the software for commercial purposes.
+   - See [LICENSE](./LICENSE) for details.
+
+2. Colored map markers in `frontend/public/markers` are from [Leaflet Color Markers](https://github.com/pointhi/leaflet-color-markers) by pointhi, licensed under the MIT License.
+
+3. The animation and relevant pictures
+
+   ```
+   frontend/src/assets/cycle_anim.gif
+   frontend/src/assets/cycle_last_frame.png
+   frontend/src/assets/cycle_logo.png
+   frontend/src/assets/cycle_trp.png
+   frontend/public/cycle_logo
+   ```
+
+   are all based on a GIF from [Gifer](https://gifer.com/en/H3SO), with custom editing. This asset is used for demonstration only and may be subject to third-party copyright.  
+   We do **not** claim ownership or redistribution rights. See [Gifer Terms of Service](https://gifer.com/en/p/tos) for details.
 
 ## Documentation
 
@@ -285,26 +308,3 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 8. We do not have any CD procedure yet.
 
 9. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
-
-## External Resources and License Notices
-
-1. This project is licensed under a customized GPL v3 license.
-
-   - You may use, study, modify, and share the source code for **non-commercial** purposes.
-   - **Commercial use by third parties is strictly prohibited.** Only the original authors (CS222 Team 07) retain the right to use the software for commercial purposes.
-   - See [LICENSE](./LICENSE) for details.
-
-2. Colored map markers in `frontend/public/markers` are from [Leaflet Color Markers](https://github.com/pointhi/leaflet-color-markers) by pointhi, licensed under the MIT License.
-
-3. The animation and relevant pictures
-
-   ```
-   frontend/src/assets/cycle_anim.gif
-   frontend/src/assets/cycle_last_frame.png
-   frontend/src/assets/cycle_logo.png
-   frontend/src/assets/cycle_trp.png
-   frontend/public/cycle_logo
-   ```
-
-   are all based on a GIF from [Gifer](https://gifer.com/en/H3SO), with custom editing. This asset is used for demonstration only and may be subject to third-party copyright.  
-   We do **not** claim ownership or redistribution rights. See [Gifer Terms of Service](https://gifer.com/en/p/tos) for details.
