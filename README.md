@@ -126,9 +126,8 @@
 - [Automatic Scripts](#automatic-scripts)
 - [Run the Project](#run-the-project)
 - [User Authentication](#user-authentication)
-- [Working on the project](#working-on-the-project)
+- [Contribute Code To This Project](#contribute-code-to-this-project)
 - [CI/CD Workflow](#cicd-workflow)
-- [Some Useful Git Operations](#some-useful-git-operations)
 
 ### Project Pre-Configuration
 
@@ -162,7 +161,7 @@
 
 6. Read the rest of this document for explanation of each script.
 
-### Run the project
+### Run The Project
 
 1. In the command line, go to the project folder, then `cd scripts`.
 
@@ -186,7 +185,7 @@
 
 7. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
 
-### User authentication
+### User Authentication
 
 1. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
 
@@ -207,15 +206,17 @@
 
 3. To exit the `sqlite3` environment, run `.exit`.
 
-### Working on the project
+### Contribute Code To This Project
 
-1. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
+1. Since this is currently a school project, only CS222 team 7 members can contribute to this repo.
 
-2. Run the `update-conda` script to update conda environments, if you have made any changes to the backend.
+2. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
 
-3. Make sure you are in the correct branch by `git branch`.
+3. Run the `update-conda` script to update conda environments, if you have made any changes to the backend.
 
-4. Merge both the new updates for your branch and for main branch via:
+4. Make sure you are in the correct branch by `git branch`.
+
+5. Merge both the new updates for your branch and for main branch via:
 
    ```
    git pull
@@ -223,13 +224,13 @@
    git merge origin/main
    ```
 
-5. Run the `formatter` script to auto-format your code. The CI test will check on this, so please format beforehand to save your time.
+6. Run the `formatter` script to auto-format your code. The CI test will check on this, so please format beforehand to save your time.
 
-6. If you are developing backend, also run the `py-type-check` script to do python type checks and fix any type bugs. It is also mandatory.
+7. If you are developing backend, also run the `py-type-check` script to do python type checks and fix any type bugs. It is also mandatory.
 
-7. For more explanations on our CI/CD procedures, read the next section.
+8. For more explanations on our CI/CD procedures, read the next section.
 
-8. Now follow the standard Git workflow:
+9. Now follow the standard Git workflow:
 
    ```
    git add -A
@@ -237,13 +238,25 @@
    git push
    ```
 
-9. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
+10. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
 
-10. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+11. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
 
-11. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
+12. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
 
-### CI/CD workflow
+13. **_The following are some useful git operations._**
+
+14. Sometimes you may want to check all branches from origin. Run `git fetch --all`. Then you can view all remote branches by `git branch -r`.
+
+15. To switch to a remote branch, first run `git checkout [remote_branch]`, this `[remote_branch]` should likely be `origin/xxx`, remember to include `origin/`.
+
+16. To make edits in this remote branch, run `git switch -c [branch_name]`. Say the remote branch name is `origin/example`, then you should run `git switch -c example` to auto track `example` with `origin/example`.
+
+17. Now you can normally use git operations on this local branch.
+
+18. `git fetch -p` will delete all remotely deleted, but locally visible via `git branch -r` branches. Your local branch should still be manually deleted by `git branch -D [local_branch]`.
+
+### CI/CD Workflows
 
 1. You can find all CI workflows in `.github/workflows`.
 
@@ -262,18 +275,6 @@
 8. `py-type-check.yml` runs `ruff` for linting and `mypy` for type checking on the backend Python code.
 
 9. We do not have any CD procedure yet.
-
-### Some Useful Git Operations
-
-1. Sometimes you may want to check all branches from origin. Run `git fetch --all`. Then you can view all remote branches by `git branch -r`.
-
-2. To switch to a remote branch, first run `git checkout [remote_branch]`, this `[remote_branch]` should likely be `origin/xxx`, remember to include `origin/`.
-
-3. To make edits in this remote branch, run `git switch -c [branch_name]`. Say the remote branch name is `origin/example`, then you should run `git switch -c example` to auto track `example` with `origin/example`.
-
-4. Now you can normally use git operations on this local branch.
-
-5. `git fetch -p` will delete all remotely deleted, but locally visible via `git branch -r` branches. Your local branch should still be manually deleted by `git branch -D [local_branch]`.
 
 ## External Resources and License Notices
 
