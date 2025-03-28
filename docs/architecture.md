@@ -46,3 +46,7 @@ frontend/src/components/maps/           This folder contains modular components 
 ├── SetViewToLocation.tsx               Adjusts the map view to follow location updates
 └── AutoFocusView.tsx                   Auto-fits the map to show all relevant points, if possible
 ```
+
+## Go back to README
+
+[Go back to README](./README.md)

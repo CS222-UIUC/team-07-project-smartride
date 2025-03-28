@@ -17,3 +17,7 @@
 8. We do not have any CD procedure yet.
 
 9. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
+
+## Go back to README
+
+[Go back to README](./README.md)

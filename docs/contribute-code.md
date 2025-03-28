@@ -47,3 +47,7 @@
 17. Now you can normally use git operations on this local branch.
 
 18. `git fetch -p` will delete all remotely deleted, but locally visible via `git branch -r` branches. Your local branch should still be manually deleted by `git branch -D [local_branch]`.
+
+## Go back to README
+
+[Go back to README](./README.md)

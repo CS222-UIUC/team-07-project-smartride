@@ -64,3 +64,7 @@
    ```
 
 3. To exit the `sqlite3` environment, run `.exit`.
+
+## Go back to README
+
+[Go back to README](./README.md)

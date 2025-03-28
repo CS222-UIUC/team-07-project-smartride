@@ -15,3 +15,7 @@
    c. Initialize the environment by running `conda init` at `./backend` folder. Then reopen the terminal.
 
 5. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
+
+## Go back to README
+
+[Go back to README](./README.md)
