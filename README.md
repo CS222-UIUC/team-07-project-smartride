@@ -148,3 +148,20 @@
 4. Now you can normally use git operations on this local branch.
 
 5. `git fetch -p` will delete all remotely deleted, but locally visible via `git branch -r` branches. Your local branch should still be manually deleted by `git branch -D [local_branch]`.
+
+## External Resources and License Notices
+
+1. Colored map markers in `frontend/public/markers` are from [Leaflet Color Markers](https://github.com/pointhi/leaflet-color-markers) by pointhi, licensed under the MIT License.
+
+2. The animation and relevant pictures
+
+   ```
+   frontend/src/assets/cycle_anim.gif
+   frontend/src/assets/cycle_last_frame.png
+   frontend/src/assets/cycle_logo.png
+   frontend/src/assets/cycle_trp.png
+   frontend/public/cycle_logo
+   ```
+
+   are all based on a GIF from [Gifer](https://gifer.com/en/H3SO), with custom editing. This asset is used for demonstration only and may be subject to third-party copyright.  
+   We do **not** claim ownership or redistribution rights. See [Gifer Terms of Service](https://gifer.com/en/p/tos) for details.
