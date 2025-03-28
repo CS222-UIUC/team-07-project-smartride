@@ -127,7 +127,7 @@
 - [Run This Project](#run-this-project)
 - [User Authentication](#user-authentication)
 - [Contribute Code To This Project](#contribute-code-to-this-project)
-- [CI/CD Workflow](#cicd-workflow)
+- [CI/CD Workflows](#cicd-workflows)
 
 ### Project Pre-Configuration
 
