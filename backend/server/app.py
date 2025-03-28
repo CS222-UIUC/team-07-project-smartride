@@ -14,7 +14,7 @@ app.config.from_object(Config)
 app.config["SECRET_KEY"] = "secret_key_here"
 CORS(app, supports_credentials=True, origins=["*"])
 
-db.init_app(app)
+db.init_app(app)  # type: ignore[no-untyped-call]
 login_manager.init_app(app)
 
 
