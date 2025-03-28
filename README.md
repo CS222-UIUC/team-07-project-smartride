@@ -4,45 +4,83 @@
 
 **SmartRide** is a smart cycling app that integrates route planning, turn-by-turn navigating, health tracking, and intelligent ride suggestions. It is designed with a robust backend, a dynamic frontend, and rich features tailored to every cyclist's needs.
 
-### Completed Features
+<h3>Completed Features</h3>
+<ul>
+  <li>
+    <strong>Full User Authentication System</strong>
+    <br>
+    Secure login, registration, and session management with Flask and JWT.
+  </li>
+  <li>
+    <strong>Frontend & Backend Architecture</strong>
+    <br>
+    React + TypeScript frontend with Flask/FastAPI backend, modular and maintainable.
+  </li>
+  <li>
+    <strong>Route Planning via OpenRouteService</strong>
+    <br>
+    Backend integration with ORS API for route generation, using real-time parameters.
+  </li>
+  <li>
+    <strong>Frontend Route Visualization</strong>
+    <br>
+    Interactive cycling route planning and visualization on OpenStreetMap via Leaflet.
+  </li>
+</ul>
 
-- **Full User Authentication System**  
-  Secure login, registration, and session management with Flask and JWT.
+<h3>Features Coming Soon</h3>
+<ul>
+  <li>
+    <strong>Smart Route Recommendations</strong>
+    <br>
+    Personalized route suggestions based on:
+    <ul>
+      <li>Weather (especially wind direction)</li>
+      <li>Terrain preferences (e.g., hill avoidance/seeking)</li>
+      <li>Calorie goals and physical condition</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Ride Tracking & Analytics</strong>
+    <br>
+    Detailed ride logs including:
+    <ul>
+      <li>Real-time path taken</li>
+      <li>Wind and elevation history</li>
+      <li>Energy expenditure analysis</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Health Assistant</strong>
+    <br>
+    Health data tracking and progress monitoring:
+    <ul>
+      <li>Daily/weekly goals</li>
+      <li>Trend visualization</li>
+      <li>Actionable insights for fitness improvement</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Real-Time Navigation & Rerouting</strong>
+    <br>
+    Live map navigation with support for dynamic rerouting during the ride.
+  </li>
+</ul>
 
-- **Frontend & Backend Architecture**  
-  React + TypeScript frontend with Flask/FastAPI backend, modular and maintainable.
+<h3>Future Plans</h3>
+<ul>
+  <li>
+    <strong>Community System</strong>
+    <br>
+    User-driven community features such as:
+    <ul>
+      <li>Route sharing</li>
+      <li>Group challenges</li>
+      <li>Social ride planning</li>
+    </ul>
+  </li>
+</ul>
 
-- **Route Planning via OpenRouteService**  
-  Backend integration with ORS API for route generation, using real-time parameters.
-
-- **Frontend Route Visualization**  
-  Interactive cycling route planning and visualization on OpenStreetMap via Leaflet.
-
-### Features Coming Soon
-
-- **Smart Route Recommendations**: Personalized route suggestions based on
-  - Weather (especially wind direction)
-  - Terrain preferences (e.g., hill avoidance/seeking)
-  - Calorie goals and physical condition
-
-- **Ride Tracking & Analytics**: Detailed ride logs including
-  - Real-time path taken
-  - Wind and elevation history
-  - Energy expenditure analysis
-
-- **Health Assistant**: Health data tracking and progress monitoring
-  - Daily/weekly goals
-  - Trend visualization
-  - Actionable insights for fitness improvement
-
-- **Real-Time Navigation & Rerouting**: Live map navigation with support for dynamic rerouting during the ride.
-
-### Future Plans
-
-- **Community System**: User-driven community features such as
-  - Route sharing
-  - Group challenges
-  - Social ride planning
 
 ## Tech Stack
 
