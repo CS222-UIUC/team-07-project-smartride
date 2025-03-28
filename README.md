@@ -22,21 +22,18 @@
 
 - **Smart Route Recommendations**  
   Personalized route suggestions based on:
-
   - Weather (especially wind direction)
   - Terrain preferences (e.g., hill avoidance/seeking)
   - Calorie goals and physical condition
 
 - **Ride Tracking & Analytics**  
   Detailed ride logs including:
-
   - Real-time path taken
   - Wind and elevation history
   - Energy expenditure analysis
 
 - **Health Assistant**  
   Health data tracking and progress monitoring:
-
   - Daily/weekly goals
   - Trend visualization
   - Actionable insights for fitness improvement

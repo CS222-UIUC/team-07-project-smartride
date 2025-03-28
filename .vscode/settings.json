@@ -13,5 +13,5 @@
     "typescript.tsserver.log": "verbose",
     "typescript.tsserver.pluginPaths": [
         "./frontend"
-    ]
+    ],
 }
