@@ -20,31 +20,26 @@
 
 ### Features Coming Soon
 
-- **Smart Route Recommendations**  
-  Personalized route suggestions based on:
+- **Smart Route Recommendations**: Personalized route suggestions based on
   - Weather (especially wind direction)
   - Terrain preferences (e.g., hill avoidance/seeking)
   - Calorie goals and physical condition
 
-- **Ride Tracking & Analytics**  
-  Detailed ride logs including:
+- **Ride Tracking & Analytics**: Detailed ride logs including
   - Real-time path taken
   - Wind and elevation history
   - Energy expenditure analysis
 
-- **Health Assistant**  
-  Health data tracking and progress monitoring:
+- **Health Assistant**: Health data tracking and progress monitoring
   - Daily/weekly goals
   - Trend visualization
   - Actionable insights for fitness improvement
 
-- **Real-Time Navigation & Rerouting**  
-  Live map navigation with support for dynamic rerouting during the ride.
+- **Real-Time Navigation & Rerouting**: Live map navigation with support for dynamic rerouting during the ride.
 
 ### Future Plans
 
-- **Community System**  
-  User-driven community features such as:
+- **Community System**: User-driven community features such as
   - Route sharing
   - Group challenges
   - Social ride planning
