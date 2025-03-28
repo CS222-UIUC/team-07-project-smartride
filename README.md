@@ -23,6 +23,27 @@
 
 We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling app that integrates route planning, turn-by-turn navigating, health tracking, and intelligent ride suggestions. It is designed with a robust backend, a dynamic frontend, and rich features tailored to every cyclist's needs.
 
+**Developers:**
+
+<p>
+  <span style="display: inline-block; text-align: center; margin: 0 20px;">
+    <img src="https://avatars.githubusercontent.com/u/25543974?v=4" width="80" style="border-radius: 50%;"/><br/>
+    <sub><b>ETwilight</b></sub>
+  </span>
+  <span style="display: inline-block; text-align: center; margin: 0 20px;">
+    <img src="https://avatars.githubusercontent.com/u/116575660?v=4" width="80" style="border-radius: 50%;"/><br/>
+    <sub>Zeqian-Long</sub>
+  </span>
+  <span style="display: inline-block; text-align: center; margin: 0 20px;">
+    <img src="https://avatars.githubusercontent.com/u/58096549?v=4" width="80" style="border-radius: 50%;"/><br/>
+    <sub>bobliboya</sub>
+  </span>
+  <span style="display: inline-block; text-align: center; margin: 0 20px;">
+    <img src="https://avatars.githubusercontent.com/u/173010316?v=4" width="80" style="border-radius: 50%;"/><br/>
+    <sub>DanielNi868</sub>
+  </span>
+</p>
+
 <h3>Completed Features</h3>
 <ul>
   <li>
