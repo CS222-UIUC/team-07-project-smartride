@@ -114,3 +114,9 @@
 8. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
 
 9. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
+
+## Git Operation
+
+1. Sometimes you may want to check all branches from origin. Run `git fetch --all`. Then you can view all remote branches by `git branch -r`.
+
+2. To switch to a remote branch, first run `git checkout [remote_branch]`, this `[remote_branch]` should likely be `origin/xxx`, remember to include `origin/`.
