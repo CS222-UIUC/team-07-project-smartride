@@ -101,7 +101,9 @@
 
 5. If you are developing backend, also run the `py-type-check` script to do python type checks and fix any type bugs. It is also mandatory.
 
-6. Now follow the standard Git workflow:
+6. For more explanations on our CI/CD procedures, read the next section.
+
+7. Now follow the standard Git workflow:
 
    ```
    git add -A
@@ -109,11 +111,31 @@
    git push
    ```
 
-7. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
+8. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
 
-8. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+9. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
 
-9. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
+10. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
+
+## CI/CD workflow
+
+1. You can find all CI workflows in `.github/workflows`.
+
+2. All CI tests **MUST** be passed before merging any branch to `main`.
+
+3. `dependabot.yml` automates weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows.
+
+4. The following workflows are auto triggered for every pull request and for every push to `main` branch.
+
+5. `eslint.yml` automatically runs ESLint on frontend code uploading results in SARIF format for GitHub's code scanning. It is also triggered every Saturday.
+
+6. `format-check.yml` checks code formatting on both backend (with Ruff) and frontend (with Prettier).
+
+7. `frontend-test.yml` runs frontend unit tests with Vitest.
+
+8. `py-type-check.yml` runs Ruff for linting and Mypy for type checking on the backend Python code.
+
+9. We do not have any CD procedure yet.
 
 ## Some Useful Git Operations
 
