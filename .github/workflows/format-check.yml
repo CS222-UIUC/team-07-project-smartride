@@ -23,7 +23,7 @@ jobs:
         run: |
           pip install ruff
 
-      - name: Format Python code
+      - name: Python code format check
         run: |
           ruff format backend --check
 
@@ -40,7 +40,7 @@ jobs:
         run: |
           pnpm install
 
-      - name: Format frontend code
+      - name: Frontend code format check
         working-directory: frontend
         run: |
           pnpm prettier --check "**/*.{ts,tsx,css}"
