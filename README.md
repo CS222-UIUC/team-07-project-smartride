@@ -124,7 +124,7 @@
 
 - [Project Pre-Configuration](#project-pre-configuration)
 - [Automatic Scripts](#automatic-scripts)
-- [Run the Project](#run-the-project)
+- [Run This Project](#run-this-project)
 - [User Authentication](#user-authentication)
 - [Contribute Code To This Project](#contribute-code-to-this-project)
 - [CI/CD Workflow](#cicd-workflow)
@@ -161,7 +161,7 @@
 
 6. Read the rest of this document for explanation of each script.
 
-### Run The Project
+### Run This Project
 
 1. In the command line, go to the project folder, then `cd scripts`.
 
