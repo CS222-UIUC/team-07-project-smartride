@@ -1,4 +1,9 @@
-# team-07-project-smartride
+# SmartRide
+
+<p><em>Smart Cycling App for Smarter Riders</em></p>
+<p>
+  <img src="https://raw.githubusercontent.com/CS222-UIUC/team-07-project-smartride/main/frontend/src/assets/cycle_logo.png" alt="SmartRide Logo" width="100"/>
+</p>
 
 ## Table of Contents
 
@@ -9,7 +14,7 @@
 
 ## Introduction
 
-**SmartRide** is a smart cycling app that integrates route planning, turn-by-turn navigating, health tracking, and intelligent ride suggestions. It is designed with a robust backend, a dynamic frontend, and rich features tailored to every cyclist's needs.
+We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling app that integrates route planning, turn-by-turn navigating, health tracking, and intelligent ride suggestions. It is designed with a robust backend, a dynamic frontend, and rich features tailored to every cyclist's needs.
 
 <h3>Completed Features</h3>
 <ul>
