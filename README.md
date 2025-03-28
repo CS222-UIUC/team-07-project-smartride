@@ -109,6 +109,8 @@
    git push
    ```
 
-7. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+7. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
 
-8. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
+8. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+
+9. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
