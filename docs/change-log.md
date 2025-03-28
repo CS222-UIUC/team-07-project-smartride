@@ -10,4 +10,4 @@
 
 4. Added type annotations to backend Python files in accordance with ruff and mypy static analysis requirements.
 
-5. Added automatic scripts for convenience, in `scripts/` folder, with more instructions at [ci-cd.md](ci-cd.md).
+5. Added automatic scripts for convenience, in `scripts/` folder, with more instructions in [usage.md](usage.md).
