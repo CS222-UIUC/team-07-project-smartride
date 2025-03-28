@@ -170,7 +170,7 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 
 2. If frontend and backend are not configured yet, follow instructions in the previous two paragraphs.
 
-3. Run the `start-dev` script. It will pop up 4 terminal windows while 3 of them will remain open.
+3. Run the `run` script. It will pop up 4 terminal windows while 3 of them will remain open.
 
 4. Please always test the frontend using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
 

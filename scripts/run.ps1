@@ -11,7 +11,7 @@ Start-Process powershell -ArgumentList @"
 cd ../backend
 conda activate smartride-backend
 conda env update --file conda_env_win.yml --prune
-python app.py
+python -m server.app
 "@
 
 # Frontend, make sure the dependencies are updated

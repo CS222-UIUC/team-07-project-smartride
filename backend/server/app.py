@@ -3,18 +3,18 @@ from typing import cast
 from flask import Flask, Response, jsonify
 from flask_cors import CORS
 
-from backend.config import Config
-from backend.extensions import db, login_manager
-from backend.models.user import User
-from backend.routes.auth import auth_bp
-from backend.routes.profile import profile_bp
+from server.config import Config
+from server.extensions import db, login_manager
+from server.models.user import User
+from server.routes.auth import auth_bp
+from server.routes.profile import profile_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config["SECRET_KEY"] = "secret_key_here"
 CORS(app, supports_credentials=True, origins=["*"])
 
-db.init_app(app)
+db.init_app(app)  # type: ignore[no-untyped-call]
 login_manager.init_app(app)
 
 

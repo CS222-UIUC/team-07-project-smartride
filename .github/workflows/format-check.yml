@@ -24,8 +24,9 @@ jobs:
           pip install ruff
 
       - name: Python code format check
+        working-directory: backend
         run: |
-          ruff format backend --check
+          ruff format server --check
 
       - name: Set up Node.js
         uses: actions/setup-node@v3

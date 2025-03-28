@@ -1,10 +1,9 @@
-Set-Location ..
-
 Write-Host "`n=== Formatting Python Backend (ruff) ===`n"
-ruff format backend
+Set-Location ../backend
+ruff format server
 
 Write-Host "`n=== Formatting Frontend (prettier) ===`n"
-Set-Location frontend
+Set-Location ../frontend
 pnpm prettier --write "**/*.{ts,tsx,css}"
 
-Set-Location ..
+Set-Location ../scripts

@@ -1,9 +1,11 @@
 #!/bin/bash
 
-cd ..
+cd ../backend
 
 echo -e "\n=== Running Ruff Fix ===\n"
-ruff check backend --fix --diff
+ruff check server --fix --diff
 
 echo -e "\n=== Running mypy ===\n"
-mypy backend
+mypy server
+
+cd ../scripts

@@ -23,7 +23,9 @@ jobs:
           pip install ruff mypy
 
       - name: Ruff Check
-        run: ruff check backend
+        working-directory: backend
+        run: ruff check server
 
       - name: Mypy Type Check
-        run: mypy backend
+        working-directory: backend
+        run: mypy server
