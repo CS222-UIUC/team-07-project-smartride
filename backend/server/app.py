@@ -1,6 +1,6 @@
 from typing import cast
 
-from flask import Flask, Response, jsonify
+from flask import Flask, Response
 from flask_cors import CORS
 
 from server.config import Config
@@ -8,6 +8,7 @@ from server.extensions import db, login_manager
 from server.models.user import User
 from server.routes.auth import auth_bp
 from server.routes.profile import profile_bp
+from server.utils.response import api_response
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -20,7 +21,7 @@ login_manager.init_app(app)
 
 @login_manager.unauthorized_handler
 def unauthorized() -> tuple[Response, int]:
-    return jsonify({"message": "Unauthorized"}), 401
+    return api_response(False, message="Unauthorized", status_code=401)
 
 
 @login_manager.user_loader
@@ -34,7 +35,7 @@ app.register_blueprint(profile_bp, url_prefix="/api")
 
 @app.route("/")
 def home() -> tuple[Response, int]:
-    return jsonify({"message": "SmartRide Backend Running!"}), 200
+    return api_response(True, message="SmartRide Backend Running", status_code=200)
 
 
 with app.app_context():
