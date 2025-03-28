@@ -1,4 +1,4 @@
-# 👋 Welcome to CS222-Team-07 Repo for Smartride Project.
+### 👋 Welcome to CS222-Team-07 Repo for Smartride Project.
 
 <h1>SmartRide</h1>
 <p><em>Smart Cycling App for Smarter Riders</em></p>
