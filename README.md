@@ -102,10 +102,8 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 
 ### Frontend
 
-- React with TypeScript
-- Vite for development and build
+- React + Typescript + Vite
 - Tailwind CSS for styling
-- React Router for navigation
 - React Leaflet + OpenStreetMap for map rendering
 - ORSM (OpenRouteService Map, for turn-by-turn navigation, planned)
 - Capacitor (planned) for mobile deployment
@@ -113,13 +111,8 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 ### Backend
 
 - Flask (main server)
-  - Flask-Login for session management
-  - Flask-SQLAlchemy for database models
-  - Flask-CORS for cross-origin access
-- FastAPI (route service)
-  - Integrated with OpenRouteService (ORS) API
-- SQLite (development database)
-  - Planned migration to PostgreSQL with Docker support
+- FastAPI (route service) with ORS (Open Route Service) integration
+- SQLite (development database), planned migration to PostgreSQL with Docker support
 
 ### DevOps & Tooling
 
