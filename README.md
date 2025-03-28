@@ -297,3 +297,12 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 
    are all based on a GIF from [Gifer](https://gifer.com/en/H3SO), with custom editing. This asset is used for demonstration only and may be subject to third-party copyright.  
    We do **not** claim ownership or redistribution rights. See [Gifer Terms of Service](https://gifer.com/en/p/tos) for details.
+
+3. This project is licensed under a customized GPL v3 license.
+
+- You may use, study, modify, and share the source code for **non-commercial** purposes.
+- **Commercial use by third parties is strictly prohibited.**
+
+Only the original authors (CS222 Team 07) retain the right to use the software for commercial purposes.
+
+See [LICENSE.txt](./LICENSE.txt) for details.
