@@ -1,0 +1,46 @@
+name: Format Check
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+jobs:
+  auto-format:
+    name: Format Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install Python formatter
+        run: |
+          pip install ruff
+
+      - name: Python code format check
+        run: |
+          ruff format backend --check
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: |
+          pnpm install
+
+      - name: Frontend code format check
+        working-directory: frontend
+        run: |
+          pnpm prettier --check "**/*.{ts,tsx,css}"
