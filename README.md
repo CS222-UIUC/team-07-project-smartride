@@ -305,4 +305,4 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 
    - You may use, study, modify, and share the source code for **non-commercial** purposes.
    - **Commercial use by third parties is strictly prohibited.** Only the original authors (CS222 Team 07) retain the right to use the software for commercial purposes.
-   - See [LICENSE.txt](./LICENSE.txt) for details.
+   - See [LICENSE](./LICENSE) for details.
