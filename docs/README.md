@@ -35,9 +35,9 @@ The `contribute-code.md` file outlines the process for contributing to the Smart
 
 The `ci-cd.md` file explains the continuous integration and continuous deployment (CI/CD) pipeline for the project. It includes details on automated testing, deployment processes, and how to monitor builds.
 
-### 6. Change Log
+### 6. Major Change Logs
 
-The `change-log.md` file provides a history of changes made to the SmartRide project. It includes details about new features, bug fixes, and other updates across different versions.
+The `change-log.md` file provides a history of major changes made to the SmartRide project. It includes details about new features, bug fixes, and most importantly, architecture refactoring across different versions.
 
 ---
 
