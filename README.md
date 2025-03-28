@@ -2,23 +2,25 @@
 
 ## Project Configuration
 
-1. Clone the repo by `git clone`, switch to the desired branch.
+1. Clone the repo by `git clone https://github.com/CS222-UIUC/team-07-project-smartride.git`.
 
-## Frontend Configuration Process
+2. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
+
+## Pre-configuration of Libraries
 
 1. Follow the instructions at `https://pnpm.io/next/installation` to install `pnpm` command.
 
 2. Download and setup `Node.js` from `https://nodejs.org/en/download`.
 
-## Backend Configuration Process
-
-1. Make sure `conda` is correctly installed, version should be at least `23.3.1`.
+3. Make sure `conda` is correctly installed, version should be at least `23.3.1`.
 
    a. Install `anaconda` or `miniconda` from their official website, then run `conda init` inside your_conda_location/scripts folder. Then reopen the terminal will give you access to conda.
 
    b. Create the virtual environment by running `conda env create -f conda_env_win.yml` / `conda env create -f conda_env_mac.yml` (depending on what platform you are using) at `./backend` folder.
 
    c. Initialize the environment by running `conda init` at `./backend` folder. Then reopen the terminal.
+
+4. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
 
 ## Open the project
 
@@ -53,21 +55,19 @@
 
 ## Test on multi-platforms
 
-1. Currently please always test using chrome, no matter if you are testing on a computer / a phone, we have not used capacitor to transfer this project into a mobile app yet.
+1. Please always test using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
 
-2. To test solely on your own computer where you are hosting yourself, just visit `localhost:5173` so that geolocation can be given to the map.
+2. To test locally on the same machine that is hosting the app, visit `http://localhost:5173`. This will allow geolocation to work correctly.
 
-3. To test on a different device, first set up `ngrok` by instruction 4, then follow the following instruction:
+3. To test on a different device, follow the following instructions:
 
-   a. Connect the hosting device and the testing device to the same LAN (Local Area Network), preferably by hotspot.
+   a. Connect both the hosting and testing devices to the same LAN (e.g., via hotspot).
 
-   b. Do NOT use the LAN domain it gives you directly, since you will not be able to use geolocation as banned by browsers for safety reasons.
+   b. Do NOT use the LAN IP address directly, as modern browsers block geolocation on non-HTTPS origins for security reasons.
 
-   c. Run `ngrok http 5173` on the hosting device, and visit the address shown in "Forwarding", like `https://ec0f-96-63-200-99.ngrok-free.app` (it may changes all the time). Don't forget to add `https` at the beginning!
+   c. Run `ngrok http 5173` on the hosting device, and visit the address shown in "Forwarding", like `https://ec0f-96-63-200-99.ngrok-free.app` (it may changes all the time). Be sure to use `https://`!
 
-   d. Troubleshoot: If you still cannot see the location in map, then please check permissions for accessing location for chrome in your phone / computer.
-
-4. To set up `ngrok`, follow instructions on `https://ngrok.com/`, the free plan is enough for us.
+   d. Troubleshoot: If the map still doesn't show your location, check the location permissions for Chrome on your device.
 
 ## Before pushing or pull request to github
 
@@ -83,8 +83,14 @@
    git merge origin/main
    ```
 
-4. Now follow the standard process of `git add -A`, then `git commit -m "commit message"`, and finally `git push`.
+4. Now follow the standard Git workflow:
 
-5. You can now open pull requests in github website, but before merging **PLEASE** get all the CI tests passed.
+   ```
+   git add -A
+   git commit -m "your commit message"
+   git push
+   ```
 
-6. After you merged to main, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you to fix.
+5. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+
+6. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
