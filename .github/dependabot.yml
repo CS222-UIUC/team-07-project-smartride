@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
-    directory: "/backend" # adjust if needed
+    directory: "/backend"
     schedule:
       interval: "weekly"
 
@@ -9,7 +9,6 @@ updates:
     directory: "/frontend"
     schedule:
       interval: "weekly"
-    # If you're using pnpm, dependabot still works because it reads package.json/lock
 
   - package-ecosystem: "github-actions"
     directory: "/"

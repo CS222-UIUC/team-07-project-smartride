@@ -6,9 +6,9 @@
   <img src="https://raw.githubusercontent.com/CS222-UIUC/team-07-project-smartride/main/frontend/src/assets/cycle_logo.png" alt="SmartRide Logo" width="100"/>
 </p>
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Repo Size](https://img.shields.io/github/repo-size/CS222-UIUC/team-07-project-smartride)](https://github.com/CS222-UIUC/team-07-project-smartride)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Repo Size](https://img.shields.io/github/repo-size/CS222-UIUC/team-07-project-smartride)](https://github.com/CS222-UIUC/team-07-project-smartride) [![Dependabot](https://img.shields.io/badge/dependabot-enabled-blue.svg)](https://docs.github.com/code-security/dependabot)
 
-[![ESLint](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/eslint.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/eslint.yml) [![Format Check](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/format-check.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/format-check.yml) [![Frontend Test](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/frontend-test.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/frontend-test.yml) [![Dependabot](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/dependabot.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/dependabot.yml) [![Python Lint](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/py-type-check.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/py-type-check.yml)
+[![ESLint](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/eslint.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/eslint.yml) [![Format Check](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/format-check.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/format-check.yml) [![Frontend Test](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/frontend-test.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/frontend-test.yml) [![Python Lint](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/py-type-check.yml/badge.svg)](https://github.com/CS222-UIUC/team-07-project-smartride/actions/workflows/py-type-check.yml)
 
 ## Table of Contents
 
@@ -137,7 +137,7 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 - [Run This Project](#run-this-project)
 - [User Authentication](#user-authentication)
 - [Contribute Code To This Project](#contribute-code-to-this-project)
-- [CI/CD Workflows](#cicd-workflows)
+- [CI/CD Workflows and Dependency Management](#cicd-workflows-and-dependency-management)
 
 ### Project Pre-Configuration
 
@@ -266,25 +266,25 @@ We are CS222 team-07, developer team of **SmartRide**, which is a smart cycling 
 
 18. `git fetch -p` will delete all remotely deleted, but locally visible via `git branch -r` branches. Your local branch should still be manually deleted by `git branch -D [local_branch]`.
 
-### CI/CD Workflows
+### CI/CD Workflows And Dependency Management
 
 1. You can find all CI workflows in `.github/workflows`.
 
 2. All CI tests **MUST** be passed before merging any branch to `main`.
 
-3. `dependabot.yml` automates weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows.
+3. The following workflows are auto triggered for every pull request and for every push to `main` branch.
 
-4. The following workflows are auto triggered for every pull request and for every push to `main` branch.
+4. `eslint.yml` automatically runs `ESLint` on frontend code uploading results in SARIF format for GitHub's code scanning. It is also triggered every Saturday.
 
-5. `eslint.yml` automatically runs `ESLint` on frontend code uploading results in SARIF format for GitHub's code scanning. It is also triggered every Saturday.
+5. `format-check.yml` checks code formatting on both backend (with `ruff`) and frontend (with `prettier`).
 
-6. `format-check.yml` checks code formatting on both backend (with `ruff`) and frontend (with `prettier`).
+6. `frontend-test.yml` runs frontend unit tests with `Vitest`.
 
-7. `frontend-test.yml` runs frontend unit tests with `Vitest`.
+7. `py-type-check.yml` runs `ruff` for linting and `mypy` for type checking on the backend Python code.
 
-8. `py-type-check.yml` runs `ruff` for linting and `mypy` for type checking on the backend Python code.
+8. We do not have any CD procedure yet.
 
-9. We do not have any CD procedure yet.
+9. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
 
 ## External Resources and License Notices
 
