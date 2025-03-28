@@ -1,12 +1,96 @@
 # team-07-project-smartride
 
-## Project Configuration
+## Introduction
+
+**SmartRide** is a smart cycling app that integrates route planning, turn-by-turn navigating, health tracking, and intelligent ride suggestions. It is designed with a robust backend, a dynamic frontend, and rich features tailored to every cyclist's needs.
+
+### Completed Features
+
+- **Full User Authentication System**  
+  Secure login, registration, and session management with Flask and JWT.
+
+- **Frontend & Backend Architecture**  
+  React + TypeScript frontend with Flask/FastAPI backend, modular and maintainable.
+
+- **Route Planning via OpenRouteService**  
+  Backend integration with ORS API for route generation, using real-time parameters.
+
+- **Frontend Route Visualization**  
+  Interactive cycling route planning and visualization on OpenStreetMap via Leaflet.
+
+### Features Coming Soon
+
+- **Smart Route Recommendations**  
+  Personalized route suggestions based on:
+
+  - Weather (especially wind direction)
+  - Terrain preferences (e.g., hill avoidance/seeking)
+  - Calorie goals and physical condition
+
+- **Ride Tracking & Analytics**  
+  Detailed ride logs including:
+
+  - Real-time path taken
+  - Wind and elevation history
+  - Energy expenditure analysis
+
+- **Health Assistant**  
+  Health data tracking and progress monitoring:
+
+  - Daily/weekly goals
+  - Trend visualization
+  - Actionable insights for fitness improvement
+
+- **Real-Time Navigation & Rerouting**  
+  Live map navigation with support for dynamic rerouting during the ride.
+
+### Future Plans
+
+- **Community System**  
+  User-driven community features such as:
+  - Route sharing
+  - Group challenges
+  - Social ride planning
+
+## Tech Stack
+
+### Frontend
+
+- React with TypeScript
+- Vite for development and build
+- Tailwind CSS for styling
+- React Router for navigation
+- React Leaflet + OpenStreetMap for map rendering
+- ORSM (OpenRouteService Map, for turn-by-turn navigation, planned)
+- Capacitor (planned) for mobile deployment
+
+### Backend
+
+- Flask (main server)
+  - Flask-Login for session management
+  - Flask-SQLAlchemy for database models
+  - Flask-CORS for cross-origin access
+- FastAPI (route service)
+  - Integrated with OpenRouteService (ORS) API
+- SQLite (development database)
+  - Planned migration to PostgreSQL with Docker support
+
+### DevOps & Tooling
+
+- GitHub Actions for CI/CD and testing
+- Conda for Python environment management
+- pnpm for frontend dependency management
+- Docker (planned) for deployment and backend upgrades
+
+## Documentation
+
+### Project Configuration
 
 1. Clone the repo by `git clone https://github.com/CS222-UIUC/team-07-project-smartride.git`.
 
 2. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
 
-## Pre-configuration of Libraries
+### Pre-configuration of Libraries
 
 1. Follow the instructions at `https://pnpm.io/next/installation` to install `pnpm` command.
 
@@ -22,7 +106,7 @@
 
 4. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
 
-## Automatic Scripts
+### Automatic Scripts
 
 1. There are many automatic scripts in `scripts` folder to make your life easier.
 
@@ -36,7 +120,7 @@
 
 6. Read the rest of this document for explanation of each script.
 
-## Open the project
+### Open the project
 
 1. In the command line, go to the project folder, then `cd scripts`.
 
@@ -46,7 +130,7 @@
 
 4. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
 
-## User authentication
+### User authentication
 
 1. In the virtual environment, run the following command, line by line. Note there is a `;` at the end of the 3rd line.
 
@@ -67,7 +151,7 @@
 
 3. To exit the `sqlite3` environment, run `.exit`.
 
-## Test on multi-platforms
+### Test on multi-platforms
 
 1. Please always test using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
 
@@ -83,7 +167,7 @@
 
    d. Troubleshoot: If the map still doesn't show your location, check the location permissions for Chrome on your device.
 
-## Before pushing or pull request to github
+### Before pushing or pull request to github
 
 1. Run the `update-conda` script to update conda environments, if you have made any changes to the backend.
 
@@ -117,7 +201,7 @@
 
 10. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
 
-## CI/CD workflow
+### CI/CD workflow
 
 1. You can find all CI workflows in `.github/workflows`.
 
@@ -137,7 +221,7 @@
 
 9. We do not have any CD procedure yet.
 
-## Some Useful Git Operations
+### Some Useful Git Operations
 
 1. Sometimes you may want to check all branches from origin. Run `git fetch --all`. Then you can view all remote branches by `git branch -r`.
 
