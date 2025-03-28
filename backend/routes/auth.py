@@ -1,15 +1,20 @@
 # routes/auth.py
-from flask import Blueprint, request, jsonify
-from flask_login import login_user, logout_user, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
-from models.user import User
-from extensions import db
+from typing import Any
+
+from flask import Blueprint, Response, jsonify, request
+from flask_login import login_required, login_user, logout_user
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from backend.extensions import db
+from backend.models.user import User
 
 auth_bp = Blueprint("auth", __name__)
 
 
 # Helper function to verify register data
-def verify_register(data):
+def verify_register(data: dict[str, Any] | None) -> tuple[Response, int] | None:
+    if not data:
+        return jsonify({"message": "Invalid JSON"}), 400
     if not data.get("name") or not data.get("email") or not data.get("password"):
         return jsonify({"message": "Please fill all required fields"}), 400
     if len(data["password"]) > 150:
@@ -24,8 +29,10 @@ def verify_register(data):
 
 
 @auth_bp.route("/register", methods=["POST"])
-def register():
+def register() -> tuple[Response, int]:
     data = request.json
+    if not data:
+        return jsonify({"message": "Invalid JSON"}), 400
     error = verify_register(data)
     if error:
         return error
@@ -38,8 +45,10 @@ def register():
 
 
 @auth_bp.route("/login", methods=["POST"])
-def login():
+def login() -> tuple[Response, int]:
     data = request.json
+    if not data:
+        return jsonify({"message": "Invalid JSON"}), 400
     user = User.query.filter_by(email=data["email"]).first()
 
     if not user or not check_password_hash(user.password, data["password"]):
@@ -51,6 +60,6 @@ def login():
 
 @auth_bp.route("/logout", methods=["POST"])
 @login_required
-def logout():
+def logout() -> tuple[Response, int]:
     logout_user()
     return jsonify({"message": "Logged out successfully"}), 200

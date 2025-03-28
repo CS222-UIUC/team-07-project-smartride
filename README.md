@@ -22,13 +22,27 @@
 
 4. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
 
+## Automatic Scripts
+
+1. There are many automatic scripts in `scripts` folder to make your life easier.
+
+2. If you are a MacOS user, use only `.sh` scripts in your terminal. Before using them, run `chmod +x [filename].sh` to grant permission.
+
+3. If you are a windows user, use `.ps1` scripts in VSCode terminal / Powershell. If it is your first time to run script, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` to grant permission.
+
+4. As a windows user, you can alternatively open `Git Bash` and run `.sh` scripts there. You do not have to run `chmod` as MacOS users do, but if you run into problem, run `chmod`.
+
+5. To run a script, just type in the script name in your terminal, including the `.sh` or `.ps1` file extension. In rare cases, add `./` before the script name.
+
+6. Read the rest of this document for explanation of each script.
+
 ## Open the project
 
 1. In the command line, go to the project folder, then `cd scripts`.
 
 2. If frontend and backend are not configured yet, follow instructions in the previous two paragraphs.
 
-3. Run either `start-dev-win.ps1` or `start-dev-mac.sh`, depending on your platform. It will pop up 4 terminal windows while 3 of them will remain open.
+3. Run the `start-dev` script. It will pop up 4 terminal windows while 3 of them will remain open.
 
 4. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
 
@@ -71,7 +85,7 @@
 
 ## Before pushing or pull request to github
 
-1. Run `update-conda-win/mac.ps1/sh` to update conda environments, if you have made any changes to the backend.
+1. Run the `update-conda` script to update conda environments, if you have made any changes to the backend.
 
 2. Make sure you are in the correct branch by `git branch`.
 
@@ -83,7 +97,11 @@
    git merge origin/main
    ```
 
-4. Now follow the standard Git workflow:
+4. Run the `formatter` script to auto-format your code. The CI test will check on this, so please format beforehand to save your time.
+
+5. If you are developing backend, also run the `py-type-check` script to do python type checks and fix any type bugs. It is also mandatory.
+
+6. Now follow the standard Git workflow:
 
    ```
    git add -A
@@ -91,6 +109,6 @@
    git push
    ```
 
-5. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+7. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
 
-6. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.
+8. After merging into `main`, please wait for ESLint to finish and check security tab, there may be _MANY_ bugs that awaits you, please fix them promptly, **including** warnings.

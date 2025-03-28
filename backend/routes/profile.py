@@ -1,12 +1,12 @@
-from flask import Blueprint, jsonify, make_response
-from flask_login import login_required, current_user
+from flask import Blueprint, Response, jsonify
+from flask_login import current_user, login_required
 
 profile_bp = Blueprint("profile", __name__)
 
 
 @profile_bp.route("/profile", methods=["GET"])
 @login_required
-def profile():
+def profile() -> tuple[Response, int]:
     return (
         jsonify(
             {

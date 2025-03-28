@@ -1,11 +1,11 @@
-from flask import Flask, jsonify
-from config import Config
+from flask import Flask, Response, jsonify
 from flask_cors import CORS
 
-from extensions import db, login_manager
-from models.user import User
-from routes.auth import auth_bp
-from routes.profile import profile_bp
+from backend.config import Config
+from backend.extensions import db, login_manager
+from backend.models.user import User
+from backend.routes.auth import auth_bp
+from backend.routes.profile import profile_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,12 +17,12 @@ login_manager.init_app(app)
 
 
 @login_manager.unauthorized_handler
-def unauthorized():
+def unauthorized() -> tuple[Response, int]:
     return jsonify({"message": "Unauthorized"}), 401
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id: str) -> User | None:
     return User.query.get(int(user_id))
 
 
@@ -31,8 +31,8 @@ app.register_blueprint(profile_bp, url_prefix="/api")
 
 
 @app.route("/")
-def home():
-    return {"message": "SmartRide Backend Running!"}
+def home() -> tuple[Response, int]:
+    return jsonify({"message": "SmartRide Backend Running!"}), 200
 
 
 with app.app_context():
