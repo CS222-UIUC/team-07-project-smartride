@@ -8,3 +8,5 @@ ruff format backend
 echo -e "\n=== Formatting Frontend (prettier) ===\n"
 cd frontend
 pnpm prettier --write "**/*.{ts,tsx,css}"
+
+cd ..
