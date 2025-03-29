@@ -22,54 +22,61 @@ const StaticLogoImg: React.FC = () => {
 
 const StaticLogo: React.FC = () => {
   return (
-    <div
-      className="aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center rounded-full bg-green-800 shadow-lg scale-100 -translate-y-8">
+    <div className="aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center rounded-full bg-green-800 shadow-lg scale-100 -translate-y-8">
       <StaticLogoImg />
       <div className="absolute bottom-0 left-0 w-full h-[15%] bg-white z-0" />
     </div>
   );
 };
 
-
-const AnimLogo = ({ animDuration, fadeDuration, play, startTimers }: AnimLogoProps) => {
+const AnimLogo = ({
+  animDuration,
+  fadeDuration,
+  play,
+  startTimers,
+}: AnimLogoProps) => {
   const [step, setStep] = useState<"anim" | "fadeout" | "complete">("anim");
   const [fade, setFade] = useState(false);
   const [circleIn, setCircleIn] = useState(false); // for future animation
   const [finalPosition, setFinalPosition] = useState(false);
 
-
-  if (!play) {
-    return (
-      <StaticLogo />
-    );
-  }
-
   useEffect(() => {
-    if (!startTimers) return;
+    if (!play || !startTimers) return;
     const tMid = setTimeout(() => {
       setCircleIn(true);
-      requestAnimationFrame(() => setFinalPosition(true));
+      requestAnimationFrame(() => {
+        setFinalPosition(true);
+      });
     }, animDuration / 2);
 
     const t1 = setTimeout(() => {
       setStep("fadeout");
-      requestAnimationFrame(() => setFade(true));
+      requestAnimationFrame(() => {
+        setFade(true);
+      });
     }, animDuration);
-    const t2 = setTimeout(() => setStep("complete"), animDuration + fadeDuration);
+    const t2 = setTimeout(() => {
+      setStep("complete");
+    }, animDuration + fadeDuration);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(tMid);
     };
-  }, [startTimers, animDuration, fadeDuration]);
+  }, [startTimers, animDuration, fadeDuration, play]);
+
+  if (!play) {
+    return <StaticLogo />;
+  }
 
   return (
     <div
       className={`
     aspect-square w-full max-w-[220px] overflow-hidden relative flex items-center justify-center transition-all duration-700 ease-in-out
-    ${circleIn ? "rounded-full bg-green-800 shadow-lg" : "rounded-none bg-white"
-        }
+    ${
+      circleIn ? "rounded-full bg-green-800 shadow-lg" : "rounded-none bg-white"
+    }
     ${finalPosition ? "scale-100 -translate-y-8" : "scale-125 translate-y-0"}
   `}
     >
@@ -93,9 +100,12 @@ const AnimLogo = ({ animDuration, fadeDuration, play, startTimers }: AnimLogoPro
           <img
             src={cycleLast}
             alt="Full cyclist"
-            style={{ transition: `opacity ${fadeDuration}ms ease-in-out` }}
-            className={`w-full h-full object-cover absolute bottom-6 left-0 z-10 ${fade ? "opacity-0" : "opacity-100"
-              }`}
+            style={{
+              transition: `opacity ${String(fadeDuration)}ms ease-in-out`,
+            }}
+            className={`w-full h-full object-cover absolute bottom-6 left-0 z-10 ${
+              fade ? "opacity-0" : "opacity-100"
+            }`}
           />
         </>
       )}

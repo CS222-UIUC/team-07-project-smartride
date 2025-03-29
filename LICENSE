@@ -1,0 +1,39 @@
+SmartRide License v1.0 (based on GPL v3 with commercial restriction)
+
+Copyright (c) 2025 CS222 Team 07
+
+SmartRide is distributed under the terms of the GNU General Public License v3.0,
+with the following additional restriction:
+
+----------------------------------------------------------------------
+Additional Condition: Commercial Use Restriction
+----------------------------------------------------------------------
+
+This software is free to use, modify, and redistribute under the terms of the GPL v3,
+**but commercial use by third parties is explicitly prohibited**.
+
+Only the original authors (CS222 Team 07) retain the right to use this software
+or any derivative work for commercial purposes, including (but not limited to)
+hosting, distribution, resale, bundling, or providing paid services.
+
+Any commercial use by entities other than CS222 Team 07 requires **explicit written permission**.
+
+----------------------------------------------------------------------
+Summary of Rights (for non-commercial users):
+----------------------------------------------------------------------
+
+You may:
+- View, study, and modify the source code.
+- Use it for academic, personal, or research purposes.
+- Share modified versions under the same license (GPL v3 + this restriction).
+
+You may not:
+- Sell, rent, sublicense, or host services based on this software.
+- Integrate this software into commercial products or offerings.
+
+----------------------------------------------------------------------
+
+This license does not constitute an OSI-approved "open source" license,
+because it includes a commercial restriction.
+
+See LICENSE-GPLv3.txt for the full text of the GNU General Public License v3.0.

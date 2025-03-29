@@ -4,14 +4,14 @@ import waypoints from "./../../assets/waypoints_test.json";
 
 // Marker Icon
 const createIcon = (color: string) =>
-    new L.Icon({
-      iconUrl: `/markers/marker-icon-${color}.png`,
-      shadowUrl: `/markers/marker-shadow.png`,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
+  new L.Icon({
+    iconUrl: `/markers/marker-icon-${color}.png`,
+    shadowUrl: `/markers/marker-shadow.png`,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
 
 const WaypointMarkers = () => {
   return (

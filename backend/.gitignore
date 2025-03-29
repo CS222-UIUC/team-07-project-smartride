@@ -1,6 +1,8 @@
 # Ignore files under pycache
 __pycache__
 __pycache__/*
-routes/__pycache__
-routes/__pycache__/*
-routes/ors_api.py
+server/utils/ors_api.py
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage

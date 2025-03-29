@@ -11,9 +11,7 @@ const SetViewToLocation = ({ position, zoom = 13 }: Props) => {
   const map = useMap();
 
   useEffect(() => {
-    if (position) {
-      map.setView(position, zoom);
-    }
+    map.setView(position, zoom);
   }, [position, zoom, map]);
 
   return null;
