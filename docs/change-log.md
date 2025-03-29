@@ -14,6 +14,8 @@
 
 6. Added automatic scripts for convenience, in `scripts/` folder, with more instructions in [usage.md](usage.md). For example, if you are not curious about what are changed, just run `run.ps1/sh` to launch the whole project.
 
+7. Add backend unit test github action workflow, see `.github/workflows/backend-test.yml`.
+
 ## Go back to README
 
 [Go back to README](./README.md)

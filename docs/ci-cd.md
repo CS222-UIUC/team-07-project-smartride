@@ -14,9 +14,11 @@
 
 7. `py-type-check.yml` runs `ruff` for linting and `mypy` for type checking on the backend Python code.
 
-8. We do not have any CD procedure yet.
+8. `backend-test.yml` runs backend unit tests with `pytest` and collects `coverage`.
 
-9. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
+9. We do not have any CD procedure yet.
+
+10. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
 
 ## Go back to README
 

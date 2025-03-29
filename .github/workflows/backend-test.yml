@@ -1,0 +1,29 @@
+name: Run Pytest
+
+on:
+  pull_request:
+    paths:
+      - "backend/server/**"
+      - "backend/tests/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install test dependencies
+        working-directory: backend
+        run: |
+          pip install pytest pytest-cov coverage
+
+      - name: Run tests
+        working-directory: backend
+        run: |
+          pytest --cov=server tests/
