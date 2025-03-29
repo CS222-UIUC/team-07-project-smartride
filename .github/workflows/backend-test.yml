@@ -1,11 +1,6 @@
 name: Backend Tests (Pytest + Coverage)
 
 on:
-  push:
-    paths:
-      - "backend/server/**"
-      - "backend/tests/**"
-      - ".github/workflows/backend-test.yml"
   pull_request:
     paths:
       - "backend/server/**"
