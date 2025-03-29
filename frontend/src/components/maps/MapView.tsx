@@ -1,24 +1,12 @@
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import WaypointMarkers from "./WaypointMarkers";
 import RoutePolyline from "./RoutePolyline";
 // import UserLocationMarker from "./UserLocationMarker";
 import AutoFocusView from "./AutoFocusView";
+import MapClickHandler from "./MapClickHandler";
 import { useState } from "react";
-import { LatLngExpression, LeafletMouseEvent } from "leaflet";
-
-interface MapClickHandlerProps {
-  onMapClick: (latlng: { lat: number; lng: number }) => void;
-}
-
-const MapClickHandler: React.FC<MapClickHandlerProps> = ({ onMapClick }) => {
-  useMapEvents({
-    click(e: LeafletMouseEvent) {
-      onMapClick(e.latlng);
-    },
-  });
-  return null; // No UI; just handles events
-};
+import { LatLngExpression } from "leaflet";
 
 const MapView = () => {
   // const [userPos, setUserPos] = useState<[number, number] | null>(null);
