@@ -58,7 +58,7 @@ const RouteLibrary: React.FC = () => {
         <Route
           path="/map"
           element={
-            <ProtectedRoute access="auth">
+            <ProtectedRoute access="public">
               <MapPage />
             </ProtectedRoute>
           }

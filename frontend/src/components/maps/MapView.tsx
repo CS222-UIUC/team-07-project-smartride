@@ -1,19 +1,36 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import WaypointMarkers from "./WaypointMarkers";
 import RoutePolyline from "./RoutePolyline";
-import UserLocationMarker from "./UserLocationMarker";
+// import UserLocationMarker from "./UserLocationMarker";
 import AutoFocusView from "./AutoFocusView";
-// import { LatLngExpression } from "leaflet";
 import { useState } from "react";
-// import { useMemo } from "react";
-// import waypoints from "./../../assets/waypoints_test.json";
+import { LatLngExpression, LeafletMouseEvent } from "leaflet";
+
+interface MapClickHandlerProps {
+  onMapClick: (latlng: { lat: number; lng: number }) => void;
+}
+
+const MapClickHandler: React.FC<MapClickHandlerProps> = ({ onMapClick }) => {
+  useMapEvents({
+    click(e: LeafletMouseEvent) {
+      onMapClick(e.latlng);
+    },
+  });
+  return null; // No UI; just handles events
+};
 
 const MapView = () => {
-  const [userPos, setUserPos] = useState<[number, number] | null>(null);
-  // const routearr: LatLngExpression[] = useMemo(() => {
-  //   return waypoints.map((pt) => pt.coords as [number, number]);
-  // }, []);
+  // const [userPos, setUserPos] = useState<[number, number] | null>(null);
+  // State to hold the clicked position
+  const [clickedPos, setClickedPos] = useState<LatLngExpression | null>(null);
+
+  // Update the clicked position when the map is clicked
+  const handleMapClick = (latlng: { lat: number; lng: number }) => {
+    console.log("Map clicked at:", latlng);
+    setClickedPos([latlng.lat, latlng.lng]);
+  };
+
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <MapContainer
@@ -25,18 +42,26 @@ const MapView = () => {
         {/* The background Tile layer renderer */}
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-        {/* Component to mark way points */}
+        {/* Listen for map clicks */}
+        <MapClickHandler onMapClick={handleMapClick} />
+
+        {/* Mark way points */}
         <WaypointMarkers />
 
-        {/* Component to mark routes */}
+        {/* Draw routes */}
         <RoutePolyline />
 
         {/* Show User Location */}
-        <UserLocationMarker onPosition={setUserPos} />
-        {userPos && <AutoFocusView points={[userPos]} zoom={15} />}
+        {/* <UserLocationMarker onPosition={setUserPos} /> */}
 
-        {/* Show Route Location */}
-        {/* <AutoFocusView points={routearr} /> */}
+        {/* Auto-focus on user location */}
+        {clickedPos && <AutoFocusView points={[clickedPos]} zoom={15} />}
+
+        {/* Set view to the clicked location */}
+        {/* {clickedPos && <SetViewToLocation position={clickedPos} zoom={13} />} */}
+
+        {/* Add marker at the clicked location */}
+        {clickedPos && <Marker position={clickedPos} />}
       </MapContainer>
     </div>
   );
