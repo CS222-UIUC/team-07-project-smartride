@@ -1,55 +1,38 @@
 #!/bin/bash
+set -e
 
-# Start three separate windows, one for backend, one for frontend, one for ngrok
-
-# Before running anything, make sure the git is up to date
-osascript <<EOF
-tell application "Terminal"
-    do script "cd .. && git pull"
-end tell
-EOF
-
-# Backend, make sure conda is updated before running the flask server
-cd ../backend
-conda activate smartride-backend
-
-CURRENT_DIR=$(pwd)
-
-UNAME_OUT="$(uname -s)"
-if [[ "$UNAME_OUT" == "Darwin" ]]; then
-    echo "Launching Flask backend on macOS..."
-    osascript <<EOF
-tell application "Terminal"
-    do script "cd $CURRENT_DIR && conda env update --file conda_env_mac.yml --prune && python -m server.app"
-end tell
-EOF
-
-elif [[ "$UNAME_OUT" == "Linux" ]]; then
-    echo "Detected Linux: launching Flask backend..."
-    conda env update --file conda_env_mac.yml --prune
-    python -m server.app
-
-elif [[ "$UNAME_OUT" == MINGW* || "$UNAME_OUT" == MSYS* || "$UNAME_OUT" == CYGWIN* ]]; then
-    echo "Detected Windows: launching Flask backend..."
-    conda env update --file conda_env_win.yml --prune
-    python -m server.app
-
-else
-    echo "Unknown OS: $UNAME_OUT"
+if [[ "$#" -ne 1 ]]; then
+  echo "Usage: run.sh --full | --easy"
+  exit 1
 fi
 
+MODE="$1"
+if [[ "$MODE" != "--full" && "$MODE" != "--easy" ]]; then
+  echo "Invalid mode: $MODE"
+  echo "Usage: run.sh --full | --easy"
+  exit 1
+fi
 
+cd "$(dirname "$0")"
 
-# Frontend, make sure the dependencies are updated
-osascript <<EOF
-tell application "Terminal"
-    do script "cd ../frontend && pnpm install && pnpm run dev"
-end tell
-EOF
+if [[ "$MODE" == "--full" ]]; then
+  echo "Running full setup (conda env update + run-easy)..."
+  cd ../backend
+  conda activate smartride-backend
 
-# Ngrok
-osascript <<EOF
-tell application "Terminal"
-    do script "ngrok http 5173"
-end tell
-EOF
+  UNAME_OUT="$(uname -s)"
+  if [[ "$UNAME_OUT" == MINGW* || "$UNAME_OUT" == MSYS* || "$UNAME_OUT" == CYGWIN* ]]; then
+    echo "Using conda_env_win.yml"
+    conda env update --file conda_env_win.yml --prune
+  else
+    echo "Using conda_env_mac.yml"
+    conda env update --file conda_env_mac.yml --prune
+  fi
+
+  cd ../scripts
+  echo "1" > subscripts/allow-easy
+fi
+
+echo "1" > subscripts/run-from-run
+cd subscripts
+bash run-easy.sh

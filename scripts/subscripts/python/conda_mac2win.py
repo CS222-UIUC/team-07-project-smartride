@@ -9,8 +9,8 @@ def create_env_file_win(input_path, output_path):
     with open(output_path, 'w', encoding="UTF-8") as file:
         yaml.dump(env_data, file, default_flow_style=False)
 
-mac_file_path = 'backend/conda_env_mac.yml'
-win_file_path = 'backend/conda_env_win.yml'
+mac_file_path = '../../../backend/conda_env_mac.yml'
+win_file_path = '../../../backend/conda_env_win.yml'
 
 create_env_file_win(mac_file_path, win_file_path)
 

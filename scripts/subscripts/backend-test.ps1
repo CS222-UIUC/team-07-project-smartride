@@ -1,5 +1,5 @@
 # Move to backend directory
-Set-Location ../backend
+Set-Location ../../backend
 
 # Activate conda env
 conda activate smartride-backend
@@ -8,4 +8,4 @@ conda activate smartride-backend
 coverage run -m pytest --cov=server tests/
 coverage report
 
-Set-Location ../scripts
+Set-Location ../scripts/subscripts
