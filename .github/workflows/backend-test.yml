@@ -5,6 +5,8 @@ on:
     paths:
       - "backend/server/**"
       - "backend/tests/**"
+  push:
+    branches: ["main"]
 
 jobs:
   test:

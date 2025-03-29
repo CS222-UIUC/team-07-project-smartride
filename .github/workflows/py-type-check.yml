@@ -2,6 +2,9 @@ name: Python Lint
 
 on:
   pull_request:
+    paths:
+      - "backend/server/**"
+      - "backend/**/*.py"
   push:
     branches: ["main"]
 

@@ -2,6 +2,15 @@ name: Format Check
 
 on:
   pull_request:
+    paths:
+      - "frontend/src/**"
+      - "frontend/public/**"
+      - "frontend/**/*.ts"
+      - "frontend/**/*.tsx"
+      - "frontend/**/*.js"
+      - "frontend/**/*.jsx"
+      - "backend/server/**"
+      - "backend/**/*.py"
   push:
     branches: ["main"]
 

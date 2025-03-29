@@ -2,6 +2,8 @@ name: Run Vitest
 
 on:
   pull_request:
+    paths:
+      - "frontend/**"
   push:
     branches: ["main"]
 
