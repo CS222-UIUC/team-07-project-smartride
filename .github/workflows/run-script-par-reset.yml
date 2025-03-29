@@ -1,12 +1,15 @@
 name: Reset script parameters
 
 on:
-  pull_request:
-    paths:
-      - "conda_env_mac.yml"
-      - "conda_env_win.yml"
   push:
     branches: ["main"]
+    paths:
+      - "backend/conda_env_mac.yml"
+      - "backend/conda_env_win.yml"
+  pull_request:
+    paths:
+      - "backend/conda_env_mac.yml"
+      - "backend/conda_env_win.yml"
 
 jobs:
   reset-allow-easy:
