@@ -1,4 +1,4 @@
-name: Backend Tests (Pytest)
+name: Backend Tests (Micromamba + Coverage)
 
 on:
   push:
@@ -21,16 +21,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Miniconda with Mac Conda Env
+      - name: Set up Miniconda with micromamba and caching
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-activate-base: false
           environment-file: backend/conda_env_mac.yml
           activate-environment: smartride-backend
+          conda-solver: micromamba
+          cache-environment: true
+          cache-environment-key: smartride-mac-ci
 
       - name: Run pytest with coverage (no report)
         working-directory: backend
         run: |
-          conda activate smartride-backend
-          coverage run -m pytest --cov=server tests/
-        # coverage report --fail-under=50  # optional
+          python -m coverage run -m pytest --cov=server tests/
+          # python -m coverage report --fail-under=50  # enable later if needed
