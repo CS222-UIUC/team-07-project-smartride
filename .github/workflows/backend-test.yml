@@ -26,9 +26,9 @@ jobs:
       - name: Install test dependencies
         working-directory: backend
         run: |
-          pip install pytest coverage
+          pip install pytest pytest-cov coverage
 
       - name: Run tests
         working-directory: backend
         run: |
-          python -m coverage run -m pytest --cov=server tests/
+          pytest --cov=server tests/
