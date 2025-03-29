@@ -27,7 +27,7 @@ jobs:
           auto-activate-base: false
           environment-file: backend/conda_env_mac.yml
           activate-environment: smartride-backend
-          conda-solver: micromamba
+          conda-solver: libmamba
           cache-environment: true
           cache-environment-key: smartride-mac-ci
 
