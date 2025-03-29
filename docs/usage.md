@@ -65,6 +65,15 @@
 
 3. To exit the `sqlite3` environment, run `.exit`.
 
+## Open Route Service API
+
+We are using Open Route Service to calculate the route. It takes the coordinates of 2 points and return a `geojson` that contains the route info. The API requires a key to limit the calling frequency, however, the free plan would be enough for our project (2000 calls per day).
+
+I stored my key in a file and I will send to you privately. Please put the file under `backend/routes` folder. Then everything should work. **Never make the API key public (including add it into the Github repo)!**
+
+You can also request a new API by registering an account at [openrouteservice.org](openrouteservice.org).
+
+
 ## Go back to README
 
 [Go back to README](./README.md)
