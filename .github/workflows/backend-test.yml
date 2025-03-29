@@ -1,0 +1,35 @@
+name: Backend Tests (Pytest)
+
+on:
+  push:
+    paths:
+      - "backend/server/**"
+      - "backend/tests/**"
+      - "backend/conda_env_mac.yml"
+      - ".github/workflows/backend-test.yml"
+  pull_request:
+    paths:
+      - "backend/server/**"
+      - "backend/tests/**"
+      - "backend/conda_env_mac.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Miniconda with Mac Conda Env
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-activate-base: false
+          environment-file: backend/conda_env_mac.yml
+          activate-environment: smartride-backend
+
+      - name: Run pytest with coverage (no report)
+        working-directory: backend
+        run: |
+          coverage run -m pytest --cov=server tests/
+          # No coverage report or fail condition for now
