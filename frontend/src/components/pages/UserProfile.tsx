@@ -23,7 +23,9 @@ const UserProfile: React.FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => setAvatar(reader.result as string);
+      reader.onloadend = () => {
+        setAvatar(reader.result as string);
+      };
       reader.readAsDataURL(file);
     }
   };
@@ -53,7 +55,14 @@ const UserProfile: React.FC = () => {
         </h1>
 
         {/* Avatar */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "24px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "24px",
+          }}
+        >
           <div
             style={{
               width: "100px",
@@ -117,8 +126,12 @@ const UserProfile: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              <div style={{ fontSize: "14px", color: "#888" }}>{stat.label}</div>
-              <div style={{ fontSize: "18px", fontWeight: "bold" }}>{stat.value}</div>
+              <div style={{ fontSize: "14px", color: "#888" }}>
+                {stat.label}
+              </div>
+              <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+                {stat.value}
+              </div>
             </div>
           ))}
         </div>
@@ -127,17 +140,37 @@ const UserProfile: React.FC = () => {
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           {[
             { label: "Name", value: name, setValue: setName, type: "text" },
-            { label: "Nickname", value: nickname, setValue: setNickname, type: "text" },
-            { label: "Height (cm)", value: height, setValue: setHeight, type: "number" },
-            { label: "Weight (kg)", value: weight, setValue: setWeight, type: "number" },
+            {
+              label: "Nickname",
+              value: nickname,
+              setValue: setNickname,
+              type: "text",
+            },
+            {
+              label: "Height (cm)",
+              value: height,
+              setValue: setHeight,
+              type: "number",
+            },
+            {
+              label: "Weight (kg)",
+              value: weight,
+              setValue: setWeight,
+              type: "number",
+            },
             { label: "Age", value: age, setValue: setAge, type: "number" },
           ].map((field) => (
-            <label key={field.label} style={{ fontSize: "14px", fontWeight: 500 }}>
+            <label
+              key={field.label}
+              style={{ fontSize: "14px", fontWeight: 500 }}
+            >
               {field.label}:&nbsp;
               <input
                 type={field.type}
                 value={field.value}
-                onChange={(e) => field.setValue(e.target.value)}
+                onChange={(e) => {
+                  field.setValue(e.target.value);
+                }}
                 style={{
                   width: "100%",
                   padding: "10px",
@@ -172,7 +205,8 @@ const UserProfile: React.FC = () => {
 
       {/* Back Button */}
       <button
-        onClick={() => navigate("/home")}
+        type="button"
+        onClick={() => void navigate("/home")}
         style={{
           marginTop: "20px",
           padding: "10px",

@@ -18,27 +18,26 @@ const RideLogPage: React.FC = () => {
   useEffect(() => {
     const stored = localStorage.getItem("lastRide");
     if (stored) {
-      setLastRide(JSON.parse(stored));
+      setLastRide(JSON.parse(stored) as RideData);
     }
   }, []);
 
   const calculateCalories = (distance: number, duration: number): number => {
     const durationInHours = duration / 60;
-  
+
     if (durationInHours === 0) return 0;
-  
+
     const speed = distance / durationInHours; // km/h
-  
+
     // Mock MET based on speed
     let met = 4; // default low effort
     if (speed >= 16 && speed < 20) met = 8;
     else if (speed >= 20 && speed < 25) met = 10;
     else if (speed >= 25) met = 12;
-  
+
     const weight = 70; // fixed for now
     return Math.round(met * weight * durationInHours);
   };
-  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,21 +54,38 @@ const RideLogPage: React.FC = () => {
 
   return (
     <div style={{ padding: "24px", fontFamily: "sans-serif" }}>
-      <h2 style={{ textAlign: "center", fontSize: "24px", marginBottom: "16px", fontWeight: "bold"}}>
+      <h2
+        style={{
+          textAlign: "center",
+          fontSize: "24px",
+          marginBottom: "16px",
+          fontWeight: "bold",
+        }}
+      >
         Log a Ride
       </h2>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+      >
         <label>
           Distance (km):
           <input
             type="number"
             value={distance}
-            onChange={(e) => setDistance(Number(e.target.value))}
+            onChange={(e) => {
+              setDistance(Number(e.target.value));
+            }}
             required
             min={0}
             step={0.1}
-            style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ccc", width: "100%" }}
+            style={{
+              padding: "8px",
+              borderRadius: "6px",
+              border: "1px solid #ccc",
+              width: "100%",
+            }}
           />
         </label>
 
@@ -78,11 +94,18 @@ const RideLogPage: React.FC = () => {
           <input
             type="number"
             value={duration}
-            onChange={(e) => setDuration(Number(e.target.value))}
+            onChange={(e) => {
+              setDuration(Number(e.target.value));
+            }}
             required
             min={0}
             step={1}
-            style={{ padding: "8px", borderRadius: "6px", border: "1px solid #ccc", width: "100%" }}
+            style={{
+              padding: "8px",
+              borderRadius: "6px",
+              border: "1px solid #ccc",
+              width: "100%",
+            }}
           />
         </label>
 
@@ -103,17 +126,34 @@ const RideLogPage: React.FC = () => {
       </form>
 
       {lastRide && (
-        <div style={{ marginTop: "24px", padding: "16px", border: "1px solid #eee", borderRadius: "8px", background: "#f9f9f9" }}>
+        <div
+          style={{
+            marginTop: "24px",
+            padding: "16px",
+            border: "1px solid #eee",
+            borderRadius: "8px",
+            background: "#f9f9f9",
+          }}
+        >
           <h3>Last Ride:</h3>
-          <p><strong>Distance:</strong> {lastRide.distance} km</p>
-          <p><strong>Duration:</strong> {lastRide.duration} min</p>
-          <p><strong>Calories:</strong> {lastRide.calories} kcal</p>
-          <p><strong>Date:</strong> {lastRide.date}</p>
+          <p>
+            <strong>Distance:</strong> {lastRide.distance} km
+          </p>
+          <p>
+            <strong>Duration:</strong> {lastRide.duration} min
+          </p>
+          <p>
+            <strong>Calories:</strong> {lastRide.calories} kcal
+          </p>
+          <p>
+            <strong>Date:</strong> {lastRide.date}
+          </p>
         </div>
       )}
 
       <button
-        onClick={() => navigate("/home")}
+        type="button"
+        onClick={() => void navigate("/home")}
         style={{
           marginTop: "20px",
           padding: "10px",

@@ -16,7 +16,6 @@ import { AuthProvider } from "./components/context/AuthProvider.tsx";
 import UserProfile from "./components/pages/UserProfile.tsx";
 import RideLogPage from "./components/pages/RideLogPage.tsx";
 
-
 const IsPhone = window.innerWidth < 768; // Flag to determine if the user is on a phone
 
 // Define the routes for the application
@@ -72,9 +71,23 @@ const RouteLibrary: React.FC = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute access="auth">
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ride-log"
+          element={
+            <ProtectedRoute access="auth">
+              <RideLogPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-      <Route path="/profile" element={<ProtectedRoute access="auth"><UserProfile /></ProtectedRoute>} />
-      <Route path="/ride-log" element={<ProtectedRoute access="auth"><RideLogPage /></ProtectedRoute>} />
     </AuthProvider>
   );
 };
