@@ -31,5 +31,5 @@ jobs:
       - name: Run pytest with coverage (no report)
         working-directory: backend
         run: |
-          coverage run -m pytest --cov=server tests/
-          # No coverage report or fail condition for now
+          python -m coverage run -m pytest --cov=server tests/
+        # python -m coverage report --fail-under=50  # optional
