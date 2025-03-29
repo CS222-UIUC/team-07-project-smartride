@@ -1,0 +1,32 @@
+name: Reset script parameters
+
+on:
+  pull_request:
+    paths:
+      - "conda_env_mac.yml"
+      - "conda_env_win.yml"
+  push:
+    branches: ["main"]
+
+jobs:
+  reset-allow-easy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Reset allow-easy to 0
+        run: |
+          echo "0" > scripts/subscripts/parameters/allow-easy
+      
+      - name: Reset run-from-run to 0
+        run: |
+          echo "0" > scripts/subscripts/parameters/run-from-run
+
+      - name: Commit and push change
+        run: |
+          git config user.name "Auto Reset Bot"
+          git config user.email "reset-bot@example.com"
+          git add scripts/subscripts/parameters/allow-easy
+          git add scripts/subscripts/parameters/run-from-run
+          git commit -m "Reset script parameters due to env update"
+          git push

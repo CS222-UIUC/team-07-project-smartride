@@ -1,27 +1,41 @@
-# Start three separate windows, one for backend, one for frontend, one for ngrok
+Set-StrictMode -Version Latest
 
-# Before running anything, make sure the git is up to date
-Start-Process powershell -ArgumentList @"
-cd ..
-git pull
-"@
+if ($args.Count -ne 1) {
+    Write-Host "Usage: run.ps1 --full | --easy"
+    exit 1
+}
 
-# Backend, make sure conda is updated before running the flask server
-Start-Process powershell -ArgumentList @"
-cd ../backend
-conda activate smartride-backend
-conda env update --file conda_env_win.yml --prune
-python -m server.app
-"@
+$mode = $args[0]
 
-# Frontend, make sure the dependencies are updated
-Start-Process powershell -ArgumentList @"
-cd ../frontend
-pnpm install
-pnpm run dev
-"@
+if ($mode -ne "--full" -and $mode -ne "--easy") {
+    Write-Host "Invalid mode: $mode"
+    Write-Host "Usage: run.ps1 --full | --easy"
+    exit 1
+}
 
-# Ngrok
-Start-Process powershell -ArgumentList @"
-ngrok http 5173
-"@
+if ($mode -eq "--full") {
+    Write-Host "Running full setup (conda env update + run-easy)..."
+
+    Push-Location "$PSScriptRoot/../backend"
+    conda activate smartride-backend
+
+    $platform = (Get-ComputerInfo -Property OsName).OsName
+    if ($platform -match "Windows") {
+        Write-Host "Using conda_env_win.yml"
+        conda env update --file conda_env_win.yml --prune
+    } else {
+        Write-Host "Using conda_env_mac.yml"
+        conda env update --file conda_env_mac.yml --prune
+    }
+
+    Pop-Location
+
+    Set-Content -Path "$PSScriptRoot\subscripts\parameters\allow-easy" -Value "1"
+} elseif ($mode -eq "--easy") {
+    Write-Host "Running in easy mode (skip conda env update)..."
+}
+
+Set-Content -Path "$PSScriptRoot\subscripts\parameters\run-from-run" -Value "1"
+Push-Location "$PSScriptRoot/subscripts"
+& "./run-easy.ps1"
+Pop-Location

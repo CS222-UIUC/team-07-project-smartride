@@ -8,4 +8,4 @@ ruff check server --fix --diff
 echo -e "\n=== Running mypy ===\n"
 mypy server
 
-cd ../scripts
+cd ../scripts/subscripts
