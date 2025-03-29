@@ -1,10 +1,12 @@
-// login.ts
 export interface LoginResponse {
   message: string;
   user?: string;
 }
 
-export async function loginUser(email: string, password: string): Promise<LoginResponse> {
+export async function loginUser(
+  email: string,
+  password: string,
+): Promise<LoginResponse> {
   try {
     const response = await fetch("/api/login", {
       method: "POST",
@@ -14,7 +16,7 @@ export async function loginUser(email: string, password: string): Promise<LoginR
       body: JSON.stringify({ email, password }),
       credentials: "include",
     });
-    const data: LoginResponse = await response.json();
+    const data = (await response.json()) as LoginResponse;
     if (!response.ok) {
       throw new Error(data.message);
     }

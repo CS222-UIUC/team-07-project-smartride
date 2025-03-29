@@ -1,63 +1,59 @@
-// MapView.tsx (example)
-import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import { LatLngExpression, LeafletMouseEvent } from "leaflet";
-import "leaflet/dist/leaflet.css";
+import { useNavigate } from "react-router-dom";
+import MapView from "../maps/MapView";
 
-interface MapViewProps {
-  onMapClick: (point: { lat: number; lng: number }) => void;
-  selectedPoints: Array<{ lat: number; lng: number }>;
-}
+import { CSSProperties } from "react";
+import { useIsPhone } from "../context/PhoneContext";
 
-const MapView: React.FC<MapViewProps> = ({ onMapClick, selectedPoints }) => {
-  const [position, setPosition] = useState<LatLngExpression | null>(null);
-
-  // Example: get the user’s current location
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setPosition([pos.coords.latitude, pos.coords.longitude]);
-      },
-      (err) => console.error("Error:", err),
-      { enableHighAccuracy: true }
-    );
-  }, []);
-
-  // This inner component handles clicks via useMapEvents
-  function MapClickHandler() {
-    useMapEvents({
-      click(e: LeafletMouseEvent) {
-        onMapClick(e.latlng);
-      },
-    });
-    return null; // no visual rendering
-  }
+const MapWrapper = () => {
+  const IsPhone = useIsPhone();
+  const style: CSSProperties = IsPhone
+    ? {
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }
+    : {
+        width: "60%",
+        height: "90%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      };
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
-      <MapContainer
-        center={position || [0, 0]}
-        zoom={position ? 13 : 2}
-        scrollWheelZoom
-        style={{ height: "100%", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-
-        {/* Add the click handler so the parent can receive clicks */}
-        <MapClickHandler />
-
-        {/* Show markers for each selected point */}
-        {selectedPoints.map((point, index) => (
-          <Marker
-            key={index}
-            position={[point.lat, point.lng]}
-          />
-        ))}
-      </MapContainer>
+    <div style={style}>
+      <MapView />
     </div>
   );
 };
 
-export default MapView;
+const MapPage = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        width: "100%",
+        alignItems: "center",
+      }}
+    >
+      <div style={{ width: "100%", margin: "1rem" }}>
+        <button
+          type="button"
+          onClick={() => void navigate("/home")}
+          className="w-full text-base bg-gray-100 border border-gray-300 rounded-lg cursor-pointer"
+        >
+          Back
+        </button>
+      </div>
+      <MapWrapper />
+    </div>
+  );
+};
+
+export default MapPage;

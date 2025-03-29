@@ -1,0 +1,32 @@
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+exclude = [
+    ".venv",
+    "venv",
+    "migrations",
+    "__pycache__",
+    ".git",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort (import order)
+    "B",   # flake8-bugbear, check common bugs
+    "UP",  # pyupgrade, auto upgrade grammar
+    "C90", # mccabe complexity check
+]
+ignore = [
+    "E501", # ignore too long lines
+]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+docstring-code-format = true

@@ -41,10 +41,9 @@
   color: #888;
 }
 
-
 .phone-frame {
-  width: 375px;  
-  height: 812px; 
+  width: 375px;
+  height: 812px;
   border: 16px solid #000;
   border-radius: 40px;
   background: #222;
@@ -64,5 +63,5 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
-
