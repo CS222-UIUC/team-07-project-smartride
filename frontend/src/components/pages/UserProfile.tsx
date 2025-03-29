@@ -13,9 +13,9 @@ const UserProfile: React.FC = () => {
 
   // Static mock value, will be fetched later
   const email = "user@example.com";
-  const totalDistance = "243.5 km";
-  const totalRideTime = "45h 20min";
-  const totalCalories = "17,600 kcal";
+  const totalDistance = "0 km";
+  const totalRideTime = "0 min";
+  const totalCalories = "0 kcal";
 
   // Avatar upload
   const [avatar, setAvatar] = useState<string | null>(null);

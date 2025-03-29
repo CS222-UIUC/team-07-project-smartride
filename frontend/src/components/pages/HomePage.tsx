@@ -23,14 +23,14 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="home-container" style={{ padding: "20px", textAlign: "center", position: "relative"}}>
-      {/* 顶部导航栏 */}
+      {/* top navigation */}
       <div style={{ position: "absolute", top: 10, left: 10 }}>
         <button onClick={toggleMenu} style={{ fontSize: "24px", background: "none", border: "none" }}>
           ☰
         </button>
       </div>
 
-      {/* 侧边栏 */}
+      {/* sidebar */}
       {menuOpen && (
         <div
           style={{
