@@ -1,4 +1,4 @@
-name: Python Type Check & Lint
+name: Python Lint
 
 on:
   pull_request:

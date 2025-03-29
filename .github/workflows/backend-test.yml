@@ -1,4 +1,4 @@
-name: Backend Tests (Pytest + Coverage)
+name: Run Pytest
 
 on:
   pull_request:
