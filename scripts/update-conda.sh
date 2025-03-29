@@ -26,7 +26,7 @@ fi
 if command -v conda >/dev/null 2>&1; then
     echo "[Backend] Exporting environment to $ENV_FILE"
     conda activate smartride-backend
-    conda env export --no-builds | grep -v "^prefix:" > "$ENV_FILE"
+    conda env export --no-builds | grep -v "^prefix:" | iconv -f utf-8 -t utf-8 > "$ENV_FILE"
     cd ../scripts/python
     python "$PY_FILE"
 else
