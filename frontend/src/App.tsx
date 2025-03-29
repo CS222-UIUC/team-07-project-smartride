@@ -25,7 +25,16 @@ const RouteLibrary: React.FC = () => {
       <Route path="/start" element={<ProtectedRoute access="public"><StartPage /></ProtectedRoute>} />
       <Route path="/login" element={<ProtectedRoute access="public"><LoginPage /></ProtectedRoute>} />
       <Route path="/register" element={<ProtectedRoute access="public"><RegisterPage /></ProtectedRoute>} />
-      <Route path="/map" element={<ProtectedRoute access="auth"><MapPage /></ProtectedRoute>} />
+      <Route path="/map" element={<ProtectedRoute access="public">
+        <MapPage
+          onMapClick={(point: { lat: number; lng: number }) => {
+            console.log("Map clicked at:", point);
+            // Or any other logic you want to perform
+            // throw new Error("Function not implemented.");
+          }}
+          selectedPoints={[]}
+        />
+      </ProtectedRoute>} />
       <Route path="/home" element={<ProtectedRoute access="auth"><HomePage /></ProtectedRoute>} />
     </Routes>
     </AuthProvider>
