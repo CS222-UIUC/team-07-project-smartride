@@ -17,4 +17,4 @@
 5. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
 
 ## What's more
-↓[Go back to Documentation](./README.md); [Next: Installation](installation.md)→
+↓[Go back to Documentation](./README.md); [Next: Usage](usage.md)→
