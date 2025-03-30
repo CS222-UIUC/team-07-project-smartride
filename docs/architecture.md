@@ -49,4 +49,5 @@ frontend/src/components/maps/           This folder contains modular components 
 ```
 
 ## What's more
+
 ←[Previous: Scripts](scripts.md); ↓[Go back to Documentation](./README.md); [Next: Contribute Code](contribute-code.md)→

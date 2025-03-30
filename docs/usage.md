@@ -8,35 +8,26 @@
 
 ## Run This Project
 
-1. In the command line, go to the project folder, then `cd scripts`.
+1. If frontend and backend are not configured yet, follow [installation.md](installation.md) first.
 
-2. If frontend and backend are not configured yet, follow [installation.md](installation.md) first.
+2. In the command line, go to the project folder, then `cd scripts`.
 
-3. Run the `run` script with the `--full` option:
-   
+3. Run the app stack by:
+
    ```
    ./run.sh --full  # on macOS/Linux
    run.ps1 --full    # on Windows PowerShell
    ```
 
-   This ensures your local conda environment is fully synced and unlocks `--easy` mode for faster startup in the future, it as well auto runs the following easy mode.
+   This will launch the whole app stack. If everything is set up corrected, you should see 4 windows popping out, leaving 3 active.
 
-4. Once unlocked, you can use `--easy` mode to launch the app stack quickly:
+4. Get to know about using automatic scripts in [scripts.md](scripts.md). (Highly recommended)
 
-   ```
-   ./run.sh --easy
-   run.ps1 --easy
-   ```
+5. Please always test the frontend using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
 
-   This will pull the latest code and pop up 3 terminal windows: backend, frontend, and ngrok. (On macOS, you must follow installation instructions to enable terminal scripting.)
+6. To test locally on the same machine that is hosting the app, visit `http://localhost:5173`. This will allow geolocation to work correctly.
 
-5. Get to know about using automatic scripts in [scripts.md](scripts.md). (Highly recommended)
-
-6. Please always test the frontend using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
-
-7. To test locally on the same machine that is hosting the app, visit `http://localhost:5173`. This will allow geolocation to work correctly.
-
-8. To test on a different device, follow the following instructions:
+7. To test on a different device, follow the following instructions:
 
    a. Connect both the hosting and testing devices to the same LAN (e.g., via hotspot).
 
@@ -46,7 +37,7 @@
 
    d. Troubleshoot: If the map still doesn't show your location, check the location permissions for Chrome on your device.
 
-9. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
+8. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
 
 ## User Authentication
 
@@ -58,7 +49,7 @@
    SELECT * from user;
    ```
 
-2. If working correctly, similar content should display
+2. If working correctly, content should display similar to below:
 
    ```
    1|Alice|alice@example.com|pbkdf2:sha256:<hash-here>
@@ -76,4 +67,5 @@ The key is stored in a private file and will be sent to you directly. Please put
 You can also request a new API key by registering an account at [openrouteservice.org](https://openrouteservice.org).
 
 ## What's more
+
 ←[Previous: Installation](installation.md); ↓[Go back to Documentation](./README.md); [Next: Scripts](scripts.md)→

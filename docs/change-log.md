@@ -10,11 +10,12 @@
 
 4. Updated frontend TypeScript files to include explicit type annotations to satisfy strict ESLint rules.
 
-5. Added type annotations to backend Python files in accordance with ruff and mypy static analysis requirements.
+5. Added type annotations to backend Python files in accordance with `ruff` and `mypy` static analysis requirements.
 
-6. Added automatic scripts for convenience, in `scripts/` folder, with more instructions in [usage.md](usage.md). For example, if you are not curious about what are changed, just run `run.ps1/sh` to launch the whole project.
+6. Added automatic scripts in `scripts/` folder to reduce your memory burden of different commands, with more instructions in [Scripts](scripts.md).
 
 7. Add backend unit test github action workflow, see `.github/workflows/backend-test.yml`.
 
 ## What's more
+
 ←[Previous: CI/CD](ci-cd.md); ↓[Go back to Documentation](./README.md).

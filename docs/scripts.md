@@ -12,9 +12,9 @@ This document describes the usage of all primary scripts in the `scripts/` direc
 
 3. If you are a windows user, use `.ps1` scripts in VSCode terminal / Powershell. Before your first time of running script, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` to grant permission permanently.
 
-4. As a windows user, you can alternatively open `Git Bash` and run `.sh` scripts there. You do not have to run `chmod` as MacOS users do, but if you run into problem, run `chmod`.
+4. We do not officially support Linux by now, but you can generally follow same procedure as MacOS user.
 
-5. To run a script, just type in the script name in your terminal, including the `.sh` or `.ps1` file extension. In rare cases, add `./` before the script name.
+5. To run a script, just type in the script name in your terminal, including the `.sh` or `.ps1` file extension. If it does not work, add `./` before the script name.
 
 6. Read the rest of this document for explanation of each script.
 
@@ -22,24 +22,24 @@ This document describes the usage of all primary scripts in the `scripts/` direc
 
 This part is an overview. For full description, see [Detailed Explanations](#detailed-explanations).
 
-| Situation                            | Script to Use (please first `cd scripts`)   |
-|--------------------------------------|---------------------------------------------|
-| Launch development app stack         | `run.ps1\|sh --full`                        |
-| Launch app stack quicker             | `run.ps1\|sh --easy`                        |
-| Run backend checks                   | `backend.ps1\|sh`                           |
-| Run frontend checks                  | `frontend.ps1\|sh`                          |
-| Verify whole project state quickly   | `fullstack.ps1\|sh`                         |
-| Format code                          | `formatter.ps1\|sh`                         |
+| Situation                       | Script to Use (please first `cd scripts`) |
+| ------------------------------- | ----------------------------------------- |
+| Launch development app stack    | `run.ps1\|sh --full`                      |
+| Launch app stack quicker        | `run.ps1\|sh --easy`                      |
+| Run backend and frontend checks | `check.ps1\|sh --fullstack`               |
+| Run backend checks              | `check.ps1\|sh --backend`                 |
+| Run frontend checks             | `check.ps1\|sh --frontend`                |
+| Format code                     | `formatter.ps1\|sh`                       |
 
 ---
 
 ## Before Submitting a Pull Request
 
-1. You **must** run `backend.ps1|sh` if your changes affect the backend.
+1. You **must** run `check.ps1|sh --backend` if your changes affect the backend.
 
-2. You **must** run `frontend.ps1|sh` if your changes affect the frontend.
+2. You **must** run `check.ps1|sh --frontend` if your changes affect the frontend.
 
-3. You are **strongly encouraged** to run `fullstack.ps1|sh` to ensure the whole project is clean.
+3. You are **strongly encouraged** to run `check.ps1|sh` (combination of 1 and 2) to ensure the whole project is clean.
 
 4. After `backend` and `frontend` checks are all clear, you **must** finally run `formatter.ps1|sh` to auto format all codes of our project.
 
@@ -50,9 +50,11 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 ## Detailed Explanation
 
 #### `scripts/run.(ps1|sh)`
+
 Entry point for launching the full SmartRide app stack. You **must** run this script at least once before submitting code changes from backend, since otherwise you will **not** be able to run the `backend` script. You are required to include one of the two run modes below to run this script:
 
 - `--full`
+
   - Ensures your local conda environment is synced with `conda_env_[platform].yml`.
   - Unlock `easy` mode for future quicker launch of the app stack, until your next change of `conda_env_[platform].yml` and/or push to `main` branch.
   - Then executes the equivalent of `--easy`, see below.
@@ -66,15 +68,10 @@ Entry point for launching the full SmartRide app stack. You **must** run this sc
     - Ngrok tunneling
   - You may not see all 3 windows if you failed to follow [installation.md](installation.md).
 
-#### `scripts/fullstack.(ps1|sh)`
-Runs both frontend and backend workflows:
-- Run `eslint`.
-- Do unit tests with `vitest`.
+#### `scripts/check.(ps1|sh) --backend`
 
-Useful for quickly verifying the overall health of the project and if you are lazy enough to run two scripts.
-
-#### `scripts/backend.(ps1|sh)`
 Runs the backend workflow, note that you can **only** run this after you have `run` the project at least once. The following workflows will be triggered:
+
 - Do python linting with `ruff`.
 - Check python type safety with `mypy`.
 - Do unit tests with `Pytest`.
@@ -82,15 +79,25 @@ Runs the backend workflow, note that you can **only** run this after you have `r
 
 This should be clean before any backend-related changes are submitted.
 
-#### `scripts/frontend.(ps1|sh)`
+#### `scripts/check.(ps1|sh) --frontend`
+
 Runs the frontend workflow:
-- Lint
-- Test
+
+- Run `eslint`.
+- Do unit tests with `vitest`.
 
 This should be clean before any frontend-related changes are submitted.
 
+#### `scripts/check.(ps1|sh) --fullstack`
+
+Runs both frontend and backend workflows, with same requirements as `--backend`.
+
+Note that `--fullstack` argument is not required. We treat no argument as running fullstack check. Useful for quickly verifying the overall health of the project and if you are lazy enough to run two scripts.
+
 #### `scripts/formatter.(ps1|sh)`
+
 Formats both frontend and backend code according to project-wide formatting standards with Ruff (for backend) and Prettier (for frontend).
 
 ## What's more
+
 ←[Previous: Usage](usage.md); ↓[Go back to Documentation](./README.md); [Next: Architecture](architecture.md)→

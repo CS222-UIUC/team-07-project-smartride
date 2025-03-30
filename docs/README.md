@@ -25,6 +25,7 @@ The `installation.md` file provides step-by-step instructions on how to set up t
 The `usage.md` file explains how to use the SmartRide application. It includes examples, command-line options, and tips for getting the most out of the project.
 
 ### 3. Scripts
+
 The `scripts.md` file provides a complete guide to SmartRide's cross-platform automation scripts. It explains how to run backend, frontend, or full-stack workflows with a single command, how to launch the app in development mode, and (**important!**) what to do before submitting a pull request. It includes platform-specific setup tips (for macOS, Windows PowerShell, and Git Bash) and details on script behavior such as conda syncing, environment validation, and formatting enforcement.
 
 ### 4. Architecture

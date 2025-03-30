@@ -23,4 +23,5 @@
 11. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
 
 ## What's more
+
 ←[Previous: Contribute Code](contribute-code.md); ↓[Go back to Documentation](./README.md); [Next: Major Change Logs](change-log.md)→
