@@ -91,3 +91,6 @@ This should be clean before any frontend-related changes are submitted.
 
 #### `scripts/formatter.(ps1|sh)`
 Formats both frontend and backend code according to project-wide formatting standards with Ruff (for backend) and Prettier (for frontend).
+
+## What's more
+←[Previous: Usage](usage.md); ↓[Go back to Documentation](./README.md); [Next: Architecture](architecture.md)→

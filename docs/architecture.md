@@ -48,6 +48,5 @@ frontend/src/components/maps/           This folder contains modular components 
 └── AutoFocusView.tsx                   Auto-fits the map to show all relevant points, if possible
 ```
 
-## Go back to README
-
-[Go back to README](./README.md)
+## What's more
+←[Previous: Scripts](scripts.md); ↓[Go back to Documentation](./README.md); [Next: Contribute Code](contribute-code.md)→

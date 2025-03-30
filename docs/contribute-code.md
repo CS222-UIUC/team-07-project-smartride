@@ -56,6 +56,5 @@
 
 22. Delete any local branch by `git branch -D [local_branch]`.
 
-## Go back to README
-
-[Go back to README](./README.md)
+## What's more
+←[Previous: Architecture](architecture.md); ↓[Go back to Documentation](./README.md); [Next: CI/CD](ci-cd.md)→
