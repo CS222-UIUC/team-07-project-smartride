@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from typing import cast
 
 from flask import Flask, Response
@@ -12,9 +14,16 @@ from server.routes.route_service import route_service_bp
 from server.utils.errors import APIError, handle_api_error
 from server.utils.response import api_response
 
+load_dotenv()
+
 app = Flask(__name__)
 app.config.from_object(Config)
-app.config["SECRET_KEY"] = "secret_key_here"
+flask_secret_key = os.getenv("FLASK_SECRET_KEY")
+
+if not flask_secret_key:
+    raise RuntimeError("FLASK_SECRET_KEY is not set in the environment.")
+
+app.config["SECRET_KEY"] = flask_secret_key
 CORS(app, supports_credentials=True, origins=["*"])
 
 db.init_app(app)  # type: ignore[no-untyped-call]
