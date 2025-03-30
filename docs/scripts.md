@@ -43,7 +43,7 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 4. After `backend` and `frontend` checks are all clear, you **must** finally run `formatter.ps1|sh` to auto format all codes of our project.
 
-5. Well, it is up to you, but you must not want to spend a lot of time puzzling at why you fail so many CI tests, do you? :)
+5. Well, it is up to you, but you must not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
 
 ---
 
