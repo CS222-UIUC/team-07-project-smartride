@@ -1,0 +1,5 @@
+[smartride]
+type = drive
+scope = drive
+token = {"access_token":"<COPY_DIRECTLY_HERE>"}
+team_drive =
