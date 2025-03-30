@@ -23,10 +23,10 @@ if [[ "$MODE" == "--full" ]]; then
   UNAME_OUT="$(uname -s)"
   if [[ "$UNAME_OUT" == MINGW* || "$UNAME_OUT" == MSYS* || "$UNAME_OUT" == CYGWIN* ]]; then
     echo "Using conda_env_win.yml"
-    conda env update --file conda_env_win.yml --prune
+    conda env update --file conda_env_win.yml
   else
     echo "Using conda_env_mac.yml"
-    conda env update --file conda_env_mac.yml --prune
+    conda env update --file conda_env_mac.yml
   fi
 
   cd ../scripts

@@ -22,16 +22,18 @@ if ($mode -eq "--full") {
     $platform = (Get-ComputerInfo -Property OsName).OsName
     if ($platform -match "Windows") {
         Write-Host "Using conda_env_win.yml"
-        conda env update --file conda_env_win.yml --prune
-    } else {
+        conda env update --file conda_env_win.yml
+    }
+    else {
         Write-Host "Using conda_env_mac.yml"
-        conda env update --file conda_env_mac.yml --prune
+        conda env update --file conda_env_mac.yml
     }
 
     Pop-Location
 
     Set-Content -Path "$PSScriptRoot\subscripts\run\parameters\allow-easy" -Value "1"
-} elseif ($mode -eq "--easy") {
+}
+elseif ($mode -eq "--easy") {
     Write-Host "Running in easy mode (skip conda env update)..."
 }
 
