@@ -25,7 +25,7 @@ if [[ "$TARGET" == "--backend" || "$TARGET" == "--fullstack" ]]; then
   SMARTRIDE_ENTRYPOINT="backend-main" bash lint.sh
   SMARTRIDE_ENTRYPOINT="backend-main" bash upconda.sh
 
-  echo "Complete backend workflows..."
+  echo "Backend workflows are completed."
 
   cd "$DIR"
 fi
@@ -38,7 +38,7 @@ if [[ "$TARGET" == "--frontend" || "$TARGET" == "--fullstack" ]]; then
   SMARTRIDE_ENTRYPOINT="frontend-main" bash lint.sh
   SMARTRIDE_ENTRYPOINT="frontend-main" bash test.sh
 
-  echo "Compmlete frontend workflows..."
+  echo "Frontend workflows are completed."
 
   cd "$DIR"
 fi
