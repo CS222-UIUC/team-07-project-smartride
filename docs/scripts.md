@@ -47,7 +47,7 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 #### `scripts/run.(ps1|sh)`
 
-Entry point for launching the full SmartRide app stack. You **must** run this script at least once before submitting code changes from backend, since otherwise you will **not** be able to run the `backend` script. You are required to include one of the two run modes below to run this script:
+Entry point for launching the full SmartRide app stack. You **must** run this script at least once before submitting code changes from backend, since otherwise you will **not** be able to run the `check` script for backend. You are required to include one of the two run modes below to run this script:
 
 - `--full`
 
