@@ -1,14 +1,10 @@
 #!/bin/bash
 set -e
 
-MARKER="$(dirname "$0")/parameters/run-from-run"
-if [[ ! -f "$MARKER" || "$(cat "$MARKER")" != "1" ]]; then
-  echo "Error: run-easy.sh must be run via run.sh --easy or --full"
-  echo "0" > "$MARKER"
+if [[ "$SMARTRIDE_ENTRYPOINT" != "run-main" ]]; then
+  echo "Error: scripts/subscripts/run/run-easy.sh must be run via scripts/run.sh"
   exit 1
 fi
-
-echo "0" > "$MARKER"
 
 ALLOW_FILE="$(dirname "$0")/parameters/allow-easy"
 if [[ ! -f "$ALLOW_FILE" || "$(cat "$ALLOW_FILE")" != "1" ]]; then
@@ -17,7 +13,7 @@ if [[ ! -f "$ALLOW_FILE" || "$(cat "$ALLOW_FILE")" != "1" ]]; then
   exit 1
 fi
 
-cd ../..
+cd ../../..
 
 echo "Pulling latest changes from git..."
 git pull

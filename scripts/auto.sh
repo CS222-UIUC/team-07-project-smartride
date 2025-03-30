@@ -5,8 +5,8 @@ cd "$(dirname "$0")/"
 
 echo "Start all workflows..."
 
-bash frontend.sh
 bash backend.sh
+bash frontend.sh
 
 echo "Complete all workflows..."
 

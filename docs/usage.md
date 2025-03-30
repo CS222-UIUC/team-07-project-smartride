@@ -2,23 +2,8 @@
 
 ## Table of Contents
 
-- [Automatic Scripts](#automatic-scripts)
 - [Run This Project](#run-this-project)
 - [User Authentication](#user-authentication)
-
-## Automatic Scripts
-
-1. There are many automatic scripts in `scripts` folder to make your life easier.
-
-2. If you are a MacOS user, use only `.sh` scripts in your terminal. Before using them, run `chmod +x [filename].sh` to grant permission.
-
-3. If you are a windows user, use `.ps1` scripts in VSCode terminal / Powershell. If it is your first time to run script, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` to grant permission.
-
-4. As a windows user, you can alternatively open `Git Bash` and run `.sh` scripts there. You do not have to run `chmod` as MacOS users do, but if you run into problem, run `chmod`.
-
-5. To run a script, just type in the script name in your terminal, including the `.sh` or `.ps1` file extension. In rare cases, add `./` before the script name.
-
-6. Read the rest of this document for explanation of each script.
 
 ## Run This Project
 

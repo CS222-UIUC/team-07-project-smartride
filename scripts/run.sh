@@ -30,9 +30,8 @@ if [[ "$MODE" == "--full" ]]; then
   fi
 
   cd ../scripts
-  echo "1" > subscripts/allow-easy
+  echo "1" > subscripts/run/parameters/allow-easy
 fi
 
-echo "1" > subscripts/run-from-run
-cd subscripts
-bash run-easy.sh
+cd subscripts/run
+SMARTRIDE_ENTRYPOINT="run-main" bash run-easy.sh

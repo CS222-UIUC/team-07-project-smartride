@@ -30,12 +30,13 @@ if ($mode -eq "--full") {
 
     Pop-Location
 
-    Set-Content -Path "$PSScriptRoot\subscripts\parameters\allow-easy" -Value "1"
+    Set-Content -Path "$PSScriptRoot\subscripts\run\parameters\allow-easy" -Value "1"
 } elseif ($mode -eq "--easy") {
     Write-Host "Running in easy mode (skip conda env update)..."
 }
 
-Set-Content -Path "$PSScriptRoot\subscripts\parameters\run-from-run" -Value "1"
-Push-Location "$PSScriptRoot/subscripts"
+$env:SMARTRIDE_ENTRYPOINT = "run-main"
+
+Push-Location "$PSScriptRoot/subscripts/run"
 & "./run-easy.ps1"
 Pop-Location

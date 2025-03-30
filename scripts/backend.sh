@@ -1,13 +1,20 @@
 #!/bin/bash
 set -e
 
-cd "$(dirname "$0")/subscripts"
+ALLOW_FILE="$(dirname "$0")/parameters/allow-easy"
+if [[ ! -f "$ALLOW_FILE" || "$(cat "$ALLOW_FILE")" != "1" ]]; then
+  echo "Error: Cannot perform backend check workflow. Please run full setup first by run.ps1 --full"
+  echo "0" > "$ALLOW_FILE"
+  exit 1
+fi
+
+cd "$(dirname "$0")/subscripts/backend"
 
 echo "Start backend workflows..."
 
-bash backend-test.sh
-bash py-type-check.sh
-bash update-conda.sh
+SMARTRIDE_ENTRYPOINT="backend-main" bash test.sh
+SMARTRIDE_ENTRYPOINT="backend-main" bash lint.sh
+SMARTRIDE_ENTRYPOINT="backend-main" bash upconda.sh
 
 echo "Complete backend workflows..."
 

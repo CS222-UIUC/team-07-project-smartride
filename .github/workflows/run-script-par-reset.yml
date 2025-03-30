@@ -16,18 +16,18 @@ jobs:
 
       - name: Reset allow-easy to 0
         run: |
-          echo "0" > scripts/subscripts/parameters/allow-easy
+          echo "0" > scripts/subscripts/run/parameters/allow-easy
       
       - name: Reset run-from-run to 0
         run: |
-          echo "0" > scripts/subscripts/parameters/run-from-run
+          echo "0" > scripts/subscripts/run/parameters/run-from-run
 
       - name: Commit and push change
         run: |
           git config user.name "Auto Reset Bot"
           git config user.email "reset-bot@example.com"
-          git add scripts/subscripts/parameters/allow-easy
-          git add scripts/subscripts/parameters/run-from-run
+          git add scripts/subscripts/run/parameters/allow-easy
+          git add scripts/subscripts/run/parameters/run-from-run
 
           if git diff --cached --quiet; then
             echo "Nothing to commit."
