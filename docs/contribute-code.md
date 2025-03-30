@@ -1,6 +1,6 @@
 # Contribute Code To This Project
 
-1. Since this is currently a school project, only CS222 team 7 members can contribute to this repo.
+1. Since this is currently a school project, only CS222 team-07 members can contribute to this repo.
 
 2. You should always create a new branch for developing by `git checkout -b [branch_name]`. Do **NOT** work directly in the `main` branch!
 
