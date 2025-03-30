@@ -28,7 +28,7 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 | Launch app stack quicker             | `run.ps1\|sh --easy`                        |
 | Run backend checks                   | `backend.ps1\|sh`                           |
 | Run frontend checks                  | `frontend.ps1\|sh`                          |
-| Verify whole project state quickly   | `auto.ps1\|sh`                              |
+| Verify whole project state quickly   | `fullstack.ps1\|sh`                         |
 | Format code                          | `formatter.ps1\|sh`                         |
 
 ---
@@ -39,7 +39,7 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 2. You **must** run `frontend.ps1|sh` if your changes affect the frontend.
 
-3. You are **strongly encouraged** to run `auto.ps1|sh` to ensure the whole project is clean.
+3. You are **strongly encouraged** to run `fullstack.ps1|sh` to ensure the whole project is clean.
 
 4. After `backend` and `frontend` checks are all clear, you **must** finally run `formatter.ps1|sh` to auto format all codes of our project.
 
@@ -66,7 +66,7 @@ Entry point for launching the full SmartRide app stack. You **must** run this sc
     - Ngrok tunneling
   - You may not see all 3 windows if you failed to follow [installation.md](installation.md).
 
-#### `scripts/auto.(ps1|sh)`
+#### `scripts/fullstack.(ps1|sh)`
 Runs both frontend and backend workflows:
 - Run `eslint`.
 - Do unit tests with `vitest`.

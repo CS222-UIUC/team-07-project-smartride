@@ -18,7 +18,7 @@
 
 6. Please fix all merge conflicts.
 
-7. Run `formatter` and `auto` scripts in `scripts/` folder. Check more details at [Scripts](scripts.md).
+7. Run `formatter` and `fullstack` scripts in `scripts/` folder. Check more details at [Scripts](scripts.md).
 
 8. You are required to run these scripts since our CI workflow will test that upon pull request. For more explanations on our CI/CD procedures, read the next section.
 
