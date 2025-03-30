@@ -16,7 +16,9 @@ This document describes the usage of all primary scripts in the `scripts/` direc
 
 5. To run a script, just type in the script name in your terminal, including the `.sh` or `.ps1` file extension. If it does not work, add `./` before the script name.
 
-6. Read the rest of this document for explanation of each script.
+6. Do not run internal scripts under the `scripts/subscripts/` folder directly. These are invoked by the top-level scripts listed below and are not meant to be used on their own.
+
+7. Read the rest of this document for explanation of each script.
 
 ## Usage Overview
 
@@ -35,15 +37,9 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 ## Before Submitting a Pull Request
 
-1. You **must** run `check.ps1|sh --backend` if your changes affect the backend.
+1. To summarize, run `auto.ps1|sh` and resolve all reported issues. Repeat the cycle — run `auto`, fix issues, and rerun — until everything passes.
 
-2. You **must** run `check.ps1|sh --frontend` if your changes affect the frontend.
-
-3. You are **strongly encouraged** to run `check.ps1|sh` (combination of 1 and 2) to ensure the whole project is clean.
-
-4. After `backend` and `frontend` checks are all clear, you **must** finally run `formatter.ps1|sh` to auto format all codes of our project.
-
-5. Well, it is up to you, but you must not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
+2. Well, it is up to you, but you definitely does not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
 
 ---
 
@@ -68,35 +64,31 @@ Entry point for launching the full SmartRide app stack. You **must** run this sc
     - Ngrok tunneling
   - You may not see all 3 windows if you failed to follow [installation.md](installation.md).
 
-#### `scripts/check.(ps1|sh) --backend`
+#### `scripts/auto.(ps1|sh)`
 
-Runs the backend workflow, note that you can **only** run this after you have `run` the project at least once. The following workflows will be triggered:
-
-- Do python linting with `ruff`.
-- Check python type safety with `mypy`.
-- Do unit tests with `Pytest`.
-- Sync `conda_env_win.yml` and `conda_env_mac.yml` based on your current conda environment.
-
-This should be clean before any backend-related changes are submitted.
-
-#### `scripts/check.(ps1|sh) --frontend`
-
-Runs the frontend workflow:
-
-- Run `eslint`.
-- Do unit tests with `vitest`.
-
-This should be clean before any frontend-related changes are submitted.
-
-#### `scripts/check.(ps1|sh) --fullstack`
-
-Runs both frontend and backend workflows, with same requirements as `--backend`.
-
-Note that `--fullstack` argument is not required. We treat no argument as running fullstack check. Useful for quickly verifying the overall health of the project and if you are lazy enough to run two scripts.
+Runs both `check` and `formatter` scripts. Highly recommend to only use this script and the `run` script throughout the time.
 
 #### `scripts/formatter.(ps1|sh)`
 
 Formats both frontend and backend code according to project-wide formatting standards with Ruff (for backend) and Prettier (for frontend).
+
+#### `scripts/check.(ps1|sh)`
+
+Performs verification checks before submitting backend or frontend changes by running code check / lint workflows. Here are available parameters:
+
+- `--backend`, this will run backend checks. Note that you can **only** execute this script after you have `run` the project at least once. The following workflows will be triggered:
+
+  - Do python linting with `ruff`.
+  - Check python type safety with `mypy`.
+  - Do unit tests with `Pytest`.
+  - Sync `conda_env_win.yml` and `conda_env_mac.yml` based on your current conda environment.
+
+- `--frontend`, this will run frontend checks. The following workflows will be triggered:
+
+  - Run `eslint`.
+  - Do unit tests with `vitest`.
+
+- `--fullstack`, default condition if you give no parameters, this will run both frontend and backend checks, with same executing requirements as `--backend`.
 
 ## What's more
 
