@@ -60,8 +60,8 @@ Files like database files, .env.shared are not suitable for uploading to GitHub.
 ## When to use
 
 - If you have already finished your first download from google drive, you will find `.env.shared`. This is a highly secured file that contain tokens, service config values, or other team-wide non-public variables. Never should be uploaded to GitHub directly.
-- Similarly, you will find `userinfo.db`. These database files can be large, and can vary accross users without impacting their works. Google Drive creates a backup for common versions, and for each one's versions that they can select on their own.
-- For example, in the future, their is a neural network model that you don't want to leak to public, use google drive!
+- Similarly, you will find `userinfo.db`. These database files can be large, and can vary accross developers during development phase without impacting common works. Google Drive creates a backup for common versions, and for each one's versions that they can select on their own.
+- For example, if in the future there is a neural network model that you don't want to leak to public, use google drive!
 - **Important: Whenever you add a new file to drive-file.txt, you are waiving the right to use Git version control. Add that file to `.gitignore` immediately!**
 
 ## What's more
