@@ -8,6 +8,6 @@ fi
 set -e
 
 cd "$(dirname "$0")/../../../frontend"
-pnpm install
+pnpm install > /dev/null
 pnpm test
 cd ../scripts/subscripts/frontend

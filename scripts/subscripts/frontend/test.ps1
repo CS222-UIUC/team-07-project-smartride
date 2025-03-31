@@ -6,6 +6,11 @@ if ($env:SMARTRIDE_ENTRYPOINT -ne "frontend-main") {
 }
 
 Push-Location "$PSScriptRoot/../../../frontend"
-pnpm install
+pnpm install > $null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "`n[Error] pnpm install failed. Aborting."
+    Pop-Location
+    exit 1
+}
 pnpm test
 Pop-Location

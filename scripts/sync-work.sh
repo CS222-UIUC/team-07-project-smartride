@@ -31,4 +31,10 @@ popd > /dev/null
 echo "[SyncWork] Downloading team google drive files..."
 bash drive.sh --download || { echo "[Error] Failed to download team google drive files. Aborting."; exit 1; }
 
+echo "[SyncWork] Installing frontend dependencies via pnpm..."
+pushd ../frontend > /dev/null
+pnpm install > /dev/null || { echo "[Error] pnpm install failed. Aborting."; popd > /dev/null; exit 1; }
+popd > /dev/null
+echo "[SyncWork] pnpm install completed."
+
 echo "[SyncWork] All workflows completed! Happy coding!"
