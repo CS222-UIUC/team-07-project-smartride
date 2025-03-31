@@ -16,8 +16,8 @@
 
 5. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
 
-6. See the next documentation to learn how you can launch the project.
+6. See the next documentation to learn how to set up environment variables and team google drive.
 
 ## What's more
 
-↓[Go back to Documentation](./README.md); [Next: Usage](usage.md)→
+↓[Go back to Documentation](./README.md); [Next: Team Google Drive and Environment Variables](drive-env.md)→
