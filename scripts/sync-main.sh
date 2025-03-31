@@ -26,7 +26,7 @@ echo "[SyncMain] Importing latest conda environment..."
 export SMARTRIDE_ENTRYPOINT="sync-main"
 bash scripts/subscripts/env/imp-conda.sh || { echo -e "[Error] Failed to sync local conda environment. Aborting."; exit 1; }
 
-echo "[SyncMain] Syncing team google drive files..."
-bash scripts/drive.sh --download || { echo -e "[Error] Failed to sync team google drive files. Aborting."; exit 1; }
+echo "[SyncMain] Downloading team google drive files..."
+bash scripts/drive.sh --download || { echo -e "[Error] Failed to download team google drive files. Aborting."; exit 1; }
 
 echo "[SyncMain] All workflows completed! Happy coding!"

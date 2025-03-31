@@ -50,10 +50,10 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "[SyncMain] Syncing team google drive files..."
+Write-Host "[SyncMain] Downloading team google drive files..."
 drive.ps1 --download
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "[Error] Failed to sync team google drive files. Aborting."
+    Write-Host "[Error] Failed to download team google drive files. Aborting."
     Pop-Location
     exit 1
 }
