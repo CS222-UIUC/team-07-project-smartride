@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 
-if ($env:SMARTRIDE_ENTRYPOINT -ne "pull-main") {
-    Write-Host "Error: scripts/subscripts/env/imp.ps1 must be run via scripts/pull-main.ps1"
+if ($env:SMARTRIDE_ENTRYPOINT -ne "sync-main") {
+    Write-Host "Error: scripts/subscripts/env/imp.ps1 must be run via scripts/sync-main.ps1 --(merge|pull)"
     exit 1
 }
 
