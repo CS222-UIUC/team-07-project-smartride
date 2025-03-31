@@ -18,6 +18,46 @@ jobs:
         run: |
           echo "0" > scripts/subscripts/env/parameters/conda-imported
 
+name: Reset script parameters
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    paths:
+      - "backend/conda_env_mac.yml"
+      - "backend/conda_env_win.yml"
+
+jobs:
+  reset-conda-synced:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Reset conda-imported to 0
+        run: |
+          echo "0" > scripts/subscripts/env/parameters/conda-imported
+
+name: Reset script parameters
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    paths:
+      - "backend/conda_env_mac.yml"
+      - "backend/conda_env_win.yml"
+
+jobs:
+  reset-conda-synced:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Reset conda-imported to 0
+        run: |
+          echo "0" > scripts/subscripts/env/parameters/conda-imported
+
       - name: Commit and push change
         run: |
           git config user.name "Auto Reset Bot"
