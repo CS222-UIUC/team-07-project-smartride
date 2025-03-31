@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 
-from server.extensions import db
+from server.core.extensions import db
 
 
 class User(UserMixin, db.Model):  # type: ignore[name-defined]
