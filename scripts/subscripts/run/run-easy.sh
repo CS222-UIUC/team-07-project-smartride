@@ -6,6 +6,8 @@ if [[ "$SMARTRIDE_ENTRYPOINT" != "run-main" ]]; then
   exit 1
 fi
 
+pushd "$(dirname "$0")/../../.."
+
 # Start backend
 echo "Starting backend..."
 osascript -e 'tell application "Terminal" to do script "cd backend && conda activate smartride-backend && python -m server.app"'
@@ -17,3 +19,5 @@ osascript -e 'tell application "Terminal" to do script "cd frontend && pnpm inst
 # Start ngrok
 echo "Starting ngrok..."
 osascript -e 'tell application "Terminal" to do script "ngrok http 5173"'
+
+popd

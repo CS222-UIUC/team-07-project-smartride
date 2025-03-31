@@ -5,6 +5,8 @@ if ($env:SMARTRIDE_ENTRYPOINT -ne "run-main") {
     exit 1
 }
 
+Push-Location "$PSScriptRoot/../../.."
+
 # Start backend
 Write-Host "Starting backend..."
 Start-Process powershell -ArgumentList @"
