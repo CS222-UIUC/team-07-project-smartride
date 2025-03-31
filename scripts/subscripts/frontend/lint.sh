@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$SMARTRIDE_ENTRYPOINT" != "frontend-main" ]]; then
-  echo "Error: scripts/subscripts/frontend/lint.sh must be run via scripts/frontend.sh or scripts/auto.sh"
+  echo "Error: scripts/subscripts/frontend/lint.sh must be run via scripts/check.sh with no parameter, or with --frontend or --fullstack parameters."
   exit 1
 fi
 

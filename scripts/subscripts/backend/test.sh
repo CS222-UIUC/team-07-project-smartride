@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$SMARTRIDE_ENTRYPOINT" != "backend-main" ]]; then
-  echo "Error: scripts/subscripts/backend/test.sh must be run via scripts/backend.sh or scripts/backend.sh"
+  echo "Error: scripts/subscripts/backend/test.sh must be run via scripts/check.sh with no parameter, or with --backend or --fullstack parameters."
   exit 1
 fi
 
