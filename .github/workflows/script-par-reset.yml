@@ -7,6 +7,7 @@ on:
     paths:
       - "backend/conda_env_mac.yml"
       - "backend/conda_env_win.yml"
+      - "scripts/subscripts/env/parameters/conda-imported"
 
 jobs:
   reset-conda-synced:
