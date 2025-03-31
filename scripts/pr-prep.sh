@@ -4,7 +4,7 @@ set -e
 cd "$(dirname "$0")"
 
 echo
-echo "[PrPrep] Although not mandatory, it is always recommended to first run sync-main.sh --merge to merge main changes."
+echo "[PrPrep] Although not mandatory, it is always recommended to first run sync-work.sh --merge to merge main changes."
 echo
 echo "[PrPrep] Preparing project before submitting PR..."
 echo

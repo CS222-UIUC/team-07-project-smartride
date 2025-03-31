@@ -9,7 +9,7 @@ fi
 cd "$(dirname "$0")"
 
 echo
-echo "[SyncMain] Starting sync mode: $1"
+echo "[SyncWork] Starting sync mode: $1"
 echo
 
 if [ "$1" = "--pull" ]; then
@@ -22,13 +22,13 @@ elif [ "$1" = "--merge" ]; then
     git merge origin/main || { echo "[Error] Merge failed. Please resolve conflicts manually then rerun."; exit 1; }
 fi
 
-echo "[SyncMain] Importing latest conda environment..."
-export SMARTRIDE_ENTRYPOINT="sync-main"
+echo "[SyncWork] Importing latest conda environment..."
+export SMARTRIDE_ENTRYPOINT="sync-work"
 pushd subscripts/env > /dev/null
 bash imp-conda.sh || { echo "[Error] Failed to sync local conda environment. Aborting."; popd > /dev/null; exit 1; }
 popd > /dev/null
 
-echo "[SyncMain] Downloading team google drive files..."
+echo "[SyncWork] Downloading team google drive files..."
 bash drive.sh --download || { echo "[Error] Failed to download team google drive files. Aborting."; exit 1; }
 
-echo "[SyncMain] All workflows completed! Happy coding!"
+echo "[SyncWork] All workflows completed! Happy coding!"

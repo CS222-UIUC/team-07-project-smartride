@@ -8,7 +8,7 @@ Set-StrictMode -Version Latest
 
 Push-Location "$PSScriptRoot"
 
-Write-Host "`n[SyncMain] Starting sync mode: $Mode`n"
+Write-Host "`n[SyncWork] Starting sync mode: $Mode`n"
 
 if ($Mode -eq "--pull") {
     Write-Host "[Git] Checking out and pulling origin/main..."
@@ -41,8 +41,8 @@ elseif ($Mode -eq "--merge") {
     }
 }
 
-Write-Host "[SyncMain] Importing latest conda environment..."
-$env:SMARTRIDE_ENTRYPOINT = "sync-main"
+Write-Host "[SyncWork] Importing latest conda environment..."
+$env:SMARTRIDE_ENTRYPOINT = "sync-work"
 Push-Location "$PSScriptRoot/subscripts/env"
 & imp-conda.ps1
 if ($LASTEXITCODE -ne 0) {
@@ -53,7 +53,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 Pop-Location
 
-Write-Host "[SyncMain] Downloading team google drive files..."
+Write-Host "[SyncWork] Downloading team google drive files..."
 & drive.ps1 --download
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] Failed to download team google drive files. Aborting."
@@ -61,5 +61,5 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "[SyncMain] All workflows completed! Happy coding!"
+Write-Host "[SyncWork] All workflows completed! Happy coding!"
 Pop-Location

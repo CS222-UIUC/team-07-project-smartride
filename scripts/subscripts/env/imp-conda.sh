@@ -2,8 +2,8 @@
 
 set -e
 
-if [[ "$SMARTRIDE_ENTRYPOINT" != "sync-main" ]]; then
-  echo "Error: scripts/subscripts/env/imp.ps1 must be run via scripts/sync-main.ps1 --(merge|pull)"
+if [[ "$SMARTRIDE_ENTRYPOINT" != "sync-work" ]]; then
+  echo "Error: scripts/subscripts/env/imp.ps1 must be run via scripts/sync-work.ps1 --(merge|pull)"
   exit 1
 fi
 
