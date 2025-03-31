@@ -61,5 +61,17 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
+Write-Host "[SyncWork] Installing frontend dependencies via pnpm..."
+Push-Location "$PSScriptRoot/../frontend"
+pnpm install > $null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[Error] pnpm install failed. Aborting."
+    Pop-Location
+    Pop-Location
+    exit 1
+}
+Pop-Location
+Write-Host "[SyncWork] pnpm install completed."
+
 Write-Host "[SyncWork] All workflows completed! Happy coding!"
 Pop-Location
