@@ -1,8 +1,9 @@
 from pathlib import Path
 
-from server.core.extensions import db
-from server.app import app
 from sqlalchemy import inspect
+
+from server.app import app
+from server.core.extensions import db
 
 db_uri = app.config["SQLALCHEMY_DATABASE_URI"]
 

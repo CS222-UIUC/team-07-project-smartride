@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 class Config:
     # Resolve current file path
     current = Path(__file__).resolve()
