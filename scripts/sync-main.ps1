@@ -43,15 +43,18 @@ elseif ($Mode -eq "--merge") {
 
 Write-Host "[SyncMain] Importing latest conda environment..."
 $env:SMARTRIDE_ENTRYPOINT = "sync-main"
-subscripts/env/imp-conda.ps1
+Push-Location "$PSScriptRoot/subscripts/env"
+& imp-conda.ps1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] Failed to sync local conda environment. Aborting."
     Pop-Location
+    Pop-Location
     exit 1
 }
+Pop-Location
 
 Write-Host "[SyncMain] Downloading team google drive files..."
-drive.ps1 --download
+& drive.ps1 --download
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] Failed to download team google drive files. Aborting."
     Pop-Location

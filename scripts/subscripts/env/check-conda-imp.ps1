@@ -6,3 +6,6 @@ if (!(Test-Path $allowFile) -or (Get-Content $allowFile).Trim() -ne "1") {
     Set-Content -Path $allowFile -Value "0"
     exit 1
 }
+
+Write-Host "Local conda environment is synced."
+exit 0
