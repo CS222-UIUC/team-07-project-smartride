@@ -51,11 +51,18 @@ Files like database files, .env.shared are not suitable for uploading to GitHub.
 
 - If committer `Alice` wants to track a new file `alice-track2.example.txt` located in `alice/test/`, they add a new line and write `alice/test/alice-track2.example.txt :: Alice`. Feel free to add tabs to align. They **must** make sure that this file is correctly located under the specified folder.
 
-- If committer `Bob` modifies `alice-track.example.txt` while not changing its directory, they changes committer `Alice` to `Bob` so the first line becomes `alice/test/alice-track.example.txt  ::  Bob`. AFter Bob uploads, warning will be issued to all teammates upon syncing. However, Alice's result will **not** be deleted unless Alice synced the google drive by downloading, _and_ select `y` (yes) when a question asking whether they want to delete thier outdated content popped up.
+- If committer `Bob` modifies `alice-track.example.txt` while not changing its directory, they changes committer `Alice` to `Bob` so the first line becomes `alice/test/alice-track.example.txt :: Bob`. AFter Bob uploads, warning will be issued to all teammates upon syncing. However, Alice's file will remain on the drive unless Alice themselves download from drive and chooses to delete it when prompted.
 
 - If `Alice` wants to keep their outdated work, do **NOT** modify the committer back to Alice **without** getting their original work back. This will cause Alice's drive backup to be overwritten by Bob's.
 
 - **NEVER** delete any line in `drive-file.txt` if you aren't the committer. If you think other committers should clear their outdated file, tell them and ask them to do so.
+
+## When to use
+
+- If you have already finished your first download from google drive, you will find `.env.shared`. This is a highly secured file that contain tokens, service config values, or other team-wide non-public variables. Never should be uploaded to GitHub directly.
+- Similarly, you will find `userinfo.db`. These database files can be large, and can vary accross users without impacting their works. Google Drive creates a backup for common versions, and for each one's versions that they can select on their own.
+- For example, in the future, their is a neural network model that you don't want to leak to public, use google drive!
+- **Important: Whenever you add a new file to drive-file.txt, you are waiving the right to use Git version control. Add that file to `.gitignore` immediately!**
 
 ## What's more
 

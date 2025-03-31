@@ -5,12 +5,13 @@ Welcome to the SmartRide project documentation! This folder contains all the nec
 ## Table of Contents
 
 1. [Installation](installation.md)
-2. [Usage](usage.md)
-3. [Scripts](scripts.md)
-4. [Architecture](architecture.md)
-5. [Contribute Code](contribute-code.md)
-6. [CI/CD](ci-cd.md)
-7. [Major Change Logs](change-log.md)
+2. [Team Google Drive and Environment Variables](drive-env.md)
+3. [Usage](usage.md)
+4. [Scripts](scripts.md)
+5. [Architecture](architecture.md)
+6. [Contribute Code](contribute-code.md)
+7. [CI/CD](ci-cd.md)
+8. [Major Change Logs](change-log.md)
 
 ---
 
@@ -19,6 +20,10 @@ Welcome to the SmartRide project documentation! This folder contains all the nec
 ### 1. Installation
 
 The `installation.md` file provides step-by-step instructions on how to set up the SmartRide project on your local machine. It includes prerequisites, dependencies, and configuration details.
+
+### 2. Team Google Drive and Environment Variables
+
+The `drive-env.md` file provides step-by-step instructions on how to set up `rclone` to access team google drive contents not uploaded to GitHub, as well as how to set up `.env.local` and `.env.shared` which are environment variables. It further instructs on how to use team google drive.
 
 ### 2. Usage
 
