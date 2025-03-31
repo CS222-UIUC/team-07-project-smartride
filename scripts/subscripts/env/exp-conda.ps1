@@ -5,6 +5,11 @@ if ($env:SMARTRIDE_ENTRYPOINT -ne "pr-prep") {
     exit 1
 }
 
+# It is strictly prohibited to export before import, which is a behavior like git push before git pull
+
+& "$PSScriptRoot/check-conda-imp.ps1"
+if ($LASTEXITCODE -ne 0) { exit 1 }
+
 # Export updated conda environment (Windows)
 
 Write-Host "[Export Conda] Exporting conda environment to conda_env_win.yml..."

@@ -17,7 +17,7 @@ conda env update --file conda_env_mac.yml
 
 cd - > /dev/null
 
-echo "1" > "$(dirname "$0")/../env/parameters/conda-synced"
-echo "[Sync Conda] Environment synced. Flag set to 1."
+echo "1" > "$(dirname "$0")/../env/parameters/conda-imported"
+echo "[Sync Conda] Environment imported. Flag set to 1."
 
 echo "Conda import completed."

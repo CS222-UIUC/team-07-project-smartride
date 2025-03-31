@@ -7,6 +7,12 @@ if [[ "$SMARTRIDE_ENTRYPOINT" != "pr-prep" ]]; then
   exit 1
 fi
 
+# It is strictly prohibited to export before import, which is a behavior like git push before git pull
+
+bash "$(dirname "$0")/check-conda-imp.sh"
+
+# Export updated conda environment (Mac)
+
 echo "[Export Conda] Preparing to export conda environment..."
 
 cd ../../../backend

@@ -15,7 +15,7 @@ conda env update --file conda_env_win.yml
 
 Pop-Location
 
-Set-Content -Path "$PSScriptRoot/parameters/conda-synced" -Value "1"
-Write-Host "[Import Conda] Environment synced. Flag set to 1."
+Set-Content -Path "$PSScriptRoot/parameters/conda-imported" -Value "1"
+Write-Host "[Import Conda] Environment imported. Flag set to 1."
 
 Write-Host "Conda import completed."
