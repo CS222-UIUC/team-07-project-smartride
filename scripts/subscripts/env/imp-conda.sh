@@ -7,17 +7,17 @@ if [[ "$SMARTRIDE_ENTRYPOINT" != "sync-work" ]]; then
   exit 1
 fi
 
-echo "Importing newest update on smartride-backend conda environment..."
+echo "[Import Conda] Importing newest update on smartride-backend conda environment..."
 
 cd "$(dirname "$0")/../../../backend"
 
 echo "Using conda_env_mac.yml"
 conda activate smartride-backend
-conda env update --file conda_env_mac.yml
+conda env update --file conda_env_mac.yml > /dev/null
 
 cd - > /dev/null
 
 echo "1" > "$(dirname "$0")/../env/parameters/conda-imported"
-echo "[Sync Conda] Environment imported. Flag set to 1."
+echo "[Import Conda] Environment imported. Flag set to 1."
 
-echo "Conda import completed."
+echo "[Import Conda] Conda import completed."
