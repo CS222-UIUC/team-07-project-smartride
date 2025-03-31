@@ -13,6 +13,8 @@ Start-Process powershell -ArgumentList @"
 cd backend
 conda activate smartride-backend
 python -m server.app
+Write-Host 'Press Enter to exit...'
+Read-Host
 "@
 
 # Start frontend
@@ -21,12 +23,16 @@ Start-Process powershell -ArgumentList @"
 cd frontend
 pnpm install
 pnpm run dev
+Write-Host 'Press Enter to exit...'
+Read-Host
 "@
 
 # Start ngrok
 Write-Host "Starting ngrok..."
 Start-Process powershell -ArgumentList @"
 ngrok http 5173
+Write-Host 'Press Enter to exit...'
+Read-Host
 "@
 
 Pop-Location
