@@ -24,49 +24,69 @@ This document describes the usage of all primary scripts in the `scripts/` direc
 
 This part is an overview. For full description, see [Detailed Explanations](#detailed-explanations).
 
-| Situation                       | Script to Use (please first `cd scripts`) |
-| ------------------------------- | ----------------------------------------- |
-| Launch development app stack    | `run.ps1\|sh --full`                      |
-| Launch app stack quicker        | `run.ps1\|sh --easy`                      |
-| Run backend and frontend checks | `check.ps1\|sh --fullstack`               |
-| Run backend checks              | `check.ps1\|sh --backend`                 |
-| Run frontend checks             | `check.ps1\|sh --frontend`                |
-| Format code                     | `formatter.ps1\|sh`                       |
+| Situation                                                                   | Script to Use (please first `cd scripts`) |
+| --------------------------------------------------------------------------- | ----------------------------------------- |
+| Just begins a new development cycle, need to sync code and files            | `sync-main.ps1\|sh --pull`                |
+| Working in a separate branch, need to merge code and files from main branch | `sync-main.ps1\|sh --merge`               |
+| Finish developing, need to wrap up and prepare for pull request             | `pr-prep.ps1\|sh`                         |
+| Launch development app stack                                                | `run.ps1\|sh`                             |
+| Run backend and frontend checks                                             | `check.ps1\|sh (--fullstack)`             |
+| Run backend checks                                                          | `check.ps1\|sh --backend`                 |
+| Run frontend checks                                                         | `check.ps1\|sh --frontend`                |
+| Format code                                                                 | `formatter.ps1\|sh`                       |
+| Upload files in `drive-file.txt` to team google drive                       | `drive.ps1\|sh --upload`                  |
+| Download files in `drive-file.txt` from team google drive                   | `drive.ps1\|sh --download`                |
 
 ---
 
-## Before Submitting a Pull Request
+## A complete development cycle
 
-1. To summarize, run `auto.ps1|sh` and resolve all reported issues. Repeat the cycle — run `auto`, fix issues, and rerun — until everything passes.
+1. If you have no idea what to do for a complete development cycle, from syncing new code to submitting pull request, follow this manual.
 
-2. Well, it is up to you, but you definitely does not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
+2. To begin with, run `sync-work.ps1|sh --pull`.
+
+3. If no issues appear, open a new branch, and start adding new features to the code. To run the project, run `run.ps1|sh`.
+
+4. After you think you are ready to prepare for a new pull request, follow the following procedures.
+
+   - You are recommended to first run `sync-work.ps1|sh --merge`. Resolve all merge conflicts and rerun until no issues occured.
+   - Check out the detailed introductions of `sync-work --merge` below to see when you should **NOT** run this script before `pr-prep`.
+   - You must run `pr-prep.ps1|sh`. Resolve all issues and rerun until no issues occured.
+
+5. Submit a pull request now! Wait for all CI tests pass, and a review from somebody else, now you can merge your efforts into main branch!
+
+6. Well, it is up to you, but you definitely does not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
 
 ---
 
 ## Detailed Explanation
 
+#### `scripts/sync-work.(ps1|sh)`
+
+Sync newest updates from github, import all missing conda dependencies, and download team google drive files. You must include one of the following parameters which functionalities are only different in the sync GitHub step:
+
+- `--pull`, this will checkout to `main` branch and pull all updates.
+
+- `--merge`, this will fetch all updates from `origin`, and try to merge `origin/main` into your current branch.
+
+**IMPORTANT**: You should **NOT** run `sync-work.(ps1|sh)` with **either** option if your local `drive-file.txt` is not updated yet while you have modified many files which are tracked in there.
+
+- Why? These files are likely **not** tracked by GitHub and you will lose their updates.
+- What to do? Update `drive-file.txt` and run `pr-prep.(ps1|sh)`, or at least `drive.(ps1|sh) --upload` to sync your files to google drive. Alternatively, backup them. Now you may run `sync-work`.
+
 #### `scripts/run.(ps1|sh)`
 
-Entry point for launching the full SmartRide app stack. You **must** run this script at least once before submitting code changes from backend, since otherwise you will **not** be able to run the `check` script for backend. You are required to include one of the two run modes below to run this script:
+Entry point for launching the full SmartRide app stack. Note that you can **only** execute this script after you have `sync-main` at least once. It will open the following 3 windows.
 
-- `--full`
-
-  - Ensures your local conda environment is synced with `conda_env_[platform].yml`.
-  - Unlock `easy` mode for future quicker launch of the app stack, until your next change of `conda_env_[platform].yml` and/or push to `main` branch.
-  - Then executes the equivalent of `--easy`, see below.
-
-- `--easy`
-  - Skips conda sync, you are only able to run with this mode **after** you have successfully run `--full` once after pulling the latest `main`, will be blocked otherwise.
-  - Performs `git pull` to fetch latest changes.
-  - Opens 3 terminal windows:
     - Backend server
     - Frontend dev server
     - Ngrok tunneling
-  - You may not see all 3 windows if you failed to follow [installation.md](installation.md).
 
-#### `scripts/auto.(ps1|sh)`
+You may not see all 3 windows if you failed to follow [installation.md](installation.md).
 
-Runs both `check` and `formatter` scripts. Highly recommend to only use this script and the `run` script throughout the time.
+#### `scripts/pr-prep.(ps1|sh)`
+
+Runs checks and lints, auto formatter, export current conda dependencies, and upload team google drive files. You are strongly recommended to run `sync-work` first except for the condition mentioned in that section. This script is really good for those who have no idea what the standard workflow cycle of this project consists.
 
 #### `scripts/formatter.(ps1|sh)`
 
@@ -76,12 +96,11 @@ Formats both frontend and backend code according to project-wide formatting stan
 
 Performs verification checks before submitting backend or frontend changes by running code check / lint workflows. Here are available parameters:
 
-- `--backend`, this will run backend checks. Note that you can **only** execute this script after you have `run` the project at least once. The following workflows will be triggered:
+- `--backend`, this will run backend checks. Note that you can **only** execute this script after you have `sync-work` at least once. The following workflows will be triggered:
 
   - Do python linting with `ruff`.
   - Check python type safety with `mypy`.
   - Do unit tests with `Pytest`.
-  - Sync `conda_env_win.yml` and `conda_env_mac.yml` based on your current conda environment.
 
 - `--frontend`, this will run frontend checks. The following workflows will be triggered:
 
@@ -89,6 +108,24 @@ Performs verification checks before submitting backend or frontend changes by ru
   - Do unit tests with `vitest`.
 
 - `--fullstack`, default condition if you give no parameters, this will run both frontend and backend checks, with same executing requirements as `--backend`.
+
+#### `scripts/drive.(ps1|sh)`
+
+It completes uploading and downloading operations to and from our team google drive. See [drive-env.md](drive-env.md), if you do not know what this drive is for or have not set up `rclone` config, as well as for instructions on how to edit `drive-file.txt` and `.gitignore`. You must include one of the following parameters to run this script:
+
+- `--upload`, this will trigger the following workflows, attempting to upload the files specified in `drive-file.txt`.
+
+  - Validate whether `drive-file.txt` is in the correct format, and whether all files in there exist locally in the correct folder.
+  - Upload all files specified to team google drive by `rclone`.
+  - Validate whether all files are correctly synced between local and drive.
+  - Trigger cleaning process which users can choose to delete outdated files.
+
+- `--download`, this will trigger the following workflows, attempting to download the files specified in `drive-file.txt`.
+
+  - Validate whether `drive-file.txt` is in the correct format.
+  - Try to download all files specified from team google drive by `rclone`.
+  - Validate whether all files are correctly synced between local and drive.
+  - Trigger cleaning process which users can choose to delete outdated files.
 
 ## What's more
 

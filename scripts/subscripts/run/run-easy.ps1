@@ -5,18 +5,6 @@ if ($env:SMARTRIDE_ENTRYPOINT -ne "run-main") {
     exit 1
 }
 
-$allowFile = "$PSScriptRoot\parameters\allow-easy"
-if (!(Test-Path $allowFile) -or (Get-Content $allowFile).Trim() -ne "1") {
-    Write-Host "Error: Cannot run easy mode. Please run full setup first by run.ps1 --full"
-    Set-Content -Path $allowFile -Value "0"
-    exit 1
-}
-
-# Pull latest Git changes
-Write-Host "Pulling latest changes from git..."
-Push-Location "../../.."
-git pull
-
 # Start backend
 Write-Host "Starting backend..."
 Start-Process powershell -ArgumentList @"

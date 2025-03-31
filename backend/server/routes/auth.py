@@ -5,7 +5,7 @@ from flask import Blueprint, Response, request
 from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from server.extensions import db
+from server.core.extensions import db
 from server.models.user import User
 from server.utils.errors import (
     EMAIL_EXISTS,
