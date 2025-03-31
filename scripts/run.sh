@@ -1,37 +1,9 @@
 #!/bin/bash
 set -e
 
-if [[ "$#" -ne 1 ]]; then
-  echo "Usage: run.sh --full | --easy"
-  exit 1
-fi
+bash "$(dirname "$0")/subscripts/env/check-conda-imp.sh"
 
-MODE="$1"
-if [[ "$MODE" != "--full" && "$MODE" != "--easy" ]]; then
-  echo "Invalid mode: $MODE"
-  echo "Usage: run.sh --full | --easy"
-  exit 1
-fi
+export SMARTRIDE_ENTRYPOINT="run-main"
 
-cd "$(dirname "$0")"
-
-if [[ "$MODE" == "--full" ]]; then
-  echo "Running full setup (conda env update + run-easy)..."
-  cd ../backend
-  conda activate smartride-backend
-
-  UNAME_OUT="$(uname -s)"
-  if [[ "$UNAME_OUT" == MINGW* || "$UNAME_OUT" == MSYS* || "$UNAME_OUT" == CYGWIN* ]]; then
-    echo "Using conda_env_win.yml"
-    conda env update --file conda_env_win.yml
-  else
-    echo "Using conda_env_mac.yml"
-    conda env update --file conda_env_mac.yml
-  fi
-
-  cd ../scripts
-  echo "1" > subscripts/run/parameters/allow-easy
-fi
-
-cd subscripts/run
-SMARTRIDE_ENTRYPOINT="run-main" bash run-easy.sh
+cd "$(dirname "$0")/subscripts/run"
+bash run-easy.sh

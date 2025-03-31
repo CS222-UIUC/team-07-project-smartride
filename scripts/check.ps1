@@ -18,12 +18,8 @@ if ($mode -ne "--backend" -and $mode -ne "--frontend" -and $mode -ne "--fullstac
 }
 
 if ($mode -eq "--backend" -or $mode -eq "--fullstack") {
-    $allowFile = "$PSScriptRoot\subscripts\run\parameters\allow-easy"
-    if (!(Test-Path $allowFile) -or (Get-Content $allowFile).Trim() -ne "1") {
-        Write-Host "Error: Cannot perform backend check workflow. Please run full setup first by run.ps1 --full"
-        Set-Content -Path $allowFile -Value "0"
-        exit 1
-    }
+    & "$PSScriptRoot/subscripts/env/check-conda-imp.ps1"
+    if ($LASTEXITCODE -ne 0) { exit 1 }
 
     $env:SMARTRIDE_ENTRYPOINT = "backend-main"
     Push-Location "$PSScriptRoot/subscripts/backend"
@@ -32,7 +28,6 @@ if ($mode -eq "--backend" -or $mode -eq "--fullstack") {
 
     & "./test.ps1"
     & "./lint.ps1"
-    & "./upconda.ps1"
 
     Write-Host "Backend workflows are completed."
 

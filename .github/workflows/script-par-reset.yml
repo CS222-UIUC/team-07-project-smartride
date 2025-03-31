@@ -9,20 +9,20 @@ on:
       - "backend/conda_env_win.yml"
 
 jobs:
-  reset-allow-easy:
+  reset-conda-synced:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Reset allow-easy to 0
+      - name: Reset conda-imported to 0
         run: |
-          echo "0" > scripts/subscripts/run/parameters/allow-easy
-      
+          echo "0" > scripts/subscripts/env/parameters/conda-imported
+
       - name: Commit and push change
         run: |
           git config user.name "Auto Reset Bot"
           git config user.email "reset-bot@example.com"
-          git add scripts/subscripts/run/parameters/allow-easy
+          git add scripts/subscripts/env/parameters/conda-imported
 
           if git diff --cached --quiet; then
             echo "Nothing to commit."
