@@ -9,7 +9,7 @@ on:
     branches: ["main"]
 
 jobs:
-  reset-allow-easy:
+  reset-conda-imported:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
