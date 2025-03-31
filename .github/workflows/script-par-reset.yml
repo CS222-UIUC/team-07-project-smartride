@@ -23,9 +23,19 @@ jobs:
           git config user.name "Auto Reset Bot"
           git config user.email "reset-bot@example.com"
           git add scripts/subscripts/env/parameters/conda-imported
+
           if git diff --cached --quiet; then
               echo "Nothing to commit."
+              exit 0
+          fi
+
+          git commit -m "Reset script parameters due to env update"
+
+          current_branch=$(git symbolic-ref --short HEAD || echo "")
+
+          if [[ "$current_branch" == "main" ]]; then
+            echo "On main branch, pushing..."
+            git push origin main
           else
-              git commit -m "Reset script parameters due to env update"
-              git push
+            echo "Not on a branch (detached HEAD), skipping push."
           fi
