@@ -6,49 +6,29 @@
 
 3. Make sure you are in the correct branch by `git branch`.
 
-4. Merge both the new updates for your branch and for main branch via:
+4. Follow [scripts.md](scripts.md), section "A complete development cycle" for instructions on what to do before developing, during developing, and after developing but before PR.
 
-   ```
-   git pull
-   git fetch origin
-   git merge origin/main
-   ```
+5. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
 
-5. Please fix all merge conflicts.
+6. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
 
-6. Run the `check` script in `scripts/` folder. Check more details at [Scripts](scripts.md).
+7. After merging into `main`, if any ESLint Code scanning issues popped up in github security tab, please fix them promptly, **including** warnings.
 
-7. You are required to run these scripts since our CI workflow will test that upon pull request. For more explanations on our CI/CD procedures, read the next section.
+8. **Important**: If your code has any architectural refactoring / updates, you **MUST** explicitly mention them in `docs/change-log.md` before your PR. Still, it is recommended that you maintain this log for any non-minor updates.
 
-8. Now follow the standard Git workflow:
+9. **_The following are some useful git operations._** (Update: By the brand-new shell and powershell techniques, you can now throw git into rubbish bin!)
 
-   ```
-   git add -A
-   git commit -m "your commit message"
-   git push
-   ```
+10. Sometimes you may want to check all branches from origin. Run `git fetch --all` and then `git branch -r` to view all remote branches.
 
-9. Note that if you are working on a new branch that hasen't being pushed before, run `git push --set-upstream origin [branch_name]` instead of `git push`.
+11. To switch to a remote branch, run `git checkout [remote_branch]`, this `[remote_branch]` should likely be `origin/xxx`, remember to include `origin/`.
 
-10. Open a Pull Request on GitHub. Before merging, **PLEASE** get all the CI tests passed.
+12. To make edits in this remote branch, run `git switch -c [branch_name]`. Say the remote branch name is `origin/example`, then you should run `git switch -c example` to auto track `example` with `origin/example`.
 
-11. After merging into `main`, if any ESLint Code scanning issues popped up in github security tab, please fix them promptly, **including** warnings.
+13. Now you can normally use git operations on this local branch.
 
-12. **Important**: If your code has any architectural refactoring / updates, you **MUST** explicitly mention them in `docs/change-log.md` before your PR. Still, it is recommended that you maintain this log for any non-minor updates.
+14. `git fetch -p` will delete all remotely deleted while locally still visible branches when you run `git branch -r`.
 
-13. **_The following are some useful git operations._**
-
-14. Sometimes you may want to check all branches from origin. Run `git fetch --all` and then `git branch -r` to view all remote branches.
-
-15. To switch to a remote branch, run `git checkout [remote_branch]`, this `[remote_branch]` should likely be `origin/xxx`, remember to include `origin/`.
-
-16. To make edits in this remote branch, run `git switch -c [branch_name]`. Say the remote branch name is `origin/example`, then you should run `git switch -c example` to auto track `example` with `origin/example`.
-
-17. Now you can normally use git operations on this local branch.
-
-18. `git fetch -p` will delete all remotely deleted while locally still visible branches when you run `git branch -r`.
-
-19. Delete any local branch by `git branch -D [local_branch]`.
+15. Delete any local branch by `git branch -D [local_branch]`.
 
 ## What's more
 
