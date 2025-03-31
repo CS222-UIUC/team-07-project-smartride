@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 
 if ($env:SMARTRIDE_ENTRYPOINT -ne "backend-main") {
-    Write-Host "Error: scripts/subscripts/backend/test.ps1 must be run via scripts/backend.ps1 or scripts/auto.ps1"
+    Write-Host "Error: scripts/subscripts/backend/test.ps1 must be run via scripts/check.ps1 with no parameter, or with --backend or --fullstack parameters."
     exit 1
 }
 
