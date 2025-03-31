@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 
-if ($env:SMARTRIDE_ENTRYPOINT -ne "before-pr") {
-    Write-Host "Error: scripts/subscripts/env/exp-conda.ps1 must be run via scripts/before-pr.ps1"
+if ($env:SMARTRIDE_ENTRYPOINT -ne "pr-prep") {
+    Write-Host "Error: scripts/subscripts/env/exp-conda.ps1 must be run via scripts/pr-prep.ps1"
     exit 1
 }
 

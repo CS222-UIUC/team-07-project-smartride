@@ -2,8 +2,8 @@
 
 set -e
 
-if [[ "$SMARTRIDE_ENTRYPOINT" != "before-pr" ]]; then
-  echo "Error: scripts/subscripts/env/exp-conda.sh must be run via scripts/before-pr.sh"
+if [[ "$SMARTRIDE_ENTRYPOINT" != "pr-prep" ]]; then
+  echo "Error: scripts/subscripts/env/exp-conda.sh must be run via scripts/pr-prep.sh"
   exit 1
 fi
 
