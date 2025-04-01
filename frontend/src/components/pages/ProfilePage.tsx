@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserProfile: React.FC = () => {
+const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
 
   // Form state
@@ -223,4 +223,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default UserProfile;
+export default ProfilePage;

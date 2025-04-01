@@ -1,6 +1,6 @@
 import { LatLngExpression } from "leaflet";
 import { Polyline } from "react-leaflet";
-import waypoints from "./../../assets/waypoints_test.json";
+import waypoints from "@/assets/waypoints_test.json";
 import { useMemo } from "react";
 
 // test purpose only

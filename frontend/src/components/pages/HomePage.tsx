@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { logoutUser } from "../../authentication/logout";
+import { logoutUser } from "@/api/web/logout";
 import { useState } from "react";
 
 const HomePage: React.FC = () => {

@@ -1,20 +1,20 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import MapPage from "./components/pages/MapPage.tsx";
-import LoginPage from "./components/pages/LoginPage.tsx";
-import RegisterPage from "./components/pages/RegisterPage.tsx";
-import HomePage from "./components/pages/HomePage.tsx";
-import StartPage from "./components/pages/StartPage.tsx";
-import LoadPage from "./components/pages/LoadPage.tsx";
-import "./index.css";
-import "./App.css";
-import { PhoneContext } from "./components/context/PhoneContext.tsx";
-import PhoneFrame from "./components/wrappers/PhoneFrame.tsx";
-import ProtectedRoute from "./components/wrappers/ProtectedRoute.tsx";
-import { AuthProvider } from "./components/context/AuthProvider.tsx";
+import MapPage from "@/components/pages/MapPage.tsx";
+import LoginPage from "@/components/pages/LoginPage.tsx";
+import RegisterPage from "@/components/pages/RegisterPage.tsx";
+import HomePage from "@/components/pages/HomePage.tsx";
+import StartPage from "@/components/pages/StartPage.tsx";
+import LoadPage from "@/components/pages/LoadPage.tsx";
+import "@/index.css";
+import "@/App.css";
+import { PhoneContext } from "@/components/context/PhoneContext.tsx";
+import PhoneFrame from "@/components/wrappers/PhoneFrame.tsx";
+import ProtectedRoute from "@/components/wrappers/ProtectedRoute.tsx";
+import { AuthProvider } from "@/components/context/AuthProvider.tsx";
 
-import UserProfile from "./components/pages/UserProfile.tsx";
-import RideLogPage from "./components/pages/RideLogPage.tsx";
+import ProfilePage from "@/components/pages/ProfilePage.js";
+import RideLogPage from "@/components/pages/RideLogPage.tsx";
 
 const IsPhone = window.innerWidth < 768; // Flag to determine if the user is on a phone
 
@@ -75,7 +75,7 @@ const RouteLibrary: React.FC = () => {
           path="/profile"
           element={
             <ProtectedRoute access="auth">
-              <UserProfile />
+              <ProfilePage />
             </ProtectedRoute>
           }
         />

@@ -1,6 +1,6 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-import waypoints from "./../../assets/waypoints_test.json";
+import waypoints from "@/assets/waypoints_test.json";
 
 // Marker Icon
 const createIcon = (color: string) =>

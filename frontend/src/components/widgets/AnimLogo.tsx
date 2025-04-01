@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import cycleAnim from "../../assets/cycle_anim.gif";
-import cycleLast from "../../assets/cycle_last_frame.png";
-import cycleLastTrp from "../../assets/cycle_trp.png";
+import cycleAnim from "@/assets/cycle_anim.gif";
+import cycleLast from "@/assets/cycle_last_frame.png";
+import cycleLastTrp from "@/assets/cycle_trp.png";
 
 interface AnimLogoProps {
   animDuration: number;
