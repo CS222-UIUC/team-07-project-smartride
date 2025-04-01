@@ -16,7 +16,9 @@ export function useAuthCheck() {
   useEffect(() => {
     checkLoginStatus()
       .then(setIsLoggedIn)
-      .catch(() => { setIsLoggedIn(false) });
+      .catch(() => {
+        setIsLoggedIn(false);
+      });
   }, []);
 
   return isLoggedIn;

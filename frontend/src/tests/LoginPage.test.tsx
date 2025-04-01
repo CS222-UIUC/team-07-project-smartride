@@ -42,7 +42,7 @@ describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
             />
           </Routes>
         </AuthProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.change(screen.getByPlaceholderText(/email/i), {
