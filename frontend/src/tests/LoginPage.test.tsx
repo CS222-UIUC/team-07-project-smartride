@@ -1,36 +1,24 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import LoginPage from "../components/pages/LoginPage";
-import { AuthProvider } from "../components/context/AuthProvider";
-import ProtectedRoute from "../components/wrappers/ProtectedRoute";
+import LoginPage from "@/components/pages/LoginPage";
+import { AuthProvider } from "@/components/context/AuthProvider";
+import ProtectedRoute from "@/components/wrappers/ProtectedRoute";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 
-// Mock loginUser API
-vi.mock("../authentication/login", () => ({
-  loginUser: vi.fn(() => Promise.resolve({ message: "Logged in" })),
+vi.mock("@/api/web/auth", () => ({
+  checkLoginStatus: () => {
+    return Promise.resolve(true);
+  },
 }));
 
-// Mock fetch for /profile
-vi.stubGlobal(
-  "fetch",
-  vi.fn((url: string) => {
-    if (url.includes("/profile")) {
-      return Promise.resolve({
-        ok: true,
-        json: () =>
-          Promise.resolve({
-            id: 1,
-            name: "Mock User",
-            email: "test@example.com",
-          }),
-      });
-    }
-    return Promise.reject(new Error("Unknown URL"));
+vi.mock("@/api/web/login", () => ({
+  loginUser: vi.fn(() => {
+    return Promise.resolve({ message: "Logged in" });
   }),
-);
+}));
 
 describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
-  it("should navigate to /home after login instead of /start, including auth check", async () => {
+  it("Mock Test of whether Successful Logins Always Navigate To Home", async () => {
     render(
       <MemoryRouter initialEntries={["/login"]}>
         <AuthProvider>
@@ -54,7 +42,7 @@ describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
             />
           </Routes>
         </AuthProvider>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     fireEvent.change(screen.getByPlaceholderText(/email/i), {
