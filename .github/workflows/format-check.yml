@@ -16,8 +16,8 @@ on:
     branches: ["main"]
 
 jobs:
-  auto-format:
-    name: Format Code
+  format-check:
+    name: Format Checks
     runs-on: ubuntu-latest
 
     steps:
