@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
-import App from "./App.tsx";
+import "@/index.css";
+import App from "@/App.tsx";
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
@@ -11,7 +11,7 @@ if (rootElement) {
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </StrictMode>,
+    </StrictMode>
   );
 } else {
   console.error("Root element not found");
