@@ -9,7 +9,8 @@ on:
     branches: ["main"]
 
 jobs:
-  test:
+  frontend-test:
+    name: Frontend Vitest
     runs-on: ubuntu-latest
 
     steps:
