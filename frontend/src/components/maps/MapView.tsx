@@ -10,7 +10,7 @@ import SetViewToUserOnce from "./SetViewToUserOnce";
 const MapView = () => {
   const [route, setRoute] = useState<{ lat: number; lng: number }[]>([]);
   const [waypoints, setWaypoints] = useState<{ lat: number; lng: number }[]>(
-    []
+    [],
   );
 
   return (
