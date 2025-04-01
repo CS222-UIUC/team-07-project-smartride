@@ -14,19 +14,23 @@ export async function getRoute(
   start: Coordinates,
   dest: Coordinates,
 ): Promise<RouteResponse> {
-  const url = "http://127.0.0.1:5000/api/get_route";
+  const url = "/api/get_route";
   const payload = { start, dest };
 
-  const response: Response = await fetch(url, {
+  const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status.toString()}`);
+    throw new Error(`HTTP error! Status: ${String(response.status)}`);
   }
 
-  const data: RouteResponse = (await response.json()) as RouteResponse;
-  return data;
+  const raw = (await response.json()) as {
+    success: boolean;
+    message: string;
+    data: RouteResponse;
+  }; // this is { success, message, data }
+  return raw.data;
 }

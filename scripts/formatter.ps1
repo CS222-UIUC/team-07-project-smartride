@@ -1,7 +1,7 @@
 Write-Host "`n[Formatter] Start backend ruff formatter workflow..."
 Set-Location ../backend
 conda activate smartride-backend
-ruff format server > $null
+ruff format server
 if ($LASTEXITCODE -ne 0) {
     Write-Host "`n[Error] Backend ruff auto-format failed. Aborting."
     Pop-Location
@@ -11,7 +11,7 @@ Write-Host "`n[Formatter] Backend ruff formatter workflow are completed."
 
 Write-Host "`n[Formatter] Start frontend prettier formatter workflow..."
 Set-Location ../frontend
-pnpm prettier --write "**/*.{ts,tsx,css}" > $null
+pnpm prettier --write "**/*.{ts,tsx,css}"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "`n[Error] Frontend prettier auto-format failed. Aborting."
     Pop-Location
