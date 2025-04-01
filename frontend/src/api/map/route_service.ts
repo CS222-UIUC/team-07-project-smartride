@@ -12,9 +12,9 @@ interface RouteResponse {
 
 export async function getRoute(
   start: Coordinates,
-  dest: Coordinates,
+  dest: Coordinates
 ): Promise<RouteResponse> {
-  const url = "http://127.0.0.1:5000/api/get_route";
+  const url = "/api/get_route";
   const payload = { start, dest };
 
   const response: Response = await fetch(url, {
