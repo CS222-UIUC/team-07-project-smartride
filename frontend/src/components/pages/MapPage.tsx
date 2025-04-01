@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import MapView from "../maps/MapView";
+import MapView from "@/components/maps/MapView";
 
 import { CSSProperties } from "react";
-import { useIsPhone } from "../context/PhoneContext";
+import { useIsPhone } from "@/components/context/PhoneContext";
 
 const MapWrapper = () => {
   const IsPhone = useIsPhone();

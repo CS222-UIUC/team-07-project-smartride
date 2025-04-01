@@ -1,9 +1,9 @@
 // import reactLogo from './../../assets/react.svg';
 // import viteLogo from '/vite.svg';
 import { useNavigate } from "react-router-dom";
-import AnimLogo from "./../widgets/AnimLogo.tsx";
+import AnimLogo from "@/components/widgets/AnimLogo.tsx";
 import { useEffect, useState } from "react";
-import { useAuthCheck } from "../../authentication/auth.ts";
+import { useAuthCheck } from "@/api/web/auth.ts";
 
 const LoadPage = () => {
   const loopCount = 2;
@@ -33,7 +33,7 @@ const LoadPage = () => {
         if (isLoggedIn === true) void navigate("/home");
         else void navigate("/start");
       },
-      animDuration + fadeDuration + liftDuration + 100,
+      animDuration + fadeDuration + liftDuration + 100
     );
 
     return () => {
