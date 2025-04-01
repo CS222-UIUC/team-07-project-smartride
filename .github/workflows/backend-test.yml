@@ -2,6 +2,7 @@ name: Run Pytest
 
 on:
   pull_request:
+    branches: ["main"]
     paths:
       - "backend/server/**"
       - "backend/tests/**"
