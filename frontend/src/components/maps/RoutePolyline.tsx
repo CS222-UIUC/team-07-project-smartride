@@ -1,20 +1,20 @@
 import { LatLngExpression } from "leaflet";
 import { Polyline } from "react-leaflet";
-import waypoints from "@/assets/waypoints_test.json";
-import { useMemo } from "react";
 
-// test purpose only
-const RoutePolyline = () => {
-  const routearr: LatLngExpression[] = useMemo(() => {
-    return waypoints.map((pt) => pt.coords as [number, number]);
-  }, []);
+interface RoutePolylineProps {
+  points?: Array<{ lat: number; lng: number }>;
+}
+
+const defaultPoints: Array<{ lat: number; lng: number }> = [];
+
+const RoutePolyline: React.FC<RoutePolylineProps> = ({
+  points = defaultPoints,
+}) => {
+  console.log("[RoutePolyline receive points]: ", points);
+  if (points.length === 0) return null;
+  const routearr: LatLngExpression[] = points.map((pt) => [pt.lat, pt.lng]);
   return (
-    <>
-      <Polyline
-        positions={routearr}
-        pathOptions={{ color: "red", weight: 6 }}
-      />
-    </>
+    <Polyline positions={routearr} pathOptions={{ color: "red", weight: 6 }} />
   );
 };
 

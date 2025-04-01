@@ -4,9 +4,8 @@ import requests
 from flask import Blueprint, Response, request
 
 from server.utils.ors_api import ors_api_key
-from server.utils.response import api_response
-
 from server.utils.ors_formatter import format_route_response
+from server.utils.response import api_response
 
 route_service_bp = Blueprint("route_service", __name__)
 
