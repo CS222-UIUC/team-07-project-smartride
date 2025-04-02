@@ -31,7 +31,6 @@ const RouteLibrary: React.FC = () => {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        {/* TODO: Auth Routes with Layout */}
         <Route element={<ProtectedRoute access="auth" />}>
           <Route element={<LayoutWrapper />}>
             <Route path="/home" element={<HomePage />} />
