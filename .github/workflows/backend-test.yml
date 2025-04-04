@@ -3,9 +3,6 @@ name: Run Pytest
 on:
   pull_request:
     branches: ["main"]
-    paths:
-      - "backend/server/**"
-      - "backend/tests/**"
   push:
     branches: ["main"]
 
@@ -16,18 +13,38 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for backend changes
+        id: changes
+        run: |
+          git fetch origin main --no-tags --depth=1
+          git diff --name-only FETCH_HEAD...HEAD > changed.txt
+          if grep -q '^backend/' changed.txt; then
+            echo "backend_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "backend_changed=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Python
+        if: steps.changes.outputs.backend_changed == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
       - name: Install test dependencies
+        if: steps.changes.outputs.backend_changed == 'true'
         working-directory: backend
         run: |
           pip install pytest pytest-cov coverage
 
       - name: Run tests
+        if: steps.changes.outputs.backend_changed == 'true'
         working-directory: backend
         run: |
           pytest --cov=server tests/
+
+      - name: Skip backend tests
+        if: steps.changes.outputs.backend_changed == 'false'
+        run: echo "No backend change, skipping tests"
