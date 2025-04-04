@@ -1,13 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/components/context/useAuth";
-import { JSX } from "react";
 
 interface ProtectedRouteProps {
-  children: JSX.Element;
   access: "public" | "auth";
 }
 
-const ProtectedRoute = ({ children, access }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ access }: ProtectedRouteProps) => {
   const { isLoggedIn, loading } = useAuth();
 
   if (loading) return null;
@@ -16,7 +14,11 @@ const ProtectedRoute = ({ children, access }: ProtectedRouteProps) => {
     return <Navigate to="/start" />;
   }
 
-  return children;
+  if (access === "public" && isLoggedIn) {
+    return <Navigate to="/home" />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
