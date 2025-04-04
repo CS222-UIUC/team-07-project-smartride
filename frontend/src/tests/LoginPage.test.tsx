@@ -24,22 +24,14 @@ describe.each([1, 2, 3, 4, 5])("LoginPage attempt #%i", () => {
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route
-              path="/home"
-              element={
-                <ProtectedRoute access="auth">
-                  <div>HomePage</div>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/start"
-              element={
-                <ProtectedRoute access="public">
-                  <div>StartPage</div>
-                </ProtectedRoute>
-              }
-            />
+
+            <Route element={<ProtectedRoute access="auth" />}>
+              <Route path="/home" element={<div>HomePage</div>} />
+            </Route>
+
+            <Route element={<ProtectedRoute access="public" />}>
+              <Route path="/start" element={<div>StartPage</div>} />
+            </Route>
           </Routes>
         </AuthProvider>
       </MemoryRouter>,

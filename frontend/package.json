@@ -12,14 +12,21 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
     "@tailwindcss/vite": "^4.0.17",
     "@types/node": "^22.13.14",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.6.3",
     "leaflet": "^1.9.4",
+    "lucide-react": "^0.486.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.4.1",
-    "tailwindcss": "^4.0.15"
+    "tailwind-merge": "^3.1.0",
+    "tailwindcss": "^4.0.15",
+    "tw-animate-css": "^1.2.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
@@ -45,7 +52,7 @@
     "prettier": "^3.5.3",
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.28.0",
-    "vite": "^6.2.4",
+    "vite": "^6.2.5",
     "vitest": "^3.0.9"
   },
   "pnpm": {
