@@ -9,7 +9,7 @@ Write-Host "`n[PrPrep] Although not mandatory, it is always recommended to first
 Write-Host "`n[PrPrep] Preparing project before submitting PR...`n"
 
 Write-Host "`n[PrPrep] Running linters and static checks...`n"
-& check.ps1
+& ./check.ps1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] Lint/check failed. Aborting."
     Pop-Location
@@ -17,7 +17,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "[PrPrep] Running formatters..."
-& formatter.ps1
+& ./formatter.ps1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] Formatter failed. Aborting."
     Pop-Location
@@ -27,7 +27,7 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "[PrPrep] Exporting current conda environment..."
 $env:SMARTRIDE_ENTRYPOINT = "pr-prep"
 Push-Location "$PSScriptRoot/subscripts/env"
-& exp-conda.ps1
+& ./exp-conda.ps1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] Failed to export conda environment. Aborting."
     Pop-Location
@@ -37,7 +37,7 @@ if ($LASTEXITCODE -ne 0) {
 Pop-Location
 
 Write-Host "[PrPrep] Uploading team google drive files..."
-& drive.ps1 --upload
+& ./drive.ps1 --upload
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] Failed to upload team google drive files. Aborting."
     Pop-Location
