@@ -8,3 +8,4 @@ class User(UserMixin, db.Model):  # type: ignore[name-defined]
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
+    # TODO: Add more fields to connect with frontend
