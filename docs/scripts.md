@@ -26,8 +26,8 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 | Situation                                                                   | Script to Use (please first `cd scripts`) |
 | --------------------------------------------------------------------------- | ----------------------------------------- |
-| Just begins a new development cycle, need to sync code and files            | `sync-main.ps1\|sh --pull`                |
-| Working in a separate branch, need to merge code and files from main branch | `sync-main.ps1\|sh --merge`               |
+| Just begins a new development cycle, need to sync code and files            | `sync-work.ps1\|sh --pull`                |
+| Working in a separate branch, need to merge code and files from main branch | `sync-work.ps1\|sh --merge`               |
 | Finish developing, need to wrap up and prepare for pull request             | `pr-prep.ps1\|sh`                         |
 | Launch development app stack                                                | `run.ps1\|sh`                             |
 | Run backend and frontend checks                                             | `check.ps1\|sh (--fullstack)`             |
