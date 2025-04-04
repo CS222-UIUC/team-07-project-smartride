@@ -15,6 +15,8 @@ jobs:
           echo "0" > scripts/subscripts/env/parameters/conda-imported
 
       - name: Commit and push change
+        env:
+          TOKEN: ${{ secrets.BOT_PUSH_TOKEN }}
         run: |
           git config user.name "Auto Reset Bot"
           git config user.email "reset-bot@example.com"
@@ -30,6 +32,7 @@ jobs:
           current_branch=$(git symbolic-ref --short HEAD || echo "")
 
           if [[ "$current_branch" == "main" ]]; then
+            git remote set-url origin https://x-access-token:${TOKEN}@github.com/CS222-UIUC/team-07-project-smartride.git
             echo "On main branch, pushing..."
             git push origin main
           else
