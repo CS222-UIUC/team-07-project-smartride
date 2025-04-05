@@ -21,7 +21,8 @@ if ($LASTEXITCODE -ne 0) {
 
 Pop-Location
 
-Set-Content -Path "$PSScriptRoot/parameters/conda-imported" -Value "1"
-Write-Host "[Import Conda] Environment imported. Flag set to 1."
+$hashFile = "$PSScriptRoot\parameters\last-import"
 
-Write-Host "[Import Conda] Conda import completed."
+$originHash = git rev-parse origin/main
+Set-Content -Path $hashFile -Value $originHash
+Write-Host "[Import Conda] Conda is successfully imported."
