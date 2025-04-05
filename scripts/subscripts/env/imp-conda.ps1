@@ -12,6 +12,7 @@ conda activate smartride-backend
 
 Write-Host "Using conda_env_win.yml"
 conda env update --file conda_env_win.yml > $null
+Write-Host "$LASTEXITCODE"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Conda environment update failed. Aborting."
     Pop-Location

@@ -9,6 +9,8 @@ Set-StrictMode -Version Latest
 $env:_SMARTRIDE_DRIVE_WRAPPER = "1"
 Push-Location "$PSScriptRoot/../"
 
+conda activate smartride-backend
+
 if ($Mode -eq "--download") {
     Write-Host "[download] Validating control file formats..."
     python scripts/subscripts/drive/python/validate.py --format
