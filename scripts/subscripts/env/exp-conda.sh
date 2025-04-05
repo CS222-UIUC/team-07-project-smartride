@@ -15,6 +15,14 @@ bash "$(dirname "$0")/check-conda-imp.sh"
 
 echo "[Export Conda] Preparing to export conda environment..."
 
+
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
 cd ../../../backend
 
 # Get the platform info

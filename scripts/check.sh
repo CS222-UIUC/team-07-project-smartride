@@ -12,7 +12,7 @@ DIR="$(dirname "$0")"
 if [[ "$TARGET" == "--backend" || "$TARGET" == "--fullstack" ]]; then
   bash "$(dirname "$0")/subscripts/env/check-conda-imp.sh"
 
-  cd "$DIR/subscripts/backend"
+  pushd "$DIR/subscripts/backend"
 
   echo "Start backend workflows..."
 
@@ -21,11 +21,11 @@ if [[ "$TARGET" == "--backend" || "$TARGET" == "--fullstack" ]]; then
 
   echo "Backend workflows are completed."
 
-  cd "$DIR"
+  popd
 fi
 
 if [[ "$TARGET" == "--frontend" || "$TARGET" == "--fullstack" ]]; then
-  cd "$DIR/subscripts/frontend"
+  pushd "$DIR/subscripts/frontend"
 
   echo "Start frontend workflows..."
 
@@ -34,5 +34,5 @@ if [[ "$TARGET" == "--frontend" || "$TARGET" == "--fullstack" ]]; then
 
   echo "Frontend workflows are completed."
 
-  cd "$DIR"
+  popd
 fi
