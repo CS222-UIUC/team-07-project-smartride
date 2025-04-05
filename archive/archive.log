@@ -1,7 +1,3 @@
-commit=d693897f7adcbf2b7aad8a129113932b6e4b1372
-timestamp=2025-04-05T17:50:12Z
-message=Merge pull request #67 from CS222-UIUC/conda-workflow-upd  new conda auto workflow, delete ci-based legacy workflow since branch protection rule has changed.
-
 # metadata
 archive_branch=archive/pre-rebase-main-latest
 main_branch=main
