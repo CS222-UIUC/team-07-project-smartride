@@ -11,15 +11,12 @@ const LayoutWrapper = () => {
 
   const currentPath = location.pathname;
 
-  // 判断是否为主页面（显示 BottomNav）
   const isAuthRoot = AUTH_ROOT_PATHS.includes(currentPath);
 
-  // 判断是否为子页面（显示 TopBar）
   const isAuthSub = AUTH_SUB_PREFIXES.some((prefix) =>
     currentPath.startsWith(prefix),
   );
 
-  // 从路径反推 active nav id
   const activeNavId = AUTH_ROOT_PATHS.find(
     (path) => path === currentPath,
   )?.slice(1);
