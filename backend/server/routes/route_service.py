@@ -3,7 +3,7 @@ from typing import Any, cast
 import requests
 from flask import Blueprint, Response, request
 
-from server.utils.ors_api import ors_api_key
+from server.core.config import Config
 from server.utils.ors_formatter import format_route_response
 from server.utils.response import api_response
 
@@ -57,7 +57,7 @@ def call_ors_api(
     }
     req_url = (
         "https://api.openrouteservice.org/v2/directions/cycling-regular"
-        f"?api_key={ors_api_key}&start={start_lng},{start_lat}&end={dest_lng},{dest_lat}"
+        f"?api_key={Config.ORS_API_KEY}&start={start_lng},{start_lat}&end={dest_lng},{dest_lat}"
     )
 
     response = requests.get(req_url, headers=headers)

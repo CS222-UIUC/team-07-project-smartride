@@ -5,14 +5,23 @@ if [[ "$SMARTRIDE_ENTRYPOINT" != "backend-main" ]]; then
   exit 1
 fi
 
-set -e
-
 cd ../../../backend
 
 echo -e "\n=== Running Ruff Fix ===\n"
-ruff check server --fix --diff
+ruff check server --diff
+ruff check server --fix
+if [ $? -ne 0 ]; then
+  echo "【Backend Lint] Ruff fix failed — aborting"
+  cd ../scripts/subscripts/backend
+  exit 1
+fi
 
 echo -e "\n=== Running mypy ===\n"
 mypy server
+if [ $? -ne 0 ]; then
+  echo "【Backend Lint] Mypy checks failed — aborting"
+  cd ../scripts/subscripts/backend
+  exit 1
+fi
 
 cd ../scripts/subscripts/backend

@@ -9,6 +9,13 @@ fi
 
 echo "[Import Conda] Importing newest update on smartride-backend conda environment..."
 
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
 cd "$(dirname "$0")/../../../backend"
 
 echo "Using conda_env_mac.yml"
