@@ -1,8 +1,6 @@
 name: smartride-backend
 channels:
   - defaults
-  - https://repo.anaconda.com/pkgs/main
-  - https://repo.anaconda.com/pkgs/r
 dependencies:
   - bzip2=1.0.8
   - ca-certificates=2025.2.25

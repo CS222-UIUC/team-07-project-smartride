@@ -4,6 +4,11 @@ def create_env_file_win(input_path, output_path):
     with open(input_path, 'r', encoding="UTF-8") as file:
         env_data = yaml.safe_load(file)
     
+    env_data['dependencies'] = [
+        dep for dep in env_data['dependencies']
+        if dep not in ['libcxx=14.0.6', 'ncurses=6.4', 'readline=8.2']
+    ]
+
     env_data['dependencies'].extend(['vc=14.42', 'vs2015_runtime=14.42.34433'])
     
     with open(output_path, 'w', encoding="UTF-8") as file:
