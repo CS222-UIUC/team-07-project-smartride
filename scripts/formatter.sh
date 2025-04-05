@@ -1,14 +1,15 @@
 #!/bin/bash
 
 echo -e "\n[Formatter] Start backend ruff formatter workflow..."
-cd ../backend
-ruff format backend
+pushd "../backend"
+ruff format server
 echo -e "\n[Formatter] Backend ruff formatter workflow are completed."
+popd
 
 echo -e "\n[Formatter] Start frontend prettier formatter workflow..."
-cd ../frontend
+pushd "../frontend"
 pnpm prettier --write "**/*.{ts,tsx,css}"
 echo -e "\n[Formatter] Frontend prettier formatter workflow are completed."
+popd
 
-cd ../scripts
 echo -e "\n[Formatter] All formatter workflows are completed.\n"

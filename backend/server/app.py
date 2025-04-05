@@ -1,7 +1,5 @@
-import os
 from typing import cast
 
-from dotenv import load_dotenv
 from flask import Flask, Response
 from flask_cors import CORS
 
@@ -14,17 +12,10 @@ from server.routes.route_service import route_service_bp
 from server.utils.errors import APIError, handle_api_error
 from server.utils.response import api_response
 
-load_dotenv(".env.shared")
-load_dotenv(".env.local", override=True)
-
 app = Flask(__name__)
 app.config.from_object(Config)
-flask_secret_key = os.getenv("FLASK_SECRET_KEY")
 
-if not flask_secret_key:
-    raise RuntimeError("FLASK_SECRET_KEY is not set in the environment.")
-
-app.config["SECRET_KEY"] = flask_secret_key
+app.config["SECRET_KEY"] = Config.FLASK_SECRET_KEY
 CORS(app, supports_credentials=True, origins=["*"])
 
 db.init_app(app)  # type: ignore[no-untyped-call]
@@ -57,4 +48,4 @@ def home() -> tuple[Response, int]:
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True, port=5000)
+    app.run(host="0.0.0.0", debug=True, port=Config.API_PORT)
