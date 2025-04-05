@@ -1,11 +1,21 @@
 Set-StrictMode -Version Latest
 
-$allowFile = "$PSScriptRoot\parameters\conda-imported"
-if (!(Test-Path $allowFile) -or (Get-Content $allowFile).Trim() -ne "1") {
-    Write-Host "Error: Local conda environment not updated. You should first execute sync-work.ps1 with --merge or --pull option."
-    Set-Content -Path $allowFile -Value "0"
+$hashFile = "$PSScriptRoot\parameters\last-import"
+
+git fetch origin *>$null
+$originHash = git rev-parse origin/main
+
+if (!(Test-Path $hashFile)) {
+    Write-Host "[check-conda-imported] Creating local hash record for first-time setup: $originHash"
+    Set-Content -Path $hashFile -Value $originHash
+}
+
+$storedHash = Get-Content $hashFile | ForEach-Object { $_.Trim() }
+
+if ($storedHash -ne $originHash) {
+    Write-Host "Error: Conda environment outdated. Please run scripts/sync-work.ps1 --pull | --merge to update."
     exit 1
 }
 
-Write-Host "Local conda environment is synced."
+Write-Host "Local conda environment is up to date."
 exit 0
