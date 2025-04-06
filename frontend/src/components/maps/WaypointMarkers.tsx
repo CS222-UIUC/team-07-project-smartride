@@ -1,17 +1,11 @@
-// src/components/maps/WaypointMarkers.tsx
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-
-interface Waypoint {
-  lat: number;
-  lng: number;
-}
+import { Point } from "./managePoints";
 
 interface WaypointMarkersProps {
-  points: Waypoint[];
+  points: Point[];
 }
 
-// Marker Icon
 const createIcon = (color: string) =>
   new L.Icon({
     iconUrl: `/markers/marker-icon-${color}.png`,
@@ -28,15 +22,13 @@ const WaypointMarkers: React.FC<WaypointMarkersProps> = ({ points }) => {
   return (
     <>
       {points.map((pt, idx) => {
-        const icon = idx === 0 ? createIcon("green") : createIcon("blue");
+        let icon = createIcon("grey");
+        if (idx === 0) icon = createIcon("green");
+        else if (idx === points.length - 1) icon = createIcon("blue");
 
         return (
-          <Marker
-            key={`${pt.lat.toString()},${pt.lng.toString()}`}
-            position={[pt.lat, pt.lng]}
-            icon={icon}
-          >
-            <Popup>{idx === 0 ? "Start Point" : "Destination"}</Popup>
+          <Marker key={pt.id} position={[pt.lat, pt.lng]} icon={icon}>
+            <Popup>{pt.label}</Popup>
           </Marker>
         );
       })}

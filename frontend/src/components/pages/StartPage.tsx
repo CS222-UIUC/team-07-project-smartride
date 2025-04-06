@@ -1,5 +1,3 @@
-// import reactLogo from './../../assets/react.svg';
-// import viteLogo from '/vite.svg';
 import { Link } from "react-router-dom";
 import AnimLogo from "@/components/widgets/AnimLogo.tsx";
 import { useEffect, useState } from "react";

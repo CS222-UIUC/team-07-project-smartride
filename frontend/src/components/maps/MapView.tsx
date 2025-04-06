@@ -1,58 +1,64 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import WaypointMarkers from "./WaypointMarkers";
+import { useState } from "react";
+
 import RoutePolyline from "./RoutePolyline";
+import WaypointMarkers from "./WaypointMarkers";
 import AutoFocusView from "./AutoFocusView";
 import MapClickHandler from "./MapClickHandler";
-import { useState } from "react";
 import SetViewToUserOnce from "./SetViewToUserOnce";
-import MapPanel from "./MapPanel";
 import PanelButton from "./PanelButton";
+import MapPanel from "./MapPanel";
+import { useManagePoints } from "./managePoints";
 
 const MapView = () => {
-  const [route, setRoute] = useState<{ lat: number; lng: number }[]>([]);
-  const [waypoints, setWaypoints] = useState<{ lat: number; lng: number }[]>(
-    [],
-  );
   const [panelOpen, setPanelOpen] = useState(false);
+  const {
+    points,
+    route,
+    addPoint,
+    removePoint,
+    reorderPoints,
+    togglePointType,
+  } = useManagePoints();
 
   return (
     <div className="relative w-full h-full">
-      {/* Map */}
       <MapContainer
         center={[0, 0]}
         zoom={1}
-        scrollWheelZoom={true}
+        scrollWheelZoom
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         <MapClickHandler
-          onRouteFetched={setRoute}
-          onPointsUpdate={setWaypoints}
+          onClick={(lat, lng) => {
+            addPoint(lat, lng);
+          }}
         />
 
-        <RoutePolyline points={route} />
-        <WaypointMarkers points={waypoints} />
+        <RoutePolyline route={route} />
+        <WaypointMarkers points={points.filter((p) => p.type === "main")} />
         {route.length > 0 && <AutoFocusView points={route} />}
         <SetViewToUserOnce />
       </MapContainer>
 
-      {/* Panel open button (absolute) */}
       <PanelButton
         onClick={() => {
           setPanelOpen(true);
         }}
       />
 
-      {/* Slide-up panel */}
       <MapPanel
         isOpen={panelOpen}
         onClose={() => {
           setPanelOpen(false);
         }}
-        points={[]}
-        onPointsChange={() => {}}
+        points={points}
+        onReorder={reorderPoints}
+        onToggleType={togglePointType}
+        onRemove={removePoint}
       />
     </div>
   );

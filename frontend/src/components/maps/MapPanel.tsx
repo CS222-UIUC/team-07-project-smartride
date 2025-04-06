@@ -3,47 +3,29 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import { MoveUp, MoveDown, Trash2, MapPin } from "lucide-react";
-
-export interface Point {
-  id: string;
-  label: string;
-  lat: number;
-  lng: number;
-  type: "main" | "waypoint";
-}
+import { Point } from "./managePoints";
 
 interface MapPanelProps {
   isOpen: boolean;
   onClose: () => void;
   points: Point[];
-  onPointsChange: (points: Point[]) => void;
+  onReorder: (from: number, to: number) => void;
+  onToggleType: (id: string) => void;
+  onRemove: (id: string) => void;
 }
 
-const MapPanel = ({
+const MapPanel: React.FC<MapPanelProps> = ({
   isOpen,
   onClose,
   points,
-  onPointsChange,
-}: MapPanelProps) => {
+  onReorder,
+  onToggleType,
+  onRemove,
+}) => {
   const move = (index: number, dir: -1 | 1) => {
     const next = index + dir;
     if (next < 0 || next >= points.length) return;
-    const newPoints = [...points];
-    [newPoints[index], newPoints[next]] = [newPoints[next], newPoints[index]];
-    onPointsChange(newPoints);
-  };
-
-  const toggleType = (index: number) => {
-    const newPoints = [...points];
-    newPoints[index].type =
-      newPoints[index].type === "main" ? "waypoint" : "main";
-    onPointsChange(newPoints);
-  };
-
-  const remove = (index: number) => {
-    const newPoints = [...points];
-    newPoints.splice(index, 1);
-    onPointsChange(newPoints);
+    onReorder(index, next);
   };
 
   return (
@@ -63,6 +45,7 @@ const MapPanel = ({
                 <Button
                   variant="ghost"
                   size="icon"
+                  type="button"
                   onClick={() => {
                     move(i, -1);
                   }}
@@ -72,6 +55,7 @@ const MapPanel = ({
                 <Button
                   variant="ghost"
                   size="icon"
+                  type="button"
                   onClick={() => {
                     move(i, 1);
                   }}
@@ -81,8 +65,9 @@ const MapPanel = ({
                 <Button
                   variant="ghost"
                   size="icon"
+                  type="button"
                   onClick={() => {
-                    toggleType(i);
+                    onToggleType(pt.id);
                   }}
                 >
                   <MapPin className="w-4 h-4" />
@@ -90,8 +75,9 @@ const MapPanel = ({
                 <Button
                   variant="ghost"
                   size="icon"
+                  type="button"
                   onClick={() => {
-                    remove(i);
+                    onRemove(pt.id);
                   }}
                 >
                   <Trash2 className="w-4 h-4" />
