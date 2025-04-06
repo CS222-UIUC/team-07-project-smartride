@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // TODO: Connect to backend, call @/api/profile/web/userprofile.ts to fetch user data, write handleUpdate and also when loaded, handleLoad function
@@ -14,7 +14,7 @@ const ProfilePage: React.FC = () => {
   const [age, setAge] = useState("");
 
   // Static mock value, will be fetched later
-  const email = "user@example.com";
+  const [email, setEmail] = useState("");
   const totalDistance = "0 km";
   const totalRideTime = "0 min";
   const totalCalories = "0 kcal";
@@ -31,6 +31,31 @@ const ProfilePage: React.FC = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch("/api/profile", {
+          method: "GET",
+          credentials: "include", 
+        });
+        const result = await res.json();
+        if (result.success) {
+          setName(result.data.name || "");
+          setEmail(result.data.email || "");
+          // setNickname(result.data.nickname || "");
+          // setHeight(result.data.height?.toString() || "");
+          // setWeight(result.data.weight?.toString() || "");
+          // setAge(result.data.age?.toString() || "");
+        }
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      }
+    }
+  
+    fetchProfile();
+  }, []);
+  
 
   return (
     <div
@@ -226,3 +251,6 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
+
+
+

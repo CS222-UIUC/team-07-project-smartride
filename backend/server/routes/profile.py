@@ -16,6 +16,10 @@ def profile() -> tuple[Response, int]:
             "name": current_user.name,
             "email": current_user.email,
             # TODO: Add more fields to connect with frontend
+            # "nickname": current_user.nickname,
+            # "height": current_user.height,
+            # "weight": current_user.weight,
+            # "age": current_user.age,
         },
         message="User profile loaded successfully.",
         status_code=200,
