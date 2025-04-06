@@ -1,6 +1,9 @@
 channels:
 - conda-forge
 - defaults
+- https://repo.anaconda.com/pkgs/main
+- https://repo.anaconda.com/pkgs/r
+- https://repo.anaconda.com/pkgs/msys2
 dependencies:
 - annotated-types=0.7.0
 - appdirs=1.4.4
@@ -37,15 +40,20 @@ dependencies:
 - jaraco.context=6.0.1
 - jaraco.functools=4.1.0
 - keyring=25.6.0
+- libexpat=2.6.4
 - libffi=3.4.4
+- liblzma=5.6.4
+- liblzma-devel=5.6.4
 - libmpdec=4.0.0
+- libsqlite=3.45.3
+- libzlib=1.2.13
 - lz4-c=1.9.4
 - markupsafe=3.0.2
 - more-itertools=10.6.0
 - msgpack-python=1.0.3
 - openssl=3.0.16
 - packaging=24.2
-- pip=25.0
+- pip=25.0.1
 - pkginfo=1.12.1.2
 - platformdirs=4.3.7
 - pycparser=2.22
@@ -61,6 +69,7 @@ dependencies:
 - requests=2.32.3
 - requests-toolbelt=1.0.0
 - ruamel.yaml=0.18.6
+- ruamel.yaml.clib=0.2.8
 - semver=3.0.4
 - setuptools=75.8.0
 - shellingham=1.5.4
@@ -70,13 +79,16 @@ dependencies:
 - tomli=2.2.1
 - tomlkit=0.13.2
 - trove-classifiers=2025.3.19.19
+- typing-inspection=0.4.0
 - typing_extensions=4.13.1
 - ucrt=10.0.22621.0
 - urllib3=2.3.0
+- vc14_runtime=14.42.34433
 - virtualenv=20.30.0
 - wheel=0.45.1
 - win_inet_pton=1.1.0
 - xz=5.6.4
+- xz-tools=5.6.4
 - yaml=0.2.5
 - zipp=3.21.0
 - zlib=1.2.13

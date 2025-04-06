@@ -1,5 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+// TODO: Connect to backend, call @/api/profile/web/userprofile.ts to fetch user data, write handleUpdate and also when loaded, handleLoad function
+
+interface UserProfileResponse {
+  success: boolean;
+  data: {
+    name: string;
+    email: string;
+  };
+}
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,7 +22,7 @@ const ProfilePage: React.FC = () => {
   const [age, setAge] = useState("");
 
   // Static mock value, will be fetched later
-  const email = "user@example.com";
+  const [email, setEmail] = useState("");
   const totalDistance = "0 km";
   const totalRideTime = "0 min";
   const totalCalories = "0 kcal";
@@ -29,6 +39,30 @@ const ProfilePage: React.FC = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch("/api/profile", {
+          method: "GET",
+          credentials: "include",
+        });
+        const result = (await res.json()) as UserProfileResponse;
+        if (result.success) {
+          setName(result.data.name || "");
+          setEmail(result.data.email || "");
+          // setNickname(result.data.nickname || "");
+          // setHeight(result.data.height?.toString() || "");
+          // setWeight(result.data.weight?.toString() || "");
+          // setAge(result.data.age?.toString() || "");
+        }
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      }
+    }
+
+    void fetchProfile();
+  }, []);
 
   return (
     <div
@@ -138,8 +172,26 @@ const ProfilePage: React.FC = () => {
 
         {/* Form Fields */}
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+          <label style={{ fontSize: "14px", fontWeight: 500 }}>
+            Name:&nbsp;
+            <input
+              type="text"
+              value={name}
+              disabled
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #eee",
+                borderRadius: "6px",
+                marginTop: "4px",
+                backgroundColor: "#f3f3f3",
+                fontSize: "14px",
+              }}
+            />
+          </label>
+
           {[
-            { label: "Name", value: name, setValue: setName, type: "text" },
+            // { label: "Name", value: name, setValue: setName, type: "text" },
             {
               label: "Nickname",
               value: nickname,
