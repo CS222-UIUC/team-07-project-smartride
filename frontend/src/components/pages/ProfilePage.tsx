@@ -3,6 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 // TODO: Connect to backend, call @/api/profile/web/userprofile.ts to fetch user data, write handleUpdate and also when loaded, handleLoad function
 
+interface UserProfileResponse {
+  success: boolean;
+  data: {
+    name: string;
+    email: string;
+    // 后续你可以添加 nickname, height, weight, age 等字段
+  };
+}
+
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
 
@@ -37,9 +46,9 @@ const ProfilePage: React.FC = () => {
       try {
         const res = await fetch("/api/profile", {
           method: "GET",
-          credentials: "include", 
+          credentials: "include",
         });
-        const result = await res.json();
+        const result = (await res.json()) as UserProfileResponse;
         if (result.success) {
           setName(result.data.name || "");
           setEmail(result.data.email || "");
@@ -52,10 +61,9 @@ const ProfilePage: React.FC = () => {
         console.error("Failed to load profile:", err);
       }
     }
-  
-    fetchProfile();
+
+    void fetchProfile();
   }, []);
-  
 
   return (
     <div
@@ -165,8 +173,26 @@ const ProfilePage: React.FC = () => {
 
         {/* Form Fields */}
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+          <label style={{ fontSize: "14px", fontWeight: 500 }}>
+            Name:&nbsp;
+            <input
+              type="text"
+              value={name}
+              disabled
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #eee",
+                borderRadius: "6px",
+                marginTop: "4px",
+                backgroundColor: "#f3f3f3",
+                fontSize: "14px",
+              }}
+            />
+          </label>
+
           {[
-            { label: "Name", value: name, setValue: setName, type: "text" },
+            // { label: "Name", value: name, setValue: setName, type: "text" },
             {
               label: "Nickname",
               value: nickname,
@@ -251,6 +277,3 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
-
-
-
