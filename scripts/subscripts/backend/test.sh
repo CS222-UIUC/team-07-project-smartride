@@ -5,10 +5,16 @@ if [[ "$SMARTRIDE_ENTRYPOINT" != "backend-main" ]]; then
   exit 1
 fi
 
-set -e
-
 # Move to backend directory
 cd ../../../backend
+
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
 conda activate smartride-backend
 
 # Run pytest with coverage

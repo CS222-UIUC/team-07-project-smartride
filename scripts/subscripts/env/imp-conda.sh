@@ -9,6 +9,13 @@ fi
 
 echo "[Import Conda] Importing newest update on smartride-backend conda environment..."
 
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
 cd "$(dirname "$0")/../../../backend"
 
 echo "Using conda_env_mac.yml"
@@ -17,7 +24,8 @@ conda env update --file conda_env_mac.yml > /dev/null
 
 cd - > /dev/null
 
-echo "1" > "$(dirname "$0")/../env/parameters/conda-imported"
-echo "[Import Conda] Environment imported. Flag set to 1."
+HASH_FILE="$(dirname "$0")/parameters/last-import"
+ORIGIN_HASH=$(git rev-parse origin/main)
+echo "$ORIGIN_HASH" > "$HASH_FILE"
 
-echo "[Import Conda] Conda import completed."
+echo "[Import Conda] Conda is successfully imported."

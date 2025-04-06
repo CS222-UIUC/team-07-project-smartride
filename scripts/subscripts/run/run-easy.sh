@@ -10,11 +10,11 @@ pushd "$(dirname "$0")/../../.."
 
 # Start backend
 echo "Starting backend..."
-osascript -e 'tell application "Terminal" to do script "cd backend && conda activate smartride-backend && python -m server.app; echo; echo Press Enter to exit...; read"'
+osascript -e 'tell application "Terminal" to do script "eval $(conda shell.bash hook); cd '$(pwd)'; cd backend && conda activate smartride-backend && python -m server.app; echo; echo Press Enter to exit...; read"'
 
 # Start frontend
 echo "Starting frontend..."
-osascript -e 'tell application "Terminal" to do script "cd frontend && pnpm install && pnpm run dev; echo; echo Press Enter to exit...; read"'
+osascript -e 'tell application "Terminal" to do script "cd '$(pwd)'; cd frontend && pnpm install && pnpm run dev; echo; echo Press Enter to exit...; read"'
 
 # Start ngrok
 echo "Starting ngrok..."

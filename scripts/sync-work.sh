@@ -12,6 +12,14 @@ echo
 echo "[SyncWork] Starting sync mode: $1"
 echo
 
+
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
 if [ "$1" = "--pull" ]; then
     echo "[Git] Checking out and pulling origin/main..."
     git checkout main || { echo "[Error] Failed to checkout main. Aborting."; exit 1; }

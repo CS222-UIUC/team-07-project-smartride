@@ -8,6 +8,8 @@ def create_env_file_mac(input_path, output_path):
         dep for dep in env_data['dependencies']
         if dep not in ['vc=14.42', 'vs2015_runtime=14.42.34433']
     ]
+
+    env_data['dependencies'].extend(['libcxx=14.0.6', 'ncurses=6.4', 'readline=8.2'])
     
     with open(output_path, 'w', encoding="UTF-8") as file:
         yaml.dump(env_data, file, default_flow_style=False)

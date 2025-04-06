@@ -1,37 +1,98 @@
 ﻿
 name: smartride-backend
 channels:
+  - conda-forge
   - defaults
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/msys2
 dependencies:
+  - annotated-types=0.7.0
+  - appdirs=1.4.4
+  - backports=1.0
+  - backports.tarfile=1.2.0
+  - boltons=24.0.0
+  - brotli-python=1.0.9
   - bzip2=1.0.8
-  - ca-certificates=2025.2.25
+  - ca-certificates=2025.1.31
+  - cachecontrol=0.14.2
+  - cachecontrol-with-filecache=0.14.2
+  - certifi=2025.1.31
+  - cffi=1.17.1
+  - charset-normalizer=3.4.1
+  - click=8.1.8
+  - click-default-group=1.2.4
+  - colorama=0.4.6
+  - conda-lock=3.0.0
+  - crashtest=0.4.1
+  - distlib=0.3.9
+  - dulwich=0.22.7
+  - ensureconda=1.4.7
   - expat=2.6.4
+  - filelock=3.18.0
+  - gitdb=4.0.12
+  - gitpython=3.1.44
+  - h2=4.2.0
+  - hpack=4.1.0
+  - hyperframe=6.1.0
+  - idna=3.10
+  - importlib-metadata=8.6.1
+  - importlib_resources=6.5.2
+  - jaraco.classes=3.4.0
+  - jaraco.context=6.0.1
+  - jaraco.functools=4.1.0
+  - keyring=25.6.0
   - libffi=3.4.4
   - libmpdec=4.0.0
-  - openssl=3.0.15
+  - lz4-c=1.9.4
+  - markupsafe=3.0.2
+  - more-itertools=10.6.0
+  - msgpack-python=1.0.3
+  - openssl=3.0.16
+  - packaging=24.2
   - pip=25.0
+  - pkginfo=1.12.1.2
+  - platformdirs=4.3.7
+  - pycparser=2.22
+  - pyproject_hooks=1.2.0
+  - pysocks=1.7.1
   - python=3.13.2
+  - python-build=1.2.2.post1
+  - python-fastjsonschema=2.21.1
+  - python-installer=0.7.0
   - python_abi=3.13
+  - pywin32-ctypes=0.2.3
+  - pyyaml=6.0.2
+  - requests=2.32.3
+  - requests-toolbelt=1.0.0
+  - ruamel.yaml=0.18.6
+  - semver=3.0.4
   - setuptools=75.8.0
+  - shellingham=1.5.4
+  - smmap=5.0.2
   - sqlite=3.45.3
   - tk=8.6.14
+  - tomli=2.2.1
+  - tomlkit=0.13.2
+  - trove-classifiers=2025.3.19.19
+  - typing_extensions=4.13.1
+  - ucrt=10.0.22621.0
+  - urllib3=2.3.0
   - vc=14.42
+  - virtualenv=20.30.0
   - vs2015_runtime=14.42.34433
   - wheel=0.45.1
+  - win_inet_pton=1.1.0
   - xz=5.6.4
+  - yaml=0.2.5
+  - zipp=3.21.0
   - zlib=1.2.13
+  - zstandard=0.23.0
+  - zstd=1.5.6
   - pip:
       - alembic==1.14.1
-      - annotated-types==0.7.0
       - anyio==4.8.0
       - blinker==1.9.0
-      - certifi==2025.1.31
-      - charset-normalizer==3.4.1
-      - click==8.1.8
-      - colorama==0.4.6
       - coverage==7.7.1
       - fastapi==0.115.10
       - flask==3.1.0
@@ -42,16 +103,13 @@ dependencies:
       - flask-sqlalchemy==3.1.1
       - greenlet==3.1.1
       - h11==0.14.0
-      - idna==3.10
       - iniconfig==2.1.0
       - itsdangerous==2.2.0
       - jinja2==3.1.5
       - mako==1.3.9
-      - markupsafe==3.0.2
       - mypy==1.15.0
       - mypy-extensions==1.0.0
       - numpy==2.2.3
-      - packaging==24.2
       - pandas==2.2.3
       - pathlib==1.0.1
       - pluggy==1.5.0
@@ -63,8 +121,6 @@ dependencies:
       - python-dateutil==2.9.0.post0
       - python-dotenv==1.1.0
       - pytz==2025.1
-      - pyyaml==6.0.2
-      - requests==2.32.3
       - ruff==0.11.2
       - six==1.17.0
       - sniffio==1.3.1
@@ -75,7 +131,6 @@ dependencies:
       - types-sqlalchemy==1.4.53.38
       - typing-extensions==4.12.2
       - tzdata==2025.1
-      - urllib3==2.3.0
       - uvicorn==0.34.0
       - websockets==15.0
       - werkzeug==3.1.3

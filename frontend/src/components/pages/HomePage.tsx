@@ -2,13 +2,16 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "@/api/web/logout";
 import { useState } from "react";
+import { useAuth } from "@/components/context/useAuth";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const { refresh } = useAuth();
 
   const handleLogout = async () => {
     try {
       await logoutUser();
+      await refresh();
       void navigate("/start");
     } catch {
       alert("Logout failed. Please try again.");
