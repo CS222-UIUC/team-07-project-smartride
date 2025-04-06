@@ -1,5 +1,4 @@
-﻿
-name: smartride-backend
+﻿name: smartride-backend
 channels:
   - conda-forge
   - defaults
@@ -146,5 +145,3 @@ dependencies:
       - uvicorn==0.34.0
       - websockets==15.0
       - werkzeug==3.1.3
-
-

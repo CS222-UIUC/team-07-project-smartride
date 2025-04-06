@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import MapView from "@/components/maps/MapView";
 
 import { CSSProperties } from "react";
@@ -30,8 +29,6 @@ const MapWrapper = () => {
 };
 
 const RoutePlanningPage = () => {
-  const navigate = useNavigate();
-
   return (
     <div
       style={{
@@ -42,15 +39,6 @@ const RoutePlanningPage = () => {
         alignItems: "center",
       }}
     >
-      <div style={{ width: "100%", margin: "1rem" }}>
-        <button
-          type="button"
-          onClick={() => void navigate("/home")}
-          className="w-full text-base bg-gray-100 border border-gray-300 rounded-lg cursor-pointer"
-        >
-          Back
-        </button>
-      </div>
       <MapWrapper />
     </div>
   );
