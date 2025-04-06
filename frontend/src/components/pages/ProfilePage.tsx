@@ -8,7 +8,6 @@ interface UserProfileResponse {
   data: {
     name: string;
     email: string;
-    // 后续你可以添加 nickname, height, weight, age 等字段
   };
 }
 
