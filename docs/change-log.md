@@ -32,6 +32,14 @@
 
 7. `MapClickHandler` is now an independent map sub-component rather than being in `MapView`.
 
+## Apr 6, Brian
+
+1. Added `TopBar` and `BottomNav` components to the frontend, which are auto-selected by `LayoutWrapper` and registered in `App.tsx`.
+
+2. Added `SlidePanel` and is extended to `MapPanel`, a bottom slide panel that will be used to support `RoutePlanningPage` planning process.
+
+3. Fix `Logout` bugs, and write new unit tests to test the whole `auth` process (for web).
+
 ## What's more
 
 ←[Previous: CI/CD](ci-cd.md); ↓[Go back to Documentation](./README.md).

@@ -1,8 +1,7 @@
-// src/components/maps/SetViewToUserOnce.tsx
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
-const SetViewToUserOnce: React.FC = () => {
+const UserFocusView: React.FC = () => {
   const map = useMap();
 
   useEffect(() => {
@@ -21,4 +20,4 @@ const SetViewToUserOnce: React.FC = () => {
   return null;
 };
 
-export default SetViewToUserOnce;
+export default UserFocusView;
