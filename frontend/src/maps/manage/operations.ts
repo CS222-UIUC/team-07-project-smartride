@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { nanoid } from "nanoid";
-import { getRoute } from "@/api/map/route_service";
-import type { Point, RouteSegment } from "./structure";
+import { getRoute } from "@/api/map/route_service.ts";
+import type { Point, RouteSegment } from "./structure.ts";
 
 export const useRouteOperations = () => {
   const [points, setPoints] = useState<Point[]>([]);

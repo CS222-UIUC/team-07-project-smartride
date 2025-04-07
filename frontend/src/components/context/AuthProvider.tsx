@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { AuthContext } from "./AuthContext";
-import { checkLoginStatus } from "@/api/web/auth";
+import { AuthContext } from "./AuthContext.tsx";
+import { checkLoginStatus } from "@/api/web/auth.ts";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const contextValue = useMemo(
     () => ({ isLoggedIn, loading: isLoggedIn === null, refresh }),
-    [isLoggedIn, refresh],
+    [isLoggedIn, refresh]
   );
 
   return <AuthContext value={contextValue}>{children}</AuthContext>;

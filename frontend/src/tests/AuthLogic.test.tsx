@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/components/context/AuthProvider";
-import ProtectedRoute from "@/components/wrappers/ProtectedRoute";
-import LoginPage from "@/components/pages/LoginPage";
-import HomePage from "@/components/pages/HomePage";
-import StartPage from "@/components/pages/StartPage";
+import { AuthProvider } from "@/components/context/AuthProvider.tsx";
+import ProtectedRoute from "@/components/wrappers/ProtectedRoute.tsx";
+import LoginPage from "@/components/pages/LoginPage.tsx";
+import HomePage from "@/components/pages/HomePage.tsx";
+import StartPage from "@/components/pages/StartPage.tsx";
 
 let authState = true; // true = logged in, false = logging/logged out
 
@@ -41,7 +41,7 @@ function renderApp(initialPath = "/login") {
           </Route>
         </Routes>
       </AuthProvider>
-    </MemoryRouter>,
+    </MemoryRouter>
   );
 }
 

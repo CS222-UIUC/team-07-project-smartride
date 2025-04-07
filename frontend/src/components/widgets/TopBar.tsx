@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.tsx";
 import { ArrowLeft, User } from "lucide-react";
 
 interface TopBarProps {

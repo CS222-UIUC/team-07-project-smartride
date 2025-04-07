@@ -5,7 +5,7 @@ import RegisterPage from "@/components/pages/RegisterPage.tsx";
 import HomePage from "@/components/pages/HomePage.tsx";
 import StartPage from "@/components/pages/StartPage.tsx";
 import LoadPage from "@/components/pages/LoadPage.tsx";
-import MapPage from "@/components/pages/MapPage";
+import MapPage from "@/components/pages/MapPage.tsx";
 import RoutePlanningPage from "@/components/pages/RoutePlanningPage.tsx";
 import ProfilePage from "@/components/pages/ProfilePage.js";
 import RideLogPage from "@/components/pages/RideLogPage.tsx";
@@ -16,7 +16,7 @@ import PhoneFrame from "@/components/wrappers/PhoneFrame.tsx";
 import LayoutWrapper from "@/components/wrappers/LayoutWrapper.tsx";
 import "@/index.css";
 import "@/App.css";
-import DayRoutePage from "./components/pages/DayRoutePage";
+import DayRoutePage from "@/components/pages/DayRoutePage.tsx";
 
 const IsPhone = window.innerWidth < 768;
 
