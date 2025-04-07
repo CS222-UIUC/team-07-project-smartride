@@ -6,6 +6,9 @@ param (
 
 Set-StrictMode -Version Latest
 
+& "$PSScriptRoot/subscripts/env/check-setup.ps1"
+if ($LASTEXITCODE -ne 0) { exit 1 }
+
 Push-Location "$PSScriptRoot"
 
 Write-Host "`n[SyncWork] Starting sync mode: $Mode`n"

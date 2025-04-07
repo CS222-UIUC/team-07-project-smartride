@@ -6,31 +6,21 @@ Files like database files, .env.shared are not suitable for uploading to GitHub.
 
 ## Instructions to setup
 
-### Rclone
+If `./setup` goes well, jump to [How to use](#how-to-use) section.
+
+#### Rclone
 
 - `rclone` can backup and restore files to and from cloud storages, where in our case, google drive.
 
-- We have a team email account which is used to sync `rclone`. As a teammate, you do not have to sync `rclone` yourself. All entries except for the token are filled for you in `rclone/rclone.conf.example`. Just copy that into `rclone/rclone.conf` by
+- We have a team email account which is used to sync `rclone`. As a teammate, you do not have to sync `rclone` yourself. All entries except for the token are filled for you in `rclone/rclone.conf.example`.
 
-  ```
-  cd rclone
-  cp rclone.conf.example rclone.conf
-  ```
+#### Environment Variables
 
-- Now, contact ETwilight for the token value and fill in.
+- `.env.local` and `.env.shared` stores all the environment variables we need.
 
-### Environment Variables
+- Modify `COMMITTER` variable in `.env.local` to be your GitHub account. (NEW: `./setup` will do this for you given you have set up `user.name` in git config.)
 
-- `.env.local` and `.env.shared` stores all the environment variables we need. Generate them by copying from relevant `.example` files:
-
-  ```
-  cp .env.local.example .env.local
-  cp .env.shared.example .env.shared
-  ```
-
-- Modify `COMMITTER` variable in `.env.local` to be your GitHub account.
-
-- Now, run `cd scripts;drive.(ps1|sh) --download` to sync `.env.shared` and other team files. Check out [scripts.md](scripts.md) if you do not know how to run a script.
+- Now, run `cd scripts;drive.(ps1|sh) --download` to sync `.env.shared` and other team files.
 
 ## How to use
 

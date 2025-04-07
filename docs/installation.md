@@ -2,21 +2,35 @@
 
 1. Clone the repo by `git clone https://github.com/CS222-UIUC/team-07-project-smartride.git`.
 
-2. Follow the instructions at `https://pnpm.io/next/installation` to install `pnpm` command.
+2. The simplest way to set up the environment is to run:
 
-3. Download and setup `Node.js` from `https://nodejs.org/en/download`.
+   ```cd scripts
+   chmod +x ./setup.sh && ./setup.sh   # for MacOS
+   ./setup.ps1                         # for Windows
+   ```
 
-4. Make sure `conda` is correctly installed, version should be at least `23.3.1`.
+   In the first step, you will need to contact ETwilight for the `token` of `rclone.conf` to fill in. Check out [drive-env.md](drive-env.md) for more details.
 
-   a. Install `anaconda` or `miniconda` from their official website, then run `conda init` inside your_conda_location/scripts folder. Then reopen the terminal will give you access to conda.
+3. Install `pnpm`, `node.js`, `conda` (either `anaconda` or `miniconda`), and `rclone` on your machine if you choose to set up manually.
 
-   b. Create the virtual environment by running `conda env create -f conda_env_win.yml` / `conda env create -f conda_env_mac.yml` (depending on what platform you are using) at `./backend` folder.
+4. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us. It is not mandatory at this time if you only want to give this project a try.
 
-   c. Initialize the environment by running `conda init` at `./backend` folder. Then reopen the terminal.
+5. Note for non-teammates only:
 
-5. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us.
+- The project is still runnable, but you should follow instructions below.
+- Register your own ORS API key and put it into `ORS_API_KEY` entry of `.env.shared`.
+- Design your own `FLASK_SECRET_KEY` and `JWT_SECRET_KEY` and put into `.env.shared`, they do not have to be the same as ours.
+- Comment out certain lines in certain files as indicated (This doc is not synced in real-time, so you may need to figure out yourselves):
+  - `scripts/setup.ps1`: line 23-71, 319-322
+  - `scripts/setup.sh`: line 4-34, 194-195
+  - `scripts/sync-work.ps1`: line 9-10, 59-65
+  - `scripts/sync-work.sh`: line 9, 41-42
+  - `scripts/pr-prep.ps1`: line 7-8, 40-46
+  - `scripts/pr-prep.sh`: line 6, 39-44
+- Run `setup` and `setup -admin`.
+- Now follow [usage.md](usage.md) to run the project. This is no different from the teammates' instructions.
 
-6. See the next documentation to learn how to set up environment variables and team google drive.
+6. To request for `rclone.conf` token or other sensitive files, or if you have a strong passion of contributing code, read [contribute-code.md](contribute-code.md) for more details. A simple message is that we rarely share sensitive informations.
 
 ## What's more
 
