@@ -1,8 +1,9 @@
 # Ignore files under pycache
 __pycache__
 __pycache__/*
-server/utils/ors_api.py
 .mypy_cache/
 .ruff_cache/
 .pytest_cache/
 .coverage
+database/*
+!database/.gitkeep

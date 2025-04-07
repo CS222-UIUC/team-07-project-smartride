@@ -1,0 +1,2 @@
+.env.shared                         ::      bobliboya
+backend/database/userinfo.db        ::      bobliboya

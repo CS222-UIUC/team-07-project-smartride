@@ -1,11 +1,15 @@
 #!/bin/bash
 
-echo -e "\n=== Formatting Python Backend (ruff) ===\n"
-cd ../backend
-ruff format backend
+echo -e "\n[Formatter] Start backend ruff formatter workflow..."
+pushd "../backend"
+ruff format server
+echo -e "\n[Formatter] Backend ruff formatter workflow are completed."
+popd
 
-echo -e "\n=== Formatting Frontend (prettier) ===\n"
-cd ../frontend
+echo -e "\n[Formatter] Start frontend prettier formatter workflow..."
+pushd "../frontend"
 pnpm prettier --write "**/*.{ts,tsx,css}"
+echo -e "\n[Formatter] Frontend prettier formatter workflow are completed."
+popd
 
-cd ../scripts
+echo -e "\n[Formatter] All formatter workflows are completed.\n"

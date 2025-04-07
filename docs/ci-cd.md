@@ -16,10 +16,12 @@
 
 8. `backend-test.yml` runs backend unit tests with `pytest` and collects `coverage`.
 
-9. We do not have any CD procedure yet.
+9. You may ignore `run-script-par-reset.yml`.
 
-10. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
+10. We do not have any CD procedure yet.
 
-## Go back to README
+11. Our project uses Dependabot to automate weekly dependency updates for the backend (`pip`), frontend (`npm`), and GitHub Actions workflows. The Dependabot configuration is located in `.github/dependabot.yml`.
 
-[Go back to README](./README.md)
+## What's more
+
+←[Previous: Contribute Code](contribute-code.md); ↓[Go back to Documentation](./README.md); [Next: Major Change Logs](change-log.md)→

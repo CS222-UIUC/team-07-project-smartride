@@ -2,28 +2,58 @@ name: Run Pytest
 
 on:
   pull_request:
-    paths:
-      - "backend/server/**"
-      - "backend/tests/**"
+    branches: ["main"]
+  push:
+    branches: ["main"]
 
 jobs:
-  test:
+  backend-test:
+    name: Backend PyTest
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
         with:
-          python-version: "3.10"
+          fetch-depth: 0
 
-      - name: Install test dependencies
+      - name: Check for backend changes
+        id: changes
+        run: |
+          git fetch origin main --no-tags --depth=1
+          git diff --name-only FETCH_HEAD...HEAD > changed.txt
+          if grep -q '^backend/' changed.txt; then
+            echo "backend_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "backend_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up micromamba + Conda env
+        if: steps.changes.outputs.backend_changed == 'true'
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: backend/conda_env_mac.yml
+          environment-name: smartride-backend
+          cache-downloads: true
+          cache-environment: true
+          init-shell: bash
+
+      - name: Install dev-only Python tools
+        if: steps.changes.outputs.backend_changed == 'true'
+        shell: bash -l {0}
         working-directory: backend
         run: |
-          pip install pytest pytest-cov coverage
+          micromamba run -n smartride-backend pip install pytest pytest-cov coverage
 
       - name: Run tests
+        if: steps.changes.outputs.backend_changed == 'true'
         working-directory: backend
+        env:
+          FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+          ORS_API_KEY: ${{ secrets.ORS_API_KEY }}
         run: |
-          pytest --cov=server tests/
+          micromamba run -n smartride-backend pytest --cov=server tests/
+
+      - name: Skip backend tests
+        if: steps.changes.outputs.backend_changed == 'false'
+        run: echo "No backend change, skipping tests"

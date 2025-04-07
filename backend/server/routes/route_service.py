@@ -3,7 +3,8 @@ from typing import Any, cast
 import requests
 from flask import Blueprint, Response, request
 
-from server.utils.ors_api import ors_api_key
+from server.core.config import Config
+from server.utils.ors_formatter import format_route_response
 from server.utils.response import api_response
 
 route_service_bp = Blueprint("route_service", __name__)
@@ -23,9 +24,9 @@ def get_route() -> tuple[Response, int]:
         )
 
     try:
-        start_lon = float(start.get("lon"))
+        start_lng = float(start.get("lng"))
         start_lat = float(start.get("lat"))
-        dest_lon = float(dest.get("lon"))
+        dest_lng = float(dest.get("lng"))
         dest_lat = float(dest.get("lat"))
     except (TypeError, ValueError):
         return api_response(
@@ -35,8 +36,9 @@ def get_route() -> tuple[Response, int]:
         )
 
     try:
-        route = call_ors_api(start_lon, start_lat, dest_lon, dest_lat)
-        return api_response(success=True, data=route)
+        route = call_ors_api(start_lng, start_lat, dest_lng, dest_lat)
+        formatted = format_route_response(route)
+        return api_response(success=True, data=formatted)
     except requests.RequestException as e:
         return api_response(
             success=False,
@@ -46,7 +48,7 @@ def get_route() -> tuple[Response, int]:
 
 
 def call_ors_api(
-    start_lon: float, start_lat: float, dest_lon: float, dest_lat: float
+    start_lng: float, start_lat: float, dest_lng: float, dest_lat: float
 ) -> dict[str, Any]:
     headers = {
         "Accept": (
@@ -55,7 +57,7 @@ def call_ors_api(
     }
     req_url = (
         "https://api.openrouteservice.org/v2/directions/cycling-regular"
-        f"?api_key={ors_api_key}&start={start_lon},{start_lat}&end={dest_lon},{dest_lat}"
+        f"?api_key={Config.ORS_API_KEY}&start={start_lng},{start_lat}&end={dest_lng},{dest_lat}"
     )
 
     response = requests.get(req_url, headers=headers)

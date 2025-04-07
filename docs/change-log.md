@@ -10,12 +10,36 @@
 
 4. Updated frontend TypeScript files to include explicit type annotations to satisfy strict ESLint rules.
 
-5. Added type annotations to backend Python files in accordance with ruff and mypy static analysis requirements.
+5. Added type annotations to backend Python files in accordance with `ruff` and `mypy` static analysis requirements.
 
-6. Added automatic scripts for convenience, in `scripts/` folder, with more instructions in [usage.md](usage.md). For example, if you are not curious about what are changed, just run `run.ps1/sh` to launch the whole project.
+6. Added automatic scripts in `scripts/` folder to reduce your memory burden of different commands, with more instructions in [scripts](scripts.md).
 
 7. Add backend unit test github action workflow, see `.github/workflows/backend-test.yml`.
 
-## Go back to README
+## Mar 31, Brian
 
-[Go back to README](./README.md)
+1. Automatic scripts refactored. Now the highest-level scripts are `sync-work --(pull|merge)` and `pr-prep`, see [scripts](scripts.md) for more.
+
+2. Create team google drive account. Move `userinfo.db` to google drive. Add environment variables, `.env.shared` and `.env.local`, where `.env.shared` is also moved to drive.
+
+3. Use `rclone` to automatically connect with google drive. Write auto script `drive --(download|upload)` for uploading and downloading, as well as a weak version control tool `drive-file.txt`. See [scripts](scripts.md) and [drive-env](drive-env.md) for details on setting up and usage.
+
+4. Conda operations are now moved to `scripts/subscripts/env`, instead of the previous chaotic call in multiple not-that-relevant scripts.
+
+5. `run` script no longer requires options.
+
+6. Update documentations in `docs` folder.
+
+7. `MapClickHandler` is now an independent map sub-component rather than being in `MapView`.
+
+## Apr 6, Brian
+
+1. Added `TopBar` and `BottomNav` components to the frontend, which are auto-selected by `LayoutWrapper` and registered in `App.tsx`.
+
+2. Added `SlidePanel` and is extended to `MapPanel`, a bottom slide panel that will be used to support `RoutePlanningPage` planning process.
+
+3. Fix `Logout` bugs, and write new unit tests to test the whole `auth` process (for web).
+
+## What's more
+
+←[Previous: CI/CD](ci-cd.md); ↓[Go back to Documentation](./README.md).

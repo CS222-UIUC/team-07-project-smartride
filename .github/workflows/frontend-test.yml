@@ -2,29 +2,52 @@ name: Run Vitest
 
 on:
   pull_request:
+    branches: ["main"]
   push:
     branches: ["main"]
 
 jobs:
-  test:
+  frontend-test:
+    name: Frontend Vitest
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect frontend changes
+        id: changes
+        run: |
+          git fetch origin main --no-tags --depth=1
+          git diff --name-only FETCH_HEAD...HEAD > changed.txt
+          if grep -q '^frontend/' changed.txt; then
+            echo "has_frontend_change=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_frontend_change=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Setup Node.js
+        if: steps.changes.outputs.has_frontend_change == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Install pnpm
+        if: steps.changes.outputs.has_frontend_change == 'true'
         run: npm install -g pnpm
 
       - name: Install dependencies
+        if: steps.changes.outputs.has_frontend_change == 'true'
         run: pnpm install
         working-directory: frontend
 
       - name: Run tests
+        if: steps.changes.outputs.has_frontend_change == 'true'
         run: pnpm test
         working-directory: frontend
+
+      - name: Skip Vitest
+        if: steps.changes.outputs.has_frontend_change == 'false'
+        run: echo "No frontend change, skipping Vitest"

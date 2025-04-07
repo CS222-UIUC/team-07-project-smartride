@@ -1,27 +1,10 @@
-# Start three separate windows, one for backend, one for frontend, one for ngrok
+Set-StrictMode -Version Latest
 
-# Before running anything, make sure the git is up to date
-Start-Process powershell -ArgumentList @"
-cd ..
-git pull
-"@
+& "$PSScriptRoot/subscripts/env/check-conda-imp.ps1"
+if ($LASTEXITCODE -ne 0) { exit 1 }
 
-# Backend, make sure conda is updated before running the flask server
-Start-Process powershell -ArgumentList @"
-cd ../backend
-conda activate smartride-backend
-conda env update --file conda_env_win.yml --prune
-python -m server.app
-"@
+$env:SMARTRIDE_ENTRYPOINT = "run-main"
 
-# Frontend, make sure the dependencies are updated
-Start-Process powershell -ArgumentList @"
-cd ../frontend
-pnpm install
-pnpm run dev
-"@
-
-# Ngrok
-Start-Process powershell -ArgumentList @"
-ngrok http 5173
-"@
+Push-Location "$PSScriptRoot/subscripts/run"
+& "./run-easy.ps1"
+Pop-Location

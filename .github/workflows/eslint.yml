@@ -2,6 +2,7 @@ name: ESLint
 
 on:
   pull_request:
+    branches: ["main"]
   push:
     branches: ["main"]
   schedule:
@@ -18,20 +19,64 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect frontend changes
+        id: changes
+        run: |
+          git fetch origin main --no-tags --depth=1
+          git diff --name-only FETCH_HEAD...HEAD > changed.txt
+          if grep -q '^frontend/' changed.txt; then
+            echo "has_frontend_change=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_frontend_change=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Node.js
+        if: steps.changes.outputs.has_frontend_change == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
       - name: Install pnpm
+        if: steps.changes.outputs.has_frontend_change == 'true'
         run: npm install -g pnpm
 
       - name: Install dependencies
+        if: steps.changes.outputs.has_frontend_change == 'true'
         working-directory: frontend
         run: pnpm install
 
+      - name: Upload empty SARIF when skipped
+        if: steps.changes.outputs.has_frontend_change == 'false'
+        run: |
+          cat <<EOF > empty.sarif
+              {
+                "version": "2.1.0",
+                "runs": [
+                  {
+                    "tool": {
+                      "driver": {
+                        "name": "ESLint",
+                        "informationUri": "https://eslint.org",
+                        "rules": []
+                      }
+                    },
+                    "results": []
+                  }
+                ]
+              }
+          EOF
+
+      - name: Upload dummy analysis result
+        if: steps.changes.outputs.has_frontend_change == 'false'
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: empty.sarif
+
       - name: Run ESLint
+        if: steps.changes.outputs.has_frontend_change == 'true'
         working-directory: frontend
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
@@ -44,7 +89,12 @@ jobs:
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
+        if: steps.changes.outputs.has_frontend_change == 'true'
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: frontend/eslint-results.sarif
           wait-for-processing: true
+
+      - name: Skip eslint
+        if: steps.changes.outputs.has_frontend_change == 'false'
+        run: echo "No frontend change, skipping ESLint."

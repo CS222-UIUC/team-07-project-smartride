@@ -2,46 +2,74 @@ name: Format Check
 
 on:
   pull_request:
+    branches: ["main"]
   push:
     branches: ["main"]
 
 jobs:
-  auto-format:
-    name: Format Code
+  format-check:
+    name: Format Checks
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect frontend/backend changes
+        id: changes
+        run: |
+          git fetch origin main --no-tags --depth=1
+          git diff --name-only FETCH_HEAD...HEAD > changed.txt
+
+          if grep -q '^frontend/' changed.txt; then
+            echo "has_frontend_change=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_frontend_change=false" >> $GITHUB_OUTPUT
+          fi
+
+          if grep -q '^backend/' changed.txt; then
+            echo "has_backend_change=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_backend_change=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Python
+        if: steps.changes.outputs.has_backend_change == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
       - name: Install Python formatter
-        run: |
-          pip install ruff
+        if: steps.changes.outputs.has_backend_change == 'true'
+        run: pip install ruff
 
       - name: Python code format check
+        if: steps.changes.outputs.has_backend_change == 'true'
         working-directory: backend
-        run: |
-          ruff format server --check
+        run: ruff format server --check
 
       - name: Set up Node.js
+        if: steps.changes.outputs.has_frontend_change == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
       - name: Install pnpm
+        if: steps.changes.outputs.has_frontend_change == 'true'
         run: npm install -g pnpm
 
       - name: Install dependencies
+        if: steps.changes.outputs.has_frontend_change == 'true'
         working-directory: frontend
-        run: |
-          pnpm install
+        run: pnpm install
 
       - name: Frontend code format check
+        if: steps.changes.outputs.has_frontend_change == 'true'
         working-directory: frontend
-        run: |
-          pnpm prettier --check "**/*.{ts,tsx,css}"
+        run: pnpm prettier --check "**/*.{ts,tsx,css}"
+
+      - name: Skip all format checks
+        if: steps.changes.outputs.has_frontend_change == 'false' && steps.changes.outputs.has_backend_change == 'false'
+        run: echo "No frontend/backend changes, skipping format check."
