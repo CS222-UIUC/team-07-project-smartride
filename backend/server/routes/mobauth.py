@@ -1,11 +1,12 @@
 # routes/mobauth.py
 from datetime import datetime, timedelta
-from typing import Any, TypedDict
+from typing import Any, TypedDict, cast
 
 import jwt
 from flask import Blueprint, Response, request
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from server.core.config import Config
 from server.core.extensions import db
 from server.models.user import User
 from server.utils.errors import (
@@ -19,8 +20,8 @@ from server.utils.errors import (
 )
 from server.utils.response import api_response
 
-JWT_SECRET = "your_secret_key"  # Ideally from environment variable
 JWT_EXPIRATION_MINUTES = 60
+JWT_SECRET_KEY: str = Config.JWT_SECRET_KEY if Config.JWT_SECRET_KEY else ""
 
 mobauth_bp = Blueprint("mobauth_bp", __name__, url_prefix="/mob/auth")
 
@@ -41,12 +42,14 @@ def create_jwt_token(user: User) -> str:
         "exp": int((datetime.utcnow() + timedelta(minutes=JWT_EXPIRATION_MINUTES)).timestamp()),
         "iat": int(datetime.utcnow().timestamp()),
     }
-    token = jwt.encode(dict(payload), JWT_SECRET, algorithm="HS256")
-    return token if isinstance(token, str) else token.decode("utf-8")
+    token = jwt.encode(cast(dict[str, Any], payload), JWT_SECRET_KEY, algorithm="HS256")
+    if isinstance(token, bytes):
+        return token.decode("utf-8")
+    return token
 
 
 def decode_jwt_token(token: str) -> JWTPayload:
-    return jwt.decode(token, JWT_SECRET, algorithms=["HS256"])  # type: ignore
+    return jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])  # type: ignore
 
 
 def verify_register(data: dict[str, Any] | None) -> None:
