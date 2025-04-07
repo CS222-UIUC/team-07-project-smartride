@@ -7,6 +7,8 @@ from server.core.config import Config
 from server.core.extensions import db, login_manager
 from server.models.user import User
 from server.routes.auth import auth_bp
+from server.routes.mobauth import mobauth_bp
+from server.routes.mobprofile import mobprofile_bp
 from server.routes.profile import profile_bp
 from server.routes.route_service import route_service_bp
 from server.utils.errors import APIError, handle_api_error
@@ -39,6 +41,8 @@ def load_user(user_id: str) -> User | None:
 
 app.register_blueprint(auth_bp, url_prefix="/api")
 app.register_blueprint(profile_bp, url_prefix="/api")
+app.register_blueprint(mobauth_bp, url_prefix="/api")
+app.register_blueprint(mobprofile_bp, url_prefix="/api")
 app.register_blueprint(route_service_bp, url_prefix="/api")
 
 

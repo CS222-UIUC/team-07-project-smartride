@@ -15,6 +15,7 @@ class Config:
     API_PORT: int | None = 5000
     ORS_API_KEY: str | None = None
     FLASK_SECRET_KEY: str | None = None
+    JWT_SECRET_KEY: str | None = None
 
     # Search upward for 'backend' directory
     for parent in current.parents:
@@ -33,6 +34,11 @@ class Config:
 
     if not FLASK_SECRET_KEY:
         raise RuntimeError("FLASK_SECRET_KEY is not set in the environment.")
+
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+
+    if not JWT_SECRET_KEY:
+        raise RuntimeError("JWT_SECRET_KEY is not set in the environment.")
 
     ORS_API_KEY = os.getenv("ORS_API_KEY")
 
