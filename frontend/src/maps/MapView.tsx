@@ -1,26 +1,28 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
-import RoutePolyline from "./RoutePolyline";
-import WaypointMarkers from "./WaypointMarkers";
-import AutoFocusView from "./AutoFocusView";
-import MapClickHandler from "./MapClickHandler";
-import SetViewToUserOnce from "./SetViewToUserOnce";
-import PanelButton from "./PanelButton";
+import RoutePolyline from "./widgets/RoutePolyline";
+import PointMarker from "./widgets/PointMarker";
+import AutoFocusView from "./widgets/AutoFocusView";
+import ClickHandler from "./widgets/ClickHandler";
+import UserFocusView from "./widgets/UserFocusView";
+import PanelButton from "./widgets/PanelButton";
 import MapPanel from "./MapPanel";
-import { useManagePoints } from "./managePoints";
+import { useRouteOperations } from "./manage/operations";
 
 const MapView = () => {
   const [panelOpen, setPanelOpen] = useState(false);
   const {
     points,
-    route,
+    segments,
     addPoint,
     removePoint,
     reorderPoints,
     togglePointType,
-  } = useManagePoints();
+  } = useRouteOperations();
+
+  const route = useMemo(() => segments.flatMap((s) => s.path), [segments]);
 
   return (
     <div className="relative w-full h-full">
@@ -32,16 +34,16 @@ const MapView = () => {
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-        <MapClickHandler
+        <ClickHandler
           onClick={(lat, lng) => {
-            addPoint(lat, lng);
+            void addPoint(lat, lng);
           }}
         />
 
         <RoutePolyline route={route} />
-        <WaypointMarkers points={points.filter((p) => p.type === "main")} />
+        <PointMarker points={points.filter((p) => p.type === "main")} />
         {route.length > 0 && <AutoFocusView points={route} />}
-        <SetViewToUserOnce />
+        {route.length == 0 && <UserFocusView />}
       </MapContainer>
 
       <PanelButton
@@ -56,9 +58,15 @@ const MapView = () => {
           setPanelOpen(false);
         }}
         points={points}
-        onReorder={reorderPoints}
-        onToggleType={togglePointType}
-        onRemove={removePoint}
+        onReorder={(from, to) => {
+          void reorderPoints(from, to);
+        }}
+        onToggleType={(id) => {
+          togglePointType(id);
+        }}
+        onRemove={(id) => {
+          void removePoint(id);
+        }}
       />
     </div>
   );

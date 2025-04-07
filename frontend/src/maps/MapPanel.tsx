@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import { MoveUp, MoveDown, Trash2, MapPin } from "lucide-react";
-import { Point } from "./managePoints";
+import { Point } from "./manage/structure";
 
 interface MapPanelProps {
   isOpen: boolean;

@@ -1,8 +1,8 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-import { Point } from "./managePoints";
+import type { Point } from "../manage/structure";
 
-interface WaypointMarkersProps {
+interface PointMarkerProps {
   points: Point[];
 }
 
@@ -16,7 +16,7 @@ const createIcon = (color: string) =>
     shadowSize: [41, 41],
   });
 
-const WaypointMarkers: React.FC<WaypointMarkersProps> = ({ points }) => {
+const PointMarker: React.FC<PointMarkerProps> = ({ points }) => {
   if (points.length === 0) return null;
 
   return (
@@ -36,4 +36,4 @@ const WaypointMarkers: React.FC<WaypointMarkersProps> = ({ points }) => {
   );
 };
 
-export default WaypointMarkers;
+export default PointMarker;

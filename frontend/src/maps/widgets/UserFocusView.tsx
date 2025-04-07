@@ -1,8 +1,7 @@
-// src/components/maps/SetViewToUserOnce.tsx
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
-const SetViewToUserOnce: React.FC = () => {
+const UserFocusView: React.FC = () => {
   const map = useMap();
 
   useEffect(() => {
@@ -14,11 +13,11 @@ const SetViewToUserOnce: React.FC = () => {
       (err) => {
         console.error("Geolocation error:", err);
       },
-      { enableHighAccuracy: true },
+      { enableHighAccuracy: true }
     );
   }, [map]);
 
   return null;
 };
 
-export default SetViewToUserOnce;
+export default UserFocusView;

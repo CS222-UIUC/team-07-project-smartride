@@ -1,7 +1,7 @@
 import { useMapEvents } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 
-const MapClickHandler = ({
+const ClickHandler = ({
   onClick,
 }: {
   onClick: (lat: number, lng: number) => void;
@@ -14,4 +14,4 @@ const MapClickHandler = ({
   return null;
 };
 
-export default MapClickHandler;
+export default ClickHandler;

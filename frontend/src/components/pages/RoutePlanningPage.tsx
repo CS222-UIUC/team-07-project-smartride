@@ -1,4 +1,4 @@
-import MapView from "@/components/maps/MapView";
+import MapView from "@/maps/MapView";
 
 import { CSSProperties } from "react";
 import { useIsPhone } from "@/components/context/PhoneContext";
