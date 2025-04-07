@@ -1,10 +1,8 @@
-﻿name: smartride-backend
+﻿
+name: smartride-backend
 channels:
   - conda-forge
   - defaults
-  - https://repo.anaconda.com/pkgs/main
-  - https://repo.anaconda.com/pkgs/r
-  - https://repo.anaconda.com/pkgs/msys2
 dependencies:
   - annotated-types=0.7.0
   - appdirs=1.4.4
@@ -145,3 +143,5 @@ dependencies:
       - uvicorn==0.34.0
       - websockets==15.0
       - werkzeug==3.1.3
+
+

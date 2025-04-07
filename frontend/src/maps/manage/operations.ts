@@ -28,52 +28,61 @@ export const useRouteOperations = () => {
 
     setSegments(newSegments);
   }, []);
-  
-  const addPoint = useCallback(async (lat: number, lng: number) => {
-    const newPoint: Point = {
-      id: nanoid(6),
-      label: `Point ${String(points.length + 1)}`,
-      lat,
-      lng,
-      type: "main",
-    };
 
-    const updatedPoints = [...points, newPoint];
-    setPoints(updatedPoints);
+  const addPoint = useCallback(
+    async (lat: number, lng: number) => {
+      const newPoint: Point = {
+        id: nanoid(6),
+        label: `Point ${String(points.length + 1)}`,
+        lat,
+        lng,
+        type: "main",
+      };
 
-    if (updatedPoints.length >= 2) {
-      const from = updatedPoints[updatedPoints.length - 2];
-      const to = updatedPoints[updatedPoints.length - 1];
-      try {
-        const res = await getRoute(from, to);
-        setSegments((prev) => [...prev, { from, to, path: res.route }]);
-      } catch (e) {
-        console.error("getRoute failed:", e);
+      const updatedPoints = [...points, newPoint];
+      setPoints(updatedPoints);
+
+      if (updatedPoints.length >= 2) {
+        const from = updatedPoints[updatedPoints.length - 2];
+        const to = updatedPoints[updatedPoints.length - 1];
+        try {
+          const res = await getRoute(from, to);
+          setSegments((prev) => [...prev, { from, to, path: res.route }]);
+        } catch (e) {
+          console.error("getRoute failed:", e);
+        }
       }
-    }
-  }, [points]);
+    },
+    [points],
+  );
 
-  const removePoint = useCallback(async (id: string) => {
-    const updated = points.filter((pt) => pt.id !== id);
-    setPoints(updated);
-    await planFullRoute(updated);
-  }, [planFullRoute, points]);
+  const removePoint = useCallback(
+    async (id: string) => {
+      const updated = points.filter((pt) => pt.id !== id);
+      setPoints(updated);
+      await planFullRoute(updated);
+    },
+    [planFullRoute, points],
+  );
 
-  const reorderPoints = useCallback(async (fromIndex: number, toIndex: number) => {
-    const newPoints = [...points];
-    const [moved] = newPoints.splice(fromIndex, 1);
-    newPoints.splice(toIndex, 0, moved);
-    setPoints(newPoints);
-    await planFullRoute(newPoints);
-  }, [planFullRoute, points]);
+  const reorderPoints = useCallback(
+    async (fromIndex: number, toIndex: number) => {
+      const newPoints = [...points];
+      const [moved] = newPoints.splice(fromIndex, 1);
+      newPoints.splice(toIndex, 0, moved);
+      setPoints(newPoints);
+      await planFullRoute(newPoints);
+    },
+    [planFullRoute, points],
+  );
 
   const togglePointType = useCallback((id: string) => {
     setPoints((prev) =>
       prev.map((pt) =>
         pt.id === id
           ? { ...pt, type: pt.type === "main" ? "waypoint" : "main" }
-          : pt
-      )
+          : pt,
+      ),
     );
   }, []);
 
@@ -81,7 +90,6 @@ export const useRouteOperations = () => {
     setPoints([]);
     setSegments([]);
   }, []);
-
 
   return {
     points,

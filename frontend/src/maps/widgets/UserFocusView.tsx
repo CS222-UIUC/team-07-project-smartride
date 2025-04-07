@@ -13,7 +13,7 @@ const UserFocusView: React.FC = () => {
       (err) => {
         console.error("Geolocation error:", err);
       },
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: true },
     );
   }, [map]);
 
