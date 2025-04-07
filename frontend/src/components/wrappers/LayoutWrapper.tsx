@@ -12,7 +12,6 @@ const LayoutWrapper = () => {
   const currentPath = location.pathname;
 
   const isAuthRoot = AUTH_ROOT_PATHS.includes(currentPath);
-
   const isAuthSub = AUTH_SUB_PREFIXES.some((prefix) =>
     currentPath.startsWith(prefix),
   );
@@ -31,7 +30,15 @@ const LayoutWrapper = () => {
           }}
         />
       )}
-      <Outlet />
+      <div
+        className={`
+          w-full h-full
+          ${isAuthSub ? "pt-[var(--topbar-height)]" : ""}
+          ${isAuthRoot ? "pb-[var(--bottomnav-height)]" : ""}
+        `}
+      >
+        <Outlet />
+      </div>
       {isAuthRoot && activeNavId && (
         <BottomNav
           active={activeNavId}

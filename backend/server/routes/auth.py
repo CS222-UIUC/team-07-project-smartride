@@ -1,4 +1,3 @@
-# routes/auth.py
 from typing import Any
 
 from flask import Blueprint, Response, request
