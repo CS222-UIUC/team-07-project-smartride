@@ -44,6 +44,7 @@ app.register_blueprint(profile_bp, url_prefix="/api")
 app.register_blueprint(mobauth_bp, url_prefix="/api")
 app.register_blueprint(mobprofile_bp, url_prefix="/api")
 app.register_blueprint(route_service_bp, url_prefix="/api")
+# TODO (Daniel): register user_routes, which is a blueprint to store and fetch routes created by the user
 
 
 @app.route("/")

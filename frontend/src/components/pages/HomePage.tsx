@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "@/api/web/logout";
 import { useState } from "react";
+import WeeklySidebar from "./WeeklySidebar";
 import { useAuth } from "@/components/context/useAuth";
 
 const HomePage: React.FC = () => {
@@ -70,6 +71,7 @@ const HomePage: React.FC = () => {
           {/* <button onClick={() => navigate("/setting")} style={{ display: "block", background: "none", border: "none" }}>
             Setting
           </button> */}
+          <WeeklySidebar />
         </div>
       )}
 

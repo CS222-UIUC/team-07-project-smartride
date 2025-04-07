@@ -25,7 +25,9 @@ const WeeklySidebar: React.FC = () => {
         // eslint-disable-next-line react-dom/no-missing-button-type
         <button
           key={day}
-          onClick={() => { handleClick(day); }}
+          onClick={() => {
+            handleClick(day);
+          }}
           style={{
             padding: "10px",
             border: "1px solid #ccc",
@@ -42,4 +44,3 @@ const WeeklySidebar: React.FC = () => {
 };
 
 export default WeeklySidebar;
-

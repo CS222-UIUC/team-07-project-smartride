@@ -8,12 +8,11 @@ const DayRoutePage: React.FC = () => {
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
       <h1>
-        Route for {day?.charAt(0).toUpperCase() + day?.slice(1)}
+        Route for{" "}
+        {day ? day.charAt(0).toUpperCase() + day.slice(1) : "Unknown Day"}
       </h1>
       {/* Add route details for the day here */}
-      <p>
-        Display the route details for {day} here.
-      </p>
+      <p>Display the route details for {day} here.</p>
       <button
         type="button"
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
