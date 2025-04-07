@@ -3,8 +3,8 @@ set -e
 
 cd "$(dirname "$0")"
 
-echo
-echo "[PrPrep] Although not mandatory, it is always recommended to first run sync-work.sh --merge to merge main changes."
+bash "$(dirname "$0")/subscripts/env/check-setup.sh"
+
 echo
 echo "[PrPrep] Preparing project before submitting PR..."
 echo
