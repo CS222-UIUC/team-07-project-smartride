@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// TODO: Connect to backend, call @/api/profile/web/userprofile.ts to fetch user data, write handleUpdate and also when loaded, handleLoad function
+// TODO (Richard): Connect to backend, call @/api/profile/web/userprofile.ts to fetch user data, write handleUpdate and also when loaded, handleLoad function
 
 interface UserProfileResponse {
   success: boolean;
@@ -13,6 +13,7 @@ interface UserProfileResponse {
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
+  // Removed unused 'profile' state to resolve errors
 
   // Form state
   const [name, setName] = useState("");

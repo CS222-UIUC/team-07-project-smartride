@@ -11,6 +11,7 @@ from server.routes.mobauth import mobauth_bp
 from server.routes.mobprofile import mobprofile_bp
 from server.routes.profile import profile_bp
 from server.routes.route_service import route_service_bp
+from server.routes.user_routes import user_routes_bp
 from server.utils.errors import APIError, handle_api_error
 from server.utils.response import api_response
 
@@ -44,6 +45,7 @@ app.register_blueprint(profile_bp, url_prefix="/api")
 app.register_blueprint(mobauth_bp, url_prefix="/api")
 app.register_blueprint(mobprofile_bp, url_prefix="/api")
 app.register_blueprint(route_service_bp, url_prefix="/api")
+app.register_blueprint(user_routes_bp, url_prefix="/api")
 
 
 @app.route("/")

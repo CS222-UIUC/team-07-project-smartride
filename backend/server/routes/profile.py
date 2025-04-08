@@ -15,7 +15,7 @@ def profile() -> tuple[Response, int]:
             "id": current_user.id,
             "name": current_user.name,
             "email": current_user.email,
-            # TODO: Add more fields to connect with frontend
+            # TODO [Richard]: Add more fields to connect with frontend
             # "nickname": current_user.nickname,
             # "height": current_user.height,
             # "weight": current_user.weight,

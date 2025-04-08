@@ -49,29 +49,29 @@ get_git_user_or_exit() {
   echo "$gitUser"
 }
 
-committerLine=$(grep -E '^COMMITTER\s*=\s*.*' .env.local || true)
-if [ -n "$committerLine" ]; then
-  committerValue=$(echo "$committerLine" | sed -E 's/^COMMITTER\s*=\s*//;s/\"//g')
-  if [[ -z "$committerValue" || "$committerValue" =~ ^[[:space:]]*$ || "$committerValue" =~ ^<.*>$ ]]; then
-    gitUser=$(get_git_user_or_exit)
-    echo "Git user.name is set to: $gitUser"
-    sed -i '' -E "s/^COMMITTER\s*=.*/COMMITTER=\"$gitUser\"/" .env.local
-    echo "[Setup] COMMITTER is now set to '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
-  else
-    echo "[Setup] .env.local is valid."
-  fi
-else
-  gitUser=$(get_git_user_or_exit)
-  echo "Git user.name is set to: $gitUser"
-  if grep -q '^# Committer$' .env.local; then
-    awk -v u="$gitUser" '/^# Committer$/{print; print "COMMITTER=\"" u "\""; next}1' .env.local > .env.local.tmp && mv .env.local.tmp .env.local
-  else
-    { echo "# Committer"; echo "COMMITTER=\"$gitUser\""; cat .env.local; } > .env.local.tmp && mv .env.local.tmp .env.local
-  fi
-  echo "[Setup] COMMITTER is now inserted as '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
-  popd > /dev/null
-  exit 0
-fi
+# committerLine=$(grep -E '^COMMITTER\s*=\s*.*' .env.local || true)
+# if [ -n "$committerLine" ]; then
+#   committerValue=$(echo "$committerLine" | sed -E 's/^COMMITTER\s*=\s*//;s/\"//g')
+#   if [[ -z "$committerValue" || "$committerValue" =~ ^[[:space:]]*$ || "$committerValue" =~ ^<.*>$ ]]; then
+#     gitUser=$(get_git_user_or_exit)
+#     echo "Git user.name is set to: $gitUser"
+#     sed -i '' -E "s/^COMMITTER\s*=.*/COMMITTER=\"$gitUser\"/" .env.local
+#     echo "[Setup] COMMITTER is now set to '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
+#   else
+#     echo "[Setup] .env.local is valid."
+#   fi
+# else
+#   gitUser=$(get_git_user_or_exit)
+#   echo "Git user.name is set to: $gitUser"
+#   if grep -q '^# Committer$' .env.local; then
+#     awk -v u="$gitUser" '/^# Committer$/{print; print "COMMITTER=\"" u "\""; next}1' .env.local > .env.local.tmp && mv .env.local.tmp .env.local
+#   else
+#     { echo "# Committer"; echo "COMMITTER=\"$gitUser\""; cat .env.local; } > .env.local.tmp && mv .env.local.tmp .env.local
+#   fi
+#   echo "[Setup] COMMITTER is now inserted as '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
+#   popd > /dev/null
+#   exit 0
+# fi
 
 popd > /dev/null
 
@@ -182,6 +182,14 @@ if conda env list | grep -q '^smartride-backend\s'; then
 else
   conda env create -f conda_env_mac.yml
 fi
+
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
 conda activate smartride-backend
 if conda list mamba | grep -q conda-forge; then
   echo "[Setup] mamba and conda-forge are already installed. Skipping install."

@@ -7,6 +7,15 @@ fi
 
 cd ../../../backend
 
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
+conda activate smartride-backend
+
 echo -e "\n=== Running Ruff Fix ===\n"
 ruff check server --diff
 ruff check server --fix
