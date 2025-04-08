@@ -13,6 +13,7 @@ interface UserProfileResponse {
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
+  // Removed unused 'profile' state to resolve errors
 
   // Form state
   const [name, setName] = useState("");

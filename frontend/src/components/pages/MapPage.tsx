@@ -1,26 +1,57 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+import { useState, useEffect } from "react";
+import { getSavedRoutes, Route } from "@/api/map/route_store";
+
 const MapPage = () => {
   const navigate = useNavigate();
+  const [routes, setRoutes] = useState<Route[]>([]);
+
+  useEffect(() => {
+    async function fetchRoutes() {
+      const savedRoutes = await getSavedRoutes();
+      setRoutes(savedRoutes);
+    }
+    void fetchRoutes();
+  }, []);
+
+  const handleRouteClick = (routeId: number, routeName: string) => {
+    // Navigate to route planning with the route id and route_name as parameters
+    void navigate(
+      `/map/plan?id=${String(routeId)}&route_name=${encodeURIComponent(routeName)}`,
+    );
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-4">
       <h1 className="text-xl font-bold mb-6 text-black">
         SmartRide Map Module
       </h1>
-      {/* Be careful of ESLint rules */}
-      {/* In RoutePlanningPage we will be able to change name and save the route to backend*/}
-      {/* TODO (Daniel): For all saved routes (use one of the functions in @/api/route_store.ts), show them in a list of buttons, upon clicking it should still navigate to "/map/plan", but with the route id as a parameter */}
-      <Button
-        className="w-full max-w-xs text-black"
-        onClick={() => {
-          void navigate("/map/plan");
-        }}
-      >
-        Go to Route Planning
-      </Button>
-      {/* TODO: Change accordingly */}
+      {/* For all saved routes, show them in a list of buttons, upon clicking it navigates to "/map/plan", but with the route id and route name as parameters */}
+      {routes.length > 0 && (
+        <div className="mb-4">
+          {routes.map((route) => (
+            <Button
+              key={route.id}
+              className="w-full max-w-xs text-black mb-2"
+              onClick={() => {
+                handleRouteClick(route.id, route.route_name);
+              }}
+            >
+              {route.route_name}
+            </Button>
+          ))}
+          <Button
+            className="w-full max-w-xs text-black"
+            onClick={() => {
+              void navigate("/map/plan");
+            }}
+          >
+            Create A New Route
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
