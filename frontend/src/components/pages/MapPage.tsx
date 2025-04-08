@@ -42,16 +42,17 @@ const MapPage = () => {
               {route.route_name}
             </Button>
           ))}
-          <Button
-            className="w-full max-w-xs text-black"
-            onClick={() => {
-              void navigate("/map/plan");
-            }}
-          >
-            Create A New Route
-          </Button>
         </div>
       )}
+
+      <Button
+        className="w-full max-w-xs text-black"
+        onClick={() => {
+          void navigate("/map/plan");
+        }}
+      >
+        Create A New Route
+      </Button>
     </div>
   );
 };

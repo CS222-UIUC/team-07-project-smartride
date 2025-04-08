@@ -16,9 +16,9 @@ db_path = Path(db_path_str).resolve()
 with app.app_context():
     db.create_all()
 
-    binds = app.config.get("SQLALCHEMY_BINDS", {})
-    for bind_key in binds:
-        db.create_all(bind=bind_key)
+    # binds = app.config.get("SQLALCHEMY_BINDS", {})
+    # for bind_key in binds:
+    # db.create_all(bind=bind_key)
 
     inspector = inspect(db.engine)
     tables = inspector.get_table_names()
