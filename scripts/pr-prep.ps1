@@ -4,7 +4,8 @@ Set-StrictMode -Version Latest
 
 Push-Location "$PSScriptRoot"
 
-Write-Host "`n[PrPrep] Although not mandatory, it is always recommended to first run sync-work.ps1 --merge to merge main changes."
+& "$PSScriptRoot/subscripts/env/check-setup.ps1"
+if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "`n[PrPrep] Preparing project before submitting PR...`n"
 
