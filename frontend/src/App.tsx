@@ -16,6 +16,7 @@ import PhoneFrame from "@/components/wrappers/PhoneFrame.tsx";
 import LayoutWrapper from "@/components/wrappers/LayoutWrapper.tsx";
 import "@/index.css";
 import "@/App.css";
+import DayRoutePage from "./components/pages/DayRoutePage";
 
 const IsPhone = window.innerWidth < 768;
 
@@ -38,6 +39,7 @@ const RouteLibrary: React.FC = () => {
             <Route path="/map/plan" element={<RoutePlanningPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/ride-log" element={<RideLogPage />} />
+            <Route path="/route/:day" element={<DayRoutePage />} />
           </Route>
         </Route>
       </Routes>

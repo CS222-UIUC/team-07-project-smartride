@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-param_dir="$(dirname "$0")/../subscripts/env/parameters"
+param_dir="$(dirname "$0")/parameters"
 last_file="$param_dir/last-setup"
 latest_file="$param_dir/latest-setup"
 

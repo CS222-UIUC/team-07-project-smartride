@@ -17,5 +17,5 @@ Set-Location ../../../backend
 conda activate smartride-backend
 conda env export --no-builds | Select-String -NotMatch "^prefix:" | Out-File -FilePath conda_env_win.yml -Encoding utf8
 Set-Location ../scripts/subscripts/env/python
-python conda_win2mac.py
+# python conda_win2mac.py
 Set-Location ..
