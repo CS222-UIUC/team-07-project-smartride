@@ -6,6 +6,8 @@ if [ "$1" != "--pull" ] && [ "$1" != "--merge" ]; then
     exit 1
 fi
 
+bash "$(dirname "$0")/subscripts/env/check-setup.sh"
+
 cd "$(dirname "$0")"
 
 echo

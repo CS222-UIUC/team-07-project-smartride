@@ -10,11 +10,9 @@
 
 1. If frontend and backend are not configured yet, follow [installation.md](installation.md) first.
 
-2. If `rclone.conf`, `.env.shared` and `.env.local` are not configured yet, follow [drive-env.md](drive-env.md) first.
+2. In the command line, go to the project folder, then `cd scripts`.
 
-3. In the command line, go to the project folder, then `cd scripts`.
-
-4. Run the app stack by:
+3. Run the app stack by:
 
    ```
    ./run.sh  # on macOS/Linux
@@ -23,13 +21,13 @@
 
    This will launch the whole app stack. If everything is set up corrected, you should see 4 windows popping out, leaving 3 active.
 
-5. Get to know about using automatic scripts in [scripts.md](scripts.md). (Highly recommended)
+4. Get to know about using automatic scripts in [scripts.md](scripts.md). (Highly recommended)
 
-6. Please always test the frontend using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
+5. Please always test the frontend using Chrome, regardless of whether you are on a computer or a phone. We have not converted this project into a mobile app using `Capacitor` yet.
 
-7. To test locally on the same machine that is hosting the app, visit `http://localhost:5173`. This will allow geolocation to work correctly.
+6. To test locally on the same machine that is hosting the app, visit `http://localhost:5173`. This will allow geolocation to work correctly.
 
-8. To test on a different device, follow the following instructions:
+7. To test on a different device, follow the following instructions:
 
    a. Connect both the hosting and testing devices to the same LAN (e.g., via hotspot).
 
@@ -39,7 +37,7 @@
 
    d. Troubleshoot: If the map still doesn't show your location, check the location permissions for Chrome on your device.
 
-9. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
+8. To kill the project, run `ctrl+c` on all popped-up terminals. Then safely close those terminal windows.
 
 ## User Authentication
 

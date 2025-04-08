@@ -29,7 +29,7 @@ jobs:
 
       - name: Set up micromamba + Conda env
         if: steps.changes.outputs.backend_changed == 'true'
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: backend/conda_env_mac.yml
           environment-name: smartride-backend

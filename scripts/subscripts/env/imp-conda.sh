@@ -20,7 +20,11 @@ cd "$(dirname "$0")/../../../backend"
 
 echo "Using conda_env_mac.yml"
 conda activate smartride-backend
-conda env update --file conda_env_mac.yml > /dev/null
+mamba env update -n smartride-backend -f conda_env_mac.yml
+if [[ $? -ne 0 ]]; then
+  echo "Error: Mamba failed to update conda environment. Aborting."
+  exit 1
+fi
 
 cd - > /dev/null
 

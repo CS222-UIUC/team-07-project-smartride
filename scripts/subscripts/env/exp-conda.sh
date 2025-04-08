@@ -37,7 +37,7 @@ if command -v conda >/dev/null 2>&1; then
     conda activate smartride-backend
     conda env export --no-builds | grep -v "^prefix:" | iconv -f utf-8 -t utf-8 > "$ENV_FILE"
     cd ../scripts/subscripts/env/python
-    python "$PY_FILE"
+    # python "$PY_FILE"
 else
     echo "[Export Conda] Error: Conda not available in current shell. Please activate it first or run conda init first."
     cd ../scripts/subscripts/env

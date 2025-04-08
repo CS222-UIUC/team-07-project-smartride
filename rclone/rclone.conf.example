@@ -1,7 +1,7 @@
 [smartride]
 type = drive
 scope = drive
-# A valid token is a JSON object that consists all 4 entries: "access_token", "token_type", "refresh_token" and "expiry".
+# A valid token is a JSON object that consists all 4 entries: "access_token", "token_type", "refresh_token" and "expiry". The token MUST be in one line.
 token = {<ENTER TOKEN HERE>}
 # Just leave blank, do not fill in anything
 team_drive =

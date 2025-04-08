@@ -26,6 +26,7 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 | Situation                                                                   | Script to Use (please first `cd scripts`) |
 | --------------------------------------------------------------------------- | ----------------------------------------- |
+| New to the project, or there are major change to environments               | `setup.ps1\|sh`                           |
 | Just begins a new development cycle, need to sync code and files            | `sync-work.ps1\|sh --pull`                |
 | Working in a separate branch, need to merge code and files from main branch | `sync-work.ps1\|sh --merge`               |
 | Finish developing, need to wrap up and prepare for pull request             | `pr-prep.ps1\|sh`                         |
@@ -41,42 +42,71 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 ## A complete development cycle
 
-1. If you have no idea what to do for a complete development cycle, from syncing new code to submitting pull request, follow this manual.
+1. If you are new to the project, run `setup.ps1|sh` to set up your environment.
 
-2. To begin with, run `sync-work.ps1|sh --pull`.
+2. If you have no idea what to do for a complete development cycle, from syncing new code to submitting pull request, follow the instructions below.
 
-3. If no issues appear, open a new branch, and start adding new features to the code. To run the project, run `run.ps1|sh`.
+3. To begin with, run `sync-work.ps1|sh --pull`. If it blocks you, run `setup.ps1|sh` first, since it signals that there are major changes to the environment.
 
-4. After you think you are ready to prepare for a new pull request, follow the following procedures.
+4. If no issues appear, open a new branch, and start adding new features to the code. To run the project, run `run.ps1|sh`.
+
+5. After you think you are ready to prepare for a new pull request, follow the following procedures.
 
    - You are recommended to first run `sync-work.ps1|sh --merge`. Resolve all merge conflicts and rerun until no issues occured.
    - Check out the detailed introductions of `sync-work --merge` below to see when you should **NOT** run this script before `pr-prep`.
    - You must run `pr-prep.ps1|sh`. Resolve all issues and rerun until no issues occured.
 
-5. Submit a pull request now! Wait for all CI tests pass, and a review from somebody else, now you can merge your efforts into main branch!
+6. Submit a pull request now! Wait for all CI tests pass, and a review from somebody else, now you can merge your efforts into main branch!
 
-6. Well, it is up to you, but you definitely does not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
+7. Well, it is up to you, but you definitely does not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
 
 ---
 
 ## Detailed Explanation
 
+#### `scripts/setup.(ps1|sh)`
+
+This script is used to set up your local environment. Other than the following situations, you do not have to run this script, since it will take a while to finish.
+Situations where you DO have to run this script:
+
+- You are new to the project.
+- You are blocked during `sync-work`, `run` or `pr-prep` scripts, which means that there are major changes to the environment and you are not up to date.
+
+This script will guide you through the following steps:
+
+- Set up or update `rclone/rclone.conf`, `.env.local`, `.env.shared`. You still need to manually fill out the `token` entry in `rclone.conf` since it contains sensitive information to our team. If you have set up `user.name` as github config before, the `COMMITTER` entry in `.env.local` will be automatically filled out.
+- For window users, it will then install `rclone` CLI, `node.js` and `miniconda3` commands in `libaries` folder of this project, and `pnpm` command somewhere else (since we directly run the install script that `pnpm.io` recommends). The processes will be skipped if you have already installed them, and you can choose to abort the script and manually install them.
+- For MacOS users, it will then install `rclone` CLI, `node.js`, `pnpm` and `miniconda3` commands into your home or `/usr/local/bin` folder. The processes will be skipped if you have already installed them, and you can choose to abort the script and manually install them. Still, for MacOS users, installing themselves are no different from running this script, so it is recommended to run this script.
+- For both platforms, if any download or installation occurs, you will be required to restart your TERMINAL (NOT script itself). There are additional instructions if MacOS users install `miniconda3`, see the script output.
+- After you restarted the terminal and the script, it will automatically create a new conda environment `smartride-backend` based on `yml` files in `backend/` folder. It will then install `mamba` in `conda-forge` that greatly accelerates the future environment update process.
+- Finally, it will download all sensitive files from team google drive, which will manually set up `.env.shared` and the database for you.
+- Now, you are able to run `sync-work` and `run` scripts. Happy coding!
+
+In rare scenarios that you updated this script (ONLY DO SO FOR MAJOR UPDATES), run `setup.ps1 -admin` (note that there is only one dash) to signal everyone to run this script again after you pull-requested and merged the changes to `main`. You MUST change `setup.sh` as well. Do not change again after you run it with `-admin` parameter, since the signal mechanism is based on the hash of `setup.ps1`.
+
 #### `scripts/sync-work.(ps1|sh)`
 
-Sync newest updates from github, import all missing conda dependencies, and download team google drive files. You must include one of the following parameters which functionalities are only different in the sync GitHub step:
+Sync newest updates from github, import all missing conda dependencies, and download team google drive files. Note that you can **only** execute this script if your `setup` is up to date. You must include one of the following parameters which functionalities are only different in the sync GitHub step:
 
 - `--pull`, this will checkout to `main` branch and pull all updates.
 
 - `--merge`, this will fetch all updates from `origin`, and try to merge `origin/main` into your current branch.
 
-**IMPORTANT**: You should **NOT** run `sync-work.(ps1|sh)` with **either** option if your local `drive-file.txt` is not updated yet while you have modified many files which are tracked in there.
+**IMPORTANT**: You should **NOT** run `sync-work.(ps1|sh)` with **either** option in the following scenarios:
+
+1. DON'T run if your local `drive-file.txt` is not updated yet while you have modified many files which are tracked in there.
 
 - Why? These files are likely **not** tracked by GitHub and you will lose their updates.
 - What to do? Update `drive-file.txt` and run `pr-prep.(ps1|sh)`, or at least `drive.(ps1|sh) --upload` to sync your files to google drive. Alternatively, backup them. Now you may run `sync-work`.
 
+2. Better DON'T run if you have `pip install`ed any new packages.
+
+- Why? We are using `mamba` to manage conda dependencies, although _significantly_ faster in updating environment, it will pop up a prompt to ask you whether you want to remove any packages not in the `yml` file.
+- What to do? Run `pr-prep.(ps1|sh)` first. Now you may run `sync-work`.
+
 #### `scripts/run.(ps1|sh)`
 
-Entry point for launching the full SmartRide app stack. Note that you can **only** execute this script after you have `sync-main` at least once. It will open the following 3 windows.
+Entry point for launching the full SmartRide app stack. Note that you can **only** execute this script after you have `sync-work` after you merged/pull changes from the `main` branch. This `run` script will open the following 3 subprocesses.
 
     - Backend server
     - Frontend dev server
@@ -86,7 +116,7 @@ You may not see all 3 windows if you failed to follow [installation.md](installa
 
 #### `scripts/pr-prep.(ps1|sh)`
 
-Runs checks and lints, auto formatter, export current conda dependencies, and upload team google drive files. You are strongly recommended to run `sync-work` first except for the condition mentioned in that section. This script is really good for those who have no idea what the standard workflow cycle of this project consists.
+Run checks and lints, auto formatter, export current conda dependencies, and upload team google drive files. Note that you can **only** execute this script if your `setup` is up to date. You are strongly recommended to run `sync-work` first EXCEPT for the conditions mentioned in that section.
 
 #### `scripts/formatter.(ps1|sh)`
 
