@@ -19,7 +19,7 @@ fi
 cd "$(dirname "$0")/../../../backend"
 
 conda activate base
-conda-lock install --mamba --lockfile conda-lock.yml --name smartride-backend
+conda-lock install --mamba conda-lock.yml --name smartride-backend
 if [[ $? -ne 0 ]]; then
   echo "Error: Failed to install/update conda environment. Aborting."
   cd - > /dev/null

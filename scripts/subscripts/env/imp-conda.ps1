@@ -9,7 +9,7 @@ Write-Host "[Import Conda] Importing newest update on smartride-backend conda en
 
 Push-Location "$PSScriptRoot/../../../backend"
 conda activate base
-conda-lock install --mamba --lockfile conda-lock.yml --name smartride-backend
+conda-lock install --mamba conda-lock.yml --name smartride-backend
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to install/update conda environment. Aborting."
     Pop-Location

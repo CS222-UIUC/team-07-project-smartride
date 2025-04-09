@@ -5,26 +5,26 @@
 # available, unless you explicitly update the lock file.
 #
 # Install this environment as "YOURENV" with:
-#     conda-lock install -n YOURENV conda_lock.yml
+#     conda-lock install -n YOURENV conda-lock.yml
 # To update a single package to the latest version compatible with the version constraints in the source:
-#     conda-lock lock  --lockfile conda_lock.yml --update PACKAGE
+#     conda-lock lock  --lockfile conda-lock.yml --update PACKAGE
 # To re-solve the entire environment, e.g. after changing a version constraint in the source file:
-#     conda-lock -f conda_env.yml --lockfile conda_lock.yml
+#     conda-lock -f conda-env.yml --lockfile conda-lock.yml
 version: 1
 metadata:
   content_hash:
-    win-64: b4c01017124f706260c0567925f1003f1473d4db306837644ddb93d3ff43f532
-    linux-64: 20ee058aea97fd52dda10f98f678c1c14e38c552148f8eacdbf8479c8511bc79
-    osx-64: a9ae65277b5b1b780611f427aa01f32c7a28f7c94d8cfd57a2283c52569ee5a3
+    win-64: f2f83c68ec31c5fdb91ea13d792a3a9b31c1df99c2fa78403dd242fba1d6444c
+    linux-64: af15d810457236e856e3febf7658c4cbb8bb5d04b5c132aa2096149d299023e6
+    osx-64: d2ce4206fad5517542f47bb162ad689425ce084e580622a4dcbf82dd1ea96b24
   channels:
   - url: conda-forge
     used_env_vars: []
   platforms:
-  - win-64
   - linux-64
   - osx-64
+  - win-64
   sources:
-  - conda_env.yml
+  - conda-env.yml
 package:
 - name: _libgcc_mutex
   version: '0.1'
@@ -48,6 +48,51 @@ package:
   hash:
     md5: 73aaf86a425cc6e73fcf236a5a46396d
     sha256: fbe2c5e56a653bebb982eda4876a9178aedfc2b545f25d0ce9c4c0b508253d22
+  category: main
+  optional: false
+- name: alembic
+  version: 1.15.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    mako: ''
+    python: '>=3.9'
+    sqlalchemy: '>=1.4.0'
+    typing_extensions: '>=4.12'
+  url: https://conda.anaconda.org/conda-forge/noarch/alembic-1.15.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: b412ae3c8625f1c05e9f7f3ce7f77554
+    sha256: e4a2b689aefe75b8cc2f8db7b0492766e98110fea1e0d71aeeb47f0ab1f3288d
+  category: main
+  optional: false
+- name: alembic
+  version: 1.15.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    mako: ''
+    python: '>=3.9'
+    sqlalchemy: '>=1.4.0'
+    typing_extensions: '>=4.12'
+  url: https://conda.anaconda.org/conda-forge/noarch/alembic-1.15.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: b412ae3c8625f1c05e9f7f3ce7f77554
+    sha256: e4a2b689aefe75b8cc2f8db7b0492766e98110fea1e0d71aeeb47f0ab1f3288d
+  category: main
+  optional: false
+- name: alembic
+  version: 1.15.2
+  manager: conda
+  platform: win-64
+  dependencies:
+    mako: ''
+    python: '>=3.9'
+    sqlalchemy: '>=1.4.0'
+    typing_extensions: '>=4.12'
+  url: https://conda.anaconda.org/conda-forge/noarch/alembic-1.15.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: b412ae3c8625f1c05e9f7f3ce7f77554
+    sha256: e4a2b689aefe75b8cc2f8db7b0492766e98110fea1e0d71aeeb47f0ab1f3288d
   category: main
   optional: false
 - name: annotated-types
@@ -1379,6 +1424,51 @@ package:
     sha256: d50d005b15de19cfafde744cd1e7c371416db2c2300b6b848db5e5f53fdde6eb
   category: main
   optional: false
+- name: flask-migrate
+  version: 4.1.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    alembic: '>=0.6'
+    flask: '>=0.9'
+    flask-sqlalchemy: '>=1.0'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-migrate-4.1.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: ceb3a3dfb8606a912c9e3d79fc9014e3
+    sha256: 108c21aa885fe331c5a2bbb2b51830426b23cdf594527ca6deb8b48cad419df6
+  category: main
+  optional: false
+- name: flask-migrate
+  version: 4.1.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    alembic: '>=0.6'
+    flask: '>=0.9'
+    flask-sqlalchemy: '>=1.0'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-migrate-4.1.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: ceb3a3dfb8606a912c9e3d79fc9014e3
+    sha256: 108c21aa885fe331c5a2bbb2b51830426b23cdf594527ca6deb8b48cad419df6
+  category: main
+  optional: false
+- name: flask-migrate
+  version: 4.1.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    alembic: '>=0.6'
+    flask: '>=0.9'
+    flask-sqlalchemy: '>=1.0'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/flask-migrate-4.1.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: ceb3a3dfb8606a912c9e3d79fc9014e3
+    sha256: 108c21aa885fe331c5a2bbb2b51830426b23cdf594527ca6deb8b48cad419df6
+  category: main
+  optional: false
 - name: flask-sqlalchemy
   version: 3.1.1
   manager: conda
@@ -2424,6 +2514,48 @@ package:
   hash:
     md5: 41fbfac52c601159df6c01f875de31b9
     sha256: ba945c6493449bed0e6e29883c4943817f7c79cbff52b83360f7b341277c6402
+  category: main
+  optional: false
+- name: mako
+  version: 1.3.9
+  manager: conda
+  platform: linux-64
+  dependencies:
+    importlib-metadata: ''
+    markupsafe: '>=0.9.2'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/mako-1.3.9-pyhd8ed1ab_0.conda
+  hash:
+    md5: 422113c902cc5181ccaafbb4b827e492
+    sha256: 56ac22e0800b44600662de49f8bc241b2d785820e44d96eebb6eae7e072c8a99
+  category: main
+  optional: false
+- name: mako
+  version: 1.3.9
+  manager: conda
+  platform: osx-64
+  dependencies:
+    importlib-metadata: ''
+    markupsafe: '>=0.9.2'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/mako-1.3.9-pyhd8ed1ab_0.conda
+  hash:
+    md5: 422113c902cc5181ccaafbb4b827e492
+    sha256: 56ac22e0800b44600662de49f8bc241b2d785820e44d96eebb6eae7e072c8a99
+  category: main
+  optional: false
+- name: mako
+  version: 1.3.9
+  manager: conda
+  platform: win-64
+  dependencies:
+    importlib-metadata: ''
+    markupsafe: '>=0.9.2'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/mako-1.3.9-pyhd8ed1ab_0.conda
+  hash:
+    md5: 422113c902cc5181ccaafbb4b827e492
+    sha256: 56ac22e0800b44600662de49f8bc241b2d785820e44d96eebb6eae7e072c8a99
   category: main
   optional: false
 - name: markupsafe

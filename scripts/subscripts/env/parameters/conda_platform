@@ -112,3 +112,6 @@ coverage:all-64
 click-default-group:all-64
 readline:ol-64
 python.app:osx-64
+flask-migrate:all-64
+mako:all-64
+alembic:all-64

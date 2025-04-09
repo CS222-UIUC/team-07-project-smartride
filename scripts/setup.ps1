@@ -300,21 +300,22 @@ if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -P
 conda activate base
 conda install -n base -c conda-forge mamba conda-lock -y
 Push-Location "$PSScriptRoot/subscripts/env"
-& "check-setup.ps1" *> $null
-if ($LASTEXITCODE -ne 0) { # The first time setting up (after installing pnpm, conda, rclone), user might be using the legacy conda environment
-    # check if user is in smartride-backend env, if yes, exit and uninstall
-    $currentEnv = conda info --envs | Select-String "\*" | ForEach-Object { $_.ToString().Trim() }
-    if ($currentEnv -eq "smartride-backend") {
+& "./check-setup.ps1" *> $null
+if ($LASTEXITCODE -ne 0) {
+    # The first time setting up (after installing pnpm, conda, rclone), user might be using the legacy conda environment
+    # Check if 'smartride-backend' environment exists, if yes, uninstall
+    $envExists = conda env list | Select-String "^\s*smartride-backend\s"
+    if ($envExists) {
         Write-Host "[Setup] First time setting up (since version changed). Reinstalling smartride-backend conda environment..."
         Write-Host "[Setup] Uninstalling smartride-backend conda environment..."
         conda env remove -n smartride-backend -y
-        conda clean --all -y
     }
+    conda clean --all -y
 }
 
 Push-Location "$PSScriptRoot/../backend"
 Write-Host "[Setup] Installing or updating smartride-backend conda environment..."
-conda-lock install --mamba --lockfile conda-lock.yml --name smartride-backend
+conda-lock install --mamba conda-lock.yml --name smartride-backend
 conda activate smartride-backend
 Write-Host "[Setup] smartride-backend conda environment is successfully installed and activated."
 Pop-Location

@@ -1,8 +1,8 @@
 Set-StrictMode -Version Latest
 
 if ($env:SMARTRIDE_ENTRYPOINT -ne "pr-prep") {
-    Write-Host "Error: scripts/subscripts/env/exp-conda.ps1 must be run via scripts/pr-prep.ps1"
-    exit 1
+  Write-Host "Error: scripts/subscripts/env/exp-conda.ps1 must be run via scripts/pr-prep.ps1"
+  exit 1
 }
 
 # It is strictly prohibited to export before import, which is a behavior like git push before git pull
@@ -12,9 +12,9 @@ if ($LASTEXITCODE -ne 0) { exit 1 }
 # Export updated conda environment (Windows)
 Push-Location python
 
-Write-Host "[Export Conda] Exporting conda environment to conda_env.yml..."
-$env:CONDA_ENV_REL_PATH = "../../../../backend/conda_env.yml"
-$env:CONDA_LOCK_REL_PATH = "../../../../backend/conda_lock.yml"
+Write-Host "[Export Conda] Exporting conda environment to conda-env.yml..."
+$env:CONDA_ENV_REL_PATH = "../../../../backend/conda-env.yml"
+$env:CONDA_LOCK_REL_PATH = "../../../../backend/conda-lock.yml"
 conda activate smartride-backend
 conda env export --from-history | Out-File $env:CONDA_ENV_REL_PATH -Encoding utf8
 Write-Host "[Export Conda] Post-processing formats and generating platform selectors..."

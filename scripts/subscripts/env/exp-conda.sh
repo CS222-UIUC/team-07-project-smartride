@@ -24,9 +24,9 @@ fi
 
 # Export updated conda environment (Mac)
 pushd python > /dev/null
-echo "[Export Conda] Exporting conda environment to conda_env.yml..."
-CONDA_ENV_REL_PATH="../../../../backend/conda_env.yml"
-CONDA_LOCK_REL_PATH="../../../../backend/conda_lock.yml"
+echo "[Export Conda] Exporting conda environment to conda-env.yml..."
+CONDA_ENV_REL_PATH="../../../../backend/conda-env.yml"
+CONDA_LOCK_REL_PATH="../../../../backend/conda-lock.yml"
 conda activate smartride-backend
 conda env export --from-history | iconv -f utf-8 -t utf-8 > "$CONDA_ENV_REL_PATH"
 echo "[Export Conda] Post-processing formats and generating platform selectors..."

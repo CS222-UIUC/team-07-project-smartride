@@ -2,6 +2,7 @@ name: smartride-backend
 channels:
   - conda-forge
 dependencies:
+  - alembic
   - annotated-types
   - appdirs
   - backports
@@ -31,6 +32,7 @@ dependencies:
   - flask-cors
   - flask-jwt-extended
   - flask-login
+  - flask-migrate
   - flask-sqlalchemy
   - gitdb
   - gitpython
@@ -54,6 +56,7 @@ dependencies:
   - libmpdec
   - libsqlite
   - libzlib
+  - mako
   - markupsafe
   - more-itertools
   - msgpack-python
@@ -82,8 +85,6 @@ dependencies:
   - python_abi
   - 'pywin32-ctypes # [win]'
   - pyyaml
-  - 'readline # [linux]'
-  - 'readline # [osx]'
   - requests
   - requests-toolbelt
   - ruamel.yaml

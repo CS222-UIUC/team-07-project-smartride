@@ -188,13 +188,13 @@ conda install -n base -c conda-forge mamba conda-lock -y
 
 pushd "$(dirname "$0")/subscripts/env" > /dev/null
 "./check-setup.sh" >/dev/null 2>&1 || { # The first time setting up (after installing pnpm, conda, rclone), user might be using the legacy conda environment
-    # check if user is in smartride-backend env, if yes, exit and uninstall
+    # check if 'smartride-backend' environment exists, if yes, uninstall
     if conda env list | grep -q '^smartride-backend\s'; then
       echo "[Setup] First time setting up (since version changed). Reinstalling smartride-backend conda environment..."
       echo "[Setup] Uninstalling smartride-backend conda environment."
       conda env remove -n smartride-backend -y
-      conda clean --all -y
     fi
+    conda clean --all -y
 }
 popd > /dev/null
 
