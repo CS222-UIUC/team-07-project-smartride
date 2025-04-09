@@ -297,22 +297,26 @@ if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -P
 }
 
 # Step 11: Setup conda environment
+conda activate base
+conda install -n base -c conda-forge mamba conda-lock -y
+Push-Location "$PSScriptRoot/subscripts/env"
+& "check-setup.ps1" *> $null
+if ($LASTEXITCODE -ne 0) { # The first time setting up (after installing pnpm, conda, rclone), user might be using the legacy conda environment
+    # check if user is in smartride-backend env, if yes, exit and uninstall
+    $currentEnv = conda info --envs | Select-String "\*" | ForEach-Object { $_.ToString().Trim() }
+    if ($currentEnv -eq "smartride-backend") {
+        Write-Host "[Setup] First time setting up (since version changed). Reinstalling smartride-backend conda environment..."
+        Write-Host "[Setup] Uninstalling smartride-backend conda environment..."
+        conda env remove -n smartride-backend -y
+        conda clean --all -y
+    }
+}
+
 Push-Location "$PSScriptRoot/../backend"
-$envList = conda env list | Select-String "^smartride-backend\s"
-if ($envList) {
-    Write-Host "[Setup] Conda environment 'smartride-backend' already exists. Skipping creation."
-}
-else {
-    conda env create -f conda_env_win.yml
-}
+Write-Host "[Setup] Installing or updating smartride-backend conda environment..."
+conda-lock install --mamba --lockfile conda-lock.yml --name smartride-backend
 conda activate smartride-backend
-$mambaCheck = conda list mamba | Select-String "conda-forge"
-if ($mambaCheck) {
-    Write-Host "[Setup] mamba and conda-forge are already installed in 'smartride-backend' conda environment. Skipping install."
-}
-else {
-    conda install -c conda-forge mamba -y
-}
+Write-Host "[Setup] smartride-backend conda environment is successfully installed and activated."
 Pop-Location
 
 # Step 12: Sync Google Drive files

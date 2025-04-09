@@ -176,18 +176,33 @@ if ! command -v conda &> /dev/null; then
 fi
 
 # Step 11: Setup conda environment
+if command -v conda &> /dev/null; then
+  eval "$(conda shell.bash hook)"
+else
+  echo "Conda not found in PATH"
+  exit 1
+fi
+
+conda activate base
+conda install -n base -c conda-forge mamba conda-lock -y
+
+pushd "$(dirname "$0")/subscripts/env" > /dev/null
+"./check-setup.sh" >/dev/null 2>&1 || { # The first time setting up (after installing pnpm, conda, rclone), user might be using the legacy conda environment
+    # check if user is in smartride-backend env, if yes, exit and uninstall
+    if conda env list | grep -q '^smartride-backend\s'; then
+      echo "[Setup] First time setting up (since version changed). Reinstalling smartride-backend conda environment..."
+      echo "[Setup] Uninstalling smartride-backend conda environment."
+      conda env remove -n smartride-backend -y
+      conda clean --all -y
+    fi
+}
+popd > /dev/null
+
 pushd "$(dirname "$0")/../backend" > /dev/null
-if conda env list | grep -q '^smartride-backend\s'; then
-  echo "[Setup] Conda environment 'smartride-backend' already exists. Skipping creation."
-else
-  conda env create -f conda_env_mac.yml
-fi
+echo "[Setup] Installing or updating smartride-backend conda environment..."
+conda-lock install --mamba --lockfile conda-lock.yml --name smartride-backend
 conda activate smartride-backend
-if conda list mamba | grep -q conda-forge; then
-  echo "[Setup] mamba and conda-forge are already installed. Skipping install."
-else
-  conda install -c conda-forge mamba -y
-fi
+echo "[Setup] smartride-backend conda environment is successfully installed and activated."
 popd > /dev/null
 
 # Step 12: Sync Google Drive files

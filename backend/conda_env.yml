@@ -1,0 +1,122 @@
+name: smartride-backend
+channels:
+  - conda-forge
+dependencies:
+  - annotated-types
+  - appdirs
+  - backports
+  - backports.tarfile
+  - blinker
+  - boltons
+  - brotli-python
+  - bzip2
+  - ca-certificates
+  - cachecontrol
+  - cachecontrol-with-filecache
+  - certifi
+  - cffi
+  - charset-normalizer
+  - click
+  - click-default-group
+  - colorama
+  - conda-lock
+  - coverage
+  - crashtest
+  - distlib
+  - dulwich
+  - ensureconda
+  - exceptiongroup
+  - filelock
+  - flask
+  - flask-cors
+  - flask-jwt-extended
+  - flask-login
+  - flask-sqlalchemy
+  - gitdb
+  - gitpython
+  - greenlet
+  - h2
+  - hpack
+  - hyperframe
+  - idna
+  - importlib-metadata
+  - importlib_resources
+  - iniconfig
+  - itsdangerous
+  - jaraco.classes
+  - jaraco.context
+  - jaraco.functools
+  - jinja2
+  - keyring
+  - libexpat
+  - libffi
+  - liblzma
+  - libmpdec
+  - libsqlite
+  - libzlib
+  - markupsafe
+  - more-itertools
+  - msgpack-python
+  - mypy
+  - mypy_extensions
+  - openssl
+  - packaging
+  - pip
+  - pkginfo
+  - platformdirs
+  - pluggy
+  - psutil
+  - pycparser
+  - pydantic
+  - pydantic-core
+  - pyjwt
+  - pyproject_hooks
+  - pysocks
+  - pytest
+  - pytest-cov
+  - python
+  - python-build
+  - python-dotenv
+  - python-fastjsonschema
+  - python-installer
+  - python_abi
+  - 'pywin32-ctypes # [win]'
+  - pyyaml
+  - 'readline # [linux]'
+  - 'readline # [osx]'
+  - requests
+  - requests-toolbelt
+  - ruamel.yaml
+  - ruamel.yaml.clib
+  - ruff
+  - semver
+  - setuptools
+  - shellingham
+  - smmap
+  - sqlalchemy
+  - sqlite
+  - tk
+  - toml
+  - tomli
+  - tomlkit
+  - tqdm
+  - trove-classifiers
+  - typing-extensions
+  - typing-inspection
+  - typing_extensions
+  - tzdata
+  - 'ucrt # [win]'
+  - urllib3
+  - 'vc # [win]'
+  - 'vc14_runtime # [win]'
+  - virtualenv
+  - 'vs2015_runtime # [win]'
+  - werkzeug
+  - 'win_inet_pton # [win]'
+  - yaml
+  - zipp
+  - zstandard
+  - pip:
+      - types-Flask-SQLAlchemy
+      - types-requests
+      - types-SQLAlchemy
