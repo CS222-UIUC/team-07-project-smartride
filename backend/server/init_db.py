@@ -13,14 +13,28 @@ if not db_uri.startswith("sqlite:///"):
 db_path_str = db_uri.replace("sqlite:///", "", 1)
 db_path = Path(db_path_str).resolve()
 
+# with app.app_context():
+#     db.create_all()
+
+#     # binds = app.config.get("SQLALCHEMY_BINDS", {})
+#     # for bind_key in binds:
+#     # db.create_all(bind=bind_key)
+
+#     inspector = inspect(db.engine)
+#     tables = inspector.get_table_names()
+#     print(f"[Init DB] Tables currently in {db_path}: {tables}")
+#     print("[Init DB] Database tables ensured/updated successfully.")
+
+
 with app.app_context():
     db.create_all()
 
-    # binds = app.config.get("SQLALCHEMY_BINDS", {})
-    # for bind_key in binds:
-    # db.create_all(bind=bind_key)
-
     inspector = inspect(db.engine)
     tables = inspector.get_table_names()
-    print(f"[Init DB] Tables currently in {db_path}: {tables}")
-    print("[Init DB] Database tables ensured/updated successfully.")
+    print(f"[Init DB] Tables in database: {tables}")
+
+    for table in tables:
+        print(f"\nTable: {table}")
+        columns = inspector.get_columns(table)
+        for column in columns:
+            print(f" - {column['name']} ({column['type']})")

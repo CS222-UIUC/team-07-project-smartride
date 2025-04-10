@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):  # type: ignore[name-defined]
     password = db.Column(db.String(150), nullable=False)
     # TODO (Richard): Add more fields to connect with frontend, do NOT uncomment line 16-19
     # New fields
-    # nickname = db.Column(db.String(100))
-    # height = db.Column(db.Float)
-    # weight = db.Column(db.Float)
-    # age = db.Column(db.Integer)
+    nickname = db.Column(db.String(100))
+    height = db.Column(db.Float)
+    weight = db.Column(db.Float)
+    age = db.Column(db.Integer)
