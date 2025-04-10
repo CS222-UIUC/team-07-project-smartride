@@ -309,7 +309,7 @@ const ProfilePage: React.FC = () => {
       <button
         type="button"
         disabled={!isSaveEnabled}
-        onClick={() => void handleSave}
+        onClick={() => void handleSave()}
         style={{
           marginTop: "20px",
           padding: "10px",
