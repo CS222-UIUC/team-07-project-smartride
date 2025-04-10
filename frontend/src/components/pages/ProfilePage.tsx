@@ -8,6 +8,10 @@ interface UserProfileResponse {
   data: {
     name: string;
     email: string;
+    nickname?: string;
+    height?: number;
+    weight?: number;
+    age?: number;
   };
 }
 
@@ -16,6 +20,7 @@ const ProfilePage: React.FC = () => {
   // Removed unused 'profile' state to resolve errors
 
   // Form state
+  const [saved, setSaved] = useState(false);
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [height, setHeight] = useState("");
@@ -41,6 +46,46 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  const isSaveEnabled =
+    !saved &&
+    (nickname.trim() !== "" ||
+      height.trim() !== "" ||
+      weight.trim() !== "" ||
+      age.trim() !== "");
+
+  const handleSave = async () => {
+    try {
+      const profile = {
+        name,
+        email,
+        nickname,
+        height: height ? parseFloat(height) : undefined,
+        weight: weight ? parseFloat(weight) : undefined,
+        age: age ? parseInt(age) : undefined,
+      };
+
+      const res = await fetch("/api/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(profile),
+      });
+
+      const result = (await res.json()) as UserProfileResponse;
+      if (result.success) {
+        alert("Saved successfully!");
+        setSaved(true);
+      } else {
+        alert("Failed to save.");
+      }
+    } catch (err) {
+      console.error("Save failed:", err);
+      alert("Save error.");
+    }
+  };
+
   useEffect(() => {
     async function fetchProfile() {
       try {
@@ -52,10 +97,10 @@ const ProfilePage: React.FC = () => {
         if (result.success) {
           setName(result.data.name || "");
           setEmail(result.data.email || "");
-          // setNickname(result.data.nickname || "");
-          // setHeight(result.data.height?.toString() || "");
-          // setWeight(result.data.weight?.toString() || "");
-          // setAge(result.data.age?.toString() || "");
+          setNickname(result.data.nickname || "");
+          setHeight(result.data.height?.toString() || "");
+          setWeight(result.data.weight?.toString() || "");
+          setAge(result.data.age?.toString() || "");
         }
       } catch (err) {
         console.error("Failed to load profile:", err);
@@ -64,6 +109,10 @@ const ProfilePage: React.FC = () => {
 
     void fetchProfile();
   }, []);
+
+  useEffect(() => {
+    setSaved(false);
+  }, [nickname, height, weight, age]);
 
   return (
     <div
@@ -255,6 +304,25 @@ const ProfilePage: React.FC = () => {
           </label>
         </div>
       </div>
+
+      {/* Save Button */}
+      <button
+        type="button"
+        disabled={!isSaveEnabled}
+        onClick={() => void handleSave()}
+        style={{
+          marginTop: "20px",
+          padding: "10px",
+          backgroundColor: isSaveEnabled ? "#4caf50" : "#ccc",
+          color: isSaveEnabled ? "#fff" : "#666",
+          borderRadius: "6px",
+          border: "none",
+          fontWeight: 600,
+          cursor: isSaveEnabled ? "pointer" : "not-allowed",
+        }}
+      >
+        Update and Save
+      </button>
 
       {/* Back Button */}
       <button

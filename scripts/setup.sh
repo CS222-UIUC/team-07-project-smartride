@@ -49,29 +49,29 @@ get_git_user_or_exit() {
   echo "$gitUser"
 }
 
-# committerLine=$(grep -E '^COMMITTER\s*=\s*.*' .env.local || true)
-# if [ -n "$committerLine" ]; then
-#   committerValue=$(echo "$committerLine" | sed -E 's/^COMMITTER\s*=\s*//;s/\"//g')
-#   if [[ -z "$committerValue" || "$committerValue" =~ ^[[:space:]]*$ || "$committerValue" =~ ^<.*>$ ]]; then
-#     gitUser=$(get_git_user_or_exit)
-#     echo "Git user.name is set to: $gitUser"
-#     sed -i '' -E "s/^COMMITTER\s*=.*/COMMITTER=\"$gitUser\"/" .env.local
-#     echo "[Setup] COMMITTER is now set to '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
-#   else
-#     echo "[Setup] .env.local is valid."
-#   fi
-# else
-#   gitUser=$(get_git_user_or_exit)
-#   echo "Git user.name is set to: $gitUser"
-#   if grep -q '^# Committer$' .env.local; then
-#     awk -v u="$gitUser" '/^# Committer$/{print; print "COMMITTER=\"" u "\""; next}1' .env.local > .env.local.tmp && mv .env.local.tmp .env.local
-#   else
-#     { echo "# Committer"; echo "COMMITTER=\"$gitUser\""; cat .env.local; } > .env.local.tmp && mv .env.local.tmp .env.local
-#   fi
-#   echo "[Setup] COMMITTER is now inserted as '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
-#   popd > /dev/null
-#   exit 0
-# fi
+committerLine=$(grep -E '^COMMITTER\s*=\s*.*' .env.local || true)
+if [ -n "$committerLine" ]; then
+  committerValue=$(echo "$committerLine" | sed -E 's/^COMMITTER\s*=\s*//;s/\"//g')
+  if [[ -z "$committerValue" || "$committerValue" =~ ^[[:space:]]*$ || "$committerValue" =~ ^<.*>$ ]]; then
+    gitUser=$(get_git_user_or_exit)
+    echo "Git user.name is set to: $gitUser"
+    sed -i '' -E "s/^COMMITTER\s*=.*/COMMITTER=\"$gitUser\"/" .env.local
+    echo "[Setup] COMMITTER is now set to '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
+  else
+    echo "[Setup] .env.local is valid."
+  fi
+else
+  gitUser=$(get_git_user_or_exit)
+  echo "Git user.name is set to: $gitUser"
+  if grep -q '^# Committer$' .env.local; then
+    awk -v u="$gitUser" '/^# Committer$/{print; print "COMMITTER=\"" u "\""; next}1' .env.local > .env.local.tmp && mv .env.local.tmp .env.local
+  else
+    { echo "# Committer"; echo "COMMITTER=\"$gitUser\""; cat .env.local; } > .env.local.tmp && mv .env.local.tmp .env.local
+  fi
+  echo "[Setup] COMMITTER is now inserted as '$gitUser' in .env.local. Change it manually if user.name is not your GitHub username."
+  popd > /dev/null
+  exit 0
+fi
 
 popd > /dev/null
 
@@ -176,15 +176,6 @@ if ! command -v conda &> /dev/null; then
 fi
 
 # Step 11: Setup conda environment
-pushd "$(dirname "$0")/../backend" > /dev/null
-if conda env list | grep -q '^smartride-backend\s'; then
-  echo "[Setup] Conda environment 'smartride-backend' already exists. Skipping creation."
-else
-  conda env create -f conda_env_mac.yml
-fi
-<<<<<<< HEAD
-=======
-
 if command -v conda &> /dev/null; then
   eval "$(conda shell.bash hook)"
 else
@@ -192,13 +183,26 @@ else
   exit 1
 fi
 
->>>>>>> 457730fe66460a817e7d57955dfa9284642dc927
+conda activate base
+conda install -n base -c conda-forge mamba conda-lock -y
+
+pushd "$(dirname "$0")/subscripts/env" > /dev/null
+"./check-setup.sh" >/dev/null 2>&1 || { # The first time setting up (after installing pnpm, conda, rclone), user might be using the legacy conda environment
+    # check if 'smartride-backend' environment exists, if yes, uninstall
+    if conda env list | grep -q '^smartride-backend\s'; then
+      echo "[Setup] First time setting up (since version changed). Reinstalling smartride-backend conda environment..."
+      echo "[Setup] Uninstalling smartride-backend conda environment."
+      conda env remove -n smartride-backend -y
+    fi
+    conda clean --all -y
+}
+popd > /dev/null
+
+pushd "$(dirname "$0")/../backend" > /dev/null
+echo "[Setup] Installing or updating smartride-backend conda environment..."
+conda-lock install --mamba --lockfile conda-lock.yml --name smartride-backend
 conda activate smartride-backend
-if conda list mamba | grep -q conda-forge; then
-  echo "[Setup] mamba and conda-forge are already installed. Skipping install."
-else
-  conda install -c conda-forge mamba -y
-fi
+echo "[Setup] smartride-backend conda environment is successfully installed and activated."
 popd > /dev/null
 
 # Step 12: Sync Google Drive files
