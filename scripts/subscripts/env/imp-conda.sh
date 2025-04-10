@@ -18,14 +18,14 @@ fi
 
 cd "$(dirname "$0")/../../../backend"
 
-echo "Using conda_env_mac.yml"
-conda activate smartride-backend
-mamba env update -n smartride-backend -f conda_env_mac.yml
+conda activate base
+conda-lock install --mamba conda-lock.yml --name smartride-backend
 if [[ $? -ne 0 ]]; then
-  echo "Error: Mamba failed to update conda environment. Aborting."
+  echo "Error: Failed to install/update conda environment. Aborting."
+  cd - > /dev/null
   exit 1
 fi
-
+conda activate smartride-backend
 cd - > /dev/null
 
 HASH_FILE="$(dirname "$0")/parameters/last-import"

@@ -8,16 +8,14 @@ if ($env:SMARTRIDE_ENTRYPOINT -ne "sync-work") {
 Write-Host "[Import Conda] Importing newest update on smartride-backend conda environment..."
 
 Push-Location "$PSScriptRoot/../../../backend"
-conda activate smartride-backend
-
-Write-Host "Using conda_env_win.yml"
-mamba env update -n smartride-backend -f conda_env_win.yml
+conda activate base
+conda-lock install --mamba conda-lock.yml --name smartride-backend
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Error: Mamba failed to update conda environment. Aborting."
+    Write-Host "Error: Failed to install/update conda environment. Aborting."
     Pop-Location
     exit 1
 }
-
+conda activate smartride-backend
 Pop-Location
 
 $hashFile = "$PSScriptRoot\parameters\last-import"
