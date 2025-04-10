@@ -289,14 +289,7 @@ if ($downloadCnt -gt 0) {
 
 Write-Host "[Setup] All manadatory tools are installed."
 
-# Step 10: Check if conda init has been done
-$condaProfile = "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"
-if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -Path $condaProfile -Quiet)) {
-    Write-Host "[Setup] Please run 'conda init' manually and restart your terminal. Aborting."
-    exit 1
-}
-
-# Step 11: Setup conda environment
+# Step 10: Setup conda environment
 conda activate base
 conda install -n base -c conda-forge mamba conda-lock -y
 Push-Location "$PSScriptRoot/subscripts/env"
@@ -320,13 +313,13 @@ conda activate smartride-backend
 Write-Host "[Setup] smartride-backend conda environment is successfully installed and activated."
 Pop-Location
 
-# Step 12: Sync Google Drive files
+# Step 11: Sync Google Drive files
 Push-Location "$PSScriptRoot"
 Write-Host "[Setup] Downloading team Google Drive files..."
 & "./drive.ps1" --download
 Pop-Location
 
-# Step 13: Completed, output the hash of this file ($PSScriptRoot/setup.ps1) to last-setup in subscripts/env/parameters/last-setup (may be not existed yet)
+# Step 12: Completed, output the hash of this file ($PSScriptRoot/setup.ps1) to last-setup in subscripts/env/parameters/last-setup (may be not existed yet)
 $hashFile = "$PSScriptRoot/subscripts/env/parameters/last-setup"
 $hash = Get-FileHash -Path $PSScriptRoot/setup.ps1 -Algorithm SHA256
 $hashValue = $hash.Hash
