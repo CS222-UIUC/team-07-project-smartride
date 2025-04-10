@@ -2,6 +2,7 @@ from typing import cast
 
 from flask import Flask, Response
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 from server.core.config import Config
 from server.core.extensions import db, login_manager
@@ -23,6 +24,8 @@ CORS(app, supports_credentials=True, origins=["*"])
 
 db.init_app(app)  # type: ignore[no-untyped-call]
 login_manager.init_app(app)
+
+migrate = Migrate(app, db)
 
 
 @app.errorhandler(APIError)
