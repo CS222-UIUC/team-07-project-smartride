@@ -5,7 +5,7 @@ $lastFile = Join-Path $paramDir "last-setup"
 $latestFile = Join-Path $paramDir "latest-setup"
 
 if (-not (Test-Path $lastFile) -or -not (Test-Path $latestFile)) {
-    Write-Host "[Check Setup] Missing last-setup or latest-setup file."
+    Write-Host "[Check Setup] You have not setup for a while. Please run or rerun scripts/setup.ps1."
     exit 1
 }
 

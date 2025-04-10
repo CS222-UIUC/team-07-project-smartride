@@ -6,7 +6,7 @@ last_file="$param_dir/last-setup"
 latest_file="$param_dir/latest-setup"
 
 if [ ! -f "$last_file" ] || [ ! -f "$latest_file" ]; then
-  echo "[Check Setup] Missing last-setup or latest-setup file."
+  echo "[Check Setup] You have not setup for a while. Please run or rerun scripts/setup.ps1."
   exit 1
 fi
 

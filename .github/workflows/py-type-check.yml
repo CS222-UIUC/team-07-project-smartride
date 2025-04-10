@@ -32,7 +32,7 @@ jobs:
         if: steps.changes.outputs.has_backend_change == 'true'
         uses: mamba-org/setup-micromamba@v2
         with:
-          environment-file: backend/conda_env_mac.yml
+          environment-file: backend/conda-lock.yml
           environment-name: smartride-backend
           cache-downloads: true
           cache-environment: true
