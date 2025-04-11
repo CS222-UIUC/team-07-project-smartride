@@ -7,11 +7,13 @@ from config import (
     file_list_path,
     rclone_remote,
     rclone_config,
-    dot_encode
+    dot_encode,
 )
+
 
 def encode_path_for_drive(path_str: str) -> str:
     return path_str.replace(".", dot_encode).replace("/", ".").replace("\\", ".")
+
 
 # --- SAFEGUARD ---
 if os.getenv("_SMARTRIDE_DRIVE_WRAPPER") != "1":
@@ -38,10 +40,16 @@ print("[Download] Downloading files from SmartRide team Google Drive...")
 for remote_path, local_path in to_download:
     local_path.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
-        "rclone", "copyto", remote_path, str(local_path),
-        "--config", rclone_config,
-        "--drive-pacer-min-sleep", "500ms",
-        "--drive-chunk-size", "8M"
+        "rclone",
+        "copyto",
+        remote_path,
+        str(local_path),
+        "--config",
+        rclone_config,
+        "--drive-pacer-min-sleep",
+        "500ms",
+        "--drive-chunk-size",
+        "8M",
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:

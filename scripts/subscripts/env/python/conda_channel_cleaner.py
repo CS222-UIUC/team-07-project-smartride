@@ -3,6 +3,7 @@ import yaml
 from collections import OrderedDict
 from yaml.representer import SafeRepresenter
 
+
 def channel_cleaner(output_path: str) -> None:
     yaml.add_representer(OrderedDict, SafeRepresenter.represent_dict)
     with open(output_path, "r", encoding="utf-8") as f:
@@ -18,8 +19,9 @@ def channel_cleaner(output_path: str) -> None:
 
     with open(output_path, "w", encoding="utf-8") as f:
         yaml.safe_dump(dict(ordered_env), f, sort_keys=False)
-        
+
     print("[Channel Cleaner] Cleaned conda channels, set to conda-forge.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
