@@ -4,12 +4,15 @@ import sys
 from pathlib import Path
 from collections import OrderedDict
 
+
 class IndentDumper(yaml.Dumper):
     def increase_indent(self, flow=False, indentless=False):
         return super().increase_indent(flow, False)
-    
+
+
 def smart_str_representer(dumper, data):
     return dumper.represent_scalar("tag:yaml.org,2002:str", data, style=None)
+
 
 def format_conda_yml(yml_path: Path):
     with open(yml_path, "r", encoding="utf-8") as f:
@@ -32,7 +35,7 @@ def format_conda_yml(yml_path: Path):
     pip_deps = sorted(pip_deps, key=lambda x: x.lower())
 
     dependencies = conda_deps
-    
+
     # if no pip_deps, then no need to add pip: [] in dependencies
     if pip_deps:
         dependencies.append({"pip": pip_deps})
@@ -54,17 +57,20 @@ def format_conda_yml(yml_path: Path):
         width=1000,
         allow_unicode=True,
         Dumper=IndentDumper,
-        default_flow_style=False
+        default_flow_style=False,
     )
 
     with open(yml_path, "w", encoding="utf-8") as f:
         f.write(formatted_yaml)
-    
+
     print(f"[Conda Formatter] Formatted conda environment yml file successfully.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("[Conda Formatter] Usage: python path/to/conda_yml_formatter.py path/to/conda_env.yml")
+        print(
+            "[Conda Formatter] Usage: python path/to/conda_yml_formatter.py path/to/conda_env.yml"
+        )
         sys.exit(1)
 
     format_conda_yml(Path(sys.argv[1]))
