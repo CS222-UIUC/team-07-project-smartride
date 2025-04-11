@@ -8,16 +8,24 @@ from config import (
     committer,
     rclone_remote,
     rclone_config,
-    dot_encode
+    dot_encode,
 )
+
 
 def gen_cmd(full_path, remote_path):
     return [
-        "rclone", "copyto", str(full_path), remote_path,
-        "--config", rclone_config,
-        "--drive-pacer-min-sleep", "500ms",
-        "--drive-chunk-size", "8M"
+        "rclone",
+        "copyto",
+        str(full_path),
+        remote_path,
+        "--config",
+        rclone_config,
+        "--drive-pacer-min-sleep",
+        "500ms",
+        "--drive-chunk-size",
+        "8M",
     ]
+
 
 def encode_path_for_drive(path_str: str) -> str:
     return path_str.replace(".", dot_encode).replace("/", ".").replace("\\", ".")
@@ -48,7 +56,9 @@ print("[Upload] Uploading files to SmartRide team Google Drive...")
 for rel_path, full_path in to_upload:
     encoded_name = encode_path_for_drive(rel_path)
     remote_path = f"{rclone_remote}:{committer}/smartride.{encoded_name}"
-    result = subprocess.run(gen_cmd(full_path, remote_path), capture_output=True, text=True)
+    result = subprocess.run(
+        gen_cmd(full_path, remote_path), capture_output=True, text=True
+    )
     if result.returncode != 0:
         print(f"[Error] Failed to upload {rel_path}:\n{result.stderr}")
         sys.exit(1)
