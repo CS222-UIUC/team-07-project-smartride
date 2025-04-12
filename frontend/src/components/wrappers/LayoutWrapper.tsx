@@ -13,11 +13,11 @@ const LayoutWrapper = () => {
 
   const isAuthRoot = AUTH_ROOT_PATHS.includes(currentPath);
   const isAuthSub = AUTH_SUB_PREFIXES.some((prefix) =>
-    currentPath.startsWith(prefix)
+    currentPath.startsWith(prefix),
   );
 
   const activeNavId = AUTH_ROOT_PATHS.find(
-    (path) => path === currentPath
+    (path) => path === currentPath,
   )?.slice(1);
 
   return (

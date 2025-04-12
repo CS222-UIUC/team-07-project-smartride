@@ -41,7 +41,7 @@ function renderApp(initialPath = "/login") {
           </Route>
         </Routes>
       </AuthProvider>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 
