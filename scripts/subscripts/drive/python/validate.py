@@ -10,7 +10,7 @@ from config import (
     committer,
     rclone_remote,
     rclone_config,
-    dot_encode
+    dot_encode,
 )
 
 # --- COLOR ---
@@ -20,8 +20,10 @@ GREEN = "\033[92m"
 BLUE = "\033[94m"
 RESET = "\033[0m"
 
+
 def encode_path_for_drive(path_str: str) -> str:
     return path_str.replace(".", dot_encode).replace("/", ".").replace("\\", ".")
+
 
 def handle_orphaned_self_hash(entries, raw_hash_lines, hash_map):
     """Allow committer to delete their own orphaned hash records (not tracked or reassigned)."""
@@ -53,12 +55,22 @@ def handle_orphaned_self_hash(entries, raw_hash_lines, hash_map):
             # Still not eligible unless also orphaned from list or reassigned
 
         if allow_remove:
-            print(f"{YELLOW}[Warning] Your hash record for {path} is invalid ({' and '.join(reason)}).{RESET}")
-            ans = input(f"{BLUE}Delete your hash entry and your own GDrive file? (y/n, default: n): {RESET}").strip().lower()
+            print(
+                f"{YELLOW}[Warning] Your hash record for {path} is invalid ({' and '.join(reason)}).{RESET}"
+            )
+            ans = (
+                input(
+                    f"{BLUE}Delete your hash entry and your own GDrive file? (y/n, default: n): {RESET}"
+                )
+                .strip()
+                .lower()
+            )
             if ans == "y":
                 encoded = encode_path_for_drive(path)
                 remote_path = f"{rclone_remote}:{committer}/smartride.{encoded}"
-                subprocess.run(["rclone", "delete", remote_path, "--config", rclone_config])
+                subprocess.run(
+                    ["rclone", "delete", remote_path, "--config", rclone_config]
+                )
                 print(f"[y] Deleted your Google Drive file: {remote_path}{RESET}")
                 removed_count += 1
             else:
@@ -71,8 +83,9 @@ def handle_orphaned_self_hash(entries, raw_hash_lines, hash_map):
         with open(hash_file_path, "w", encoding="utf-8") as f:
             for line in updated_lines:
                 f.write(line + "\n")
-        print(f"[Clean] Removed {removed_count} of your own invalid hash entries.{RESET}")
-
+        print(
+            f"[Clean] Removed {removed_count} of your own invalid hash entries.{RESET}"
+        )
 
 
 # --- SAFEGUARD ---
@@ -93,7 +106,7 @@ with open(file_list_path, "r", encoding="utf-8") as f:
 entries = []
 for idx, line in enumerate(lines):
     if "::" not in line:
-        print(f"{RED}[Error] Invalid format at line {idx+1}: {line}{RESET}")
+        print(f"{RED}[Error] Invalid format at line {idx + 1}: {line}{RESET}")
         sys.exit(1)
     path_str, owner = [x.strip() for x in line.split("::")]
     entries.append((path_str, owner))
@@ -105,7 +118,9 @@ if MODE == "--format":
 
 # --- --local mode ---
 if MODE == "--local":
-    print(f"{BLUE}[Validate] Checking required files exist for current committer...{RESET}")
+    print(
+        f"{BLUE}[Validate] Checking required files exist for current committer...{RESET}"
+    )
     for rel_path, owner in entries:
         if owner == committer:
             if not (project_root / rel_path).exists():
@@ -121,7 +136,9 @@ if not hash_file_path.exists():
     sys.exit(1)
 
 with open(hash_file_path, "r", encoding="utf-8") as f:
-    hash_lines = [line.strip() for line in f if line.strip() and not line.startswith("#")]
+    hash_lines = [
+        line.strip() for line in f if line.strip() and not line.startswith("#")
+    ]
 
 hash_map = {}
 hash_owners = {}
@@ -129,7 +146,7 @@ raw_hash_lines = []
 
 for idx, line in enumerate(hash_lines):
     if "::" not in line:
-        print(f"{RED}[Error] Invalid hash format at line {idx+1}: {line}{RESET}")
+        print(f"{RED}[Error] Invalid hash format at line {idx + 1}: {line}{RESET}")
         sys.exit(1)
     path, hash_val, owner = [x.strip() for x in line.split("::")]
     raw_hash_lines.append((path, hash_val, owner))
@@ -158,7 +175,9 @@ for rel_path, owner in entries:
 for path, owners in hash_owners.items():
     if len(owners) > 1:
         sorted_owners = ", ".join(sorted(owners))
-        print(f"{YELLOW}[Warning] Multiple hash owners for {path}: {sorted_owners}{RESET}")
+        print(
+            f"{YELLOW}[Warning] Multiple hash owners for {path}: {sorted_owners}{RESET}"
+        )
 
 # --- Own invalid entries cleanup ---
 handle_orphaned_self_hash(entries, raw_hash_lines, hash_map)

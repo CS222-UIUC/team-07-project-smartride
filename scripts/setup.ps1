@@ -1,8 +1,9 @@
 param (
     [switch]$admin
 )
-
+$setupVersion = "1.0" # do NOT move this to another line
 Set-StrictMode -Version Latest
+
 
 # usage: ./setup.ps1 -admin (NOTE: It is single dash)
 if ($admin) {
@@ -12,11 +13,9 @@ if ($admin) {
         Write-Host "[Setup Admin] Aborting."
         exit 0
     }
-    $hashFile = "$PSScriptRoot/subscripts/env/parameters/latest-setup"
-    $hash = Get-FileHash -Path $PSScriptRoot/setup.ps1 -Algorithm SHA256
-    $hashValue = $hash.Hash
-    Set-Content -Path $hashFile -Value $hashValue
-    Write-Host "[Setup Admin] Hash of setup.ps1 has been written to 'latest-setup'."
+    $latestFile = "$PSScriptRoot/subscripts/env/parameters/latest-setup"
+    Set-Content -Path $latestFile -Value $setupVersion
+    Write-Host "[Setup Admin] The required minimum version of 'setup' script is updated to"$setupVersion -ForegroundColor Cyan
     exit 0
 }
 
@@ -48,7 +47,7 @@ if ($match.Success) {
         }
 
         if ($missingFields.Count -gt 0) {
-            Write-Host "Error: rclone.conf is missing or has empty fields: $($missingFields -join ', '). Please complete it."
+            Write-Host "Error: rclone.conf is missing or has empty fields: $($missingFields -join ', '). Please complete it." -ForegroundColor Red
             Pop-Location
             exit 1
         }
@@ -58,13 +57,13 @@ if ($match.Success) {
 
     }
     catch {
-        Write-Host "Error: Failed to parse token as JSON. Please ensure token = { ... } is valid JSON."
+        Write-Host "Error: Failed to parse 'token' entry in rclone.conf as JSON. Please ensure 'token = { ... }' is valid JSON." -ForegroundColor Red
         Pop-Location
         exit 1
     }
 }
 else {
-    Write-Host "Error: token section not found in rclone.conf."
+    Write-Host "Error: token section not found in rclone.conf." -ForegroundColor Red
     Pop-Location
     exit 1
 }
@@ -118,7 +117,7 @@ function Get-GitUserOrExit {
     $gitUser = git config user.name 2>$null
 
     if (-not $gitUser -or $gitUser.Trim() -eq "") {
-        Write-Host "Error: Git user.name is not set. Please configure it using:"
+        Write-Host "Error: Git user.name is not set. Please configure it using:" -ForegroundColor Red
         Write-Host "       git config --global user.name \"Your Name\""
         if (Get-Location -match "scripts") {
             Pop-Location
@@ -197,7 +196,7 @@ foreach ($tool in $requiredTools.Keys) {
 }
 if ($missingTools.Count -gt 0) {
     Write-Host "[Setup] The following tools are missing: $($missingTools -join ", ")"
-    $choice = Read-Host "[Setup] Do you want to install them to the 'libraries' folder? (Y/N)"
+    $choice = Read-Host "[Setup] Do you want to install them to the 'libraries' folder? (Y/N)" -ForegroundColor Yellow
     if ($choice -ne 'Y') {
         Write-Host "[Setup] Please install and configure them manually, then rerun this script. Aborting."
         exit 1
@@ -283,13 +282,20 @@ if (-not (Get-Command ngrok -ErrorAction SilentlyContinue)) {
 # Step 9: Require restart if any download happened
 if ($downloadCnt -gt 0) {
     Write-Host "[Setup] Except for pnpm, all components installed by this script are registered in the User Environment Path. If you decide to move 'libraries' folder or the whole project folder, you are required to update the User Environment Path manually."
-    Write-Host "[Setup] $(missingTools -join ', ') are installed. Please restart your terminal and rerun this script to enable the changes."
+    Write-Host "[Setup] $($missingTools -join ', ') are installed. Please restart your terminal and rerun this script to enable the changes."
     exit 0
 }
 
 Write-Host "[Setup] All manadatory tools are installed."
 
-# Step 10: Setup conda environment
+# Step 10: Check if conda init has been done
+$condaProfile = "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"
+if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -Path $condaProfile -Quiet)) {
+    Write-Host "[Setup] Please run 'conda init' manually and restart your terminal. Aborting." -ForegroundColor Red
+    exit 1
+}
+
+# Step 11: Setup conda environment
 conda activate base
 conda install -n base -c conda-forge mamba conda-lock -y
 Push-Location "$PSScriptRoot/subscripts/env"
@@ -299,7 +305,7 @@ if ($LASTEXITCODE -ne 0) {
     # Check if 'smartride-backend' environment exists, if yes, uninstall
     $envExists = conda env list | Select-String "^\s*smartride-backend\s"
     if ($envExists) {
-        Write-Host "[Setup] First time setting up (since version changed). Reinstalling smartride-backend conda environment..."
+        Write-Host "[Setup] First time setting up (since version changed). Reinstalling smartride-backend conda environment..." -ForegroundColor Blue
         Write-Host "[Setup] Uninstalling smartride-backend conda environment..."
         conda env remove -n smartride-backend -y
     }
@@ -310,7 +316,7 @@ Push-Location "$PSScriptRoot/../backend"
 Write-Host "[Setup] Installing or updating smartride-backend conda environment..."
 conda-lock install --mamba conda-lock.yml --name smartride-backend
 conda activate smartride-backend
-Write-Host "[Setup] smartride-backend conda environment is successfully installed and activated."
+Write-Host "[Setup] smartride-backend conda environment is successfully installed and activated." -ForegroundColor Green
 Pop-Location
 
 # Step 11: Sync Google Drive files
@@ -319,11 +325,11 @@ Write-Host "[Setup] Downloading team Google Drive files..."
 & "./drive.ps1" --download
 Pop-Location
 
-# Step 12: Completed, output the hash of this file ($PSScriptRoot/setup.ps1) to last-setup in subscripts/env/parameters/last-setup (may be not existed yet)
-$hashFile = "$PSScriptRoot/subscripts/env/parameters/last-setup"
-$hash = Get-FileHash -Path $PSScriptRoot/setup.ps1 -Algorithm SHA256
-$hashValue = $hash.Hash
-Set-Content -Path $hashFile -Value $hashValue
+# Step 13: Completed, output the hash of this file ($PSScriptRoot/setup.ps1) to last-setup in subscripts/env/parameters/last-setup (may be not existed yet)
+$lastFile = "$PSScriptRoot/subscripts/env/parameters/last-setup"
+Set-Content -Path $lastFile -Value $setupVersion
 
-Write-Host "[Setup] SmartRide setup complete. Please check the 'docs' folder for documentation."
+Write-Host "[Setup] SmartRide setup complete. Please check the 'docs' folder for documentation." -ForegroundColor Green
 Write-Host "[Setup] To run the project, first run './sync-work.ps1 --pull' and then './run.ps1'. Happy coding!"
+
+Pop-Location

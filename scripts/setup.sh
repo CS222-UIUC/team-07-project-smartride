@@ -210,10 +210,9 @@ echo "[Setup] Downloading team Google Drive files..."
 "$(dirname "$0")/drive.sh" --download
 
 # Step 13: Completed, output the hash of the ps1 equivalent file ($PSScriptRoot/setup.ps1) to last-setup in subscripts/env/parameters/last-setup (may be not existed yet)
-setup_path="$(dirname "$0")/../../setup.ps1"
-hash_file="$(dirname "$0")/../parameters/latest-setup"
-hash_value=$(sha256sum "$setup_path" | awk '{print $1}')
-echo "$hash_value" > "$hash_file"
+version=$(sed -n '4p' $(dirname "$0")/../../setup.ps1 | grep -oP '(?<=\$setupVersion = ")([0-9.]+)(?=")') # get the version number from setup.ps1
+last_file="$(dirname "$0")/../parameters/last-setup"
+echo "$version" > "$hash_file"
 
 echo "[Setup] SmartRide setup complete. Please check the 'docs' folder for documentation."
 echo "[Setup] To run the project, first run './sync-work.sh --pull' and then './run.sh'. Happy coding!"

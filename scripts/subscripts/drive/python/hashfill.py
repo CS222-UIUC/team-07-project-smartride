@@ -2,12 +2,7 @@ import os
 import sys
 import hashlib
 
-from config import (
-    project_root,
-    hash_file_path,
-    file_list_path,
-    committer
-)
+from config import project_root, hash_file_path, file_list_path, committer
 
 # --- SAFEGUARD ---
 if os.getenv("_SMARTRIDE_DRIVE_WRAPPER") != "1":
@@ -41,7 +36,9 @@ for rel_path, full_path in entries:
 existing_lines = []
 if hash_file_path.exists():
     with open(hash_file_path, "r", encoding="utf-8") as f:
-        existing_lines = [line.strip() for line in f if line.strip() and not line.startswith("#")]
+        existing_lines = [
+            line.strip() for line in f if line.strip() and not line.startswith("#")
+        ]
 
 output_lines = []
 already_written = set()

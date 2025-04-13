@@ -5,6 +5,7 @@ import yaml
 from pathlib import Path
 import sys
 
+
 class ProgressTracker:
     def __init__(self, total: int, cached_hits: int = 0, desc: str = "Progress"):
         self.total = total
@@ -35,15 +36,19 @@ class ProgressTracker:
         remaining_count = self.total - self.cached_hits - self.processed
         rate = elapsed / self.processed if self.processed > 0 else 0
         eta = remaining_count * rate if self.processed > 0 else 0
-        postfix = f"[{self.format_time(elapsed)}<{self.format_time(eta)}, {rate:.2f}s/it]"
+        postfix = (
+            f"[{self.format_time(elapsed)}<{self.format_time(eta)}, {rate:.2f}s/it]"
+        )
         self.bar.set_postfix_str(postfix)
         self.bar.update(n)
 
     def close(self):
         self.bar.close()
 
+
 def get_name_by_dep(dep: str) -> str:
     return dep.split("==")[0].strip().split("#", 1)[0].strip()
+
 
 def split_package_sections(csr: str, dep: str) -> list[list[str]]:
     lines = csr.splitlines()
@@ -55,7 +60,7 @@ def split_package_sections(csr: str, dep: str) -> list[list[str]]:
         return []
     sections = []
     dep_name = get_name_by_dep(dep)
-    
+
     i = 0
     while i < len(lines):
         line = lines[i].strip()
@@ -85,10 +90,21 @@ def get_package_sections(dep: str) -> list[list[str]]:
     pkg_name = get_name_by_dep(dep)
     total_packages: list[list[str]] = []
     platforms = ["win-64", "osx-64", "linux-64"]
-    platform_bar = tqdm(total=len(platforms), desc=f"{get_name_by_dep(dep)}", position=0, leave=False)
+    platform_bar = tqdm(
+        total=len(platforms), desc=f"{get_name_by_dep(dep)}", position=0, leave=False
+    )
     for platform in platforms:
         search_by_info = subprocess.run(
-            ["conda", "search", "--info", pkg_name, "--platform", platform, "-c", channel],
+            [
+                "conda",
+                "search",
+                "--info",
+                pkg_name,
+                "--platform",
+                platform,
+                "-c",
+                channel,
+            ],
             stdout=stdout,
             stderr=stderr,
             encoding=encoding,
@@ -101,11 +117,17 @@ def get_package_sections(dep: str) -> list[list[str]]:
 
 
 def is_platform_supported(sections: list[list[str]], platform: str) -> bool:
-    platform_info = platform.split('-')[0]
+    platform_info = platform.split("-")[0]
     platform_prefix = f"__{platform_info}"
     no_subdir_cnt = 0
     for section in sections:
-        subdirs = set([line.split(":", 1)[1].strip().split('-')[0].strip() for line in section if line.strip().startswith("subdir")])
+        subdirs = set(
+            [
+                line.split(":", 1)[1].strip().split("-")[0].strip()
+                for line in section
+                if line.strip().startswith("subdir")
+            ]
+        )
         if not subdirs:
             no_subdir_cnt += 1
             continue
@@ -130,6 +152,7 @@ def is_platform_supported(sections: list[list[str]], platform: str) -> bool:
                 return True
     return False
 
+
 def load_platform_table(path: Path) -> dict:
     table = {}
     if path.exists():
@@ -138,6 +161,7 @@ def load_platform_table(path: Path) -> dict:
                 k, v = line.strip().split(":", 1)
                 table[k] = v
     return table
+
 
 def compute_platform_code(has_win: bool, has_osx: bool, has_linux: bool) -> str:
     if has_win and has_osx and has_linux:
@@ -156,11 +180,13 @@ def compute_platform_code(has_win: bool, has_osx: bool, has_linux: bool) -> str:
         return "ol-64"
     return "unknown"
 
+
 def platform_code_to_has_arr(platform_code: str) -> tuple[bool, bool, bool]:
     has_win = platform_code in ["all-64", "win-64", "wo-64", "wl-64"]
     has_osx = platform_code in ["all-64", "osx-64", "wo-64", "ol-64"]
     has_linux = platform_code in ["all-64", "linux-64", "wl-64", "ol-64"]
     return has_win, has_osx, has_linux
+
 
 def append_platform_entry(path: Path, dep: str, code: str):
     if not path.exists():
@@ -169,25 +195,34 @@ def append_platform_entry(path: Path, dep: str, code: str):
     with open(path, "a", encoding="utf-8") as f:
         f.write(f"{get_name_by_dep(dep)}:{code or 'all-64'}\n")
 
+
 def quiet_write(msg: str, quiet: bool):
     if not quiet:
         tqdm.write(msg)
 
-def print_entry(dep: str, has_win: bool, has_osx: bool, has_linux: bool, is_new: bool, quiet: bool) -> None:
-    check       =   "\u2713"
-    win_str     =   f"{check if has_win else '':<8}"
-    osx_str     =   f"{check if has_osx else '':<8}"
-    linux_str   =   f"{check if has_linux else '':<10}"
-    line        =   f"{get_name_by_dep(dep):<40}{win_str}{osx_str}{linux_str}"
+
+def print_entry(
+    dep: str, has_win: bool, has_osx: bool, has_linux: bool, is_new: bool, quiet: bool
+) -> None:
+    check = "\u2713"
+    win_str = f"{check if has_win else '':<8}"
+    osx_str = f"{check if has_osx else '':<8}"
+    linux_str = f"{check if has_linux else '':<10}"
+    line = f"{get_name_by_dep(dep):<40}{win_str}{osx_str}{linux_str}"
 
     if is_new:
-        line    =   f"\033[94m{line}\033[0m"
+        line = f"\033[94m{line}\033[0m"
 
     quiet_write(line, quiet)
 
-def update_new_deps(has_win: bool, has_osx: bool, has_linux: bool, dep: str, new_deps: list) -> tuple[list, bool]:
+
+def update_new_deps(
+    has_win: bool, has_osx: bool, has_linux: bool, dep: str, new_deps: list
+) -> tuple[list, bool]:
     found = False
-    clean_dep = dep.split("#", 1)[0].strip() # to prevent # [win64] # [win64] # [win64] # [win64] ...
+    clean_dep = dep.split("#", 1)[
+        0
+    ].strip()  # to prevent # [win64] # [win64] # [win64] # [win64] ...
     if has_win and has_osx and has_linux:
         new_deps.append(clean_dep)
         found = True
@@ -203,13 +238,16 @@ def update_new_deps(has_win: bool, has_osx: bool, has_linux: bool, dep: str, new
             found = True
     return new_deps, found
 
+
 def main():
     args = sys.argv[1:]
     quiet = "--quiet" in args
     cache_output = not ("--no_cache_output" in args)
     args = [arg for arg in args if arg != "--quiet" and arg != "--no_cache_output"]
     if len(args) != 1:
-        print("Usage: python path/to/conda_platform_analyzer.py path/to/conda_env.yml [--quiet] [--no_cache_output]")
+        print(
+            "Usage: python path/to/conda_platform_analyzer.py path/to/conda_env.yml [--quiet] [--no_cache_output]"
+        )
         sys.exit(1)
 
     yml_path = Path(args[0])
@@ -218,7 +256,9 @@ def main():
     lock_path = current_file.parent.parent / "parameters" / "processing_conda"
 
     if lock_path.exists() and lock_path.read_text().strip() == "1":
-        print("Another process is analyzing conda environment and/or platform file(s). Aborting.")
+        print(
+            "Another process is analyzing conda environment and/or platform file(s). Aborting."
+        )
         sys.exit(1)
     lock_path.write_text("1")
 
@@ -226,43 +266,64 @@ def main():
         with open(yml_path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
 
-        quiet_write(f"{'Package':<40} {'win-64':<8} {'osx-64':<8} {'linux-64':<10}", quiet)
+        quiet_write(
+            f"{'Package':<40} {'win-64':<8} {'osx-64':<8} {'linux-64':<10}", quiet
+        )
         quiet_write("-" * 70, quiet)
 
         deps_list = data.get("dependencies", [])
         platform_table = load_platform_table(platform_path)
 
         cached_hits = sum(
-            1 for dep in deps_list
+            1
+            for dep in deps_list
             if isinstance(dep, str) and get_name_by_dep(dep) in platform_table
         )
 
         if cached_hits > 0:
-            quiet_write(f"Found {cached_hits} cached entries, remaining {len(deps_list) - cached_hits} to process.", quiet)
+            quiet_write(
+                f"Found {cached_hits} cached entries, remaining {len(deps_list) - cached_hits} to process.",
+                quiet,
+            )
 
         total_str_ins_deps = len([i for i in deps_list if isinstance(i, str)])
-        total_bar = ProgressTracker(total_str_ins_deps, cached_hits, desc="Processing dependencies")
+        total_bar = ProgressTracker(
+            total_str_ins_deps, cached_hits, desc="Processing dependencies"
+        )
         new_deps = []
 
         for dep in deps_list:
             if isinstance(dep, str):
                 if get_name_by_dep(dep) in platform_table:
                     platform_code = platform_table[get_name_by_dep(dep)]
-                    has_win, has_osx, has_linux = platform_code_to_has_arr(platform_code)
+                    has_win, has_osx, has_linux = platform_code_to_has_arr(
+                        platform_code
+                    )
                     if cache_output:
                         print_entry(dep, has_win, has_osx, has_linux, False, quiet)
-                    new_deps, _ = update_new_deps(has_win, has_osx, has_linux, dep, new_deps)
+                    new_deps, _ = update_new_deps(
+                        has_win, has_osx, has_linux, dep, new_deps
+                    )
                     continue
-                sections    = get_package_sections(dep)
-                has_win     = is_platform_supported(sections, "win-64")
-                has_osx     = is_platform_supported(sections, "osx-64")
-                has_linux   = is_platform_supported(sections, "linux-64")
+                sections = get_package_sections(dep)
+                has_win = is_platform_supported(sections, "win-64")
+                has_osx = is_platform_supported(sections, "osx-64")
+                has_linux = is_platform_supported(sections, "linux-64")
                 print_entry(dep, has_win, has_osx, has_linux, True, quiet)
-                new_deps, found = update_new_deps(has_win, has_osx, has_linux, dep, new_deps)
+                new_deps, found = update_new_deps(
+                    has_win, has_osx, has_linux, dep, new_deps
+                )
                 if found:
-                    append_platform_entry(platform_path, dep, compute_platform_code(has_win, has_osx, has_linux))
+                    append_platform_entry(
+                        platform_path,
+                        dep,
+                        compute_platform_code(has_win, has_osx, has_linux),
+                    )
                 else:
-                    quiet_write(f"[WARN] {get_name_by_dep(dep)} not found on any major platform, skipping.", quiet)
+                    quiet_write(
+                        f"[WARN] {get_name_by_dep(dep)} not found on any major platform, skipping.",
+                        quiet,
+                    )
                 total_bar.update(1)
         total_bar.close()
         data["dependencies"] = new_deps
@@ -274,6 +335,7 @@ def main():
 
     finally:
         lock_path.write_text("0")
+
 
 if __name__ == "__main__":
     main()
