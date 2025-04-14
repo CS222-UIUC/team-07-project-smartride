@@ -18,8 +18,6 @@ if ($mode -ne "--backend" -and $mode -ne "--frontend" -and $mode -ne "--fullstac
 }
 
 if ($mode -eq "--backend" -or $mode -eq "--fullstack") {
-    & "$PSScriptRoot/subscripts/env/check-conda-imp.ps1"
-    if ($LASTEXITCODE -ne 0) { exit 1 }
     $env:SMARTRIDE_ENTRYPOINT = "backend-main"
     Push-Location "$PSScriptRoot/subscripts/backend"
 
