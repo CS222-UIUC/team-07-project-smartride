@@ -6,13 +6,13 @@ if ($env:SMARTRIDE_ENTRYPOINT -ne "backend-main") {
 }
 
 # Move to backend directory
-Set-Location ../../../backend
+Push-Location "$PSScriptRoot/../../../backend"
 
 # Activate conda env
 conda activate smartride-backend
 
 # Run pytest with coverage
-coverage run -m pytest --cov=server tests/
-coverage report
+pytest --cov=server --cov-report=term --cov-report=html tests/
+start "htmlcov/index.html"
 
-Set-Location ../scripts/subscripts/backend
+Pop-Location

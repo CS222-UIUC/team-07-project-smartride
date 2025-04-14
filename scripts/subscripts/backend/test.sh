@@ -18,7 +18,7 @@ fi
 conda activate smartride-backend
 
 # Run pytest with coverage
-coverage run -m pytest --cov=server tests/
-coverage report
+pytest --cov=server --cov-report=term --cov-report=html tests/
+open htmlcov/index.html
 
 cd ../scripts/subscripts/backend

@@ -10,8 +10,6 @@ fi
 DIR="$(dirname "$0")"
 
 if [[ "$TARGET" == "--backend" || "$TARGET" == "--fullstack" ]]; then
-  bash "$(dirname "$0")/subscripts/env/check-conda-imp.sh"
-
   pushd "$DIR/subscripts/backend"
 
   echo "Start backend workflows..."

@@ -9,5 +9,6 @@ set -e
 
 cd "$(dirname "$0")/../../../frontend"
 pnpm install > /dev/null
-pnpm test
+pnpm test --coverage
+open coverage/index.html
 cd ../scripts/subscripts/frontend
