@@ -12,7 +12,7 @@ Push-Location "$PSScriptRoot/../../../backend"
 conda activate smartride-backend
 
 # Run pytest with coverage
-pytest --cov=server --cov-report=term --cov-report=html tests/
+pytest --cov=server --cov-report=term --cov-report=html --rich tests/
 start "htmlcov/index.html"
 
 Pop-Location

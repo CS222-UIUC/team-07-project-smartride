@@ -70,11 +70,11 @@ export default defineConfig(({ mode }) => {
       globals: true,
       setupFiles: "./src/setupTests.ts",
       coverage: {
-        reporter: ["text", "html"],
+        reporter: ["html"],
         all: true,
         include: ["src/**/*.{ts,tsx}"],
         exclude: ["src/**/*.d.ts", "src/setupTests.ts"],
-        reportsDirectory: './coverage'
+        reportsDirectory: "./coverage",
       },
     },
   };

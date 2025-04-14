@@ -115,3 +115,4 @@ python.app:osx-64
 flask-migrate:all-64
 mako:all-64
 alembic:all-64
+pytest-rich:all-64

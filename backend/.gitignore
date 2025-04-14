@@ -5,7 +5,6 @@ __pycache__/*
 .ruff_cache/
 .pytest_cache/
 .coverage
-coverage.lcov
 htmlcov
 database/*
 !database/.gitkeep
