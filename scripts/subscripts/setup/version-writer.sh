@@ -10,10 +10,13 @@ step="$1"
 version="$2"
 
 versionFile="$(dirname "$0")/../parameters/lastVersion"
+echo $versionFile
 tempFile="$(mktemp)"
 
 if [ -f "$versionFile" ]; then
     grep -vE "^\s*$step\s*=" "$versionFile" > "$tempFile"
+else
+    > "$tempFile"
 fi
 
 echo "$step=$version" >> "$tempFile"
