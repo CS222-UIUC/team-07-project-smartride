@@ -4464,39 +4464,39 @@ package:
   category: main
   optional: false
 - name: trove-classifiers
-  version: 2025.3.19.19
+  version: 2025.4.11.15
   manager: conda
   platform: linux-64
   dependencies:
     python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/trove-classifiers-2025.3.19.19-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/trove-classifiers-2025.4.11.15-pyhd8ed1ab_0.conda
   hash:
-    md5: 4601bd3e415bf63bca30d00353a9440d
-    sha256: 8b6fe745925e55636a5f8bd1affde47fc385665486e3cf9ba12a73bd4cdf2df1
+    md5: cb035e6070d809099f5db5c4b63a5c40
+    sha256: f9c348a4f74e99befe0c6e69a5868a2b078eb00f8def94c24378499af4d2834b
   category: main
   optional: false
 - name: trove-classifiers
-  version: 2025.3.19.19
+  version: 2025.4.11.15
   manager: conda
   platform: osx-64
   dependencies:
     python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/trove-classifiers-2025.3.19.19-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/trove-classifiers-2025.4.11.15-pyhd8ed1ab_0.conda
   hash:
-    md5: 4601bd3e415bf63bca30d00353a9440d
-    sha256: 8b6fe745925e55636a5f8bd1affde47fc385665486e3cf9ba12a73bd4cdf2df1
+    md5: cb035e6070d809099f5db5c4b63a5c40
+    sha256: f9c348a4f74e99befe0c6e69a5868a2b078eb00f8def94c24378499af4d2834b
   category: main
   optional: false
 - name: trove-classifiers
-  version: 2025.3.19.19
+  version: 2025.4.11.15
   manager: conda
   platform: win-64
   dependencies:
     python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/trove-classifiers-2025.3.19.19-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/trove-classifiers-2025.4.11.15-pyhd8ed1ab_0.conda
   hash:
-    md5: 4601bd3e415bf63bca30d00353a9440d
-    sha256: 8b6fe745925e55636a5f8bd1affde47fc385665486e3cf9ba12a73bd4cdf2df1
+    md5: cb035e6070d809099f5db5c4b63a5c40
+    sha256: f9c348a4f74e99befe0c6e69a5868a2b078eb00f8def94c24378499af4d2834b
   category: main
   optional: false
 - name: typing-extensions

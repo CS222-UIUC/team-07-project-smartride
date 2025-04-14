@@ -1,9 +1,9 @@
-import SlidePanel from "@/components/widgets/SlidePanel";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card } from "@/components/ui/card";
+import SlidePanel from "@/components/widgets/SlidePanel.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { Card } from "@/components/ui/card.tsx";
 import { MoveUp, MoveDown, Trash2, MapPin } from "lucide-react";
-import { Point } from "./manage/structure";
+import { Point } from "./manage/structure.ts";
 
 interface MapPanelProps {
   isOpen: boolean;

@@ -1,5 +1,5 @@
 {
-  "include": ["src", "vite.config.ts"],
+  "include": ["src", "vite.config.ts", "capacitor.config.ts"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
@@ -7,7 +7,16 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["src/*"]
+    },
+    "target": "ES2020",
+    
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["vite/client", "jest"],
+    "jsx": "react-jsx",
+
+    "moduleResolution": "bundler",
+    "module": "ESNext",
   }
 }

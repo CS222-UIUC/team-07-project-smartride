@@ -4,7 +4,7 @@ Set-StrictMode -Version Latest
 
 Push-Location "$PSScriptRoot"
 
-& "$PSScriptRoot/subscripts/env/check-setup.ps1"
+& "$PSScriptRoot/subscripts/setup/check-setup.ps1"
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "`n[PrPrep] Preparing project before submitting PR...`n"
@@ -24,6 +24,9 @@ if ($LASTEXITCODE -ne 0) {
     Pop-Location
     exit 1
 }
+
+Write-Host "[PrPrep] Generate a build for frontend and capacitor..."
+
 
 Write-Host "[PrPrep] Exporting current conda environment..."
 $env:SMARTRIDE_ENTRYPOINT = "pr-prep"

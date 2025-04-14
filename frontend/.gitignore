@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+**/*.d.ts
+tsconfig.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +24,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# identical generated assets files by capacitor
+android\app\src\main\assets\public
+
+ios\App\App\public

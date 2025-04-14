@@ -1,6 +1,6 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-import type { Point } from "../manage/structure";
+import type { Point } from "../manage/structure.ts";
 
 interface PointMarkerProps {
   points: Point[];
