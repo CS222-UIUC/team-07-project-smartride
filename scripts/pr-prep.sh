@@ -3,7 +3,7 @@ set -e
 
 cd "$(dirname "$0")"
 
-bash "$(dirname "$0")/subscripts/env/check-setup.sh"
+bash "$(dirname "$0")/subscripts/setup/check-setup.sh"
 
 echo
 echo "[PrPrep] Preparing project before submitting PR..."

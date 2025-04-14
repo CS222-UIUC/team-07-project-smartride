@@ -6,12 +6,16 @@ param (
 
 Set-StrictMode -Version Latest
 
+# Ensure setup correctly
+& "$PSScriptRoot/subscripts/setup/check-setup.ps1"
+if ($LASTEXITCODE -ne 0) { exit 1 }
+
 # Ensure conda env is imported
 & "$PSScriptRoot/subscripts/env/check-conda-imp.ps1"
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
-# Write project mode to .env.local
-$envFile = "$PSScriptRoot/../.env.local"
+# Write project mode to .env.auto
+$envFile = "$PSScriptRoot/../.env.auto"
 $projectMode = if ($Mode -eq "--dev") { "DEV" } else { "BUILD" }
 
 $lines = Get-Content $envFile
