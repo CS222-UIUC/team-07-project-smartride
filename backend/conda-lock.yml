@@ -3699,10 +3699,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/python-3.13.3-h261c0b1_100_cp313.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/python-3.13.3-h261c0b1_101_cp313.conda
   hash:
-    md5: 73aef991d40cedc8696fdd2791800c14
-    sha256: ff03ad000485d565ca23f4d871b994f9fd4388349d6458293bd5d605f0b9ea29
+    md5: 4784d7aecc8996babe9681d017c81b8a
+    sha256: 25cf0113c0e4fa42d31b0ff85349990dc454f1237638ba4642b009b451352cdf
   category: main
   optional: false
 - name: python-build

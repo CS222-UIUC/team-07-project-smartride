@@ -41,7 +41,7 @@ conda-lock lock --mamba \
   --platform win-64 \
   --platform linux-64 \
   --platform osx-64 \
-  --lockfile "$CONDA_LOCK_REL_PATH"
+  --lockfile "$CONDA_LOCK_REL_PATH" 1>/dev/null
 popd > /dev/null
 
 echo "[Export Conda] The conda environment is successfully exported."

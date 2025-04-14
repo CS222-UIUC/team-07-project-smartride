@@ -8,7 +8,7 @@ popd
 
 echo -e "\n[Formatter] Start frontend prettier formatter workflow..."
 pushd "../frontend"
-pnpm prettier --write "**/*.{ts,tsx,css}"
+pnpm prettier --write "src/**/*.{ts,tsx,js,jsx}" 2>&1 | grep -v "(unchanged)"
 echo -e "\n[Formatter] Frontend prettier formatter workflow are completed."
 popd
 
