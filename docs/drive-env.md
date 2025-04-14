@@ -16,7 +16,7 @@ If `./setup` goes well, jump to [How to use](#how-to-use) section.
 
 #### Environment Variables
 
-- `.env.local` and `.env.shared` stores all the environment variables we need.
+- `.env.local`, `.env.shared` and `.env.auto` store all the environment variables we need.
 
 - Modify `COMMITTER` variable in `.env.local` to be your GitHub account. (NEW: `./setup` will do this for you given you have set up `user.name` in git config.)
 

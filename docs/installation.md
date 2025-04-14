@@ -11,11 +11,9 @@
 
    In the first step, you will need to contact ETwilight for the `token` of `rclone.conf` to fill in. Check out [drive-env.md](drive-env.md) for more details.
 
-3. Install `pnpm`, `node.js`, `conda` (either `anaconda` or `miniconda`), and `rclone` on your machine if you choose to set up manually.
+3. Install `pnpm`, `node.js`, `conda` (it is recommended to use `miniforge3` or `miniconda3`), and `rclone` on your machine if you choose to set up manually.
 
-4. Set up `ngrok` by following the instructions on `https://ngrok.com/`, the free plan is enough for us. It is not mandatory at this time if you only want to give this project a try.
-
-5. Note for non-teammates only:
+4. Note for non-teammates only (OUTDATED):
 
 - The project is still runnable, but you should follow instructions below.
 - Register your own ORS API key and put it into `ORS_API_KEY` entry of `.env.shared`.
@@ -30,7 +28,7 @@
 - Run `setup` and `setup -admin`.
 - Now follow [usage.md](usage.md) to run the project. This is no different from the teammates' instructions.
 
-6. To request for `rclone.conf` token or other sensitive files, or if you have a strong passion of contributing code, read [contribute-code.md](contribute-code.md) for more details. A simple message is that we rarely share sensitive informations.
+5. To request for `rclone.conf` token or other sensitive files, or if you have a strong passion of contributing code, read [contribute-code.md](contribute-code.md) for more details. A simple message is that we rarely share sensitive informations.
 
 ## What's more
 
