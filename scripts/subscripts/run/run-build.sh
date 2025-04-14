@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+if [[ "$SMARTRIDE_ENTRYPOINT" != "run-main" ]]; then
+  echo "Error: scripts/subscripts/run/run-build.sh must be run via scripts/run.sh --build"
+  exit 1
+fi
+
+pushd "$(dirname "$0")/../../.."
+
+# Start backend
+echo "Starting backend..."
+osascript -e 'tell application "Terminal" to do script "eval $(conda shell.bash hook); cd '$(pwd)'; cd backend && conda activate smartride-backend && python -m server.app; echo; echo Press Enter to exit...; read"'
+
+# Start frontend
+echo "Starting frontend..."
+osascript -e 'tell application "Terminal" to do script "cd '$(pwd)'; cd frontend; pnpm install && pnpm run build; pnpm preview; echo; echo Press Enter to exit...; read"'
+
+# Start ngrok
+echo "Starting ngrok..."
+osascript -e 'tell application "Terminal" to do script "ngrok http 5173; echo; echo Press Enter to exit...; read"'
+
+popd

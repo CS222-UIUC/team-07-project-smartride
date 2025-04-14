@@ -25,6 +25,9 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
+Write-Host "[PrPrep] Generate a build for frontend and capacitor..."
+
+
 Write-Host "[PrPrep] Exporting current conda environment..."
 $env:SMARTRIDE_ENTRYPOINT = "pr-prep"
 Push-Location "$PSScriptRoot/subscripts/env"

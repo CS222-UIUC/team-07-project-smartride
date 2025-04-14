@@ -1,12 +1,13 @@
 param (
     [switch]$admin
 )
-$setupVersion = "1.0" # do NOT move this to another line
+$setupVersion = "1.1" # do NOT move this to another line
 Set-StrictMode -Version Latest
 
 
 # usage: ./setup.ps1 -admin (NOTE: It is single dash)
 if ($admin) {
+    $adminVersion = "1.0"
     Write-Host "[Setup Admin] Danger! This mode is for updating setup.ps1 only. It will ask everyone to rerun this script."
     $continue = Read-Host "[Setup Admin] Do you want to continue? (Y/N)"
     if ($continue -ne 'Y') {
@@ -14,8 +15,8 @@ if ($admin) {
         exit 0
     }
     $latestFile = "$PSScriptRoot/subscripts/env/parameters/latest-setup"
-    Set-Content -Path $latestFile -Value $setupVersion
-    Write-Host "[Setup Admin] The required minimum version of 'setup' script is updated to"$setupVersion -ForegroundColor Cyan
+    Set-Content -Path $latestFile -Value $adminVersion
+    Write-Host "[Setup Admin] The required minimum version of 'setup' script is updated to"$adminVersion -ForegroundColor Cyan
     exit 0
 }
 
@@ -289,11 +290,11 @@ if ($downloadCnt -gt 0) {
 Write-Host "[Setup] All manadatory tools are installed."
 
 # Step 10: Check if conda init has been done
-$condaProfile = "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"
-if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -Path $condaProfile -Quiet)) {
-    Write-Host "[Setup] Please run 'conda init' manually and restart your terminal. Aborting." -ForegroundColor Red
-    exit 1
-}
+# $condaProfile = "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"
+# if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -Path $condaProfile -Quiet)) {
+#     Write-Host "[Setup] Please run 'conda init' manually and restart your terminal. Aborting." -ForegroundColor Red
+#     exit 1
+# }
 
 # Step 11: Setup conda environment
 conda activate base

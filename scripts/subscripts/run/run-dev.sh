@@ -2,7 +2,7 @@
 set -e
 
 if [[ "$SMARTRIDE_ENTRYPOINT" != "run-main" ]]; then
-  echo "Error: scripts/subscripts/run/run-easy.sh must be run via scripts/run.sh"
+  echo "Error: scripts/subscripts/run/run-dev.sh must be run via scripts/run.sh"
   exit 1
 fi
 
