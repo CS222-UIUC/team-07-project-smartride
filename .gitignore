@@ -1,6 +1,6 @@
 .vscode/*
 !.vscode/settings.json
 .DS_Store
-.env.local
-.env.shared
+.env.*
+!.env.*.example
 libraries/*

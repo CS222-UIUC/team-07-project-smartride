@@ -6,7 +6,7 @@ param (
 
 Set-StrictMode -Version Latest
 
-& "$PSScriptRoot/subscripts/env/check-setup.ps1"
+& "$PSScriptRoot/subscripts/setup/check-setup.ps1"
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Push-Location "$PSScriptRoot"

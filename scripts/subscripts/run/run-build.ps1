@@ -31,12 +31,12 @@ if ($LASTEXITCODE -ne 0 -or -not $wlanIp) {
 }
 Write-Host "[INFO] Retrieved WLAN IP: $wlanIp"
 
-# Step 3: Only update VITE_WLAN_IP in .env.local
-$envPath = "$PSScriptRoot/../../../.env.local"
-$envLines = Get-Content $envPath
+# Step 3: Update VITE_WLAN_IP in .env.auto
+$autoEnvPath = "$PSScriptRoot/../../../.env.auto"
+$autoEnvLines = Get-Content $autoEnvPath
 
 $found = $false
-$updatedLines = $envLines | ForEach-Object {
+$updatedLines = $autoEnvLines | ForEach-Object {
     if ($_ -match '^VITE_WLAN_IP=') {
         $found = $true
         "VITE_WLAN_IP=`"$wlanIp`""
@@ -47,7 +47,7 @@ $updatedLines = $envLines | ForEach-Object {
 if (-not $found) {
     $updatedLines += "VITE_WLAN_IP=`"$wlanIp`""
 }
-$updatedLines | Set-Content $envPath -Encoding UTF8
+$updatedLines | Set-Content $autoEnvPath -Encoding UTF8
 
 Push-Location "$PSScriptRoot/../../.."
 
@@ -64,16 +64,25 @@ Read-Host
 # Step 5: Start frontend preview or cap run
 Write-Host "Starting frontend..."
 if ($Platform -eq "--android" -or $Platform -eq "--ios") {
-    $deployType = Get-Content frontend/.env.local | Where-Object { $_ -match '^VITE_DEPLOY_TARGET=' } | ForEach-Object { ($_ -split '=')[1].Trim('"') }
-
+    $deployType = Get-Content "$PSScriptRoot/../../../.env.local" |
+    Where-Object { $_ -match '^VITE_DEPLOY_TARGET=' } |
+    ForEach-Object {
+        ($_ -split '=', 2)[1] -replace '"', '' -replace '\s*#.*$', '' -replace '\s+$', ''
+    }
+    $emulatorMode = Get-Content "$PSScriptRoot/../../../.env.local" |
+    Where-Object { $_ -match '^SMARTRIDE_EMULATOR_MODE=' } |
+    ForEach-Object {
+        ($_ -split '=', 2)[1] -replace '"', '' -replace '\s*#.*$', '' -replace '\s+$', ''
+    }
     if ($deployType -eq "MACHINE") {
         Write-Host "[SKIP] Target is MACHINE. Skipping 'npx cap run'."
     } else {
         $platformStr = if ($Platform -eq "--android") { "android" } else { "ios" }
+        $emulModeStr = if ($emulatorMode -eq "RUN") { "run" } else { "open" }
         Start-Process powershell -ArgumentList @"
 cd frontend
 pnpm install
-pnpm --package="@capacitor/cli" dlx capacitor run $platformStr
+pnpm --package="@capacitor/cli" dlx capacitor $emulModeStr $platformStr
 Write-Host 'Press Enter to exit...'
 Read-Host
 "@

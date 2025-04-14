@@ -4,6 +4,8 @@ import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import { Capacitor } from "@capacitor/core";
+import dotenv from "dotenv";
+import fs from "fs";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -15,7 +17,12 @@ export default defineConfig(({ mode }) => {
     WLAN_IP?: string;
   };
 
-  const rawEnv = loadEnv(mode, path.resolve(__dirname, ".."));
+  const envAuto = dotenv.parse(fs.readFileSync(path.resolve(__dirname, "../.env.auto")));
+  const envLocal = loadEnv(mode, path.resolve(__dirname, ".."));
+  const rawEnv = {
+    ...envAuto,
+    ...envLocal,
+  };
   const env: EnvVars = {
     API_PORT: rawEnv.VITE_API_PORT,
     DEV_PORT: rawEnv.VITE_DEV_PORT,
