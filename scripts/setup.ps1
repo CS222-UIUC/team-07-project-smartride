@@ -1,7 +1,7 @@
 param (
     [switch]$admin
 )
-$setupVersion = "1.0" # do NOT move this to another line
+$setupVersion = "1.1" # do NOT move this to another line
 Set-StrictMode -Version Latest
 
 
@@ -289,11 +289,11 @@ if ($downloadCnt -gt 0) {
 Write-Host "[Setup] All manadatory tools are installed."
 
 # Step 10: Check if conda init has been done
-$condaProfile = "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"
-if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -Path $condaProfile -Quiet)) {
-    Write-Host "[Setup] Please run 'conda init' manually and restart your terminal. Aborting." -ForegroundColor Red
-    exit 1
-}
+# $condaProfile = "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"
+# if (-not (Test-Path $condaProfile) -or -not (Select-String "conda initialize" -Path $condaProfile -Quiet)) {
+#     Write-Host "[Setup] Please run 'conda init' manually and restart your terminal. Aborting." -ForegroundColor Red
+#     exit 1
+# }
 
 # Step 11: Setup conda environment
 conda activate base
@@ -319,7 +319,7 @@ conda activate smartride-backend
 Write-Host "[Setup] smartride-backend conda environment is successfully installed and activated." -ForegroundColor Green
 Pop-Location
 
-# Step 12: Sync Google Drive files
+# Step 11: Sync Google Drive files
 Push-Location "$PSScriptRoot"
 Write-Host "[Setup] Downloading team Google Drive files..."
 & "./drive.ps1" --download
