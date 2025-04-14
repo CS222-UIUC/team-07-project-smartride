@@ -17,7 +17,10 @@ export default defineConfig(({ mode }) => {
     WLAN_IP?: string;
   };
 
-  const envAuto = dotenv.parse(fs.readFileSync(path.resolve(__dirname, "../.env.auto")));
+  const envAutoPath = path.resolve(__dirname, "../.env.auto");
+  const envAuto = fs.existsSync(envAutoPath)
+    ? dotenv.parse(fs.readFileSync(envAutoPath))
+    : {};
   const envLocal = loadEnv(mode, path.resolve(__dirname, ".."));
   const rawEnv = {
     ...envAuto,
