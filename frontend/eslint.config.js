@@ -7,7 +7,7 @@ import reactX from 'eslint-plugin-react-x'
 import reactDom from 'eslint-plugin-react-dom'
 
 export default tseslint.config(
-  { ignores: ['dist', '**/*.d.ts'] },
+  { ignores: ['dist', 'android', 'ios', '**/*.d.ts'] },
 
   {
     files: ['**/*.{js,jsx}'],

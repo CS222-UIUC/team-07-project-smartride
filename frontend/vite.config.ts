@@ -3,7 +3,7 @@ import { loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-import { Capacitor } from '@capacitor/core';
+import { Capacitor } from "@capacitor/core";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -26,13 +26,15 @@ export default defineConfig(({ mode }) => {
 
   const apiPort: string = env.API_PORT || "5000";
   const devPort: number = parseInt(env.DEV_PORT || "5173");
-  let apiHost: string = '127.0.0.1';
-  if (env.PROJECT_MODE === 'BUILD') {
-    if (Capacitor.getPlatform() === 'android' && env.DEPLOY_TARGET === 'EMULATOR') {
-      apiHost = '10.0.2.2';
-    }
-    else {
-      apiHost = env.WLAN_IP || '127.0.0.1';
+  let apiHost: string = "127.0.0.1";
+  if (env.PROJECT_MODE === "BUILD") {
+    if (
+      Capacitor.getPlatform() === "android" &&
+      env.DEPLOY_TARGET === "EMULATOR"
+    ) {
+      apiHost = "10.0.2.2";
+    } else {
+      apiHost = env.WLAN_IP || "127.0.0.1";
     }
   }
   return {
