@@ -320,7 +320,7 @@ conda activate smartride-backend
 Write-Host "[Setup] smartride-backend conda environment is successfully installed and activated." -ForegroundColor Green
 Pop-Location
 
-# Step 12: Sync Google Drive files
+# Step 11: Sync Google Drive files
 Push-Location "$PSScriptRoot"
 Write-Host "[Setup] Downloading team Google Drive files..."
 & "./drive.ps1" --download
