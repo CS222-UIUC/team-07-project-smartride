@@ -1,10 +1,10 @@
-import MapView from "@/maps/MapView";
+import MapView from "@/maps/MapView.tsx";
 
 import { CSSProperties, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useIsPhone } from "@/components/context/PhoneContext";
-import { createOrUpdateRoute } from "@/api/map/route_store";
-import { Button } from "@/components/ui/button";
+import { useIsPhone } from "@/components/context/PhoneContext.tsx";
+import { createOrUpdateRoute } from "@/api/map/route_store.ts";
+import { Button } from "@/components/ui/button.tsx";
 
 const MapWrapper = () => {
   const IsPhone = useIsPhone();

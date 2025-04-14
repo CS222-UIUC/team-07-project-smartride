@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import TopBar from "@/components/widgets/TopBar";
-import BottomNav from "@/components/widgets/BottomNav";
+import TopBar from "@/components/widgets/TopBar.tsx";
+import BottomNav from "@/components/widgets/BottomNav.tsx";
 
 const AUTH_ROOT_PATHS = ["/home", "/map", "/profile"];
 const AUTH_SUB_PREFIXES = ["/map/"];

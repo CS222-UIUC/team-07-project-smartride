@@ -7,6 +7,7 @@ Set-StrictMode -Version Latest
 
 # usage: ./setup.ps1 -admin (NOTE: It is single dash)
 if ($admin) {
+    $adminVersion = "1.0"
     Write-Host "[Setup Admin] Danger! This mode is for updating setup.ps1 only. It will ask everyone to rerun this script."
     $continue = Read-Host "[Setup Admin] Do you want to continue? (Y/N)"
     if ($continue -ne 'Y') {
@@ -14,8 +15,8 @@ if ($admin) {
         exit 0
     }
     $latestFile = "$PSScriptRoot/subscripts/env/parameters/latest-setup"
-    Set-Content -Path $latestFile -Value $setupVersion
-    Write-Host "[Setup Admin] The required minimum version of 'setup' script is updated to"$setupVersion -ForegroundColor Cyan
+    Set-Content -Path $latestFile -Value $adminVersion
+    Write-Host "[Setup Admin] The required minimum version of 'setup' script is updated to"$adminVersion -ForegroundColor Cyan
     exit 0
 }
 

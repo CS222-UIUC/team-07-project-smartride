@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.tsx";
 
 import { useState, useEffect } from "react";
-import { getSavedRoutes, Route } from "@/api/map/route_store";
+import { getSavedRoutes, Route } from "@/api/map/route_store.ts";
 
 const MapPage = () => {
   const navigate = useNavigate();

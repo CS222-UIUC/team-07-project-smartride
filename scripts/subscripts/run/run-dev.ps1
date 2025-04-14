@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 
 if ($env:SMARTRIDE_ENTRYPOINT -ne "run-main") {
-    Write-Host "Error: scripts/subscripts/run/run-easy.ps1 must be run via scripts/run.ps1"
+    Write-Host "Error: scripts/subscripts/run/run-dev.ps1 must be run via scripts/run.ps1"
     exit 1
 }
 
@@ -23,14 +23,6 @@ Start-Process powershell -ArgumentList @"
 cd frontend
 pnpm install
 pnpm run dev
-Write-Host 'Press Enter to exit...'
-Read-Host
-"@
-
-# Start ngrok
-Write-Host "Starting ngrok..."
-Start-Process powershell -ArgumentList @"
-ngrok http 5173
 Write-Host 'Press Enter to exit...'
 Read-Host
 "@

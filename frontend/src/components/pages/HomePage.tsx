@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { logoutUser } from "@/api/web/logout";
+import { logoutUser } from "@/api/web/logout.ts";
 import { useState } from "react";
-import WeeklySidebar from "./WeeklySidebar";
-import { useAuth } from "@/components/context/useAuth";
+import WeeklySidebar from "./WeeklySidebar.tsx";
+import { useAuth } from "@/components/context/useAuth.ts";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();

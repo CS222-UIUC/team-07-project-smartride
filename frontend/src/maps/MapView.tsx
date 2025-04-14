@@ -2,14 +2,14 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useState, useMemo } from "react";
 
-import RoutePolyline from "./widgets/RoutePolyline";
-import PointMarker from "./widgets/PointMarker";
-import AutoFocusView from "./widgets/AutoFocusView";
-import ClickHandler from "./widgets/ClickHandler";
-import UserFocusView from "./widgets/UserFocusView";
-import PanelButton from "./widgets/PanelButton";
-import MapPanel from "./MapPanel";
-import { useRouteOperations } from "./manage/operations";
+import RoutePolyline from "./widgets/RoutePolyline.tsx";
+import PointMarker from "./widgets/PointMarker.tsx";
+import AutoFocusView from "./widgets/AutoFocusView.tsx";
+import ClickHandler from "./widgets/ClickHandler.tsx";
+import UserFocusView from "./widgets/UserFocusView.tsx";
+import PanelButton from "./widgets/PanelButton.tsx";
+import MapPanel from "./MapPanel.tsx";
+import { useRouteOperations } from "./manage/operations.ts";
 
 const MapView = () => {
   const [panelOpen, setPanelOpen] = useState(false);
