@@ -27,12 +27,4 @@ Write-Host 'Press Enter to exit...'
 Read-Host
 "@
 
-# Start ngrok
-Write-Host "Starting ngrok..."
-Start-Process powershell -ArgumentList @"
-ngrok http 5173
-Write-Host 'Press Enter to exit...'
-Read-Host
-"@
-
 Pop-Location

@@ -32,7 +32,7 @@ if ($LASTEXITCODE -ne 0 -or -not $wlanIp) {
 Write-Host "[INFO] Retrieved WLAN IP: $wlanIp"
 
 # Step 3: Only update VITE_WLAN_IP in .env.local
-$envPath = "$PSScriptRoot/../../frontend/.env.local"
+$envPath = "$PSScriptRoot/../../../.env.local"
 $envLines = Get-Content $envPath
 
 $found = $false

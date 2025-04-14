@@ -11,7 +11,7 @@ Set-StrictMode -Version Latest
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 # Write project mode to .env.local
-$envFile = "$PSScriptRoot/../frontend/.env.local"
+$envFile = "$PSScriptRoot/../.env.local"
 $projectMode = if ($Mode -eq "--dev") { "DEV" } else { "BUILD" }
 
 $lines = Get-Content $envFile
