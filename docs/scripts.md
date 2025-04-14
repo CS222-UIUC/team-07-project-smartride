@@ -27,10 +27,12 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 | Situation                                                                   | Script to Use (please first `cd scripts`) |
 | --------------------------------------------------------------------------- | ----------------------------------------- |
 | New to the project, or there are major change to environments               | `setup.ps1\|sh`                           |
+| Being instructed to run a specific step `step_xxx` in setup script          | `setup.ps1\|sh --step_xxx`                |
 | Just begins a new development cycle, need to sync code and files            | `sync-work.ps1\|sh --pull`                |
 | Working in a separate branch, need to merge code and files from main branch | `sync-work.ps1\|sh --merge`               |
 | Finish developing, need to wrap up and prepare for pull request             | `pr-prep.ps1\|sh`                         |
-| Launch development app stack                                                | `run.ps1\|sh`                             |
+| Launch development app stack                                                | `run.ps1\|sh (--dev)`                     |
+| Launch android / ios / web app stack in production setting                  | `run.ps1\|sh --android \| --ios \| --web` |
 | Run backend and frontend checks                                             | `check.ps1\|sh (--fullstack)`             |
 | Run backend checks                                                          | `check.ps1\|sh --backend`                 |
 | Run frontend checks                                                         | `check.ps1\|sh --frontend`                |
@@ -70,19 +72,26 @@ This script is used to set up your local environment. Other than the following s
 Situations where you DO have to run this script:
 
 - You are new to the project.
-- You are blocked during `sync-work`, `run` or `pr-prep` scripts, which means that there are major changes to the environment and you are not up to date.
+- You are blocked during `sync-work`, `run` or `pr-prep` scripts, and are asked one or more times to run `setup` with `--step_xxx`, listed below.
+
+You have two options:
+
+1. Run `./setup.ps1\|sh` without any option. This will trigger all the steps below in order.
+2. Run `./setup.ps1\|sh --step_xxx` where available `step_xxx` are listed below, like `step_drive`. This will trigger only `step_xxx` setup process.
 
 This script will guide you through the following steps:
 
-- Set up or update `rclone/rclone.conf`, `.env.local`, `.env.shared`. You still need to manually fill out the `token` entry in `rclone.conf` since it contains sensitive information to our team. If you have set up `user.name` as github config before, the `COMMITTER` entry in `.env.local` will be automatically filled out.
-- For window users, it will then install `rclone` CLI, `node.js` and `miniconda3` commands in `libaries` folder of this project, and `pnpm` command somewhere else (since we directly run the install script that `pnpm.io` recommends). The processes will be skipped if you have already installed them, and you can choose to abort the script and manually install them.
-- For MacOS users, it will then install `rclone` CLI, `node.js`, `pnpm` and `miniconda3` commands into your home or `/usr/local/bin` folder. The processes will be skipped if you have already installed them, and you can choose to abort the script and manually install them. Still, for MacOS users, installing themselves are no different from running this script, so it is recommended to run this script.
-- For both platforms, if any download or installation occurs, you will be required to restart your TERMINAL (NOT script itself). There are additional instructions if MacOS users install `miniconda3`, see the script output.
-- After you restarted the terminal and the script, it will automatically create a new conda environment `smartride-backend` based on `yml` files in `backend/` folder. It will then install `mamba` in `conda-forge` that greatly accelerates the future environment update process.
-- Finally, it will download all sensitive files from team google drive, which will manually set up `.env.shared` and the database for you.
-- Now, you are able to run `sync-work` and `run` scripts. Happy coding!
+1. `step_rclone`: Set up or update `rclone/rclone.conf`, `.env.local`, `.env.shared`. You still need to manually fill out the `token` entry in `rclone.conf` since it contains sensitive information to our team.
+2. `step_env`: Set up or update `.env.local`, `.env.shared` and `.env.auto`. If you have set up `user.name` as github config before, the `COMMITTER` entry in `.env.local` will be automatically filled out.
+3. `step_cli`: Depending on your platform, it performs the following:
 
-In rare scenarios that you updated this script (ONLY DO SO FOR MAJOR UPDATES), run `setup.ps1 -admin` (note that there is only one dash) to signal everyone to run this script again after you pull-requested and merged the changes to `main`. You MUST change `setup.sh` as well. Do not change again after you run it with `-admin` parameter, since the signal mechanism is based on the hash of `setup.ps1`.
+- For window users, it installs `rclone` CLI, `node.js` and `miniconda3` commands in `libaries` folder of this project, and `pnpm` command somewhere else (since we directly run the install script that `pnpm.io` recommends). The processes will be skipped if you have already installed them, and you can choose to abort the script and manually install them.
+- For MacOS users, it installs `rclone` CLI, `node.js`, `pnpm` and `miniconda3` commands into your home or `/usr/local/bin` folder. The processes will be skipped if you have already installed them, and you can choose to abort the script and manually install them. Still, for MacOS users, installing themselves are no different from running this script, so it is recommended to run this script.
+- For both platforms, if any download or installation occurs, you will be required to restart your TERMINAL (NOT script itself). There are additional instructions if MacOS users install `miniconda3`, see the script output.
+
+4. `step_conda`: It will automatically create a new conda environment `smartride-backend` based on `yml` files in `backend/` folder. It will then install `mamba` and `conda_lock` in `conda-forge` that greatly accelerates the future environment update process.
+5. `step_drive`: It will finally download all sensitive files from team google drive, your `.env.shared` and database files will be automatically synced.
+6. Now, you are able to run `sync-work` and `run` scripts. Happy coding!
 
 #### `scripts/sync-work.(ps1|sh)`
 
@@ -106,13 +115,22 @@ Sync newest updates from github, import all missing conda dependencies, and down
 
 #### `scripts/run.(ps1|sh)`
 
-Entry point for launching the full SmartRide app stack. Note that you can **only** execute this script after you have `sync-work` after you merged/pull changes from the `main` branch. This `run` script will open the following 3 subprocesses.
+Entry point for launching the full SmartRide app stack. Note that you can **only** execute this script after you have `sync-work` after you merged/pull changes from the `main` branch and `setup` to required minimum versions. This `run` script will open the following 2 subprocesses.
 
-    - Backend server
-    - Frontend dev server
-    - Ngrok tunneling
+- Backend server
+- Frontend server
 
-You may not see all 3 windows if you failed to follow [installation.md](installation.md).
+It is worth discussing the frontend server. There are a few options available to the `run` script:
+
+- `--dev`: This opens the frontend server in `localhost:VITE_DEV_PORT` where `VITE_DEV_PORT` is a variable in `.env.local`.
+- `--web`: This builds the production version, and opens a preview frontend server in `VITE_WLAN_IP:4173` where `VITE_WLAN_IP` is a variable in `.env.auto`.
+- `--android` | `--ios`: This builds the production version, and triggers capacitor to sync the targeted platform, and does the following:
+  - If `VITE_DEPLOY_TARGET` in `.env.local` is `MACHINE`, it does nothing else.
+  - If `VITE_DEPLOY_TARGET` is `EMULATOR`, AND if `SMARTRIDE_EMULATOR_MODE` in `.env.local` is `OPEN`, it launches Android Studio / XCode for you to debug the code for the targeted platform.
+  - If `VITE_DEPLOY_TARGET` is `MACHINE`, AND if `SMARTRIDE_EMULATOR_MODE` in `.env.local` is `RUN`, it launches the emulator for targeted platform directly.
+
+Note that you may ONLY run with `--android` given you are using Windows (with Android Studio and Latest JDK installed). You may ONLY run with `--ios` given you are using MacOS (with XCode installed).
+You may not see every window if you failed to follow [installation.md](installation.md).
 
 #### `scripts/pr-prep.(ps1|sh)`
 
