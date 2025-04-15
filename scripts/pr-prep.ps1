@@ -28,12 +28,12 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "[PrPrep] Generate a build for frontend and capacitor..."
 
 
-Write-Host "[PrPrep] Exporting current conda environment..."
+Write-Host "[PrPrep] Locking current conda environment..."
 $env:SMARTRIDE_ENTRYPOINT = "pr-prep"
 Push-Location "$PSScriptRoot/subscripts/env"
-& ./exp-conda.ps1
+& "./lock-conda.ps1"
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "[Error] Failed to export conda environment. Aborting."
+    Write-Host "[Error] Failed to lock conda environment. Aborting."
     Pop-Location
     Pop-Location
     exit 1

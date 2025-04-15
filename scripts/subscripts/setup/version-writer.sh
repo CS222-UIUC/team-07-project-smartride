@@ -9,12 +9,18 @@ fi
 step="$1"
 version="$2"
 
-versionFile="$(dirname "$0")/../parameters/lastVersion"
-echo $versionFile
+versionFile="$(dirname "$0")/parameters/lastVersion"
 tempFile="$(mktemp)"
 
 if [ -f "$versionFile" ]; then
-    grep -vE "^\s*$step\s*=" "$versionFile" > "$tempFile"
+    awk -v key="$step" '
+    {
+        line = $0
+        sub(/^[ \t]+/, "", line)
+        if (line ~ "^" key "[ \t]*=") next
+        print
+    }
+    ' "$versionFile" > "$tempFile"
 else
     > "$tempFile"
 fi

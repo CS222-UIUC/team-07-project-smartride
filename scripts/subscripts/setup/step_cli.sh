@@ -52,7 +52,15 @@ if [ ${#missing_tools[@]} -gt 0 ]; then
       conda)
         echo "[Setup] Installing Miniconda3..."
         mkdir -p ~/miniconda3
-        curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+        platform="$(uname -s)"
+        if [[ "$platform" == "Linux" ]]; then
+          wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+        elif [[ "$platform" == "Darwin" ]]; then
+          curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+        else
+          echo "[Miniconda] Unsupported platform: $platform"
+          exit 1
+        fi
         bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
         rm ~/miniconda3/miniconda.sh
         installed_miniconda=true

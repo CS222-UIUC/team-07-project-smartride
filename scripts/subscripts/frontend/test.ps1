@@ -13,5 +13,5 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 pnpm test --coverage
-start coverage/index.html
+Start-Process coverage/index.html
 Pop-Location

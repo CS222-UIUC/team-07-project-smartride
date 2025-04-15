@@ -2,8 +2,8 @@
 
 set -e
 
-if [[ "$SMARTRIDE_ENTRYPOINT" != "sync-work" ]]; then
-  echo "Error: scripts/subscripts/env/imp.ps1 must be run via scripts/sync-work.ps1 --(merge|pull)"
+if [[ "$SMARTRIDE_ENTRYPOINT" != "sync-work" && "$SMARTRIDE_ENTRYPOINT" != "conda-op" ]]; then
+  echo "Error: scripts/subscripts/env/imp-conda.sh must be run via scripts/sync-work.sh --(merge|pull) or scripts/conda-op.sh --import"
   exit 1
 fi
 

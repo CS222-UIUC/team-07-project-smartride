@@ -15,16 +15,12 @@ PLATFORM="$1"
 
 # Step 1: Build frontend
 pushd "$(dirname "$0")/../frontend"
-./build.sh
-if [[ $? -ne 0 ]]; then
-  echo "Error: Failed to build project. Aborting..."
-  exit 1
-fi
+bash "./build.sh"
 popd
 
 # Step 2: Fetch WLAN IP
 wlan_ip=$(python "$(dirname "$0")/python/fetch_ip.py")
-if [[ $? -ne 0 || -z "$wlan_ip" ]]; then
+if [[ -z "$wlan_ip" ]]; then
   echo "Error: fetch_ip.py failed or returned empty string."
   exit 1
 fi
@@ -38,56 +34,53 @@ else
   echo "VITE_WLAN_IP=\"$wlan_ip\"" >> "$auto_env_path"
 fi
 
+run_capacitor_if_needed() {
+  local prefix="$1"
+  local postfix="$2"
+  local run_cmd=""
+
+  if [[ "$PLATFORM" == "--android" || "$PLATFORM" == "--ios" ]]; then
+    local deploy_type=$(grep '^VITE_DEPLOY_TARGET=' .env.local | cut -d '=' -f2 | tr -d '"' | sed 's/\s*#.*$//' | xargs)
+    local emulator_mode=$(grep '^SMARTRIDE_EMULATOR_MODE=' .env.local | cut -d '=' -f2 | tr -d '"' | sed 's/\s*#.*$//' | xargs)
+
+    if [[ "$deploy_type" == "MACHINE" ]]; then
+      run_cmd="echo '[SKIP] Target is MACHINE. Skipping npx cap run.'"
+    else
+      local platform_str="android"
+      [[ "$PLATFORM" == "--ios" ]] && platform_str="ios"
+      local emul_mode_str="open"
+      [[ "$emulator_mode" == "RUN" ]] && emul_mode_str="run"
+      run_cmd="cd frontend && pnpm install && pnpm --package='@capacitor/cli' dlx capacitor $emul_mode_str $platform_str"
+    fi
+  else
+    run_cmd="cd frontend && pnpm install && pnpm preview"
+  fi
+
+  eval "$prefix \"$run_cmd\" $postfix"
+}
+
 pushd "$(dirname "$0")/../../.."
 
-# Step 4: Start backend
-echo "Starting backend..."
-gnome-terminal -- bash -c "
-cd backend
-eval \"\$(conda shell.bash hook)\"
-conda activate smartride-backend
-python -m server.app
-echo 'Press Enter to exit...'
-read
-"
+platform=$(uname)
+if [[ "$platform" != "Darwin" && "$platform" != "Linux" ]]; then
+  echo "[run] Unsupported platform: $platform"
+  exit 1
+fi
 
-# Step 5: Start frontend preview or capacitor run
-echo "Starting frontend..."
-if [[ "$PLATFORM" == "--android" || "$PLATFORM" == "--ios" ]]; then
-  deploy_type=$(grep '^VITE_DEPLOY_TARGET=' .env.local | cut -d '=' -f2 | tr -d '"' | sed 's/\s*#.*$//' | xargs)
-  emulator_mode=$(grep '^SMARTRIDE_EMULATOR_MODE=' .env.local | cut -d '=' -f2 | tr -d '"' | sed 's/\s*#.*$//' | xargs)
-
-  if [[ "$deploy_type" == "MACHINE" ]]; then
-    echo "[SKIP] Target is MACHINE. Skipping 'npx cap run'."
-  else
-    platform_str=""
-    emul_mode_str=""
-    if [[ "$PLATFORM" == "--android" ]]; then
-      platform_str="android"
-    else
-      platform_str="ios"
-    fi
-    if [[ "$emulator_mode" == "RUN" ]]; then
-      emul_mode_str="run"
-    else
-      emul_mode_str="open"
-    fi
-    gnome-terminal -- bash -c "
-cd frontend
-pnpm install
-pnpm --package='@capacitor/cli' dlx capacitor $emul_mode_str $platform_str
-echo 'Press Enter to exit...'
-read
-"
+if [[ "$platform" == "Linux" ]]; then
+  SESSION="smartride-build"
+  if tmux has-session -t "$SESSION" 2>/dev/null; then
+    echo "[run-build] tmux session '$SESSION' already exists. Attach with: tmux attach -t $SESSION"
+    exit 0
   fi
+  tmux new-session -d -s "$SESSION" -n backend
+  tmux send-keys -t "$SESSION:0.0" "cd backend && eval \$(conda shell.bash hook) && conda activate smartride-backend && python -m server.app" C-m
+  tmux split-window -h -t "$SESSION:0"
+  run_capacitor_if_needed "tmux send-keys -t \"$SESSION:0.1\"" "C-m"
+  tmux attach -t "$SESSION"
 else
-  gnome-terminal -- bash -c "
-cd frontend
-pnpm install
-pnpm preview
-echo 'Press Enter to exit...'
-read
-"
+  osascript -e 'tell application "Terminal" to do script "cd backend && eval $(conda shell.bash hook) && conda activate smartride-backend && python -m server.app"'
+  run_capacitor_if_needed 'osascript -e "tell application \"Terminal\" to do script' '"\""'
 fi
 
 popd
