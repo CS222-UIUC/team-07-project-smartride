@@ -19,6 +19,17 @@ conda activate smartride-backend
 
 # Run pytest with coverage
 pytest --cov=server --cov-report=term --cov-report=html --rich tests/
-open htmlcov/index.html
+
+platform=$(uname)
+if [[ "$platform" != "Darwin" && "$platform" != "Linux" ]]; then
+  echo "[Backend Test] Unsupported platform: $platform"
+  exit 1
+fi
+
+if [[ "$platform" == "Linux" ]]; then
+  echo "[Frontend Test] Coverage report generated. You may open <project_dir>/backend/htmlcov/index.html manually."
+else
+  open htmlcov/index.html
+fi
 
 cd ../scripts/subscripts/backend

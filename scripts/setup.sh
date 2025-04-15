@@ -31,6 +31,7 @@ fi
 for step in "${stepsToRun[@]}"; do
   echo "[Setup] Running $step..."
   bash "./$step.sh"
+  echo "[Setup] Finished running $step...."
   bash "./version-writer.sh" "$step" "${stepVersions[$step]}"
 done
 popd > /dev/null

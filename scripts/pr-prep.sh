@@ -25,12 +25,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "[PrPrep] Exporting current conda environment..."
+echo "[PrPrep] Locking current conda environment..."
 export SMARTRIDE_ENTRYPOINT="pr-prep"
 pushd subscripts/env > /dev/null
-bash exp-conda.sh
+bash lock-conda.sh
 if [ $? -ne 0 ]; then
-    echo "[Error] Failed to export conda environment. Aborting."
+    echo "[Error] Failed to lock conda environment. Aborting."
     popd > /dev/null
     exit 1
 fi
