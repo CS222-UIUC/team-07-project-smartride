@@ -76,5 +76,10 @@ if ($LASTEXITCODE -ne 0) {
 Pop-Location
 Write-Host "[SyncWork] pnpm install completed."
 
+Write-Host "[SyncWork] Cleaning all legacy parameter files..."
+Push-Location "$PSScriptRoot/subscripts"
+& "./legacy-cleaner.ps1"
+Pop-Location
+
 Write-Host "[SyncWork] All workflows completed! Happy coding!"
 Pop-Location

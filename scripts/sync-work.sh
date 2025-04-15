@@ -47,4 +47,8 @@ pnpm install > /dev/null || { echo "[Error] pnpm install failed. Aborting."; pop
 popd > /dev/null
 echo "[SyncWork] pnpm install completed."
 
+echo "[SyncWork] Cleaning all legacy parameter files..."
+pushd subscripts > /dev/null
+bash "legacy-cleaner.sh"
+popd
 echo "[SyncWork] All workflows completed! Happy coding!"
