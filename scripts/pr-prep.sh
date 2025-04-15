@@ -43,4 +43,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+echo "[PrPrep] Cleaning all legacy parameter files..."
+pushd subscripts > /dev/null
+bash "legacy-cleaner.sh"
+popd
 echo "[PrPrep] PR preparation complete. You may now submit your pull request."

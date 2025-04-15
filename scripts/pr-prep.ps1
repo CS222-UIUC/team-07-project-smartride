@@ -48,5 +48,10 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
+Write-Host "[PrPrep] Cleaning all legacy parameter files..."
+Push-Location "$PSScriptRoot/subscripts"
+& "./legacy-cleaner.ps1"
+Pop-Location
+
 Write-Host "[PrPrep] PR preparation complete. You may now submit your pull request."
 Pop-Location
