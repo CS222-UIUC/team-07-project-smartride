@@ -20,9 +20,9 @@ metadata:
   - url: conda-forge
     used_env_vars: []
   platforms:
-  - win-64
   - linux-64
   - osx-64
+  - win-64
   sources:
   - conda-env.yml
 package:
