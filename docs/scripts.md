@@ -24,21 +24,24 @@ This document describes the usage of all primary scripts in the `scripts/` direc
 
 This part is an overview. For full description, see [Detailed Explanations](#detailed-explanations).
 
-| Situation                                                                   | Script to Use (please first `cd scripts`) |
-| --------------------------------------------------------------------------- | ----------------------------------------- |
-| New to the project, or there are major change to environments               | `setup.ps1\|sh`                           |
-| Being instructed to run a specific step `step_xxx` in setup script          | `setup.ps1\|sh --step_xxx`                |
-| Just begins a new development cycle, need to sync code and files            | `sync-work.ps1\|sh --pull`                |
-| Working in a separate branch, need to merge code and files from main branch | `sync-work.ps1\|sh --merge`               |
-| Finish developing, need to wrap up and prepare for pull request             | `pr-prep.ps1\|sh`                         |
-| Launch development app stack                                                | `run.ps1\|sh (--dev)`                     |
-| Launch android / ios / web app stack in production setting                  | `run.ps1\|sh --android \| --ios \| --web` |
-| Run backend and frontend checks                                             | `check.ps1\|sh (--fullstack)`             |
-| Run backend checks                                                          | `check.ps1\|sh --backend`                 |
-| Run frontend checks                                                         | `check.ps1\|sh --frontend`                |
-| Format code                                                                 | `formatter.ps1\|sh`                       |
-| Upload files in `drive-file.txt` to team google drive                       | `drive.ps1\|sh --upload`                  |
-| Download files in `drive-file.txt` from team google drive                   | `drive.ps1\|sh --download`                |
+| Situation                                                                   | Script to Use (please first `cd scripts`)       |
+| --------------------------------------------------------------------------- | ----------------------------------------------- |
+| New to the project, or there are major change to environments               | `setup.ps1\|sh`                                 |
+| Being instructed to run a specific step `step_xxx` in setup script          | `setup.ps1\|sh --step_xxx`                      |
+| Just begins a new development cycle, need to sync code and files            | `sync-work.ps1\|sh --pull`                      |
+| Working in a separate branch, need to merge code and files from main branch | `sync-work.ps1\|sh --merge`                     |
+| Finish developing, need to wrap up and prepare for pull request             | `pr-prep.ps1\|sh`                               |
+| Launch development app stack                                                | `run.ps1\|sh (--dev)`                           |
+| Launch android / ios / web app stack in production setting                  | `run.ps1\|sh --android \| --ios \| --web`       |
+| Run backend and frontend checks                                             | `check.ps1\|sh (--fullstack)`                   |
+| Run backend checks                                                          | `check.ps1\|sh --backend`                       |
+| Run frontend checks                                                         | `check.ps1\|sh --frontend`                      |
+| Format code                                                                 | `formatter.ps1\|sh`                             |
+| Upload files in `drive-file.txt` to team google drive                       | `drive.ps1\|sh --upload`                        |
+| Download files in `drive-file.txt` from team google drive                   | `drive.ps1\|sh --download`                      |
+| Import conda environment from lock file                                     | `conda-op.ps1\|sh --import`                     |
+| Install new packages and export to yml file                                 | `conda-op.ps1\|sh --install <pkg_name> [--pip]` |
+| Lock the conda environment and update lock file                             | `conda-op.ps1\|sh --lock`                       |
 
 ---
 
@@ -50,17 +53,19 @@ This part is an overview. For full description, see [Detailed Explanations](#det
 
 3. To begin with, run `sync-work.ps1|sh --pull`. If it blocks you, run `setup.ps1|sh` first, since it signals that there are major changes to the environment.
 
-4. If no issues appear, open a new branch, and start adding new features to the code. To run the project, run `run.ps1|sh`.
+4. To add new conda/pip packages, run `conda-op.ps1|sh --install <pkg_name>`. Normally do NOT run with `--pip` option unless the previous script fails. Also, NEVER runs `conda install xxx` or `pip install xxx` manually.
 
-5. After you think you are ready to prepare for a new pull request, follow the following procedures.
+5. If no issues appear, open a new branch, and start adding new features to the code. To run the project, run `run.ps1|sh`.
+
+6. After you think you are ready to prepare for a new pull request, follow the following procedures.
 
    - You are recommended to first run `sync-work.ps1|sh --merge`. Resolve all merge conflicts and rerun until no issues occured.
    - Check out the detailed introductions of `sync-work --merge` below to see when you should **NOT** run this script before `pr-prep`.
    - You must run `pr-prep.ps1|sh`. Resolve all issues and rerun until no issues occured.
 
-6. Submit a pull request now! Wait for all CI tests pass, and a review from somebody else, now you can merge your efforts into main branch!
+7. Submit a pull request now! Wait for all CI tests pass, and a review from somebody else, now you can merge your efforts into main branch!
 
-7. Well, it is up to you, but you definitely does not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
+8. Well, it is up to you, but you definitely does not want to spend a lot of time puzzling at why you fail so many CI tests, do you? ;)
 
 ---
 
@@ -134,7 +139,9 @@ You may not see every window if you failed to follow [installation.md](installat
 
 #### `scripts/pr-prep.(ps1|sh)`
 
-Run checks and lints, auto formatter, export current conda dependencies, and upload team google drive files. Note that you can **only** execute this script if your `setup` is up to date. You are strongly recommended to run `sync-work` first EXCEPT for the conditions mentioned in that section.
+Run checks and lints, auto formatter, lock conda dependencies, and upload team google drive files. Note that you can **only** execute this script if your `setup` is up to date. You are strongly recommended to run `sync-work` first EXCEPT for the conditions mentioned in that section.
+
+New: `pr-prep` is NO LONGER exporting all conda dependencies for you! Run `conda-op` with `--install <pkg_name>` option instead for all packages you are trying to install and export. See `conda-op` script below.
 
 #### `scripts/formatter.(ps1|sh)`
 
@@ -174,6 +181,16 @@ It completes uploading and downloading operations to and from our team google dr
   - Try to download all files specified from team google drive by `rclone`.
   - Validate whether all files are correctly synced between local and drive.
   - Trigger cleaning process which users can choose to delete outdated files.
+
+#### `scripts/conda-op.(ps1|sh)`
+
+It contains all the `conda` workflows you may encounter. You must include one of the following parameters to run this script:
+
+- `--import`, this will update your current `smartride-backend` environment with `conda-lock.yml` located in `project_dir/backend` folder.
+
+- `--lock`, this will generate a multi-platform lock based on `conda-env.yml` located in `project_dir/backend` folder. Do NOT modify `conda-env.yml` by hand!
+
+- `--install <pkg_name> [--pip]`, this will try to install `<pkg_name>` (for example, `flask`) package for you using `conda-forge` as the channel. You should almost never run with `--pip` option unless the package you are trying to install is a type stub like `types-request` that is only managed by `pip`.
 
 ## What's more
 
