@@ -3,9 +3,16 @@ import { nanoid } from "nanoid";
 import { getRoute } from "@/api/map/route_service.ts";
 import type { Point, RouteSegment } from "./structure.ts";
 
-export const useRouteOperations = () => {
-  const [points, setPoints] = useState<Point[]>([]);
-  const [segments, setSegments] = useState<RouteSegment[]>([]);
+// export const useRouteOperations = () => {
+//   const [points, setPoints] = useState<Point[]>([]);
+//   const [segments, setSegments] = useState<RouteSegment[]>([]);
+
+export const useRouteOperations = (
+    initialPoints: Point[] = [],
+    initialSegments: RouteSegment[] = []
+  ) => {
+  const [points, setPoints] = useState<Point[]>(initialPoints);
+  const [segments, setSegments] = useState<RouteSegment[]>(initialSegments);
 
   const planFullRoute = useCallback(async (pts: Point[]) => {
     if (pts.length < 2) {

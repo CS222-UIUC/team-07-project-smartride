@@ -12,6 +12,7 @@ dependencies:
   - pyjwt
   - pytest
   - pytest-cov
+  - pytest-rich
   - python-dotenv
   - python=3.13.2
   - pyyaml

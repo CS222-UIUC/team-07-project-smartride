@@ -10,8 +10,17 @@ import UserFocusView from "./widgets/UserFocusView.tsx";
 import PanelButton from "./widgets/PanelButton.tsx";
 import MapPanel from "./MapPanel.tsx";
 import { useRouteOperations } from "./manage/operations.ts";
+import { useEffect } from "react";
 
-const MapView = () => {
+import type { Point, RouteSegment } from "./manage/structure";
+
+const MapView = ({
+  onRouteDataChange,
+  initialData,
+}: {
+  onRouteDataChange: (data: { points: Point[]; segments: RouteSegment[] }) => void;
+  initialData: { points: Point[]; segments: RouteSegment[] };
+}) => {
   const [panelOpen, setPanelOpen] = useState(false);
   const {
     points,
@@ -20,10 +29,14 @@ const MapView = () => {
     removePoint,
     reorderPoints,
     togglePointType,
-  } = useRouteOperations();
+  } = useRouteOperations(initialData.points, initialData.segments);
 
   const route = useMemo(() => segments.flatMap((s) => s.path), [segments]);
-
+  useEffect(() => {
+    if (onRouteDataChange) {
+      onRouteDataChange({ points, segments });
+    }
+  }, [points, segments, onRouteDataChange]);
   return (
     <div className="relative w-full h-full">
       <MapContainer
