@@ -10,9 +10,23 @@ import UserFocusView from "./widgets/UserFocusView.tsx";
 import PanelButton from "./widgets/PanelButton.tsx";
 import MapPanel from "./MapPanel.tsx";
 import { useRouteOperations } from "./manage/operations.ts";
+import { useEffect } from "react";
 
-const MapView = () => {
+import type { Point, RouteSegment } from "./manage/structure";
+import { useRef } from "react";
+
+const MapView = ({
+  onRouteDataChange,
+  initialData,
+}: {
+  onRouteDataChange: (data: {
+    points: Point[];
+    segments: RouteSegment[];
+  }) => void;
+  initialData: { points: Point[]; segments: RouteSegment[] };
+}) => {
   const [panelOpen, setPanelOpen] = useState(false);
+
   const {
     points,
     segments,
@@ -20,9 +34,37 @@ const MapView = () => {
     removePoint,
     reorderPoints,
     togglePointType,
-  } = useRouteOperations();
+  } = useRouteOperations(initialData.points, initialData.segments);
+
+  const hasInteractedRef = useRef(false);
 
   const route = useMemo(() => segments.flatMap((s) => s.path), [segments]);
+
+  useEffect(() => {
+    if (hasInteractedRef.current) {
+      onRouteDataChange({ points, segments });
+    }
+  }, [points, segments, onRouteDataChange]);
+
+  const wrappedAddPoint = async (lat: number, lng: number) => {
+    hasInteractedRef.current = true;
+    await addPoint(lat, lng);
+  };
+
+  const wrappedRemovePoint = async (id: string) => {
+    hasInteractedRef.current = true;
+    await removePoint(id);
+  };
+
+  const wrappedReorderPoints = async (from: number, to: number) => {
+    hasInteractedRef.current = true;
+    await reorderPoints(from, to);
+  };
+
+  const wrappedTogglePointType = (id: string) => {
+    hasInteractedRef.current = true;
+    togglePointType(id);
+  };
 
   return (
     <div className="relative w-full h-full">
@@ -33,17 +75,18 @@ const MapView = () => {
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-
         <ClickHandler
           onClick={(lat, lng) => {
-            void addPoint(lat, lng);
+            void wrappedAddPoint(lat, lng);
           }}
         />
-
         <RoutePolyline route={route} />
         <PointMarker points={points.filter((p) => p.type === "main")} />
-        {route.length > 0 && <AutoFocusView points={route} />}
-        {route.length == 0 && <UserFocusView />}
+        {route.length > 0 ? (
+          <AutoFocusView points={route} />
+        ) : (
+          <UserFocusView />
+        )}
       </MapContainer>
 
       <PanelButton
@@ -58,14 +101,14 @@ const MapView = () => {
           setPanelOpen(false);
         }}
         points={points}
-        onReorder={(from, to) => {
-          void reorderPoints(from, to);
+        onReorder={(f, t) => {
+          void wrappedReorderPoints(f, t);
         }}
         onToggleType={(id) => {
-          togglePointType(id);
+          wrappedTogglePointType(id);
         }}
         onRemove={(id) => {
-          void removePoint(id);
+          void wrappedRemovePoint(id);
         }}
       />
     </div>

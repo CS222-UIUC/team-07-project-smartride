@@ -29,9 +29,10 @@ export async function getSavedRoutes(): Promise<Route[]> {
 export async function createOrUpdateRoute(
   routeId: number,
   routeName: string,
+  routeData: object,
 ): Promise<Route | null> {
   try {
-    const body = { id: routeId, route_name: routeName };
+    const body = { id: routeId, route_name: routeName, route_data: routeData };
     const response = await fetch("/api/manage_route", {
       method: "POST",
       credentials: "include",

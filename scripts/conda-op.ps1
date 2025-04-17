@@ -18,13 +18,13 @@ switch ($cmd) {
             exit 1
         }
         $installArgs = $args[1..($args.Count - 1)]
-        & "inst-conda.ps1" --package @installArgs
+        & "./inst-conda.ps1" --package @installArgs
     }
     "--lock" {
-        & "lock-conda.ps1"
+        & "./lock-conda.ps1"
     }
     "--import" {
-        & "imp-conda.ps1"
+        & "./imp-conda.ps1"
     }
     default {
         Write-Host "Usage: conda-op.ps1 [--install <pkg_name> [--pip]] | [--lock] | [--import]"
