@@ -12,7 +12,7 @@ def format_route_response(ors_json: dict[str, Any]) -> dict[str, Any]:
     except (KeyError, IndexError, TypeError) as e:
         raise ValueError(f"Invalid ORS response structure: {e}") from e
 
-    route = [{"lat": lat, "lng": lng} for lng, lat in geometry]
+    route = [{"lat": lat, "lng": lng, "ele": ele} for lng, lat, ele in geometry]
 
     return {
         "distance": summary.get("distance", 0),
@@ -35,6 +35,30 @@ def call_ors_api(
     )
 
     response = requests.get(req_url, headers=headers)
+    print(response.status_code, response.reason)
+    response.raise_for_status()  # raises for non-2xx responses
+    return cast(dict[str, Any], response.json())
+
+def call_ors_api_with_altitude(
+    start_lng: float, start_lat: float, dest_lng: float, dest_lat: float
+) -> dict[str, Any]:
+    body = {
+        "coordinates": [[start_lng, start_lat], [dest_lng, dest_lat]],
+        "elevation": "true",
+        "extra_info": ["steepness"],
+    }
+
+    headers = {
+        "Accept": "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
+        "Authorization": Config.ORS_API_KEY,
+        "Content-Type": "application/json; charset=utf-8",
+    }
+    response = requests.post(
+        "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson",
+        json=body,
+        headers=headers,
+    )
+
     print(response.status_code, response.reason)
     response.raise_for_status()  # raises for non-2xx responses
     return cast(dict[str, Any], response.json())
