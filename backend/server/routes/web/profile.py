@@ -4,7 +4,8 @@ from flask_login import current_user, login_required
 from server.core.extensions import db
 from server.utils.response import api_response
 
-profile_bp = Blueprint("web_profile", __name__, url_prefix="/profile")
+URL_PREFIX_ADDON = "/profile"
+profile_bp = Blueprint("web_profile", __name__)
 
 
 @profile_bp.route("/", methods=["GET"])

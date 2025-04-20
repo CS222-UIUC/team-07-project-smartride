@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_ROUTES } from "../../api/utils/route_dictionary";
 
 // TODO (Richard) 1: Move all await fetch("xxx") to api folder, do NOT place them here in a page component.
 // TODO (Richard) 2: Use responsive design, do NOT use css values like "24px", "14px".
@@ -65,7 +66,7 @@ const ProfilePage: React.FC = () => {
         age: age ? parseInt(age) : undefined,
       };
 
-      const res = await fetch("/api/profile", {
+      const res = await fetch(API_ROUTES.WEB_PROFILE, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +91,7 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const res = await fetch("/api/profile", {
+        const res = await fetch(API_ROUTES.WEB_PROFILE, {
           method: "GET",
           credentials: "include",
         });

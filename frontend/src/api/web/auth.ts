@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { API_ROUTES } from "../utils/route_dictionary";
 
 export async function checkLoginStatus(): Promise<boolean> {
   try {
-    const res = await fetch("/api/profile", { credentials: "include" });
+    const res = await fetch(API_ROUTES.WEB_PROFILE, { credentials: "include" });
     const contentType = res.headers.get("content-type") || "";
     return res.ok && contentType.includes("application/json");
   } catch {

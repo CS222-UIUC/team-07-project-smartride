@@ -1,16 +1,18 @@
-from typing import Any, cast
+from typing import Any
 
 import requests
 from flask import Blueprint, Response, request
 
-from server.utils.ors import format_route_response, call_ors_api
+from server.core.auth_combo import combined_login_required
+from server.utils.ors import call_ors_api, format_route_response
 from server.utils.response import api_response
 
-calc_route_bp = Blueprint("calc_route", __name__, url_prefix="/calc_route")
+URL_PREFIX_ADDON = "/calc_route"
+calc_route_bp = Blueprint("calc_route", __name__)
 
-# TODO (Brian): Need login required
 
 @calc_route_bp.route("/", methods=["POST"])
+@combined_login_required  # to prevent user from exhausting our ors resources
 def get_route() -> tuple[Response, int]:
     points: dict[str, Any] | None = request.json
     start = points.get("start") if points else None

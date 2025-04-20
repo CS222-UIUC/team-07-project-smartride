@@ -1,6 +1,7 @@
 from typing import Any, cast
 
 import requests
+
 from server.core.config import Config
 
 
