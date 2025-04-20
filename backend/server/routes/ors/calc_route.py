@@ -47,3 +47,47 @@ def get_route() -> tuple[Response, int]:
             message=f"OpenRouteService API error: {e}",
             status_code=502,
         )
+
+
+def call_ors_api(
+    start_lng: float, start_lat: float, dest_lng: float, dest_lat: float
+) -> dict[str, Any]:
+    headers = {
+        "Accept": (
+            "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8"
+        ),
+    }
+    req_url = (
+        "https://api.openrouteservice.org/v2/directions/cycling-regular"
+        f"?api_key={Config.ORS_API_KEY}&start={start_lng},{start_lat}&end={dest_lng},{dest_lat}"
+    )
+
+    response = requests.get(req_url, headers=headers)
+    print(response.status_code, response.reason)
+    response.raise_for_status()  # raises for non-2xx responses
+    return cast(dict[str, Any], response.json())
+
+
+def call_ors_api_with_altitude(
+    start_lng: float, start_lat: float, dest_lng: float, dest_lat: float
+) -> dict[str, Any]:
+    body = {
+        "coordinates": [[start_lng, start_lat], [dest_lng, dest_lat]],
+        "elevation": "true",
+        "extra_info": ["steepness"],
+    }
+
+    headers = {
+        "Accept": "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
+        "Authorization": Config.ORS_API_KEY,
+        "Content-Type": "application/json; charset=utf-8",
+    }
+    response = requests.post(
+        "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson",
+        json=body,
+        headers=headers,
+    )
+
+    print(response.status_code, response.reason)
+    response.raise_for_status()  # raises for non-2xx responses
+    print(cast(dict[str, Any], response.json()))

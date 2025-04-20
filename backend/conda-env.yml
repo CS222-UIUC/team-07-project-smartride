@@ -10,6 +10,7 @@ dependencies:
   - flask-sqlalchemy
   - flask_cors
   - mamba
+  - geopy
   - mypy
   - pyjwt
   - pytest
