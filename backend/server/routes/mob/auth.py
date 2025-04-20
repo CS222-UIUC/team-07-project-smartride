@@ -3,16 +3,18 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from server.core.extensions import db
 from server.models.user import User
-from server.utils.verify_register import verify_register
 from server.utils.errors import (
     INVALID_CREDENTIALS,
     INVALID_JSON,
     MISSING_FIELDS,
 )
-from server.utils.response import api_response
 from server.utils.jwt_utils import create_jwt_token
+from server.utils.response import api_response
+from server.utils.verify_register import verify_register
 
-auth_bp = Blueprint("mob_auth", __name__, url_prefix="/auth")
+URL_PREFIX_ADDON = "/auth"
+auth_bp = Blueprint("mob_auth", __name__)
+
 
 @auth_bp.route("/register", methods=["POST"])
 def register() -> tuple[Response, int]:

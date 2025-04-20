@@ -1,4 +1,5 @@
 from typing import Any
+
 from server.models.user import User
 from server.utils.errors import (
     EMAIL_EXISTS,
@@ -8,6 +9,7 @@ from server.utils.errors import (
     NAME_TOO_LONG,
     PASSWORD_TOO_LONG,
 )
+
 
 # Helper function to raise register errors
 def verify_register(data: dict[str, Any] | None) -> None:

@@ -1,5 +1,3 @@
-from typing import Any
-
 from flask import Blueprint, Response, request
 from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -10,10 +8,12 @@ from server.utils.errors import (
     INVALID_CREDENTIALS,
     INVALID_JSON,
 )
-from server.utils.verify_register import verify_register
 from server.utils.response import api_response
+from server.utils.verify_register import verify_register
 
-auth_bp = Blueprint("web_auth", __name__, url_prefix="/auth")
+URL_PREFIX_ADDON = "/auth"
+auth_bp = Blueprint("web_auth", __name__)
+
 
 @auth_bp.route("/register", methods=["POST"])
 def register() -> tuple[Response, int]:
