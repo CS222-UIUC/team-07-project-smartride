@@ -4,19 +4,20 @@
 import pytest
 from unittest.mock import patch, Mock
 from flask import Flask
-from server.routes.route_service import route_service_bp, call_ors_api
+from server.routes.ors.calc_route import calc_route_bp
+from server.utils.ors import call_ors_api
 
 
 @pytest.fixture
 def client():
     app = Flask(__name__)
-    app.register_blueprint(route_service_bp)
+    app.register_blueprint(calc_route_bp)
     app.config["TESTING"] = True
     return app.test_client()
 
 
 def test_missing_start_or_dest_returns_400(client):
-    response = client.post("/get_route", json={})
+    response = client.post("/calc_route", json={})
     data = response.get_json()
 
     assert response.status_code == 400
@@ -29,7 +30,7 @@ def test_invalid_coordinates_return_400(client):
         "start": {"lat": "not_a_number", "lng": 8.4},
         "dest": {"lat": 49.01, "lng": 8.41}
     }
-    response = client.post("/get_route", json=payload)
+    response = client.post("/calc_route", json=payload)
     data = response.get_json()
 
     assert response.status_code == 400
@@ -52,7 +53,7 @@ def test_valid_coordinates_return_200(client):
         "start": {"lat": 49.0, "lng": 8.4},
         "dest": {"lat": 49.01, "lng": 8.41}
     }
-    response = client.post("/get_route", json=payload)
+    response = client.post("/calc_route", json=payload)
     data = response.get_json()
 
     assert response.status_code == 200
@@ -64,7 +65,7 @@ def test_missing_start_returns_400(client):
     payload = {
         "dest": {"lat": 49.01, "lng": 8.41}
     }
-    response = client.post("/get_route", json=payload)
+    response = client.post("/calc_route", json=payload)
     data = response.get_json()
 
     assert response.status_code == 400
@@ -76,7 +77,7 @@ def test_missing_dest_returns_400(client):
     payload = {
         "start": {"lat": 49.0, "lng": 8.4}
     }
-    response = client.post("/get_route", json=payload)
+    response = client.post("/calc_route", json=payload)
     data = response.get_json()
 
     assert response.status_code == 400
@@ -85,7 +86,7 @@ def test_missing_dest_returns_400(client):
 
 
 def test_empty_payload_returns_400(client):
-    response = client.post("/get_route", json={})
+    response = client.post("/calc_route", json={})
     data = response.get_json()
 
     assert response.status_code == 400
