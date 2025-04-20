@@ -39,6 +39,7 @@ def call_ors_api(
     response.raise_for_status()  # raises for non-2xx responses
     return cast(dict[str, Any], response.json())
 
+
 def call_ors_api_with_altitude(
     start_lng: float, start_lat: float, dest_lng: float, dest_lat: float
 ) -> dict[str, Any]:

@@ -39,7 +39,6 @@ def load_user(user_id: str) -> User | None:
 
 
 register_all_routes(app)
-print(app.url_map)
 
 
 @app.route("/")
