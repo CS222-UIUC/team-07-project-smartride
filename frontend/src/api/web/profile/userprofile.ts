@@ -1,5 +1,6 @@
-// TODO (Richard): Make Post Request to backend, /api/profile
-// userprofile.ts
+// TODO (Richard): Use your userprofile in ProfilePage
+
+import { API_ROUTES } from "../../utils/route_dictionary";
 
 export interface UserProfile {
   name: string;
@@ -13,7 +14,7 @@ export interface UserProfile {
 
 // Fetch user profile data from backend
 export async function fetchUserProfile(): Promise<UserProfile> {
-  const res = await fetch("/api/profile", {
+  const res = await fetch(API_ROUTES.WEB_PROFILE, {
     method: "GET",
     credentials: "include",
   });
@@ -28,7 +29,7 @@ export async function fetchUserProfile(): Promise<UserProfile> {
 export async function updateUserProfile(
   profile: UserProfile,
 ): Promise<UserProfile> {
-  const res = await fetch("/api/profile", {
+  const res = await fetch(API_ROUTES.WEB_PROFILE, {
     method: "PUT",
     credentials: "include",
     headers: {

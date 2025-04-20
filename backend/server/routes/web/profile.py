@@ -4,10 +4,11 @@ from flask_login import current_user, login_required
 from server.core.extensions import db
 from server.utils.response import api_response
 
-profile_bp = Blueprint("profile", __name__)
+URL_PREFIX_ADDON = "/profile"
+profile_bp = Blueprint("web_profile", __name__)
 
 
-@profile_bp.route("/profile", methods=["GET"])
+@profile_bp.route("/", methods=["GET"])
 @login_required
 def profile() -> tuple[Response, int]:
     return api_response(
@@ -26,7 +27,7 @@ def profile() -> tuple[Response, int]:
     )
 
 
-@profile_bp.route("/profile", methods=["PUT"])
+@profile_bp.route("/", methods=["PUT"])
 @login_required
 def update_profile() -> tuple[Response, int]:
     data = request.get_json()

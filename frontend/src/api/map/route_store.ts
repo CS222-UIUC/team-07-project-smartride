@@ -1,3 +1,5 @@
+import { API_ROUTES } from "../utils/route_dictionary";
+
 export interface Route {
   id: number;
   route_name: string;
@@ -5,7 +7,7 @@ export interface Route {
 
 export async function getSavedRoutes(): Promise<Route[]> {
   try {
-    const response = await fetch("/api/get_routes", {
+    const response = await fetch(API_ROUTES.MAP_GET_ROUTES, {
       method: "GET",
       credentials: "include",
     });
@@ -32,7 +34,7 @@ export async function createOrUpdateRoute(
 ): Promise<Route | null> {
   try {
     const body = { id: routeId, route_name: routeName };
-    const response = await fetch("/api/manage_route", {
+    const response = await fetch(API_ROUTES.MAP_SET_ROUTE, {
       method: "POST",
       credentials: "include",
       headers: {
