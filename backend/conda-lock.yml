@@ -1607,6 +1607,81 @@ package:
     sha256: fd88cd4796572d649da4d249ffb91bd387558c75ab14ad344b7ac45f714079b6
   category: main
   optional: false
+- name: geographiclib
+  version: '2.0'
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/geographiclib-2.0-pyhd8ed1ab_1.conda
+  hash:
+    md5: 8b9328ab4aafb8fde493ab32c5eba731
+    sha256: 933064eaaac79ceadef948223873c433eb5375b8445264cbe569d34035ab4e20
+  category: main
+  optional: false
+- name: geographiclib
+  version: '2.0'
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/geographiclib-2.0-pyhd8ed1ab_1.conda
+  hash:
+    md5: 8b9328ab4aafb8fde493ab32c5eba731
+    sha256: 933064eaaac79ceadef948223873c433eb5375b8445264cbe569d34035ab4e20
+  category: main
+  optional: false
+- name: geographiclib
+  version: '2.0'
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/geographiclib-2.0-pyhd8ed1ab_1.conda
+  hash:
+    md5: 8b9328ab4aafb8fde493ab32c5eba731
+    sha256: 933064eaaac79ceadef948223873c433eb5375b8445264cbe569d34035ab4e20
+  category: main
+  optional: false
+- name: geopy
+  version: 2.4.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    geographiclib: '>=1.52'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/geopy-2.4.1-pyhd8ed1ab_2.conda
+  hash:
+    md5: 40182a8d62a61d147ec7d3e4c5c36ac2
+    sha256: ac453c9558c48febe452c79281c632b3749baef7c04ed4b62f871709aee2aa03
+  category: main
+  optional: false
+- name: geopy
+  version: 2.4.1
+  manager: conda
+  platform: osx-64
+  dependencies:
+    geographiclib: '>=1.52'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/geopy-2.4.1-pyhd8ed1ab_2.conda
+  hash:
+    md5: 40182a8d62a61d147ec7d3e4c5c36ac2
+    sha256: ac453c9558c48febe452c79281c632b3749baef7c04ed4b62f871709aee2aa03
+  category: main
+  optional: false
+- name: geopy
+  version: 2.4.1
+  manager: conda
+  platform: win-64
+  dependencies:
+    geographiclib: '>=1.52'
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/geopy-2.4.1-pyhd8ed1ab_2.conda
+  hash:
+    md5: 40182a8d62a61d147ec7d3e4c5c36ac2
+    sha256: ac453c9558c48febe452c79281c632b3749baef7c04ed4b62f871709aee2aa03
+  category: main
+  optional: false
 - name: gitdb
   version: 4.0.12
   manager: conda

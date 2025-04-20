@@ -38,7 +38,7 @@ def get_route() -> tuple[Response, int]:
         )
 
     try:
-        route = call_ors_api(start_lng, start_lat, dest_lng, dest_lat)
+        route = call_ors_api_with_altitude(start_lng, start_lat, dest_lng, dest_lat)
         formatted = format_route_response(route)
         return api_response(success=True, data=formatted)
     except requests.RequestException as e:
@@ -90,4 +90,4 @@ def call_ors_api_with_altitude(
 
     print(response.status_code, response.reason)
     response.raise_for_status()  # raises for non-2xx responses
-    print(cast(dict[str, Any], response.json()))
+    return cast(dict[str, Any], response.json())

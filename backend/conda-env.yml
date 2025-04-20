@@ -9,8 +9,8 @@ dependencies:
   - flask-migrate
   - flask-sqlalchemy
   - flask_cors
-  - mamba
   - geopy
+  - mamba
   - mypy
   - pyjwt
   - pytest
