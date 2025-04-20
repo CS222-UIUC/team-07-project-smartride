@@ -21,7 +21,6 @@ const ORS_PREFICES = {
 };
 
 // TODO (Brian): Also bind RESTAPI method, GET PUT POST DELETE ...
-// TODO (Brian): Use route_dictionary
 export const API_ROUTES = {
   WEB_PROFILE: WEB_PREFICES.PROFILE + "/",
   WEB_LOGIN: WEB_PREFICES.AUTH + "/login",
