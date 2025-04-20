@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// TODO (Richard): Connect to backend, call @/api/profile/web/userprofile.ts to fetch user data, write handleUpdate and also when loaded, handleLoad function
+// TODO (Richard) 1: Move all await fetch("xxx") to api folder, do NOT place them here in a page component.
+// TODO (Richard) 2: Use responsive design, do NOT use css values like "24px", "14px".
 
 interface UserProfileResponse {
   success: boolean;

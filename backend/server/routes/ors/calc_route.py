@@ -8,7 +8,7 @@ from server.utils.response import api_response
 
 calc_route_bp = Blueprint("calc_route", __name__, url_prefix="/calc_route")
 
-# TODO: Need login required
+# TODO (Brian): Need login required
 
 @calc_route_bp.route("/", methods=["POST"])
 def get_route() -> tuple[Response, int]:

@@ -1,5 +1,4 @@
-// TODO (Richard): Make Post Request to backend, /api/profile
-// userprofile.ts
+// TODO (Richard): Use your userprofile in ProfilePage
 
 export interface UserProfile {
   name: string;

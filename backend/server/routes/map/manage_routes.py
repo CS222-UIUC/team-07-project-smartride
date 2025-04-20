@@ -12,7 +12,7 @@ from server.utils.response import api_response
 
 manage_bp = Blueprint("manage_map", __name__, url_prefix='/manage')
 
-# TODO: Use RestAPI Methods, GET PUT POST DELETE ...
+# TODO (Brian): Use RestAPI Methods, GET PUT POST DELETE ...
 
 @manage_bp.route("/get_routes", methods=["GET"])
 @combined_login_required
