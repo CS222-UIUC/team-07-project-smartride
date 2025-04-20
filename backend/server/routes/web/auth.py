@@ -7,34 +7,13 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from server.core.extensions import db
 from server.models.user import User
 from server.utils.errors import (
-    EMAIL_EXISTS,
-    EMAIL_TOO_LONG,
     INVALID_CREDENTIALS,
     INVALID_JSON,
-    MISSING_FIELDS,
-    NAME_TOO_LONG,
-    PASSWORD_TOO_LONG,
 )
+from server.utils.verify_register import verify_register
 from server.utils.response import api_response
 
-auth_bp = Blueprint("auth", __name__)
-
-
-# Helper function to raise register errors
-def verify_register(data: dict[str, Any] | None) -> None:
-    if not data:
-        raise INVALID_JSON
-    if not data.get("name") or not data.get("email") or not data.get("password"):
-        raise MISSING_FIELDS
-    if len(data["password"]) > 150:
-        raise PASSWORD_TOO_LONG
-    if len(data["name"]) > 100:
-        raise NAME_TOO_LONG
-    if len(data["email"]) > 120:
-        raise EMAIL_TOO_LONG
-    if User.query.filter_by(email=data["email"]).first():
-        raise EMAIL_EXISTS
-
+auth_bp = Blueprint("web_auth", __name__, url_prefix="/auth")
 
 @auth_bp.route("/register", methods=["POST"])
 def register() -> tuple[Response, int]:

@@ -1,24 +1,19 @@
 # routes/mobprofile.py
-from typing import TypedDict, cast
+from typing import cast
 
 import jwt
 from flask import Blueprint, Request, Response, request
 
+from server.schemas.jwt import JWTPayload
 from server.models.user import User
+from server.core.config import Config
 from server.utils.errors import INVALID_CREDENTIALS
 from server.utils.response import api_response
+from server.utils.jwt_utils import decode_jwt_token
 
-JWT_SECRET = "your_secret_key"  # Use same as in mobauth
+JWT_SECRET_KEY: str = Config.JWT_SECRET_KEY if Config.JWT_SECRET_KEY else ""
 
-mobprofile_bp = Blueprint("mobprofile_bp", __name__, url_prefix="/mob")
-
-
-class JWTPayload(TypedDict):
-    sub: int
-    name: str
-    email: str
-    exp: int
-    iat: int
+profile_bp = Blueprint("mob_profile", __name__, url_prefix="/profile")
 
 
 def get_user_from_token(req: Request) -> User:
@@ -28,7 +23,7 @@ def get_user_from_token(req: Request) -> User:
 
     token = auth_header.split(" ")[1]
     try:
-        payload: JWTPayload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])  # type: ignore
+        payload: JWTPayload = decode_jwt_token(token)
         user = cast(User, User.query.get(payload["sub"]))
         if not user:
             raise INVALID_CREDENTIALS
@@ -37,8 +32,8 @@ def get_user_from_token(req: Request) -> User:
         raise INVALID_CREDENTIALS from err
 
 
-@mobprofile_bp.route("/profile", methods=["GET"])
-def mob_profile() -> tuple[Response, int]:
+@profile_bp.route("/", methods=["GET"])
+def profile() -> tuple[Response, int]:
     user = get_user_from_token(request)
 
     return api_response(
