@@ -14,7 +14,6 @@ import { useEffect } from "react";
 
 import type { Point, RouteSegment } from "./manage/structure";
 import { useRef } from "react";
-import { fromTheme } from "tailwind-merge";
 
 const MapView = ({
   onRouteDataChange,
