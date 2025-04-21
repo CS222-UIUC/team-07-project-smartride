@@ -3,10 +3,21 @@ import MapView from "@/maps/MapView.tsx";
 import { CSSProperties, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIsPhone } from "@/components/context/PhoneContext.tsx";
-import { createOrUpdateRoute } from "@/api/map/route_store.ts";
+import { createOrUpdateRoute, getSavedRoutes } from "@/api/map/route_store.ts";
 import { Button } from "@/components/ui/button.tsx";
+import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
+import { useEffect } from "react";
 
-const MapWrapper = () => {
+const MapWrapper = ({
+  onRouteDataChange,
+  initialData,
+}: {
+  onRouteDataChange: (data: {
+    points: Point[];
+    segments: RouteSegment[];
+  }) => void;
+  initialData: { points: Point[]; segments: RouteSegment[] };
+}) => {
   const IsPhone = useIsPhone();
   const style: CSSProperties = IsPhone
     ? {
@@ -26,32 +37,64 @@ const MapWrapper = () => {
 
   return (
     <div style={style}>
-      <MapView />
+      <MapView
+        onRouteDataChange={onRouteDataChange}
+        initialData={initialData}
+      />
     </div>
   );
 };
 
 const RoutePlanningPage = () => {
-  /* id and route_name may be undefined, if the user is creating a new route */
   const [searchParams] = useSearchParams();
   const initialRouteId = parseInt(searchParams.get("id") || "-1");
   const [routeId, setRouteId] = useState<number>(initialRouteId);
   const initialRouteName = searchParams.get("route_name") || "New Route";
   const [routeName, setRouteName] = useState<string>(initialRouteName);
 
+  const [routeData, setRouteData] = useState<{
+    points: Point[];
+    segments: RouteSegment[];
+  }>({ points: [], segments: [] });
+
+  const [hasLoadedData, setHasLoadedData] = useState(false);
+
   const handleSave = async () => {
-    const result = await createOrUpdateRoute(routeId, routeName);
+    const result = await createOrUpdateRoute(routeId, routeName, routeData);
     if (result && routeId === -1) {
-      // If the routeId is -1, it means we are creating a new route
       setRouteId(result.id);
       alert(`Route created with ID: ${String(result.id)}`);
     } else if (result) {
-      // If the routeId is not -1, it means we are updating an existing route
       alert(`Route updated with ID: ${String(result.id)}`);
     } else {
       alert("Failed to save route");
     }
   };
+  useEffect(() => {
+    if (routeId === -1 || hasLoadedData) return;
+
+    async function fetchRouteData() {
+      const res = await getSavedRoutes();
+      const found = res.find((r) => r.id === routeId);
+      if (found?.route_data) {
+        try {
+          const parsed =
+            typeof found.route_data === "string"
+              ? (JSON.parse(found.route_data) as {
+                  points: Point[];
+                  segments: RouteSegment[];
+                })
+              : found.route_data;
+
+          setRouteData(parsed);
+        } catch (e) {
+          console.error("Failed to parse route_data:", e);
+        }
+      }
+      setHasLoadedData(true);
+    }
+    void fetchRouteData();
+  }, [routeId, hasLoadedData]);
 
   return (
     <div
@@ -63,8 +106,6 @@ const RoutePlanningPage = () => {
         alignItems: "center",
       }}
     >
-      {/* For this week, we do not load the route, but show the name in the name field */}
-      {/* Allow user to change the name of the route */}
       <input
         type="text"
         value={routeName}
@@ -80,7 +121,16 @@ const RoutePlanningPage = () => {
           border: "1px solid #ccc",
         }}
       />
-      <MapWrapper />
+      {routeId === -1 || routeData.points.length > 0 ? (
+        <MapWrapper
+          initialData={routeData}
+          onRouteDataChange={(data) => {
+            setRouteData(data);
+          }}
+        />
+      ) : (
+        <div>Loading route data...</div> // or a spinner
+      )}
       <div>
         <Button
           onClick={() => {

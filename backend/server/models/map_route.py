@@ -8,3 +8,4 @@ class MapRoute(db.Model):  # type: ignore[name-defined]
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     route_name = db.Column(db.String(100), nullable=False)
+    route_data = db.Column(db.Text, nullable=True)
