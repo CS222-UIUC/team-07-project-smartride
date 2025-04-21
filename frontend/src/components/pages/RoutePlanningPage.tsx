@@ -7,6 +7,7 @@ import { createOrUpdateRoute } from "@/api/map/route_store.ts";
 import { Button } from "@/components/ui/button.tsx";
 import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
 import { useEffect } from "react";
+import { RouteRecord, GetRoutesResponse } from "@/api/map/route_service.ts";
 
 const MapWrapper = ({
   onRouteDataChange,
@@ -45,16 +46,16 @@ const MapWrapper = ({
   );
 };
 
-interface RouteRecord {
-  id: number;
-  route_name: string;
-  route_data?: string | { points: Point[]; segments: RouteSegment[] };
-}
+// interface RouteRecord {
+//   id: number;
+//   route_name: string;
+//   route_data?: string | { points: Point[]; segments: RouteSegment[] };
+// }
 
-interface GetRoutesResponse {
-  success: boolean;
-  data?: RouteRecord[];
-}
+// interface GetRoutesResponse {
+//   success: boolean;
+//   data?: RouteRecord[];
+// }
 
 const RoutePlanningPage = () => {
   const [searchParams] = useSearchParams();
@@ -86,9 +87,10 @@ const RoutePlanningPage = () => {
 
     async function fetchRouteData() {
       try {
-        const res = await fetch("/api/get_routes", {
+        const res = await fetch("/api/map/manage/get_routes", {
           credentials: "include",
         });
+
         const result = (await res.json()) as GetRoutesResponse;
 
         if (result.success && result.data) {

@@ -1,8 +1,10 @@
 import { API_ROUTES } from "../utils/route_dictionary";
+import type { Point, RouteSegment } from "@/maps/manage/structure";
 
 export interface Route {
   id: number;
   route_name: string;
+  route_data?: string | { points: Point[]; segments: RouteSegment[] };
 }
 
 export async function getSavedRoutes(): Promise<Route[]> {

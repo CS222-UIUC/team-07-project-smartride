@@ -1,9 +1,9 @@
 import { API_ROUTES } from "../utils/route_dictionary";
+import type { Point, RouteSegment } from "@/maps/manage/structure";
 
 interface Coordinates {
   lat: number;
   lng: number;
-  ele: number;
 }
 
 interface RouteResponse {
@@ -35,4 +35,15 @@ export async function getRoute(
     data: RouteResponse;
   }; // this is { success, message, data }
   return raw.data;
+}
+
+export interface RouteRecord {
+  id: number;
+  route_name: string;
+  route_data?: string | { points: Point[]; segments: RouteSegment[] };
+}
+
+export interface GetRoutesResponse {
+  success: boolean;
+  data?: RouteRecord[];
 }
