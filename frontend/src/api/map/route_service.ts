@@ -4,6 +4,7 @@ import type { Point, RouteSegment } from "@/maps/manage/structure";
 interface Coordinates {
   lat: number;
   lng: number;
+  ele: number;
 }
 
 interface RouteResponse {

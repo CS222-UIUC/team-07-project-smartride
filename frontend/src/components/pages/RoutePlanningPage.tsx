@@ -3,11 +3,10 @@ import MapView from "@/maps/MapView.tsx";
 import { CSSProperties, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIsPhone } from "@/components/context/PhoneContext.tsx";
-import { createOrUpdateRoute } from "@/api/map/route_store.ts";
+import { createOrUpdateRoute, getSavedRoutes } from "@/api/map/route_store.ts";
 import { Button } from "@/components/ui/button.tsx";
 import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
 import { useEffect } from "react";
-import { RouteRecord, GetRoutesResponse } from "@/api/map/route_service.ts";
 
 const MapWrapper = ({
   onRouteDataChange,
@@ -46,17 +45,6 @@ const MapWrapper = ({
   );
 };
 
-// interface RouteRecord {
-//   id: number;
-//   route_name: string;
-//   route_data?: string | { points: Point[]; segments: RouteSegment[] };
-// }
-
-// interface GetRoutesResponse {
-//   success: boolean;
-//   data?: RouteRecord[];
-// }
-
 const RoutePlanningPage = () => {
   const [searchParams] = useSearchParams();
   const initialRouteId = parseInt(searchParams.get("id") || "-1");
@@ -86,41 +74,25 @@ const RoutePlanningPage = () => {
     if (routeId === -1 || hasLoadedData) return;
 
     async function fetchRouteData() {
-      try {
-        const res = await fetch("/api/map/manage/get_routes", {
-          credentials: "include",
-        });
+      const res = await getSavedRoutes();
+      const found = res.find((r) => r.id === routeId);
+      if (found?.route_data) {
+        try {
+          const parsed =
+            typeof found.route_data === "string"
+              ? (JSON.parse(found.route_data) as {
+                  points: Point[];
+                  segments: RouteSegment[];
+                })
+              : found.route_data;
 
-        const result = (await res.json()) as GetRoutesResponse;
-
-        if (result.success && result.data) {
-          const found: RouteRecord | undefined = result.data.find(
-            (r: RouteRecord) => r.id === routeId,
-          );
-
-          if (found?.route_data) {
-            try {
-              const parsed =
-                typeof found.route_data === "string"
-                  ? (JSON.parse(found.route_data) as {
-                      points: Point[];
-                      segments: RouteSegment[];
-                    })
-                  : found.route_data;
-
-              setRouteData(parsed);
-            } catch (e) {
-              console.error("Failed to parse route_data:", e);
-            }
-          }
+          setRouteData(parsed);
+        } catch (e) {
+          console.error("Failed to parse route_data:", e);
         }
-      } catch (e) {
-        console.error("Failed to fetch or parse route_data:", e);
-      } finally {
-        setHasLoadedData(true);
       }
+      setHasLoadedData(true);
     }
-
     void fetchRouteData();
   }, [routeId, hasLoadedData]);
 

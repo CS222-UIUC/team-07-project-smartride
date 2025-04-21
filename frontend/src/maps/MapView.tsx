@@ -43,27 +43,29 @@ const MapView = ({
   useEffect(() => {
     if (hasInteractedRef.current) {
       onRouteDataChange({ points, segments });
+      hasInteractedRef.current = false;
     }
-  }, [points, segments, onRouteDataChange]);
+  }, [points, segments, onRouteDataChange, hasInteractedRef]);
 
   const wrappedAddPoint = async (lat: number, lng: number) => {
-    hasInteractedRef.current = true;
     await addPoint(lat, lng);
+    hasInteractedRef.current = true;
   };
 
+  // TODO: Bug: When removing a point, the route is not updated correctly.
   const wrappedRemovePoint = async (id: string) => {
-    hasInteractedRef.current = true;
     await removePoint(id);
+    hasInteractedRef.current = true;
   };
 
   const wrappedReorderPoints = async (from: number, to: number) => {
-    hasInteractedRef.current = true;
     await reorderPoints(from, to);
+    hasInteractedRef.current = true;
   };
 
   const wrappedTogglePointType = (id: string) => {
-    hasInteractedRef.current = true;
     togglePointType(id);
+    hasInteractedRef.current = true;
   };
 
   return (
