@@ -3,6 +3,7 @@ import { API_ROUTES } from "../utils/route_dictionary";
 interface Coordinates {
   lat: number;
   lng: number;
+  ele: number;
 }
 
 interface RouteResponse {
