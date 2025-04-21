@@ -9,4 +9,3 @@ class MapRoute(db.Model):  # type: ignore[name-defined]
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     route_name = db.Column(db.String(100), nullable=False)
     route_data = db.Column(db.Text, nullable=True)
-    # point[], routesegment[] (see frontend/src/maps/manage/strcture.ts and operations.ts)

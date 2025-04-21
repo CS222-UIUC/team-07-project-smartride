@@ -4,7 +4,6 @@ from types import ModuleType
 
 from flask import Flask
 
-
 def register_all_routes(app: Flask) -> None:
     package_name = __name__
     package_path = __path__
