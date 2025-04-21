@@ -39,6 +39,7 @@ export const useRouteOperations = (
         label: `Point ${String(points.length + 1)}`,
         lat,
         lng,
+        ele: -22207,
         type: "main",
       };
 

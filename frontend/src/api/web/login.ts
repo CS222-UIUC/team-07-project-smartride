@@ -1,3 +1,5 @@
+import { API_ROUTES } from "../utils/route_dictionary";
+
 export interface LoginResponse {
   message: string;
   user?: string;
@@ -8,7 +10,7 @@ export async function loginUser(
   password: string,
 ): Promise<LoginResponse> {
   try {
-    const response = await fetch("/api/login", {
+    const response = await fetch(API_ROUTES.WEB_LOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

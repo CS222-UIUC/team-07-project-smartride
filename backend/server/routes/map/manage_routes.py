@@ -2,17 +2,21 @@ import json
 from typing import Any
 
 from flask import Blueprint, Response, request
-from flask_login import current_user, login_required
+from flask_login import current_user
 
+from server.core.auth_combo import combined_login_required
 from server.core.extensions import db
 from server.models.map_route import MapRoute
 from server.utils.response import api_response
 
-user_routes_bp = Blueprint("user_routes", __name__)
+URL_PREFIX_ADDON = "/manage"
+manage_bp = Blueprint("manage_map", __name__)
+
+# TODO (Brian): Use RestAPI Methods, GET PUT POST DELETE ...
 
 
-@user_routes_bp.route("/get_routes", methods=["GET"])
-@login_required
+@manage_bp.route("/get_routes", methods=["GET"])
+@combined_login_required
 def get_routes() -> tuple[Response, int]:
     routes = MapRoute.query.filter_by(user_id=current_user.id).all()
     routes_list = [
@@ -60,9 +64,9 @@ def add_route(user_id: int | None, route_name: str | None) -> tuple[Response, in
     return new_route
 
 
-@user_routes_bp.route("/manage_route", methods=["POST"])
-@login_required
-def manage_route() -> tuple[Response, int]:
+@manage_bp.route("/set_route", methods=["POST"])
+@combined_login_required
+def set_route() -> tuple[Response, int]:
     data = request.get_json()
     if not data:
         return api_response(success=False, message="Invalid JSON", status_code=400)
