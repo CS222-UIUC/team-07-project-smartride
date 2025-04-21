@@ -14,6 +14,7 @@ import { useEffect } from "react";
 
 import type { Point, RouteSegment } from "./manage/structure";
 import { useRef } from "react";
+import { fromTheme } from "tailwind-merge";
 
 const MapView = ({
   onRouteDataChange,
@@ -103,8 +104,8 @@ const MapView = ({
           setPanelOpen(false);
         }}
         points={points}
-        onReorder={(f, t) => {
-          void wrappedReorderPoints(f, t);
+        onReorder={(from, to) => {
+          void wrappedReorderPoints(from, to);
         }}
         onToggleType={(id) => {
           wrappedTogglePointType(id);
