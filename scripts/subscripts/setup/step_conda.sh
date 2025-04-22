@@ -33,6 +33,7 @@ popd > /dev/null
 
 pushd "$(dirname "$0")/../../../backend" > /dev/null
 echo "[Setup] Installing or updating smartride-backend conda environment..."
+conda activate base
 conda-lock install --mamba conda-lock.yml --name smartride-backend
 conda activate smartride-backend
 echo "[Setup] smartride-backend conda environment is successfully installed and activated."

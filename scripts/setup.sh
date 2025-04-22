@@ -17,7 +17,7 @@ declare -A stepVersions=(
   ["step_rclone"]="1.1"
   ["step_env"]="1.2"
   ["step_cli"]="1.1"
-  ["step_conda"]="1.1"
+  ["step_conda"]="1.2"
   ["step_drive"]="1.1"
 )
 

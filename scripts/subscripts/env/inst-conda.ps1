@@ -21,7 +21,8 @@ for ($i = 0; $i -lt $args.Count; $i++) {
             if ($i + 1 -lt $args.Count -and $args[$i + 1] -notmatch "^--") {
                 $PkgName = $args[$i + 1]
                 $i++
-            } else {
+            }
+            else {
                 Write-Host "Error: --package must be followed by a valid package name."
                 exit 1
             }
@@ -44,7 +45,9 @@ if ($PkgName -eq "") {
 if ($IsPip) {
     Write-Host "[Install Conda] Installing pip package: $PkgName"
     pip install --upgrade $PkgName
-} else {
+}
+else {
+    conda activate base
     Write-Host "[Install Conda] Installing conda package: $PkgName"
     mamba install -c conda-forge $PkgName
     python "python/conda_exporter.py" "../../../backend/conda-env.yml" $PkgName

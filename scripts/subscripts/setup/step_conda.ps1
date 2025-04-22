@@ -35,6 +35,7 @@ Pop-Location
 
 Push-Location "$PSScriptRoot/../../../backend"
 Write-Host "[Setup] Installing or updating smartride-backend conda environment..."
+conda activate base
 conda-lock install --mamba conda-lock.yml --name smartride-backend
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[Error] We failed to install smartride-backend with conda-lock. Contact administrator." -ForegroundColor Red
