@@ -59,7 +59,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "eslint-plugin-react-x": "^1.47.2",
     "globals": "^16.0.0",
-    "jsdom": "^26.0.0",
+    "jsdom": "^26.1.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "typescript": "~5.8.2",
