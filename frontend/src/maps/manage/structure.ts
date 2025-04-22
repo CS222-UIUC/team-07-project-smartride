@@ -5,11 +5,12 @@ export interface Point {
   label: string;
   lat: number;
   lng: number;
+  ele: number;
   type: PointType;
 }
 
 export interface RouteSegment {
   from: Point;
   to: Point;
-  path: { lat: number; lng: number }[];
+  path: { lat: number; lng: number; ele: number }[];
 }

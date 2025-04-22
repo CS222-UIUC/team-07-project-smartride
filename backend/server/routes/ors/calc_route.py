@@ -4,7 +4,7 @@ import requests
 from flask import Blueprint, Response, request
 
 from server.core.auth_combo import combined_login_required
-from server.utils.ors import call_ors_api, format_route_response
+from server.utils.ors import call_ors_api_with_altitude, format_route_response
 from server.utils.response import api_response
 
 URL_PREFIX_ADDON = "/calc_route"
@@ -38,7 +38,7 @@ def get_route() -> tuple[Response, int]:
         )
 
     try:
-        route = call_ors_api(start_lng, start_lat, dest_lng, dest_lat)
+        route = call_ors_api_with_altitude(start_lng, start_lat, dest_lng, dest_lat)
         formatted = format_route_response(route)
         return api_response(success=True, data=formatted)
     except requests.RequestException as e:
