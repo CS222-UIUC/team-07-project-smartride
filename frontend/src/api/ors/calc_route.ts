@@ -1,5 +1,5 @@
 import { buildAuthHeaders } from "../jwt/compatible_token_manager";
-// import { getApiRoute, ORS_OPTIONS } from "../utils/api_routes";
+import { getApiRoute, ORS_OPTIONS } from "../utils/api_routes";
 import type { Point, RouteSegment } from "@/maps/manage/structure";
 
 interface Coordinates {
@@ -18,10 +18,11 @@ export async function calcRoute(
   start: Coordinates,
   dest: Coordinates,
 ): Promise<RouteResponse> {
-  // const url = getApiRoute(ORS_OPTIONS.ORS_CALC_ROUTE);
-  const url = "http://10.0.2.2:5050/api/ors/calc_route/";
+  const url = getApiRoute(ORS_OPTIONS.ORS_CALC_ROUTE);
   const payload = { start, dest };
-  const headers = buildAuthHeaders({"Content-Type": "application/json",});
+  const headers = buildAuthHeaders({
+    "Content-Type": "application/json",
+  });
   const response = await fetch(url, {
     method: "POST",
     headers: headers,
@@ -34,7 +35,7 @@ export async function calcRoute(
     success: boolean;
     message: string;
     data: RouteResponse;
-  }; // this is { success, message, data }
+  };
   return raw.data;
 }
 

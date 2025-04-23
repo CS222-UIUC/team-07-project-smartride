@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-// import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
+import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
 import { buildAuthHeaders } from "../jwt/compatible_token_manager";
 import { toast } from "sonner";
-// import { getToken } from "../jwt/raw_token_manager";
 
 export async function checkLoginStatus(): Promise<boolean> {
   try {
-    // const url = getApiRoute(AUTH_OPTIONS.AUTH_STATUS);
-    const url = "http://10.0.2.2:5050/api/mob/profile/";
-    // toast.info("[checkLoginStatus] token = "+String(getToken()));
+    const url = getApiRoute(AUTH_OPTIONS.AUTH_STATUS);
     const headers = buildAuthHeaders({});
     const response = await fetch(url, {
       credentials: "include",
@@ -19,7 +16,7 @@ export async function checkLoginStatus(): Promise<boolean> {
     const result = (await response.json()) as { success: boolean };
     return result.success;
   } catch(err: unknown) {
-    toast.info("checkLoginStatus() catch branch" + String(err));
+    toast.info("checkLoginStatus() failed: " + String(err));
     return false;
   }
 }

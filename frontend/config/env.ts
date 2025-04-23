@@ -9,8 +9,6 @@ export type EnvVars = {
   PROJECT_MODE: string;
   DEPLOY_TARGET: string;
   WLAN_IP: string;
-  API_HOST: string;
-  PLATFORM: string;
 };
 
 function getEnv(): EnvVars {
@@ -35,29 +33,12 @@ function getEnv(): EnvVars {
   const deployTarget = rawEnv.VITE_DEPLOY_TARGET || "EMULATOR";
   const wlanIp = rawEnv.VITE_WLAN_IP || "127.0.0.1";
 
-  let apiHost = "127.0.0.1";
-  // TODO [Brian]: Issue here, in compiler-time, Capacitor.getPlatform() on emulator seems to always be web
-  // const platformName = Capacitor.getPlatform();
-  const platformName = "android"; // test only
-  if (projectMode === "BUILD") {
-    if (
-      // platformName === "android"
-      // &&
-      deployTarget === "EMULATOR"
-    ) {
-      apiHost = "10.0.2.2";
-    } else {
-      apiHost = wlanIp;
-    }
-  }
   return {
     API_PORT: apiPort,
     DEV_PORT: devPort,
     PROJECT_MODE: projectMode,
     DEPLOY_TARGET: deployTarget,
     WLAN_IP: wlanIp,
-    API_HOST: apiHost,
-    PLATFORM:  projectMode + "-" + platformName,
   };
 }
 

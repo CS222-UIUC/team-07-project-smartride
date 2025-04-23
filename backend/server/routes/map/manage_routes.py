@@ -14,26 +14,39 @@ manage_bp = Blueprint("manage_map", __name__)
 # TODO (Brian): Use RestAPI Methods, GET PUT POST DELETE ...
 
 
-@manage_bp.route("/get_routes", methods=["GET"])
+@manage_bp.route("/get_routes_info", methods=["GET"])
 @combined_login_required
 def get_routes() -> tuple[Response, int]:
     routes = MapRoute.query.filter_by(user_id=get_combined_current_user().id).all()
-    print("total routes:", len(routes))
     routes_list = [
         {
             "id": route.id,
             "route_name": route.route_name,
-            "route_data": json.loads(route.route_data) if route.route_data else None,
+            # "route_data": json.loads(route.route_data) if route.route_data else None,
         }
         for route in routes
     ]
-    print("queried routes:", [{"id": route["id"], "route_name": route["route_name"]} for route in routes_list])
     return api_response(
         success=True,
         message="Routes retrieved successfully",
         data=routes_list,
     )
 
+@manage_bp.route("/get_route_by_id", methods=["GET"])
+@combined_login_required
+def get_route_by_id() -> tuple[Response, int]:
+    route_id = request.args.get("id")
+    if not route_id:
+        return api_response(success=False, message="Route id is required", status_code=400)
+    route = MapRoute.query.filter_by(id=route_id, user_id=get_combined_current_user().id).first()
+    if not route:
+        return api_response(success=False, message="Route not found", status_code=404)
+    route_data = {
+        "id": route.id,
+        "route_name": route.route_name,
+        "route_data": json.loads(route.route_data) if route.route_data else None,
+    }
+    return api_response(success=True, data=route_data)
 
 def update_route(
     user_id: int | None,

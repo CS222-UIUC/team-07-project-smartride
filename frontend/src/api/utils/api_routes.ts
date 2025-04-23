@@ -1,10 +1,13 @@
+import { API_URL } from "@/utils/api_url";
 import { useJwt } from "./useJwt";
 
+const API_URL_ROOT = API_URL + "/api";
+
 const API_URL_DIRECTORIES = {
-  WEB: "/api/web",
-  MOB: "/api/mob",
-  MAP: "/api/map",
-  ORS: "/api/ors",
+  WEB: API_URL_ROOT + "/web",
+  MOB: API_URL_ROOT + "/mob",
+  MAP: API_URL_ROOT + "/map",
+  ORS: API_URL_ROOT + "/ors",
 } as const;
 
 const API_WEB_PREFICES = {
@@ -13,7 +16,7 @@ const API_WEB_PREFICES = {
 };
 const API_MOB_PREFICES = {
   AUTH: API_URL_DIRECTORIES.MOB + "/auth",
-  PROFILE: API_URL_DIRECTORIES.MOB + "/profile/",
+  PROFILE: API_URL_DIRECTORIES.MOB + "/profile",
 };
 const API_MAP_PREFICES = {
   MANAGE_ROUTES: API_URL_DIRECTORIES.MAP + "/manage",
@@ -36,8 +39,8 @@ const API_ROUTES = {
 
   ORS_CALC_ROUTE: API_ORS_PREFICES.CALC_ROUTE + "/",
 
-  MAP_GET_ROUTE: API_MAP_PREFICES.MANAGE_ROUTES + "/get_route",
-  MAP_GET_ROUTES: API_MAP_PREFICES.MANAGE_ROUTES + "/get_routes",
+  MAP_GET_ROUTE_BY_ID: API_MAP_PREFICES.MANAGE_ROUTES + "/get_route_by_id",
+  MAP_GET_ROUTES_INFO: API_MAP_PREFICES.MANAGE_ROUTES + "/get_routes_info",
   MAP_SET_ROUTE: API_MAP_PREFICES.MANAGE_ROUTES + "/set_route",
 };
 
@@ -62,13 +65,13 @@ const profileRoutes = {
 };
 
 export enum MAP_OPTIONS {
-  MAP_GET_ROUTE = "MAP_GET_ROUTE",
-  MAP_GET_ROUTES = "MAP_GET_ROUTES",
+  MAP_GET_ROUTE_BY_ID = "MAP_GET_ROUTE_BY_ID",
+  MAP_GET_ROUTES_INFO = "MAP_GET_ROUTES_INFO",
   MAP_SET_ROUTE = "MAP_SET_ROUTE",
 }
 const mapRoutes = {
-  MAP_GET_ROUTE: API_ROUTES.MAP_GET_ROUTE,
-  MAP_GET_ROUTES: API_ROUTES.MAP_GET_ROUTES,
+  MAP_GET_ROUTE_BY_ID: API_ROUTES.MAP_GET_ROUTE_BY_ID,
+  MAP_GET_ROUTES_INFO: API_ROUTES.MAP_GET_ROUTES_INFO,
   MAP_SET_ROUTE: API_ROUTES.MAP_SET_ROUTE,
 };
 

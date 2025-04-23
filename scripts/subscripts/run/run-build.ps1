@@ -89,7 +89,7 @@ if ($Platform -eq "--android" -or $Platform -eq "--ios") {
     else {
         $emulModeStr = if ($emulatorMode -eq "RUN") { "run" } else { "open" }
         Start-Process powershell -ArgumentList @"
-Write-Host "Press Enter to continue with '$emulModeStr $platformStr'..." -ForegroundColor Purple
+Write-Host "Press Enter to continue with '$emulModeStr $platformStr'..." -ForegroundColor Blue
 Read-Host
 pnpm --package="@capacitor/cli" dlx capacitor $emulModeStr $platformStr
 Write-Host 'Press Enter to exit...'

@@ -1,5 +1,5 @@
 import { jwtPostProcess, TOKEN_STATE } from "../jwt/compatible_token_manager";
-// import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
+import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
 
 export interface LoginResponse {
   message: string;
@@ -14,13 +14,13 @@ export async function loginUser(
   password: string,
 ): Promise<LoginResponse> {
   try {
-    // const url = getApiRoute(AUTH_OPTIONS.AUTH_LOGIN);
-    const url = "http://10.0.2.2:5050/api/mob/auth/login";
+    const url = getApiRoute(AUTH_OPTIONS.AUTH_LOGIN);
+    const headers = {
+      "Content-Type": "application/json",
+    };
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
       body: JSON.stringify({ email, password }),
       credentials: "include",
     });
