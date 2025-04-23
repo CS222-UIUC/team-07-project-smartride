@@ -3,14 +3,14 @@ Set-StrictMode -Version Latest
 $setupSteps = @("step_rclone", "step_env", "step_cli", "step_conda", "step_drive")
 $stepVersions = @{
     "step_rclone" = "1.1"
-    "step_env"    = "1.2"
+    "step_env"    = "1.3"
     "step_cli"    = "1.1"
     "step_conda"  = "1.2"
     "step_drive"  = "1.1"
 }
 $requiredVersions = @{
     "step_rclone" = "1.0"
-    "step_env"    = "1.2"
+    "step_env"    = "1.3"
     "step_cli"    = "1.0"
     "step_conda"  = "1.0"
     "step_drive"  = "1.0"

@@ -25,7 +25,6 @@ const RouteLibrary: React.FC = () => {
   return (
     <AuthProvider>
       <Routes>
-        {/* Public Routes */}
         <Route element={<ProtectedRoute access="public" />}>
           <Route path="/" element={<LoadPage />} />
           <Route path="/start" element={<StartPage />} />

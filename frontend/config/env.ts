@@ -1,14 +1,14 @@
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
-// import { Capacitor } from "@capacitor/core";
 
 export type EnvVars = {
   API_PORT: number;
-  DEV_PORT: number;
+  WEB_PORT: number;
   PROJECT_MODE: string;
   DEPLOY_TARGET: string;
   WLAN_IP: string;
+  API_WEB_HOST: string;
 };
 
 function getEnv(): EnvVars {
@@ -28,17 +28,19 @@ function getEnv(): EnvVars {
   };
 
   const apiPort: number = rawEnv.VITE_API_PORT ? parseInt(rawEnv.VITE_API_PORT, 10) : 5000;
-  const devPort: number = rawEnv.VITE_DEV_PORT ? parseInt(rawEnv.VITE_DEV_PORT, 10) : 5173;
+  const webPort: number = rawEnv.VITE_WEB_PORT ? parseInt(rawEnv.VITE_WEB_PORT, 10) : 5173;
   const projectMode = rawEnv.VITE_PROJECT_MODE || "DEV";
   const deployTarget = rawEnv.VITE_DEPLOY_TARGET || "EMULATOR";
   const wlanIp = rawEnv.VITE_WLAN_IP || "127.0.0.1";
+  const apiWebHost = (projectMode === "DEV") ? "localhost" : wlanIp;
 
   return {
     API_PORT: apiPort,
-    DEV_PORT: devPort,
+    WEB_PORT: webPort,
     PROJECT_MODE: projectMode,
     DEPLOY_TARGET: deployTarget,
     WLAN_IP: wlanIp,
+    API_WEB_HOST: apiWebHost,
   };
 }
 

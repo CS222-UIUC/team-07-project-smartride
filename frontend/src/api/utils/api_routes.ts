@@ -1,13 +1,11 @@
 import { API_URL } from "@/utils/api_url";
 import { useJwt } from "./useJwt";
 
-const API_URL_ROOT = API_URL + "/api";
-
 const API_URL_DIRECTORIES = {
-  WEB: API_URL_ROOT + "/web",
-  MOB: API_URL_ROOT + "/mob",
-  MAP: API_URL_ROOT + "/map",
-  ORS: API_URL_ROOT + "/ors",
+  WEB: API_URL + "/web",
+  MOB: API_URL + "/mob",
+  MAP: API_URL + "/map",
+  ORS: API_URL + "/ors",
 } as const;
 
 const API_WEB_PREFICES = {

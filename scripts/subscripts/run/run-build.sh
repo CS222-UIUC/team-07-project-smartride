@@ -49,7 +49,12 @@ run_capacitor_if_needed() {
     pnpm --package="@capacitor/cli" dlx capacitor sync $platformStr
     echo "Sync Completed."
     if [[ "$deploy_type" == "MACHINE" ]]; then
-      run_cmd="echo '[SKIP] Target is MACHINE. Skipping npx cap run.'"
+      run_cmd="echo -e '\033[0;33m[SKIP] Target is MACHINE. Skipping npx cap run.\033[0m'"
+      if [[ "$PLATFORM" == "--android" ]]; then
+      echo -e "\033[0;36mYou can find the APK in the 'frontend/android/app/build/outputs/apk/debug' directory as 'app-debug.apk'.\033[0m"
+      else
+      echo -e "\033[0;36mYou can find the IPA in the 'frontend/ios/build' directory.\033[0m"
+      fi
     elif [[ "$emulator_mode" == "NONE" ]]; then
       run_cmd="echo '[SKIP] Emulator Mode is NONE. Skipping npx cap run.'"
     else

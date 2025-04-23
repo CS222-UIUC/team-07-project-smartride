@@ -81,7 +81,13 @@ if ($Platform -eq "--android" -or $Platform -eq "--ios") {
     pnpm --package="@capacitor/cli" dlx capacitor sync $platformStr
     Write-Host "Sync completed." -ForegroundColor Green
     if ($deployType -eq "MACHINE") {
-        Write-Host "[SKIP] Target is MACHINE. Skipping 'npx cap run'."
+        Write-Host -NoNewline "[SKIP] Target is MACHINE. Skipping 'npx cap run'."
+        if ($Platform -eq "--android") {
+            Write-Host "You can find the APK in the 'frontend/android/app/build/outputs/apk/debug' directory as 'app-debug.apk'." -ForegroundColor Cyan
+        }
+        else {
+            Write-Host "You can find the IPA in the 'frontend/ios/build' directory." -ForegroundColor Cyan
+        }
     }
     elseif ($emulatorMode -eq "NONE") {
         Write-Host "[SKIP] Emulator Mode is NONE. Skipping 'npx cap run'."

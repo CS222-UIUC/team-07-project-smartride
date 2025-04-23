@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   plugins: [react(), tailwindcss()],
-  // no need to pass DEV_PORT to the client
+  // no need to pass WEB_PORT and API_WEB_HOST to the client
   define: {
     __API_PORT__: JSON.stringify(smartride_env.API_PORT),
     __PROJECT_MODE__: JSON.stringify(smartride_env.PROJECT_MODE),
@@ -22,7 +22,13 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: true,
-    port: smartride_env.DEV_PORT,
+    port: smartride_env.WEB_PORT,
+    proxy: {
+      "/api": {
+        target: `http://${smartride_env.API_WEB_HOST}:${smartride_env.API_PORT.toString()}`,
+        changeOrigin: true,
+      },
+    },
   },
   test: {
     environment: "jsdom",
