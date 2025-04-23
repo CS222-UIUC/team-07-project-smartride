@@ -17,6 +17,7 @@ import LayoutWrapper from "@/components/wrappers/LayoutWrapper.tsx";
 import "@/index.css";
 import "@/App.css";
 import DayRoutePage from "@/components/pages/DayRoutePage.tsx";
+import { Toaster } from "sonner";
 
 const IsPhone = window.innerWidth < 768;
 
@@ -50,9 +51,12 @@ const RouteLibrary: React.FC = () => {
 const App: React.FC = () => {
   const content = <RouteLibrary />;
   return (
-    <PhoneContext value={IsPhone}>
-      {IsPhone ? <PhoneFrame>{content}</PhoneFrame> : content}
-    </PhoneContext>
+    <>
+      <PhoneContext value={IsPhone}>
+        {IsPhone ? <PhoneFrame>{content}</PhoneFrame> : content}
+      </PhoneContext>
+      <Toaster richColors position="top-center" />
+    </>
   );
 };
 

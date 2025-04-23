@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { fetchUserProfile, updateUserProfile } from "@/api/profile/basic_info";
 import { BasicInfoType, EMPTY_BASIC_INFO } from "@/types/UserProfile";
 import { toast } from "sonner";
 
 const ProfilePage: React.FC = () => {
-  const navigate = useNavigate();
-
   const [saved, setSaved] = useState(false);
   const [initialProfile, setInitialProfile] =
     useState<BasicInfoType>(EMPTY_BASIC_INFO);
@@ -32,9 +29,10 @@ const ProfilePage: React.FC = () => {
       .then(() => {
         setInitialProfile(profile);
         setSaved(true);
+        toast.success("Profile successfully updated.");
       })
       .catch((err: unknown) => {
-        toast.error("Failed to save");
+        toast.error("Failed to update profile.");
         console.error(err);
       });
   };
@@ -173,14 +171,13 @@ const ProfilePage: React.FC = () => {
         type="button"
         disabled={!isSaveEnabled}
         onClick={() => void handleSave()}
-        className={`mt-5 p-2 rounded-md font-semibold border-none ${isSaveEnabled ? "bg-green-500 text-white cursor-pointer" : "bg-gray-300 text-gray-600 cursor-not-allowed"}`}
+        className={`mt-5 p-2 rounded-md font-semibold border-none ${isSaveEnabled ? "!bg-green-500 text-white cursor-pointer" : "!bg-gray-300 text-gray-600 cursor-not-allowed"}`}
       >
         Update and Save
       </button>
 
       <button
         type="button"
-        onClick={() => void navigate("/home")}
         className="mt-5 p-2 bg-gray-200 rounded-md border-none font-semibold cursor-pointer"
       >
         Back to Home

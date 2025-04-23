@@ -2,7 +2,7 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-import { smartride_env } from "config/env";
+import { smartride_env } from "./config/env.ts";
 
 // https://vite.dev/config/
 export default defineConfig({
