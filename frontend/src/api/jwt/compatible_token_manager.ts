@@ -10,8 +10,8 @@ export function buildAuthHeaders(headers: HeadersInit = {}): HeadersInit {
     headers instanceof Headers
       ? Object.fromEntries(headers.entries())
       : Array.isArray(headers)
-      ? Object.fromEntries(headers)
-      : { ...headers };
+        ? Object.fromEntries(headers)
+        : { ...headers };
 
   return {
     ...plainHeaders,
@@ -21,7 +21,7 @@ export function buildAuthHeaders(headers: HeadersInit = {}): HeadersInit {
 
 export enum TOKEN_STATE {
   LOGIN = "LOGIN",
-  LOGOUT = "LOGOUT"
+  LOGOUT = "LOGOUT",
 }
 export function jwtPostProcess(state: TOKEN_STATE, token?: string) {
   if (!(token && useJwt)) return;

@@ -4,7 +4,10 @@ import { buildAuthHeaders } from "../jwt/compatible_token_manager";
 
 export async function checkLoginStatus(): Promise<boolean> {
   try {
-    const res = await fetch(getApiRoute(AUTH_OPTIONS.AUTH_STATUS), { credentials: "include", headers: buildAuthHeaders({}), });
+    const res = await fetch(getApiRoute(AUTH_OPTIONS.AUTH_STATUS), {
+      credentials: "include",
+      headers: buildAuthHeaders({}),
+    });
     const contentType = res.headers.get("content-type") || "";
     if (!(res.ok && contentType.includes("application/json"))) return false;
     const result = (await res.json()) as { success: boolean };

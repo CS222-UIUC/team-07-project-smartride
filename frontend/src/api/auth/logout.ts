@@ -1,4 +1,8 @@
-import { buildAuthHeaders, jwtPostProcess, TOKEN_STATE } from "../jwt/compatible_token_manager";
+import {
+  buildAuthHeaders,
+  jwtPostProcess,
+  TOKEN_STATE,
+} from "../jwt/compatible_token_manager";
 import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
 
 export interface LogoutResponse {

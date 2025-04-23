@@ -31,7 +31,7 @@ const LoadPage = () => {
         if (isLoggedIn === true) void navigate("/home");
         else void navigate("/start");
       },
-      animDuration + fadeDuration + liftDuration + 100
+      animDuration + fadeDuration + liftDuration + 100,
     );
 
     return () => {

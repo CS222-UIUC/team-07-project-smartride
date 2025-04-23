@@ -9,7 +9,10 @@ export async function fetchUserProfile(): Promise<BasicInfoType> {
     credentials: "include",
     headers: buildAuthHeaders({}),
   });
-  const result = (await res.json()) as { success: boolean; data: BasicInfoType };
+  const result = (await res.json()) as {
+    success: boolean;
+    data: BasicInfoType;
+  };
   if (result.success) {
     return result.data;
   }
@@ -28,7 +31,10 @@ export async function updateUserProfile(
     }),
     body: JSON.stringify(profile),
   });
-  const result = (await res.json()) as { success: boolean; data: BasicInfoType };
+  const result = (await res.json()) as {
+    success: boolean;
+    data: BasicInfoType;
+  };
   if (result.success) {
     return result.data;
   }
