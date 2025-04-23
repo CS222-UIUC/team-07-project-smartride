@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button.tsx";
 
 import { useState, useEffect } from "react";
-import { getSavedRoutes, Route } from "@/api/map/route_store.ts";
+import { getSavedRoutes, Route } from "@/api/map/manage_routes";
 
 const MapPage = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const MapPage = () => {
   const handleRouteClick = (routeId: number, routeName: string) => {
     // Navigate to route planning with the route id and route_name as parameters
     void navigate(
-      `/map/plan?id=${String(routeId)}&route_name=${encodeURIComponent(routeName)}`,
+      `/map/plan?id=${String(routeId)}&route_name=${encodeURIComponent(routeName)}`
     );
   };
 

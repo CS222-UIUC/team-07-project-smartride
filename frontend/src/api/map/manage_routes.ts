@@ -1,4 +1,4 @@
-import { API_ROUTES } from "../utils/route_dictionary";
+import { getApiRoute, MAP_OPTIONS } from "../utils/api_routes";
 import type { Point, RouteSegment } from "@/maps/manage/structure";
 
 export interface Route {
@@ -9,7 +9,7 @@ export interface Route {
 
 export async function getSavedRoutes(): Promise<Route[]> {
   try {
-    const response = await fetch(API_ROUTES.MAP_GET_ROUTES, {
+    const response = await fetch(getApiRoute(MAP_OPTIONS.MAP_GET_ROUTES), {
       method: "GET",
       credentials: "include",
     });
@@ -37,7 +37,7 @@ export async function createOrUpdateRoute(
 ): Promise<Route | null> {
   try {
     const body = { id: routeId, route_name: routeName, route_data: routeData };
-    const response = await fetch(API_ROUTES.MAP_SET_ROUTE, {
+    const response = await fetch(getApiRoute(MAP_OPTIONS.MAP_SET_ROUTE), {
       method: "POST",
       credentials: "include",
       headers: {

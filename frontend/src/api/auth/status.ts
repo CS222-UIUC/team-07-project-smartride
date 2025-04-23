@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { API_ROUTES } from "../utils/route_dictionary";
+import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
+import { buildAuthHeaders } from "../jwt/compatible_token_manager";
 
 export async function checkLoginStatus(): Promise<boolean> {
   try {
-    const res = await fetch(API_ROUTES.WEB_PROFILE, { credentials: "include" });
+    const res = await fetch(getApiRoute(AUTH_OPTIONS.AUTH_STATUS), { credentials: "include", headers: buildAuthHeaders({}), });
     const contentType = res.headers.get("content-type") || "";
-    return res.ok && contentType.includes("application/json");
+    if (!(res.ok && contentType.includes("application/json"))) return false;
+    const result = (await res.json()) as { success: boolean };
+    return result.success;
   } catch {
     return false;
   }

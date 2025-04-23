@@ -3,10 +3,11 @@ import MapView from "@/maps/MapView.tsx";
 import { CSSProperties, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIsPhone } from "@/components/context/PhoneContext.tsx";
-import { createOrUpdateRoute, getSavedRoutes } from "@/api/map/route_store.ts";
+import { createOrUpdateRoute, getSavedRoutes } from "@/api/map/manage_routes";
 import { Button } from "@/components/ui/button.tsx";
 import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 const MapWrapper = ({
   onRouteDataChange,
@@ -63,11 +64,11 @@ const RoutePlanningPage = () => {
     const result = await createOrUpdateRoute(routeId, routeName, routeData);
     if (result && routeId === -1) {
       setRouteId(result.id);
-      alert(`Route created with ID: ${String(result.id)}`);
+      toast.success(`Route is successfully created.`);
     } else if (result) {
-      alert(`Route updated with ID: ${String(result.id)}`);
+      toast.success(`Route is successfully updated.`);
     } else {
-      alert("Failed to save route");
+      toast.error(`Failed to create or upload the route.`);
     }
   };
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { API_ROUTES } from "../utils/route_dictionary";
+import { getApiRoute, ORS_OPTIONS } from "../utils/api_routes";
 import type { Point, RouteSegment } from "@/maps/manage/structure";
 
 interface Coordinates {
@@ -13,11 +13,11 @@ interface RouteResponse {
   route: Coordinates[];
 }
 
-export async function getRoute(
+export async function calcRoute(
   start: Coordinates,
   dest: Coordinates,
 ): Promise<RouteResponse> {
-  const url = API_ROUTES.ORS_CALC_ROUTE;
+  const url = getApiRoute(ORS_OPTIONS.ORS_CALC_ROUTE);
   const payload = { start, dest };
 
   const response = await fetch(url, {

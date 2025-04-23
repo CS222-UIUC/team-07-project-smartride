@@ -1,8 +1,11 @@
-import { API_ROUTES } from "../utils/route_dictionary";
+import { jwtPostProcess, TOKEN_STATE } from "../jwt/compatible_token_manager";
+import { getApiRoute } from "../utils/api_routes";
+import { AUTH_OPTIONS } from "../utils/api_routes";
 
 export interface LoginResponse {
   message: string;
   user?: string;
+  token?: string;
 }
 
 export async function loginUser(
@@ -10,7 +13,7 @@ export async function loginUser(
   password: string,
 ): Promise<LoginResponse> {
   try {
-    const response = await fetch(API_ROUTES.WEB_LOGIN, {
+    const response = await fetch(getApiRoute(AUTH_OPTIONS.AUTH_LOGIN), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,6 +25,7 @@ export async function loginUser(
     if (!response.ok) {
       throw new Error(data.message);
     }
+    jwtPostProcess(TOKEN_STATE.LOGIN, data.token);
     return data;
   } catch (error) {
     throw new Error((error as Error).message || "Login failed");
