@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { fetchUserProfile, updateUserProfile } from "@/api/profile/basic_info";
 import { BasicInfoType, EMPTY_BASIC_INFO } from "@/types/UserProfile";
 import { toast } from "sonner";
 
 const ProfilePage: React.FC = () => {
-  const [saved, setSaved] = useState(false);
   const [initialProfile, setInitialProfile] =
     useState<BasicInfoType>(EMPTY_BASIC_INFO);
   const [profile, setProfile] = useState<BasicInfoType>(EMPTY_BASIC_INFO);
   const [avatar, setAvatar] = useState<string | null>(null);
 
-  const isSaveEnabled =
-    !saved && JSON.stringify(profile) !== JSON.stringify(initialProfile);
+  const isSaveEnabled = useMemo(() => {
+    return JSON.stringify(profile) !== JSON.stringify(initialProfile);
+  }, [profile, initialProfile]);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -28,7 +28,6 @@ const ProfilePage: React.FC = () => {
     await updateUserProfile(profile)
       .then(() => {
         setInitialProfile(profile);
-        setSaved(true);
         toast.success("Profile successfully updated.");
       })
       .catch((err: unknown) => {
