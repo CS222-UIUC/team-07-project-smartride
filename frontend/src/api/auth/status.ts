@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
-import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
+// import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
 import { buildAuthHeaders } from "../jwt/compatible_token_manager";
+import { toast } from "sonner";
+// import { getToken } from "../jwt/raw_token_manager";
 
 export async function checkLoginStatus(): Promise<boolean> {
   try {
-    const res = await fetch(getApiRoute(AUTH_OPTIONS.AUTH_STATUS), {
+    // const url = getApiRoute(AUTH_OPTIONS.AUTH_STATUS);
+    const url = "http://10.0.2.2:5050/api/mob/profile/";
+    // toast.info("[checkLoginStatus] token = "+String(getToken()));
+    const headers = buildAuthHeaders({});
+    const response = await fetch(url, {
       credentials: "include",
-      headers: buildAuthHeaders({}),
+      headers: headers,
     });
-    const contentType = res.headers.get("content-type") || "";
-    if (!(res.ok && contentType.includes("application/json"))) return false;
-    const result = (await res.json()) as { success: boolean };
+    const contentType = response.headers.get("content-type") || "";
+    if (!(response.ok && contentType.includes("application/json"))) return false;
+    const result = (await response.json()) as { success: boolean };
     return result.success;
-  } catch {
+  } catch(err: unknown) {
+    toast.info("checkLoginStatus() catch branch" + String(err));
     return false;
   }
 }

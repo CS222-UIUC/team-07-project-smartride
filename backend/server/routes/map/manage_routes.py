@@ -2,9 +2,8 @@ import json
 from typing import Any
 
 from flask import Blueprint, Response, request
-from flask_login import current_user
 
-from server.core.auth_combo import combined_login_required
+from server.core.auth_combo import combined_login_required, get_combined_current_user
 from server.core.extensions import db
 from server.models.map_route import MapRoute
 from server.utils.response import api_response
@@ -18,7 +17,8 @@ manage_bp = Blueprint("manage_map", __name__)
 @manage_bp.route("/get_routes", methods=["GET"])
 @combined_login_required
 def get_routes() -> tuple[Response, int]:
-    routes = MapRoute.query.filter_by(user_id=current_user.id).all()
+    routes = MapRoute.query.filter_by(user_id=get_combined_current_user().id).all()
+    print("total routes:", len(routes))
     routes_list = [
         {
             "id": route.id,
@@ -27,6 +27,7 @@ def get_routes() -> tuple[Response, int]:
         }
         for route in routes
     ]
+    print("queried routes:", [{"id": route["id"], "route_name": route["route_name"]} for route in routes_list])
     return api_response(
         success=True,
         message="Routes retrieved successfully",
@@ -74,7 +75,7 @@ def set_route() -> tuple[Response, int]:
     route_name = data.get("route_name", "Untitled Route")
     route_id = data.get("id")
     route_data = data.get("route_data")
-    user_id = current_user.id
+    user_id = get_combined_current_user().id
 
     if route_id == -1:
         new_route = MapRoute(

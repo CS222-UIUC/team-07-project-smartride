@@ -14,6 +14,9 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   define: {
     __PLATFORM__: JSON.stringify(smartride_env.PLATFORM),
+    // Below are test only
+    __DEPLOY_TARGET__: JSON.stringify(smartride_env.DEPLOY_TARGET),
+    __API_HOST__: JSON.stringify(smartride_env.API_HOST),
   },
   server: {
     host: true,

@@ -13,10 +13,12 @@ export function buildAuthHeaders(headers: HeadersInit = {}): HeadersInit {
         ? Object.fromEntries(headers)
         : { ...headers };
 
-  return {
+  const newHeader = {
     ...plainHeaders,
     Authorization: `Bearer ${token}`,
   };
+  
+  return newHeader;
 }
 
 export enum TOKEN_STATE {
@@ -24,9 +26,10 @@ export enum TOKEN_STATE {
   LOGOUT = "LOGOUT",
 }
 export function jwtPostProcess(state: TOKEN_STATE, token?: string) {
-  if (!(token && useJwt)) return;
+  if (!useJwt) return;
   switch (state) {
     case TOKEN_STATE.LOGIN:
+      if (!token) return;
       markLoggedIn();
       setToken(token);
       break;

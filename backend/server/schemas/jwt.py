@@ -2,7 +2,7 @@ from typing import TypedDict
 
 
 class JWTPayload(TypedDict):
-    sub: int
+    sub: str
     name: str
     email: str
     exp: int

@@ -19,6 +19,7 @@ Push-Location "$PSScriptRoot/../frontend"
 & "./build.ps1"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to build project. Aborting..."
+    Pop-Location
     exit 1
 }
 Pop-Location
@@ -74,20 +75,29 @@ if ($Platform -eq "--android" -or $Platform -eq "--ios") {
     ForEach-Object {
         ($_ -split '=', 2)[1] -replace '"', '' -replace '\s*#.*$', '' -replace '\s+$', ''
     }
+    Set-Location "frontend"
+    $platformStr = if ($Platform -eq "--android") { "android" } else { "ios" }
+    pnpm install
+    pnpm --package="@capacitor/cli" dlx capacitor sync $platformStr
+    Write-Host "Sync completed." -ForegroundColor Green
     if ($deployType -eq "MACHINE") {
         Write-Host "[SKIP] Target is MACHINE. Skipping 'npx cap run'."
-    } else {
-        $platformStr = if ($Platform -eq "--android") { "android" } else { "ios" }
+    }
+    elseif ($emulatorMode -eq "NONE") {
+        Write-Host "[SKIP] Emulator Mode is NONE. Skipping 'npx cap run'."
+    }
+    else {
         $emulModeStr = if ($emulatorMode -eq "RUN") { "run" } else { "open" }
         Start-Process powershell -ArgumentList @"
-cd frontend
-pnpm install
+Write-Host "Press Enter to continue with '$emulModeStr $platformStr'..." -ForegroundColor Purple
+Read-Host
 pnpm --package="@capacitor/cli" dlx capacitor $emulModeStr $platformStr
 Write-Host 'Press Enter to exit...'
 Read-Host
 "@
     }
-} else {
+}
+else {
     Start-Process powershell -ArgumentList @"
 cd frontend
 pnpm install

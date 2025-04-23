@@ -1,4 +1,4 @@
-import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
+// import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
 
 export interface RegisterResponse {
   message: string;
@@ -11,7 +11,9 @@ export async function registerUser(
   password: string,
 ): Promise<RegisterResponse> {
   try {
-    const response = await fetch(getApiRoute(AUTH_OPTIONS.AUTH_REGISTER), {
+    // const url = getApiRoute(AUTH_OPTIONS.AUTH_REGISTER);
+    const url = "http://10.0.2.2:5050/api/mob/auth/register";
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

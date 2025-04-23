@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const contextValue = useMemo(
     () => ({ isLoggedIn, loading: isLoggedIn === null, refresh }),
-    [isLoggedIn, refresh],
+    [isLoggedIn, refresh]
   );
 
   return <AuthContext value={contextValue}>{children}</AuthContext>;

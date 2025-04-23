@@ -1,6 +1,10 @@
-import { getApiRoute, MAP_OPTIONS } from "../utils/api_routes";
+import { toast } from "sonner";
+import { buildAuthHeaders } from "../jwt/compatible_token_manager";
+// import { getApiRoute, MAP_OPTIONS } from "../utils/api_routes";
 import type { Point, RouteSegment } from "@/maps/manage/structure";
 
+// TODO: Identified Issue, When there is a broken route uploaded to backend, getSavedRoutes() will break entirely.
+// TODO: Add a getSavedRoute(route_id) to compensate, and then getSavedRoutes() may remove data? requirements.
 export interface Route {
   id: number;
   route_name: string;
@@ -9,23 +13,26 @@ export interface Route {
 
 export async function getSavedRoutes(): Promise<Route[]> {
   try {
-    const response = await fetch(getApiRoute(MAP_OPTIONS.MAP_GET_ROUTES), {
+    // const url = getApiRoute(MAP_OPTIONS.MAP_GET_ROUTES);
+    const url = "http://10.0.2.2:5050/api/map/manage/get_routes";
+    const headers = buildAuthHeaders({});
+    const response = await fetch(url, {
       method: "GET",
       credentials: "include",
+      headers: headers,
     });
     const result = (await response.json()) as {
       success: boolean;
       data?: Route[];
-      error?: string;
+      message?: string;
     };
     if (result.success) {
       return result.data ?? [];
     } else {
-      console.error("Failed to fetch routes", result.error);
       return [];
     }
   } catch (error) {
-    console.error("Error fetching routes", error);
+    toast.info("Error fetching routes: " + String(error));
     return [];
   }
 }
@@ -37,12 +44,13 @@ export async function createOrUpdateRoute(
 ): Promise<Route | null> {
   try {
     const body = { id: routeId, route_name: routeName, route_data: routeData };
-    const response = await fetch(getApiRoute(MAP_OPTIONS.MAP_SET_ROUTE), {
+    // const url = getApiRoute(MAP_OPTIONS.MAP_SET_ROUTE);
+    const url = "http://10.0.2.2:5050/api/map/manage/set_route";
+    const headers = buildAuthHeaders({"Content-Type": "application/json",});
+    const response = await fetch(url, {
       method: "POST",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
       body: JSON.stringify(body),
     });
     const result = (await response.json()) as {

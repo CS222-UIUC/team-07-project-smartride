@@ -1,8 +1,15 @@
+// import { toast } from "sonner";
+// TODO: Capacitor.getPlatform() will move to runtime, i.e. here, and we will change logic accordingly
 declare const __PLATFORM__: string;
+// declare const __API_HOST__: string;
+// declare const __DEPLOY_TARGET__: string;
 
 export const PLATFORM = __PLATFORM__; // e.g., "BUILD-android"
 
 export function isDev(): boolean {
+  // toast.info("[PLATFORM] PLATFORM == " + __PLATFORM__ + "\n" +
+  //           "[PLATFORM] API_HOST == " + __API_HOST__ + "\n" +
+  //           "[PLATFORM] DEPLOY_TARGET == " + __DEPLOY_TARGET__);
   return PLATFORM.startsWith("DEV");
 }
 

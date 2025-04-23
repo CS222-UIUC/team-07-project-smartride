@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
-import { Capacitor } from "@capacitor/core";
+// import { Capacitor } from "@capacitor/core";
 
 export type EnvVars = {
   API_PORT: number;
@@ -36,8 +36,15 @@ function getEnv(): EnvVars {
   const wlanIp = rawEnv.VITE_WLAN_IP || "127.0.0.1";
 
   let apiHost = "127.0.0.1";
+  // TODO [Brian]: Issue here, in compiler-time, Capacitor.getPlatform() on emulator seems to always be web
+  // const platformName = Capacitor.getPlatform();
+  const platformName = "android"; // test only
   if (projectMode === "BUILD") {
-    if (Capacitor.getPlatform() === "android" && deployTarget === "EMULATOR") {
+    if (
+      // platformName === "android"
+      // &&
+      deployTarget === "EMULATOR"
+    ) {
       apiHost = "10.0.2.2";
     } else {
       apiHost = wlanIp;
@@ -50,7 +57,7 @@ function getEnv(): EnvVars {
     DEPLOY_TARGET: deployTarget,
     WLAN_IP: wlanIp,
     API_HOST: apiHost,
-    PLATFORM:  projectMode + "-" + Capacitor.getPlatform(),
+    PLATFORM:  projectMode + "-" + platformName,
   };
 }
 

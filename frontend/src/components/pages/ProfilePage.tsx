@@ -3,6 +3,7 @@ import { fetchUserProfile, updateUserProfile } from "@/api/profile/basic_info";
 import { BasicInfoType, EMPTY_BASIC_INFO } from "@/types/UserProfile";
 import { toast } from "sonner";
 
+// TODO: Still cannot scroll
 const ProfilePage: React.FC = () => {
   const [initialProfile, setInitialProfile] =
     useState<BasicInfoType>(EMPTY_BASIC_INFO);
