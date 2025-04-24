@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any, cast
 
 import jwt
@@ -16,8 +16,8 @@ def create_jwt_token(user: User) -> str:
         "sub": str(user.id),
         "name": user.name,
         "email": user.email,
-        "exp": int((datetime.now(tz=timezone.utc) + timedelta(minutes=JWT_EXPIRATION_MINUTES)).timestamp()),
-        "iat": int(datetime.now(tz=timezone.utc).timestamp()),
+        "exp": int((datetime.now(tz=UTC) + timedelta(minutes=JWT_EXPIRATION_MINUTES)).timestamp()),
+        "iat": int(datetime.now(tz=UTC).timestamp()),
     }
     token = jwt.encode(cast(dict[str, Any], payload), JWT_SECRET_KEY, algorithm="HS256")
     if isinstance(token, bytes):

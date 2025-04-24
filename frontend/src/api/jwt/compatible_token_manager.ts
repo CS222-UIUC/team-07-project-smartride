@@ -17,7 +17,7 @@ export function buildAuthHeaders(headers: HeadersInit = {}): HeadersInit {
     ...plainHeaders,
     Authorization: `Bearer ${token}`,
   };
-  
+
   return newHeader;
 }
 

@@ -13,7 +13,7 @@ export async function logoutUser(): Promise<LogoutResponse> {
   try {
     const url = getApiRoute(AUTH_OPTIONS.AUTH_LOGOUT);
     const headers = buildAuthHeaders({
-        "Content-Type": "application/json",
+      "Content-Type": "application/json",
     });
     const response = await fetch(url, {
       method: "POST",

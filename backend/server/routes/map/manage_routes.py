@@ -32,6 +32,7 @@ def get_routes() -> tuple[Response, int]:
         data=routes_list,
     )
 
+
 @manage_bp.route("/get_route_by_id", methods=["GET"])
 @combined_login_required
 def get_route_by_id() -> tuple[Response, int]:
@@ -47,6 +48,7 @@ def get_route_by_id() -> tuple[Response, int]:
         "route_data": json.loads(route.route_data) if route.route_data else None,
     }
     return api_response(success=True, data=route_data)
+
 
 def update_route(
     user_id: int | None,

@@ -36,23 +36,23 @@ def combined_login_required(func: Callable[..., Any]) -> Callable[..., Any]:
 
     return wrapper
 
+
 def get_combined_current_user() -> User:
     # 1. Try Flask-Login (session-based)
-    user: User | None = None
     if current_user.is_authenticated:
-        user = current_user
-        return user
+        user_web: User = current_user
+        return user_web
     # 2. Try JWT (token-based)
     auth_header = request.headers.get("Authorization", "")
     if auth_header.startswith("Bearer "):
         token = auth_header.split(" ", 1)[1]
         try:
             payload = decode_jwt_token(token)
-            user = User.query.get(payload["sub"])
-            if not user:
+            user_mob: User | None = User.query.get(payload["sub"])
+            if not user_mob:
                 raise INVALID_CREDENTIALS
-            return user
+            return user_mob
         except Exception:
-            raise INVALID_CREDENTIALS
+            raise INVALID_CREDENTIALS from None
     # 3. Neither works
     raise INVALID_CREDENTIALS

@@ -57,6 +57,7 @@ def login() -> tuple[Response, int]:
     token = create_jwt_token(user)
     return api_response(True, data={"token": token}, message="Login successful.", status_code=200)
 
+
 @auth_bp.route("/logout", methods=["POST"])
 def logout() -> tuple[Response, int]:
     return api_response(True, message="Logout successful.", status_code=200)

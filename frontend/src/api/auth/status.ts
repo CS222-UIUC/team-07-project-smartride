@@ -12,7 +12,8 @@ export async function checkLoginStatus(): Promise<boolean> {
       headers: headers,
     });
     const contentType = response.headers.get("content-type") || "";
-    if (!(response.ok && contentType.includes("application/json"))) return false;
+    if (!(response.ok && contentType.includes("application/json")))
+      return false;
     const result = (await response.json()) as { success: boolean };
     return result.success;
   } catch (err: unknown) {
