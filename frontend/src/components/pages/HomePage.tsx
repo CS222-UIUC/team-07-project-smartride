@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { logoutUser } from "@/api/web/logout.ts";
+import { logoutUser } from "@/api/auth/logout.js";
 import { useState } from "react";
 import WeeklySidebar from "./WeeklySidebar.tsx";
 import { useAuth } from "@/components/context/useAuth.ts";
+import { toast } from "sonner";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const HomePage: React.FC = () => {
       await refresh();
       void navigate("/start");
     } catch {
-      alert("Logout failed. Please try again.");
+      toast.error("Logout failed. Please try again.");
     }
   };
 

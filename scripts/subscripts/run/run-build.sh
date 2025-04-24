@@ -42,15 +42,26 @@ run_capacitor_if_needed() {
   if [[ "$PLATFORM" == "--android" || "$PLATFORM" == "--ios" ]]; then
     local deploy_type=$(grep '^VITE_DEPLOY_TARGET=' .env.local | cut -d '=' -f2 | tr -d '"' | sed 's/\s*#.*$//' | xargs)
     local emulator_mode=$(grep '^SMARTRIDE_EMULATOR_MODE=' .env.local | cut -d '=' -f2 | tr -d '"' | sed 's/\s*#.*$//' | xargs)
-
+    cd frontend
+    local platform_str="android"
+    [[ "$PLATFORM" == "--ios" ]] && platform_str="ios"
+    pnpm install
+    pnpm --package="@capacitor/cli" dlx capacitor sync $platform_str
+    echo "Sync Completed."
     if [[ "$deploy_type" == "MACHINE" ]]; then
-      run_cmd="echo '[SKIP] Target is MACHINE. Skipping npx cap run.'"
+      pnpm --package="@capacitor/cli" dlx capacitor build $platform_str
+      if [[ "$PLATFORM" == "--android" ]]; then
+        echo -e "\033[0;36mThe build is complete. You can find the APK in the 'frontend/android/app/build/outputs/apk/debug' directory as 'app-debug.apk'.\033[0m"
+      else
+        echo -e "\033[0;36mThe build is complete. You can find the IPA in the 'frontend/ios/build' directory.\033[0m"
+      fi
+    fi
+    elif [[ "$emulator_mode" == "NONE" ]]; then
+      run_cmd="echo '[SKIP] Emulator Mode is NONE. Skipping npx cap run, npx cap open and npx cap build.'"
     else
-      local platform_str="android"
-      [[ "$PLATFORM" == "--ios" ]] && platform_str="ios"
       local emul_mode_str="open"
       [[ "$emulator_mode" == "RUN" ]] && emul_mode_str="run"
-      run_cmd="cd frontend && pnpm install && pnpm --package='@capacitor/cli' dlx capacitor $emul_mode_str $platform_str"
+      run_cmd="bash -c 'echo -e \"\033[0;35mPress Enter to continue with '$emul_mode_str $platform_str'...\033[0m\"; read -r; pnpm --package=\"@capacitor/cli\" dlx capacitor $emul_mode_str $platform_str; echo \"Press Enter to exit...\"; read -r'"
     fi
   else
     run_cmd="cd frontend && pnpm install && pnpm preview"

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button.tsx";
 
 import { useState, useEffect } from "react";
-import { getSavedRoutes, Route } from "@/api/map/route_store.ts";
+import { getRoutesInfo, Route } from "@/api/map/manage_routes";
 
 const MapPage = () => {
   const navigate = useNavigate();
@@ -10,17 +10,15 @@ const MapPage = () => {
 
   useEffect(() => {
     async function fetchRoutes() {
-      const savedRoutes = await getSavedRoutes();
+      const savedRoutes = await getRoutesInfo();
       setRoutes(savedRoutes);
     }
     void fetchRoutes();
   }, []);
 
-  const handleRouteClick = (routeId: number, routeName: string) => {
+  const handleRouteClick = (routeId: number) => {
     // Navigate to route planning with the route id and route_name as parameters
-    void navigate(
-      `/map/plan?id=${String(routeId)}&route_name=${encodeURIComponent(routeName)}`,
-    );
+    void navigate(`/map/plan?id=${String(routeId)}`);
   };
 
   return (
@@ -36,7 +34,7 @@ const MapPage = () => {
               key={route.id}
               className="w-full max-w-xs text-black mb-2"
               onClick={() => {
-                handleRouteClick(route.id, route.route_name);
+                handleRouteClick(route.id);
               }}
             >
               {route.route_name}

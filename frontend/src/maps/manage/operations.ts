@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { nanoid } from "nanoid";
-import { getRoute } from "@/api/map/route_service.ts";
+import { calcRoute } from "@/api/ors/calc_route.ts";
 import type { Point, RouteSegment } from "./structure.ts";
 
 export const useRouteOperations = (
@@ -22,7 +22,7 @@ export const useRouteOperations = (
       const from = pts[i];
       const to = pts[i + 1];
       try {
-        const res = await getRoute(from, to);
+        const res = await calcRoute(from, to);
         newSegments.push({ from, to, path: res.route });
       } catch (e) {
         console.error(`getRoute failed: ${from.label} → ${to.label}`, e);
@@ -50,7 +50,7 @@ export const useRouteOperations = (
         const from = updatedPoints[updatedPoints.length - 2];
         const to = updatedPoints[updatedPoints.length - 1];
         try {
-          const res = await getRoute(from, to);
+          const res = await calcRoute(from, to);
           setSegments((prev) => [...prev, { from, to, path: res.route }]);
         } catch (e) {
           console.error("getRoute failed:", e);

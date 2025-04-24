@@ -7,6 +7,7 @@ from config import (
     project_root,
     hash_file_path,
     file_list_path,
+    upload_only_drive_file_path,
     committer,
     rclone_remote,
     rclone_config,
@@ -111,6 +112,22 @@ for idx, line in enumerate(lines):
     path_str, owner = [x.strip() for x in line.split("::")]
     entries.append((path_str, owner))
 
+# --- READ UPLOAD-ONLY FILE LIST ---
+with open(upload_only_drive_file_path, "r", encoding="utf-8") as f:
+    lines = [
+        line.strip() for line in f if line.strip() and not line.startswith("#")
+    ]
+
+special_entries = []
+for idx, line in enumerate(lines):
+    if line.count("::") != 3:
+        print(f"{RED}[Error] Invalid format at line {idx + 1}: {line}{RESET}")
+        sys.exit(1)
+    path_str, owner, root_dir, file_name = [
+        x.strip() for x in line.split("::")
+    ]
+    special_entries.append((path_str, owner, root_dir, file_name))
+
 # --- --format mode ---
 if MODE == "--format":
     print(f"{GREEN}[Validate] Formats are all correct.{RESET}")
@@ -126,11 +143,16 @@ if MODE == "--local":
             if not (project_root / rel_path).exists():
                 print(f"{RED}[Error] File missing: {rel_path}{RESET}")
                 sys.exit(1)
+    for rel_path, owner, root_dir, file_name in special_entries:
+        if owner == committer:
+            if not (project_root / rel_path).exists():
+                print(f"{RED}[Error] File missing: {rel_path}{RESET}")
+                sys.exit(1)
     print(f"{GREEN}[Validate] Local files present.{RESET}")
     sys.exit(0)
 
 # --- --sync mode ---
-print(f"{BLUE}[Validate] Checking sync hash match for all files...{RESET}")
+print(f"{BLUE}[Validate] Checking sync hash match for all normal files...{RESET}")
 if not hash_file_path.exists():
     print(f"{RED}[Error] Hash file missing.{RESET}")
     sys.exit(1)

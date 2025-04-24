@@ -31,6 +31,7 @@ python conda_channel_cleaner.py "$CONDA_ENV_REL_PATH"
 python conda_pips_filler.py "$CONDA_ENV_REL_PATH"
 python conda_yml_formatter.py "$CONDA_ENV_REL_PATH"
 echo "[Lock Conda] Locking conda environment..."
+conda activate base
 conda-lock lock --mamba \
   --file "$CONDA_ENV_REL_PATH" \
   --platform win-64 \

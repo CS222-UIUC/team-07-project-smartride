@@ -40,6 +40,7 @@ if [[ $IS_PIP -eq 1 ]]; then
   echo "[Install Conda] Installing pip package: $PKG_NAME"
   pip install --upgrade "$PKG_NAME"
 else
+  conda activate base
   echo "[Install Conda] Installing conda package: $PKG_NAME"
   mamba install -c conda-forge "$PKG_NAME"
   python "python/conda_exporter.py" "../../../backend/conda-env.yml" "$PKG_NAME"

@@ -1,42 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { API_ROUTES } from "../../api/utils/route_dictionary";
+import React, { useEffect, useMemo, useState } from "react";
+import { fetchUserProfile, updateUserProfile } from "@/api/profile/basic_info";
+import { BasicInfoType, EMPTY_BASIC_INFO } from "@/types/UserProfile";
+import { toast } from "sonner";
 
-// TODO (Richard) 1: Move all await fetch("xxx") to api folder, do NOT place them here in a page component.
-// TODO (Richard) 2: Use responsive design, do NOT use css values like "24px", "14px".
-
-interface UserProfileResponse {
-  success: boolean;
-  data: {
-    name: string;
-    email: string;
-    nickname?: string;
-    height?: number;
-    weight?: number;
-    age?: number;
-  };
-}
-
+// TODO: Still cannot scroll
 const ProfilePage: React.FC = () => {
-  const navigate = useNavigate();
-  // Removed unused 'profile' state to resolve errors
-
-  // Form state
-  const [saved, setSaved] = useState(false);
-  const [name, setName] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [age, setAge] = useState("");
-
-  // Static mock value, will be fetched later
-  const [email, setEmail] = useState("");
-  const totalDistance = "0 km";
-  const totalRideTime = "0 min";
-  const totalCalories = "0 kcal";
-
-  // Avatar upload
+  const [initialProfile, setInitialProfile] =
+    useState<BasicInfoType>(EMPTY_BASIC_INFO);
+  const [profile, setProfile] = useState<BasicInfoType>(EMPTY_BASIC_INFO);
   const [avatar, setAvatar] = useState<string | null>(null);
+
+  const isSaveEnabled = useMemo(() => {
+    return JSON.stringify(profile) !== JSON.stringify(initialProfile);
+  }, [profile, initialProfile]);
+
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -48,130 +25,53 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  const isSaveEnabled =
-    !saved &&
-    (nickname.trim() !== "" ||
-      height.trim() !== "" ||
-      weight.trim() !== "" ||
-      age.trim() !== "");
-
   const handleSave = async () => {
-    try {
-      const profile = {
-        name,
-        email,
-        nickname,
-        height: height ? parseFloat(height) : undefined,
-        weight: weight ? parseFloat(weight) : undefined,
-        age: age ? parseInt(age) : undefined,
-      };
-
-      const res = await fetch(API_ROUTES.WEB_PROFILE, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(profile),
+    await updateUserProfile(profile)
+      .then(() => {
+        setInitialProfile(profile);
+        toast.success("Profile successfully updated.");
+      })
+      .catch((err: unknown) => {
+        toast.error("Failed to update profile.");
+        console.error(err);
       });
-
-      const result = (await res.json()) as UserProfileResponse;
-      if (result.success) {
-        alert("Saved successfully!");
-        setSaved(true);
-      } else {
-        alert("Failed to save.");
-      }
-    } catch (err) {
-      console.error("Save failed:", err);
-      alert("Save error.");
-    }
   };
 
   useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const res = await fetch(API_ROUTES.WEB_PROFILE, {
-          method: "GET",
-          credentials: "include",
+    const fetchData = async () => {
+      await fetchUserProfile()
+        .then((data) => {
+          setInitialProfile(data);
+          setProfile(data);
+        })
+        .catch((err: unknown) => {
+          console.error("Failed to load profile:", err);
         });
-        const result = (await res.json()) as UserProfileResponse;
-        if (result.success) {
-          setName(result.data.name || "");
-          setEmail(result.data.email || "");
-          setNickname(result.data.nickname || "");
-          setHeight(result.data.height?.toString() || "");
-          setWeight(result.data.weight?.toString() || "");
-          setAge(result.data.age?.toString() || "");
-        }
-      } catch (err) {
-        console.error("Failed to load profile:", err);
-      }
-    }
-
-    void fetchProfile();
+    };
+    void fetchData();
   }, []);
 
-  useEffect(() => {
-    setSaved(false);
-  }, [nickname, height, weight, age]);
+  const totalDistance = "0 km";
+  const totalRideTime = "0 min";
+  const totalCalories = "0 kcal";
 
   return (
-    <div
-      style={{
-        padding: "24px",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        fontFamily: "sans-serif",
-      }}
-    >
+    <div className="p-6 h-full flex flex-col justify-between font-sans">
       <div>
-        {/* Header */}
-        <h1
-          style={{
-            textAlign: "center",
-            fontSize: "28px",
-            fontWeight: "bold",
-            marginBottom: "16px",
-          }}
-        >
-          User Profile
-        </h1>
+        <h1 className="text-center text-2xl font-bold mb-4">User Profile</h1>
 
-        {/* Avatar */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginBottom: "24px",
-          }}
-        >
+        <div className="flex flex-col items-center mb-6">
           <div
+            className="w-[100px] h-[100px] rounded-full bg-gray-300 mb-2"
             style={{
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
-              backgroundColor: "#ddd",
               backgroundImage: avatar ? `url(${avatar})` : undefined,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              marginBottom: "8px",
             }}
           />
           <label
             htmlFor="avatar-upload"
-            style={{
-              backgroundColor: "#eee",
-              padding: "8px 16px",
-              borderRadius: "6px",
-              fontSize: "14px",
-              fontWeight: 500,
-              cursor: "pointer",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
-            }}
+            className="bg-gray-200 px-4 py-2 rounded-md text-sm font-medium cursor-pointer shadow-sm"
           >
             Upload / Change Avatar
           </label>
@@ -180,20 +80,11 @@ const ProfilePage: React.FC = () => {
             type="file"
             accept="image/*"
             onChange={handleAvatarChange}
-            style={{ display: "none" }}
+            className="hidden"
           />
         </div>
 
-        {/* Stats Cards */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "12px",
-            marginBottom: "24px",
-          }}
-        >
+        <div className="flex flex-wrap justify-center gap-3 mb-6">
           {[
             { label: "Total Riding Distance", value: totalDistance },
             { label: "Total Time", value: totalRideTime },
@@ -201,144 +92,93 @@ const ProfilePage: React.FC = () => {
           ].map((stat) => (
             <div
               key={stat.label}
-              style={{
-                flex: "1 1 100px",
-                minWidth: "100px",
-                maxWidth: "140px",
-                backgroundColor: "#f9f9f9",
-                borderRadius: "12px",
-                padding: "12px",
-                boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-                textAlign: "center",
-              }}
+              className="flex-1 min-w-[100px] max-w-[140px] bg-gray-100 rounded-xl p-3 shadow text-center"
             >
-              <div style={{ fontSize: "14px", color: "#888" }}>
-                {stat.label}
-              </div>
-              <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                {stat.value}
-              </div>
+              <div className="text-sm text-gray-500">{stat.label}</div>
+              <div className="text-lg font-bold">{stat.value}</div>
             </div>
           ))}
         </div>
 
-        {/* Form Fields */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-          <label style={{ fontSize: "14px", fontWeight: 500 }}>
-            Name:&nbsp;
+        <div className="flex flex-col gap-4">
+          <label className="text-sm font-medium">
+            Name:
             <input
               type="text"
-              value={name}
+              value={profile.name}
               disabled
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #eee",
-                borderRadius: "6px",
-                marginTop: "4px",
-                backgroundColor: "#f3f3f3",
-                fontSize: "14px",
-              }}
+              className="w-full p-2 border border-gray-200 rounded-md mt-1 bg-gray-100 text-sm"
             />
           </label>
 
           {[
-            // { label: "Name", value: name, setValue: setName, type: "text" },
             {
               label: "Nickname",
-              value: nickname,
-              setValue: setNickname,
+              key: "nickname",
               type: "text",
             },
             {
               label: "Height (cm)",
-              value: height,
-              setValue: setHeight,
+              key: "height",
               type: "number",
             },
             {
               label: "Weight (kg)",
-              value: weight,
-              setValue: setWeight,
+              key: "weight",
               type: "number",
             },
-            { label: "Age", value: age, setValue: setAge, type: "number" },
+            {
+              label: "Age",
+              key: "age",
+              type: "number",
+            },
           ].map((field) => (
-            <label
-              key={field.label}
-              style={{ fontSize: "14px", fontWeight: 500 }}
-            >
-              {field.label}:&nbsp;
+            <label key={field.label} className="text-sm font-medium">
+              {field.label}:
               <input
                 type={field.type}
-                value={field.value}
+                value={profile[field.key as keyof BasicInfoType] ?? ""}
                 onChange={(e) => {
-                  field.setValue(e.target.value);
+                  const val = e.target.value;
+                  setProfile((prev) => ({
+                    ...prev,
+                    [field.key]:
+                      val === ""
+                        ? undefined
+                        : field.type === "number"
+                          ? Number(val)
+                          : val,
+                  }));
                 }}
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  border: "1px solid #ccc",
-                  borderRadius: "6px",
-                  marginTop: "4px",
-                  fontSize: "14px",
-                }}
+                className="w-full p-2 border border-gray-300 rounded-md mt-1 text-sm"
               />
             </label>
           ))}
 
-          <label style={{ fontSize: "14px", fontWeight: 500 }}>
-            Email:&nbsp;
+          <label className="text-sm font-medium">
+            Email:
             <input
               type="email"
-              value={email}
+              value={profile.email}
               disabled
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #eee",
-                borderRadius: "6px",
-                marginTop: "4px",
-                backgroundColor: "#f3f3f3",
-                fontSize: "14px",
-              }}
+              className="w-full p-2 border border-gray-200 rounded-md mt-1 bg-gray-100 text-sm"
             />
           </label>
         </div>
       </div>
 
-      {/* Save Button */}
       <button
         type="button"
         disabled={!isSaveEnabled}
         onClick={() => void handleSave()}
-        style={{
-          marginTop: "20px",
-          padding: "10px",
-          backgroundColor: isSaveEnabled ? "#4caf50" : "#ccc",
-          color: isSaveEnabled ? "#fff" : "#666",
-          borderRadius: "6px",
-          border: "none",
-          fontWeight: 600,
-          cursor: isSaveEnabled ? "pointer" : "not-allowed",
-        }}
+        className={`mt-5 p-2 rounded-md font-semibold border-none ${isSaveEnabled ? "!bg-green-500 text-white cursor-pointer" : "!bg-gray-300 text-gray-600 cursor-not-allowed"}`}
       >
         Update and Save
       </button>
 
-      {/* Back Button */}
       <button
         type="button"
-        onClick={() => void navigate("/home")}
-        style={{
-          marginTop: "20px",
-          padding: "10px",
-          backgroundColor: "#eee",
-          borderRadius: "6px",
-          border: "none",
-          fontWeight: 600,
-          cursor: "pointer",
-        }}
+        className="mt-5 p-2 bg-gray-200 rounded-md border-none font-semibold cursor-pointer"
       >
         Back to Home
       </button>

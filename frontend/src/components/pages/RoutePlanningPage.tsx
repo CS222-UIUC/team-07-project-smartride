@@ -3,11 +3,13 @@ import MapView from "@/maps/MapView.tsx";
 import { CSSProperties, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIsPhone } from "@/components/context/PhoneContext.tsx";
-import { createOrUpdateRoute, getSavedRoutes } from "@/api/map/route_store.ts";
+import { createOrUpdateRoute, getRouteById } from "@/api/map/manage_routes";
 import { Button } from "@/components/ui/button.tsx";
 import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
+// TODO: Do not store the route data here, call operations.ts
 const MapWrapper = ({
   onRouteDataChange,
   initialData,
@@ -49,8 +51,7 @@ const RoutePlanningPage = () => {
   const [searchParams] = useSearchParams();
   const initialRouteId = parseInt(searchParams.get("id") || "-1");
   const [routeId, setRouteId] = useState<number>(initialRouteId);
-  const initialRouteName = searchParams.get("route_name") || "New Route";
-  const [routeName, setRouteName] = useState<string>(initialRouteName);
+  const [routeName, setRouteName] = useState<string>("New Route");
 
   const [routeData, setRouteData] = useState<{
     points: Point[];
@@ -63,28 +64,30 @@ const RoutePlanningPage = () => {
     const result = await createOrUpdateRoute(routeId, routeName, routeData);
     if (result && routeId === -1) {
       setRouteId(result.id);
-      alert(`Route created with ID: ${String(result.id)}`);
+      toast.success(`Route is successfully created.`);
     } else if (result) {
-      alert(`Route updated with ID: ${String(result.id)}`);
+      toast.success(`Route is successfully updated.`);
     } else {
-      alert("Failed to save route");
+      toast.error(`Failed to create or upload the route.`);
     }
   };
   useEffect(() => {
     if (routeId === -1 || hasLoadedData) return;
 
     async function fetchRouteData() {
-      const res = await getSavedRoutes();
-      const found = res.find((r) => r.id === routeId);
-      if (found?.route_data) {
+      const res = await getRouteById(routeId);
+      if (res?.route_name) {
+        setRouteName(res.route_name);
+      }
+      if (res?.route_data) {
         try {
           const parsed =
-            typeof found.route_data === "string"
-              ? (JSON.parse(found.route_data) as {
+            typeof res.route_data === "string"
+              ? (JSON.parse(res.route_data) as {
                   points: Point[];
                   segments: RouteSegment[];
                 })
-              : found.route_data;
+              : res.route_data;
 
           setRouteData(parsed);
         } catch (e) {

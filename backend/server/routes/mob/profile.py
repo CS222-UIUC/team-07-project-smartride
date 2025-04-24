@@ -1,4 +1,3 @@
-# routes/mobprofile.py
 from typing import cast
 
 import jwt

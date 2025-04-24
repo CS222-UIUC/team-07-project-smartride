@@ -6,7 +6,7 @@ from flask import Response, g, request
 from flask_login import AnonymousUserMixin, current_user
 
 from server.models.user import User
-from server.utils.errors import UNAUTHORIZED
+from server.utils.errors import INVALID_CREDENTIALS, UNAUTHORIZED
 from server.utils.jwt_utils import decode_jwt_token
 from server.utils.response import api_response
 
@@ -35,3 +35,24 @@ def combined_login_required(func: Callable[..., Any]) -> Callable[..., Any]:
         return api_response(False, data={"message": UNAUTHORIZED}, status_code=401)
 
     return wrapper
+
+
+def get_combined_current_user() -> User:
+    # 1. Try Flask-Login (session-based)
+    if current_user.is_authenticated:
+        user_web: User = current_user
+        return user_web
+    # 2. Try JWT (token-based)
+    auth_header = request.headers.get("Authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header.split(" ", 1)[1]
+        try:
+            payload = decode_jwt_token(token)
+            user_mob: User | None = User.query.get(payload["sub"])
+            if not user_mob:
+                raise INVALID_CREDENTIALS
+            return user_mob
+        except Exception:
+            raise INVALID_CREDENTIALS from None
+    # 3. Neither works
+    raise INVALID_CREDENTIALS

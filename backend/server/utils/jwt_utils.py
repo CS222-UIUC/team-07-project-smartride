@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from typing import Any, cast
 
 import jwt
@@ -13,11 +13,11 @@ JWT_SECRET_KEY: str = Config.JWT_SECRET_KEY if Config.JWT_SECRET_KEY else ""
 
 def create_jwt_token(user: User) -> str:
     payload: JWTPayload = {
-        "sub": user.id,
+        "sub": str(user.id),
         "name": user.name,
         "email": user.email,
-        "exp": int((datetime.utcnow() + timedelta(minutes=JWT_EXPIRATION_MINUTES)).timestamp()),
-        "iat": int(datetime.utcnow().timestamp()),
+        "exp": int((datetime.now(tz=UTC) + timedelta(minutes=JWT_EXPIRATION_MINUTES)).timestamp()),
+        "iat": int(datetime.now(tz=UTC).timestamp()),
     }
     token = jwt.encode(cast(dict[str, Any], payload), JWT_SECRET_KEY, algorithm="HS256")
     if isinstance(token, bytes):

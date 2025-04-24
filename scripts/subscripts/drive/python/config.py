@@ -13,6 +13,7 @@ drive_root = Path(__file__).resolve().parents[1]
 project_root = drive_root.parents[2]
 hash_file_path = drive_root / "file" / "drive-file.hash"
 file_list_path = project_root / "drive-file.txt"
+upload_only_drive_file_path = project_root / "upload-only-drive-file.txt"
 
 # --- Env values
 committer = os.getenv("COMMITTER")

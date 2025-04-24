@@ -2,18 +2,18 @@ Set-StrictMode -Version Latest
 
 $setupSteps = @("step_rclone", "step_env", "step_cli", "step_conda", "step_drive")
 $stepVersions = @{
-  "step_rclone" = "1.1"
-  "step_env"    = "1.2"
-  "step_cli"    = "1.1"
-  "step_conda"  = "1.1"
-  "step_drive"  = "1.1"
+    "step_rclone" = "1.1"
+    "step_env"    = "1.3"
+    "step_cli"    = "1.1"
+    "step_conda"  = "1.2"
+    "step_drive"  = "1.1"
 }
 $requiredVersions = @{
-  "step_rclone" = "1.0"
-  "step_env"    = "1.2"
-  "step_cli"    = "1.0"
-  "step_conda"  = "1.0"
-  "step_drive"  = "1.0"
+    "step_rclone" = "1.0"
+    "step_env"    = "1.3"
+    "step_cli"    = "1.0"
+    "step_conda"  = "1.0"
+    "step_drive"  = "1.0"
 }
 
 $adminMode = $false
@@ -22,13 +22,16 @@ $step = "step_all"
 if ($args.Count -eq 1) {
     if ($args[0] -eq "--admin") {
         $adminMode = $true
-    } elseif ($args[0] -like "--step_*") {
+    }
+    elseif ($args[0] -like "--step_*") {
         $step = $args[0].Substring(2)
-    } else {
+    }
+    else {
         Write-Host "Invalid argument: $($args[0])" -ForegroundColor Red
         exit 1
     }
-} elseif ($args.Count -gt 1) {
+}
+elseif ($args.Count -gt 1) {
     Write-Host "Too many arguments. Only one of --admin or --step_xxx allowed." -ForegroundColor Red
     exit 1
 }
