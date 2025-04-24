@@ -15,8 +15,8 @@ export async function checkLoginStatus(): Promise<boolean> {
     if (!(response.ok && contentType.includes("application/json"))) return false;
     const result = (await response.json()) as { success: boolean };
     return result.success;
-  } catch(err: unknown) {
-    toast.info("checkLoginStatus() failed: " + String(err));
+  } catch (err: unknown) {
+    toast.info("Unexpected Error during status check: " + String(err));
     return false;
   }
 }

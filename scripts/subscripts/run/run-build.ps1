@@ -81,16 +81,26 @@ if ($Platform -eq "--android" -or $Platform -eq "--ios") {
     pnpm --package="@capacitor/cli" dlx capacitor sync $platformStr
     Write-Host "Sync completed." -ForegroundColor Green
     if ($deployType -eq "MACHINE") {
-        Write-Host -NoNewline "[SKIP] Target is MACHINE. Skipping 'npx cap run'."
+        # The following code is WRONG, that is for building BUILD version, which requires many options
+        # pnpm --package="@capacitor/cli" dlx capacitor build $platformStr
         if ($Platform -eq "--android") {
-            Write-Host "You can find the APK in the 'frontend/android/app/build/outputs/apk/debug' directory as 'app-debug.apk'." -ForegroundColor Cyan
+            Set-Location "android"
+            & "./gradlew" assembleDebug
+            if ($LASTEXITCODE -ne 0) {
+                Write-Host "Error: Failed to build Android APK. Aborting..." -ForegroundColor Red
+                Pop-Location
+                exit 1
+            }
+            Write-Host "Build complete, you can find the APK in the 'frontend/android/app/build/outputs/apk/debug' directory as 'app-debug.apk'." -ForegroundColor Cyan
         }
         else {
-            Write-Host "You can find the IPA in the 'frontend/ios/build' directory." -ForegroundColor Cyan
+            Write-Host "Error: iOS build is not supported yet on windows!" -ForegroundColor Red
+            Pop-Location
+            exit 1
         }
     }
     elseif ($emulatorMode -eq "NONE") {
-        Write-Host "[SKIP] Emulator Mode is NONE. Skipping 'npx cap run'."
+        Write-Host "Emulator Mode is NONE. Skipping 'npx cap run', 'npx cap open' and 'npx cap build'."
     }
     else {
         $emulModeStr = if ($emulatorMode -eq "RUN") { "run" } else { "open" }
