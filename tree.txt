@@ -1,0 +1,414 @@
+.
+├── .github
+│   ├── dependabot.yml
+│   └── workflows
+│       ├── backend-test.yml
+│       ├── eslint.yml
+│       ├── format-check.yml
+│       ├── frontend-test.yml
+│       └── py-type-check.yml
+├── .gitignore
+├── .vscode
+│   └── settings.json
+├── LICENSE
+├── README.md
+├── archive
+│   ├── archive.log
+│   ├── cherry.script
+│   └── scripts
+│       ├── output-cherry-cmd.ps1
+│       └── update-last-archive.ps1
+├── backend
+│   ├── conda-env.yml
+│   ├── conda-lock.yml
+│   ├── database
+│   ├── migrations
+│   │   ├── README
+│   │   ├── alembic.ini
+│   │   ├── env.py
+│   │   ├── script.py.mako
+│   │   └── versions
+│   │       ├── 6e7cf1db297b_add_route_data_to_maproute.py
+│   │       └── bf67f2fa2393_add_user_profile_fields.py
+│   ├── mypy.ini
+│   ├── pyproject.toml
+│   ├── server
+│   │   ├── __init__.py
+│   │   ├── app.py
+│   │   ├── core
+│   │   │   ├── __init__.py
+│   │   │   ├── auth_combo.py
+│   │   │   ├── config.py
+│   │   │   └── extensions.py
+│   │   ├── init_db.py
+│   │   ├── models
+│   │   │   ├── __init__.py
+│   │   │   ├── map_route.py
+│   │   │   └── user.py
+│   │   ├── routes
+│   │   │   ├── __init__.py
+│   │   │   ├── map
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── manage_routes.py
+│   │   │   ├── mob
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── auth.py
+│   │   │   │   └── profile.py
+│   │   │   ├── ors
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── calc_route.py
+│   │   │   └── web
+│   │   │       ├── __init__.py
+│   │   │       ├── auth.py
+│   │   │       └── profile.py
+│   │   ├── schemas
+│   │   │   ├── __init__.py
+│   │   │   └── jwt.py
+│   │   └── utils
+│   │       ├── __init__.py
+│   │       ├── errors.py
+│   │       ├── jwt_utils.py
+│   │       ├── ors.py
+│   │       ├── response.py
+│   │       └── verify_register.py
+│   └── tests
+│       ├── __init__.py
+│       ├── test_auth.py
+│       └── test_getroute.py
+├── developers.png
+├── docs
+│   ├── README.md
+│   ├── architecture.md
+│   ├── change-log.md
+│   ├── ci-cd.md
+│   ├── contribute-code.md
+│   ├── drive-env.md
+│   ├── installation.md
+│   ├── scripts.md
+│   └── usage.md
+├── drive-file.txt
+├── frontend
+│   ├── android
+│   │   ├── app
+│   │   │   ├── build.gradle
+│   │   │   ├── capacitor.build.gradle
+│   │   │   ├── proguard-rules.pro
+│   │   │   └── src
+│   │   │       ├── androidTest
+│   │   │       │   └── java
+│   │   │       │       └── com
+│   │   │       │           └── getcapacitor
+│   │   │       │               └── myapp
+│   │   │       │                   └── ExampleInstrumentedTest.java
+│   │   │       ├── main
+│   │   │       │   ├── AndroidManifest.xml
+│   │   │       │   ├── java
+│   │   │       │   │   └── com
+│   │   │       │   │       └── app
+│   │   │       │   │           └── smartride
+│   │   │       │   │               └── MainActivity.java
+│   │   │       │   └── res
+│   │   │       │       ├── drawable
+│   │   │       │       │   ├── ic_launcher_background.xml
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-land-hdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-land-mdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-land-xhdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-land-xxhdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-land-xxxhdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-port-hdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-port-mdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-port-xhdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-port-xxhdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-port-xxxhdpi
+│   │   │       │       │   └── splash.png
+│   │   │       │       ├── drawable-v24
+│   │   │       │       │   └── ic_launcher_foreground.xml
+│   │   │       │       ├── layout
+│   │   │       │       │   └── activity_main.xml
+│   │   │       │       ├── mipmap-anydpi-v26
+│   │   │       │       │   ├── ic_launcher.xml
+│   │   │       │       │   └── ic_launcher_round.xml
+│   │   │       │       ├── mipmap-hdpi
+│   │   │       │       │   ├── ic_launcher.png
+│   │   │       │       │   ├── ic_launcher_foreground.png
+│   │   │       │       │   └── ic_launcher_round.png
+│   │   │       │       ├── mipmap-mdpi
+│   │   │       │       │   ├── ic_launcher.png
+│   │   │       │       │   ├── ic_launcher_foreground.png
+│   │   │       │       │   └── ic_launcher_round.png
+│   │   │       │       ├── mipmap-xhdpi
+│   │   │       │       │   ├── ic_launcher.png
+│   │   │       │       │   ├── ic_launcher_foreground.png
+│   │   │       │       │   └── ic_launcher_round.png
+│   │   │       │       ├── mipmap-xxhdpi
+│   │   │       │       │   ├── ic_launcher.png
+│   │   │       │       │   ├── ic_launcher_foreground.png
+│   │   │       │       │   └── ic_launcher_round.png
+│   │   │       │       ├── mipmap-xxxhdpi
+│   │   │       │       │   ├── ic_launcher.png
+│   │   │       │       │   ├── ic_launcher_foreground.png
+│   │   │       │       │   └── ic_launcher_round.png
+│   │   │       │       ├── values
+│   │   │       │       │   ├── ic_launcher_background.xml
+│   │   │       │       │   ├── strings.xml
+│   │   │       │       │   └── styles.xml
+│   │   │       │       └── xml
+│   │   │       │           └── file_paths.xml
+│   │   │       └── test
+│   │   │           └── java
+│   │   │               └── com
+│   │   │                   └── getcapacitor
+│   │   │                       └── myapp
+│   │   │                           └── ExampleUnitTest.java
+│   │   ├── build.gradle
+│   │   ├── capacitor.settings.gradle
+│   │   ├── gradle
+│   │   │   └── wrapper
+│   │   │       ├── gradle-wrapper.jar
+│   │   │       └── gradle-wrapper.properties
+│   │   ├── gradle.properties
+│   │   ├── gradlew
+│   │   ├── gradlew.bat
+│   │   ├── settings.gradle
+│   │   └── variables.gradle
+│   ├── capacitor.config.js
+│   ├── capacitor.config.ts
+│   ├── components.json
+│   ├── config
+│   │   └── env.ts
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── ios
+│   │   └── App
+│   │       ├── App
+│   │       │   ├── AppDelegate.swift
+│   │       │   ├── Assets.xcassets
+│   │       │   │   ├── AppIcon.appiconset
+│   │       │   │   │   ├── AppIcon-512@2x.png
+│   │       │   │   │   └── Contents.json
+│   │       │   │   ├── Contents.json
+│   │       │   │   └── Splash.imageset
+│   │       │   │       ├── Contents.json
+│   │       │   │       ├── splash-2732x2732-1.png
+│   │       │   │       ├── splash-2732x2732-2.png
+│   │       │   │       └── splash-2732x2732.png
+│   │       │   ├── Base.lproj
+│   │       │   │   ├── LaunchScreen.storyboard
+│   │       │   │   └── Main.storyboard
+│   │       │   └── Info.plist
+│   │       ├── App.xcodeproj
+│   │       │   └── project.pbxproj
+│   │       ├── App.xcworkspace
+│   │       │   └── xcshareddata
+│   │       │       └── IDEWorkspaceChecks.plist
+│   │       └── Podfile
+│   ├── package.json
+│   ├── pnpm-lock.yaml
+│   ├── public
+│   │   ├── cycle_logo.ico
+│   │   └── markers
+│   │       ├── marker-icon-2x-black.png
+│   │       ├── marker-icon-2x-blue.png
+│   │       ├── marker-icon-2x-gold.png
+│   │       ├── marker-icon-2x-green.png
+│   │       ├── marker-icon-2x-grey.png
+│   │       ├── marker-icon-2x-orange.png
+│   │       ├── marker-icon-2x-red.png
+│   │       ├── marker-icon-2x-violet.png
+│   │       ├── marker-icon-2x-yellow.png
+│   │       ├── marker-icon-black.png
+│   │       ├── marker-icon-blue.png
+│   │       ├── marker-icon-gold.png
+│   │       ├── marker-icon-green.png
+│   │       ├── marker-icon-grey.png
+│   │       ├── marker-icon-orange.png
+│   │       ├── marker-icon-red.png
+│   │       ├── marker-icon-violet.png
+│   │       ├── marker-icon-yellow.png
+│   │       └── marker-shadow.png
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.tsx
+│   │   ├── api
+│   │   │   ├── auth
+│   │   │   │   ├── login.ts
+│   │   │   │   ├── logout.ts
+│   │   │   │   ├── register.ts
+│   │   │   │   └── status.ts
+│   │   │   ├── jwt
+│   │   │   │   ├── compatible_token_manager.ts
+│   │   │   │   └── raw_token_manager.ts
+│   │   │   ├── map
+│   │   │   │   └── manage_routes.ts
+│   │   │   ├── ors
+│   │   │   │   └── calc_route.ts
+│   │   │   ├── profile
+│   │   │   │   └── basic_info.ts
+│   │   │   └── utils
+│   │   │       ├── api_routes.ts
+│   │   │       └── useJwt.ts
+│   │   ├── assets
+│   │   │   ├── cycle_anim.gif
+│   │   │   ├── cycle_last_frame.png
+│   │   │   ├── cycle_logo.png
+│   │   │   ├── cycle_trp.png
+│   │   │   ├── react.svg
+│   │   │   └── waypoints_test.json
+│   │   ├── components
+│   │   │   ├── context
+│   │   │   │   ├── AuthContext.tsx
+│   │   │   │   ├── AuthProvider.tsx
+│   │   │   │   ├── PhoneContext.tsx
+│   │   │   │   └── useAuth.ts
+│   │   │   ├── pages
+│   │   │   │   ├── DayRoutePage.tsx
+│   │   │   │   ├── HomePage.tsx
+│   │   │   │   ├── LoadPage.tsx
+│   │   │   │   ├── LoginPage.tsx
+│   │   │   │   ├── MapPage.tsx
+│   │   │   │   ├── ProfilePage.tsx
+│   │   │   │   ├── RegisterPage.tsx
+│   │   │   │   ├── RideLogPage.tsx
+│   │   │   │   ├── RoutePlanningPage.tsx
+│   │   │   │   ├── StartPage.tsx
+│   │   │   │   └── WeeklySidebar.tsx
+│   │   │   ├── ui
+│   │   │   │   ├── button-variants.ts
+│   │   │   │   ├── button.tsx
+│   │   │   │   ├── card.tsx
+│   │   │   │   └── scroll-area.tsx
+│   │   │   ├── widgets
+│   │   │   │   ├── AnimLogo.tsx
+│   │   │   │   ├── BottomNav.tsx
+│   │   │   │   ├── SlidePanel.tsx
+│   │   │   │   └── TopBar.tsx
+│   │   │   └── wrappers
+│   │   │       ├── CapacitorWrapper.tsx
+│   │   │       ├── LayoutWrapper.tsx
+│   │   │       ├── PhoneFrame.tsx
+│   │   │       └── ProtectedRoute.tsx
+│   │   ├── index.css
+│   │   ├── lib
+│   │   │   └── utils.ts
+│   │   ├── main.tsx
+│   │   ├── maps
+│   │   │   ├── MapPanel.tsx
+│   │   │   ├── MapView.tsx
+│   │   │   ├── manage
+│   │   │   │   ├── operations.ts
+│   │   │   │   └── structure.ts
+│   │   │   └── widgets
+│   │   │       ├── AutoFocusView.tsx
+│   │   │       ├── ClickHandler.tsx
+│   │   │       ├── PanelButton.tsx
+│   │   │       ├── PointMarker.tsx
+│   │   │       ├── RoutePolyline.tsx
+│   │   │       └── UserFocusView.tsx
+│   │   ├── setupTests.ts
+│   │   ├── tests
+│   │   │   └── AuthLogic.test.tsx
+│   │   ├── types
+│   │   │   └── UserProfile.ts
+│   │   └── utils
+│   │       ├── api_url.ts
+│   │       └── login-marker.ts
+│   ├── tsconfig.app.json
+│   ├── tsconfig.eslint.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+├── rclone
+├── scripts
+│   ├── check.ps1
+│   ├── check.sh
+│   ├── conda-op.ps1
+│   ├── conda-op.sh
+│   ├── drive.ps1
+│   ├── drive.sh
+│   ├── formatter.ps1
+│   ├── formatter.sh
+│   ├── pr-prep.ps1
+│   ├── pr-prep.sh
+│   ├── run.ps1
+│   ├── run.sh
+│   ├── setup.ps1
+│   ├── setup.sh
+│   ├── subscripts
+│   │   ├── backend
+│   │   │   ├── lint.ps1
+│   │   │   ├── lint.sh
+│   │   │   ├── test.ps1
+│   │   │   └── test.sh
+│   │   ├── drive
+│   │   │   ├── file
+│   │   │   │   └── drive-file.hash
+│   │   │   └── python
+│   │   │       ├── config.py
+│   │   │       ├── download.py
+│   │   │       ├── hashfill.py
+│   │   │       ├── upload.py
+│   │   │       └── validate.py
+│   │   ├── env
+│   │   │   ├── check-conda-imp.ps1
+│   │   │   ├── check-conda-imp.sh
+│   │   │   ├── imp-conda.ps1
+│   │   │   ├── imp-conda.sh
+│   │   │   ├── inst-conda.ps1
+│   │   │   ├── inst-conda.sh
+│   │   │   ├── lock-conda.ps1
+│   │   │   ├── lock-conda.sh
+│   │   │   ├── parameters
+│   │   │   └── python
+│   │   │       ├── conda_channel_cleaner.py
+│   │   │       ├── conda_exporter.py
+│   │   │       ├── conda_pips_filler.py
+│   │   │       └── conda_yml_formatter.py
+│   │   ├── frontend
+│   │   │   ├── build.ps1
+│   │   │   ├── build.sh
+│   │   │   ├── lint.ps1
+│   │   │   ├── lint.sh
+│   │   │   ├── test.ps1
+│   │   │   └── test.sh
+│   │   ├── legacy-cleaner.ps1
+│   │   ├── legacy-cleaner.sh
+│   │   ├── run
+│   │   │   ├── python
+│   │   │   │   └── fetch_ip.py
+│   │   │   ├── run-build.ps1
+│   │   │   ├── run-build.sh
+│   │   │   ├── run-dev.ps1
+│   │   │   └── run-dev.sh
+│   │   └── setup
+│   │       ├── check-setup.ps1
+│   │       ├── check-setup.sh
+│   │       ├── parameters
+│   │       │   └── requiredVersion
+│   │       ├── step_cli.ps1
+│   │       ├── step_cli.sh
+│   │       ├── step_conda.ps1
+│   │       ├── step_conda.sh
+│   │       ├── step_drive.ps1
+│   │       ├── step_drive.sh
+│   │       ├── step_env.ps1
+│   │       ├── step_env.sh
+│   │       ├── step_rclone.ps1
+│   │       ├── step_rclone.sh
+│   │       ├── version-writer.ps1
+│   │       └── version-writer.sh
+│   ├── sync-work.ps1
+│   └── sync-work.sh
+├── tree.txt
+└── upload-only-drive-file.txt
+
+114 directories, 297 files
