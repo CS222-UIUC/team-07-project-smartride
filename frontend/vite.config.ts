@@ -41,5 +41,5 @@ export default defineConfig({
       exclude: ["src/**/*.d.ts", "src/setupTests.ts"],
       reportsDirectory: "./coverage",
     },
-  }
+  },
 });

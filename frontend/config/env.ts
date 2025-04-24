@@ -27,12 +27,16 @@ function getEnv(): EnvVars {
     ...envLocal,
   };
 
-  const apiPort: number = rawEnv.VITE_API_PORT ? parseInt(rawEnv.VITE_API_PORT, 10) : 5000;
-  const webPort: number = rawEnv.VITE_WEB_PORT ? parseInt(rawEnv.VITE_WEB_PORT, 10) : 5173;
+  const apiPort: number = rawEnv.VITE_API_PORT
+    ? parseInt(rawEnv.VITE_API_PORT, 10)
+    : 5000;
+  const webPort: number = rawEnv.VITE_WEB_PORT
+    ? parseInt(rawEnv.VITE_WEB_PORT, 10)
+    : 5173;
   const projectMode = rawEnv.VITE_PROJECT_MODE || "DEV";
   const deployTarget = rawEnv.VITE_DEPLOY_TARGET || "EMULATOR";
   const wlanIp = rawEnv.VITE_WLAN_IP || "127.0.0.1";
-  const apiWebHost = (projectMode === "DEV") ? "localhost" : wlanIp;
+  const apiWebHost = projectMode === "DEV" ? "localhost" : wlanIp;
 
   return {
     API_PORT: apiPort,

@@ -4,7 +4,7 @@ const config: CapacitorConfig = {
   appId: "com.app.smartride",
   appName: "smartride",
   webDir: "dist",
-  android: { allowMixedContent: true, webContentsDebuggingEnabled: true }
+  android: { allowMixedContent: true, webContentsDebuggingEnabled: true },
 };
 
 export default config;

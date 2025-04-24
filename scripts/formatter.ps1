@@ -11,7 +11,7 @@ Write-Host "`n[Formatter] Backend ruff formatter workflow are completed."
 
 Write-Host "`n[Formatter] Start frontend prettier formatter workflow..."
 Set-Location ../frontend
-pnpm prettier --write "src/**/*.{ts,tsx,js,jsx}" 2>&1 |
+pnpm prettier --write "**/*.{ts,tsx,js,jsx}" 2>&1 |
   Where-Object { $_ -notmatch "\(unchanged\)" -and $_.Trim() -ne "" }
 
 if ($LASTEXITCODE -ne 0) {

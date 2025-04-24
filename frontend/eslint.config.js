@@ -1,16 +1,16 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
 
 export default tseslint.config(
-  { ignores: ['dist', 'android', 'ios', 'coverage', '**/*.d.ts'] },
+  { ignores: ["dist", "android", "ios", "coverage", "**/*.d.ts"] },
 
   {
-    files: ['**/*.{js,jsx}'],
+    files: ["**/*.{js,jsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -20,32 +20,30 @@ export default tseslint.config(
   },
 
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.eslint.json'],
+        project: ["./tsconfig.eslint.json"],
         tsconfigRootDir: import.meta.dirname,
       },
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-    extends: [
-      ...tseslint.configs.strictTypeChecked,
-    ],
+    extends: [...tseslint.configs.strictTypeChecked],
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      'react-x': reactX,
-      'react-dom': reactDom,
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      "react-x": reactX,
+      "react-dom": reactDom,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      ...reactX.configs['recommended-typescript'].rules,
+      ...reactX.configs["recommended-typescript"].rules,
       ...reactDom.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
+      "react-refresh/only-export-components": [
+        "warn",
         { allowConstantExport: true },
       ],
     },
   },
-)
+);
