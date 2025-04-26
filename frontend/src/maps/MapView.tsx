@@ -18,14 +18,14 @@
 // const MapView = ({
 //   onRouteDataChange,
 //   initialData,
-//   readonly = false, 
+//   readonly = false,
 // }: {
 //   onRouteDataChange: (data: {
 //     points: Point[];
 //     segments: RouteSegment[];
 //   }) => void;
 //   initialData: { points: Point[]; segments: RouteSegment[] };
-//   readonly?: boolean;  
+//   readonly?: boolean;
 // }) => {
 //   const [panelOpen, setPanelOpen] = useState(false);
 
@@ -78,7 +78,7 @@
 //         style={{ height: "100%", width: "100%" }}
 //       >
 //         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        
+
 //         {!readonly && (
 //           <ClickHandler
 //             onClick={(lat, lng) => {
@@ -126,9 +126,7 @@
 //   );
 // };
 
-
 // export default MapView;
-
 
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -233,9 +231,7 @@ const MapView = ({
           <Polyline positions={remainingPoints} color="red" weight={6} />
         )}
 
-        {!traveledPoints && !remainingPoints && (
-          <RoutePolyline route={route} />
-        )}
+        {!traveledPoints && !remainingPoints && <RoutePolyline route={route} />}
 
         <PointMarker points={points.filter((p) => p.type === "main")} />
 
@@ -245,9 +241,7 @@ const MapView = ({
           <UserFocusView />
         )}
 
-        {userPosition && (
-          <NavigationArrow position={userPosition} />
-        )}
+        {userPosition && <NavigationArrow position={userPosition} />}
       </MapContainer>
 
       {!readonly && (
@@ -280,4 +274,3 @@ const MapView = ({
 };
 
 export default MapView;
-
