@@ -7,6 +7,7 @@ import StartPage from "@/components/pages/StartPage.tsx";
 import LoadPage from "@/components/pages/LoadPage.tsx";
 import MapPage from "@/components/pages/MapPage.tsx";
 import RoutePlanningPage from "@/components/pages/RoutePlanningPage.tsx";
+import NavigationPage from "@/components/pages/NavigationPage.tsx";
 import ProfilePage from "@/components/pages/ProfilePage.js";
 import RideLogPage from "@/components/pages/RideLogPage.tsx";
 import ProtectedRoute from "@/components/wrappers/ProtectedRoute.tsx";
@@ -37,6 +38,7 @@ const RouteLibrary: React.FC = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/map/plan" element={<RoutePlanningPage />} />
+            <Route path="/map/navigation" element={<NavigationPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/ride-log" element={<RideLogPage />} />
             <Route path="/route/:day" element={<DayRoutePage />} />

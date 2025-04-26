@@ -18,12 +18,14 @@ import { useRef } from "react";
 const MapView = ({
   onRouteDataChange,
   initialData,
+  readonly = false, 
 }: {
   onRouteDataChange: (data: {
     points: Point[];
     segments: RouteSegment[];
   }) => void;
   initialData: { points: Point[]; segments: RouteSegment[] };
+  readonly?: boolean;  
 }) => {
   const [panelOpen, setPanelOpen] = useState(false);
 
@@ -52,7 +54,6 @@ const MapView = ({
     hasInteractedRef.current = true;
   };
 
-  // TODO: Bug: When removing a point, the route is not updated correctly.
   const wrappedRemovePoint = async (id: string) => {
     await removePoint(id);
     hasInteractedRef.current = true;
@@ -77,11 +78,15 @@ const MapView = ({
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <ClickHandler
-          onClick={(lat, lng) => {
-            void wrappedAddPoint(lat, lng);
-          }}
-        />
+        
+        {!readonly && (
+          <ClickHandler
+            onClick={(lat, lng) => {
+              void wrappedAddPoint(lat, lng);
+            }}
+          />
+        )}
+
         <RoutePolyline route={route} />
         <PointMarker points={points.filter((p) => p.type === "main")} />
         {route.length > 0 ? (
@@ -91,30 +96,35 @@ const MapView = ({
         )}
       </MapContainer>
 
-      <PanelButton
-        onClick={() => {
-          setPanelOpen(true);
-        }}
-      />
+      {!readonly && (
+        <>
+          <PanelButton
+            onClick={() => {
+              setPanelOpen(true);
+            }}
+          />
 
-      <MapPanel
-        isOpen={panelOpen}
-        onClose={() => {
-          setPanelOpen(false);
-        }}
-        points={points}
-        onReorder={(from, to) => {
-          void wrappedReorderPoints(from, to);
-        }}
-        onToggleType={(id) => {
-          wrappedTogglePointType(id);
-        }}
-        onRemove={(id) => {
-          void wrappedRemovePoint(id);
-        }}
-      />
+          <MapPanel
+            isOpen={panelOpen}
+            onClose={() => {
+              setPanelOpen(false);
+            }}
+            points={points}
+            onReorder={(from, to) => {
+              void wrappedReorderPoints(from, to);
+            }}
+            onToggleType={(id) => {
+              wrappedTogglePointType(id);
+            }}
+            onRemove={(id) => {
+              void wrappedRemovePoint(id);
+            }}
+          />
+        </>
+      )}
     </div>
   );
 };
+
 
 export default MapView;
