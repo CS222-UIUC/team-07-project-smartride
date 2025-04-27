@@ -24,7 +24,7 @@ const PointMarker: React.FC<PointMarkerProps> = ({ points }) => {
       green: createIcon("green"),
       blue: createIcon("blue"),
     }),
-    []
+    [],
   );
 
   if (points.length === 0) return null;
