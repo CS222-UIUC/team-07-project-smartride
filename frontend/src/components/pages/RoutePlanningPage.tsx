@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button.tsx";
 import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 // TODO: Do not store the route data here, call operations.ts
 const MapWrapper = ({
@@ -59,6 +60,7 @@ const RoutePlanningPage = () => {
   }>({ points: [], segments: [] });
 
   const [hasLoadedData, setHasLoadedData] = useState(false);
+  const navigate = useNavigate();
 
   const handleSave = async () => {
     const result = await createOrUpdateRoute(routeId, routeName, routeData);
@@ -142,6 +144,17 @@ const RoutePlanningPage = () => {
           className="bg-blue-600 hover:bg-blue-700 text-black px-6 py-2 rounded-md shadow-md"
         >
           Save/Update Route
+        </Button>
+      </div>
+
+      <div style={{ marginTop: "10px" }}>
+        <Button
+          onClick={() => {
+            void navigate("/map/navigation", { state: { routeData, routeId } });
+          }}
+          className="bg-green-600 hover:bg-green-700 text-black px-6 py-2 rounded-md shadow-md"
+        >
+          Start Navigation
         </Button>
       </div>
     </div>
