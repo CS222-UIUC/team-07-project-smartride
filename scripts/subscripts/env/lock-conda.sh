@@ -37,6 +37,7 @@ conda-lock lock --mamba \
   --platform win-64 \
   --platform linux-64 \
   --platform osx-64 \
+  --platform osx-arm64 \
   --lockfile "$CONDA_LOCK_REL_PATH" 1>/dev/null
 popd > /dev/null
 
