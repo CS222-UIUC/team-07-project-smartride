@@ -1,5 +1,5 @@
 import { clearLoginMark, markLoggedIn } from "@/utils/login-marker";
-import { useJwt } from "../utils/useJwt";
+import { useJwt } from "@/api/useJwt";
 import { clearToken, getToken, setToken } from "./raw_token_manager";
 
 export function buildAuthHeaders(headers: HeadersInit = {}): HeadersInit {

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { fetchUserProfile, updateUserProfile } from "@/api/profile/basic_info";
+import { fetchUserProfile, updateUserProfile } from "@/api/services/profile/basic_info";
 import { BasicInfoType, EMPTY_BASIC_INFO } from "@/types/UserProfile";
 import { toast } from "sonner";
 

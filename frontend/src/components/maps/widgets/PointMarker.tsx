@@ -1,6 +1,6 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-import type { Point } from "../manage/structure.ts";
+import type { Point } from "@/types/MapRoute";
 
 interface PointMarkerProps {
   points: Point[];
@@ -27,7 +27,7 @@ const PointMarker: React.FC<PointMarkerProps> = ({ points }) => {
         else if (idx === points.length - 1) icon = createIcon("blue");
 
         return (
-          <Marker key={pt.id} position={[pt.lat, pt.lng]} icon={icon}>
+          <Marker key={pt.id} position={[pt.coordinates.lat, pt.coordinates.lng]} icon={icon}>
             <Popup>{pt.label}</Popup>
           </Marker>
         );

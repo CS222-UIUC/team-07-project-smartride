@@ -1,11 +1,11 @@
-import MapView from "@/maps/MapView.tsx";
+import MapView from "@/components/maps/MapView.tsx";
 
 import { CSSProperties, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIsPhone } from "@/components/context/PhoneContext.tsx";
-import { createOrUpdateRoute, getRouteById } from "@/api/map/manage_routes";
+import { createOrUpdateRoute, getRouteById } from "@/api/services/map/manage_routes";
 import { Button } from "@/components/ui/button.tsx";
-import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
+import type { Point, RouteData, RouteSegment } from "@/types/MapRoute.ts";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -14,11 +14,8 @@ const MapWrapper = ({
   onRouteDataChange,
   initialData,
 }: {
-  onRouteDataChange: (data: {
-    points: Point[];
-    segments: RouteSegment[];
-  }) => void;
-  initialData: { points: Point[]; segments: RouteSegment[] };
+  onRouteDataChange: (route: RouteData) => void;
+  initialData: RouteData;
 }) => {
   const IsPhone = useIsPhone();
   const style: CSSProperties = IsPhone
@@ -62,13 +59,16 @@ const RoutePlanningPage = () => {
 
   const handleSave = async () => {
     const result = await createOrUpdateRoute(routeId, routeName, routeData);
-    if (result && routeId === -1) {
+    try {
+      if (routeId === -1) {
       setRouteId(result.id);
       toast.success(`Route is successfully created.`);
-    } else if (result) {
+      } else {
       toast.success(`Route is successfully updated.`);
-    } else {
-      toast.error(`Failed to create or upload the route.`);
+      }
+    } catch (error) {
+      console.error("Failed to save/update route:", error);
+      toast.error("An error occurred while saving/updating the route.");
     }
   };
   useEffect(() => {
@@ -76,10 +76,10 @@ const RoutePlanningPage = () => {
 
     async function fetchRouteData() {
       const res = await getRouteById(routeId);
-      if (res?.route_name) {
+      if (res.route_name) {
         setRouteName(res.route_name);
       }
-      if (res?.route_data) {
+      if (res.route_data) {
         try {
           const parsed =
             typeof res.route_data === "string"

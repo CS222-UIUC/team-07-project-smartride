@@ -1,13 +1,6 @@
-import { jwtPostProcess, TOKEN_STATE } from "../jwt/compatible_token_manager";
-import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
-
-export interface LoginResponse {
-  message: string;
-  // user?: string;
-  data?: {
-    token?: string;
-  };
-}
+import { jwtPostProcess, TOKEN_STATE } from "@/api/core/jwt/compatible_token_manager";
+import { AUTH_OPTIONS, getApiRoute } from "@/api/api_routes";
+import { LoginResponse } from "@/types/ApiResponses";
 
 export async function loginUser(
   email: string,

@@ -1,9 +1,5 @@
-import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
-
-export interface RegisterResponse {
-  message: string;
-  user?: string;
-}
+import { AUTH_OPTIONS, getApiRoute } from "@/api/api_routes";
+import { RegisterResponse } from "@/types/ApiResponses";
 
 export async function registerUser(
   name: string,

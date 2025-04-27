@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import AnimLogo from "@/components/widgets/AnimLogo.tsx";
 import { useEffect, useState } from "react";
-import { useAuthCheck } from "@/api/auth/status";
+import { useAuthCheck } from "@/api/services/auth/status";
 
 const LoadPage = () => {
   const loopCount = 2;

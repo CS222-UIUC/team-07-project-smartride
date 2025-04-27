@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { logoutUser } from "@/api/auth/logout.js";
+import { logoutUser } from "@/api/services/auth/logout";
 import { useState } from "react";
 import WeeklySidebar from "./WeeklySidebar.tsx";
 import { useAuth } from "@/components/context/useAuth.ts";

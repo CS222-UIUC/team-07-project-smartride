@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Card } from "@/components/ui/card.tsx";
 import { MoveUp, MoveDown, Trash2, MapPin } from "lucide-react";
-import { Point } from "./manage/structure.ts";
+import { Point } from "@/types/MapRoute.ts";
 
 interface MapPanelProps {
   isOpen: boolean;
@@ -38,7 +38,7 @@ const MapPanel: React.FC<MapPanelProps> = ({
               <div className="text-sm">
                 <div>{pt.label}</div>
                 <div className="text-muted-foreground text-xs">
-                  {pt.lat.toFixed(5)}, {pt.lng.toFixed(5)} ({pt.type})
+                  {pt.coordinates.lat.toFixed(5)}, {pt.coordinates.lng.toFixed(5)} ({pt.type})
                 </div>
               </div>
               <div className="flex gap-1">

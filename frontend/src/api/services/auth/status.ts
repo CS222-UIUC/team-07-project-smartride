@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
-import { buildAuthHeaders } from "../jwt/compatible_token_manager";
+import { AUTH_OPTIONS, getApiRoute } from "@/api/api_routes";
+import { buildAuthHeaders } from "@/api/core/jwt/compatible_token_manager";
 import { toast } from "sonner";
 
 export async function checkLoginStatus(): Promise<boolean> {

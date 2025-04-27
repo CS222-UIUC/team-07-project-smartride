@@ -2,12 +2,9 @@ import {
   buildAuthHeaders,
   jwtPostProcess,
   TOKEN_STATE,
-} from "../jwt/compatible_token_manager";
-import { AUTH_OPTIONS, getApiRoute } from "../utils/api_routes";
-
-export interface LogoutResponse {
-  message: string;
-}
+} from "@/api/core/jwt/compatible_token_manager";
+import { AUTH_OPTIONS, getApiRoute } from "@/api/api_routes";
+import { LogoutResponse } from "@/types/ApiResponses";
 
 export async function logoutUser(): Promise<LogoutResponse> {
   try {
