@@ -951,7 +951,7 @@ package:
   platform: osx-64
   dependencies:
     flask: '>=2.2.5'
-    python: '>=3.9'
+    python: ''
     sqlalchemy: '>=2.0.16'
   url: https://conda.anaconda.org/conda-forge/noarch/flask-sqlalchemy-3.1.1-pyh29332c3_1.conda
   hash:
@@ -965,7 +965,7 @@ package:
   platform: osx-arm64
   dependencies:
     flask: '>=2.2.5'
-    python: '>=3.9'
+    python: ''
     sqlalchemy: '>=2.0.16'
   url: https://conda.anaconda.org/conda-forge/noarch/flask-sqlalchemy-3.1.1-pyh29332c3_1.conda
   hash:
@@ -979,7 +979,7 @@ package:
   platform: win-64
   dependencies:
     flask: '>=2.2.5'
-    python: '>=3.9'
+    python: ''
     sqlalchemy: '>=2.0.16'
   url: https://conda.anaconda.org/conda-forge/noarch/flask-sqlalchemy-3.1.1-pyh29332c3_1.conda
   hash:
@@ -1175,7 +1175,6 @@ package:
   category: main
   optional: false
 - name: greenlet
-  version: 3.2.1
   version: 3.2.1
   manager: conda
   platform: osx-arm64
@@ -2456,7 +2455,7 @@ package:
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.8'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/packaging-25.0-pyh29332c3_1.conda
   hash:
     md5: 58335b26c38bf4a20f399384c33cbcf9
@@ -2468,7 +2467,7 @@ package:
   manager: conda
   platform: osx-arm64
   dependencies:
-    python: '>=3.8'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/packaging-25.0-pyh29332c3_1.conda
   hash:
     md5: 58335b26c38bf4a20f399384c33cbcf9
@@ -2480,7 +2479,7 @@ package:
   manager: conda
   platform: win-64
   dependencies:
-    python: '>=3.8'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/packaging-25.0-pyh29332c3_1.conda
   hash:
     md5: 58335b26c38bf4a20f399384c33cbcf9
@@ -2659,7 +2658,7 @@ package:
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/pycparser-2.22-pyh29332c3_1.conda
   hash:
     md5: 12c566707c80111f9799308d9e265aef
@@ -2671,7 +2670,7 @@ package:
   manager: conda
   platform: osx-arm64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/pycparser-2.22-pyh29332c3_1.conda
   hash:
     md5: 12c566707c80111f9799308d9e265aef
@@ -2683,7 +2682,7 @@ package:
   manager: conda
   platform: win-64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/pycparser-2.22-pyh29332c3_1.conda
   hash:
     md5: 12c566707c80111f9799308d9e265aef
@@ -3155,7 +3154,7 @@ package:
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/python-dotenv-1.1.0-pyh29332c3_1.conda
   hash:
     md5: 27d816c6981a8d50090537b761de80f4
@@ -3167,7 +3166,7 @@ package:
   manager: conda
   platform: osx-arm64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/python-dotenv-1.1.0-pyh29332c3_1.conda
   hash:
     md5: 27d816c6981a8d50090537b761de80f4
@@ -3179,7 +3178,7 @@ package:
   manager: conda
   platform: win-64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/python-dotenv-1.1.0-pyh29332c3_1.conda
   hash:
     md5: 27d816c6981a8d50090537b761de80f4
@@ -3416,7 +3415,7 @@ package:
   dependencies:
     markdown-it-py: '>=2.2.0'
     pygments: '>=2.13.0,<3.0.0'
-    python: '>=3.9'
+    python: ''
     typing_extensions: '>=4.0.0,<5.0.0'
   url: https://conda.anaconda.org/conda-forge/noarch/rich-14.0.0-pyh29332c3_0.conda
   hash:
@@ -3431,7 +3430,7 @@ package:
   dependencies:
     markdown-it-py: '>=2.2.0'
     pygments: '>=2.13.0,<3.0.0'
-    python: '>=3.9'
+    python: ''
     typing_extensions: '>=4.0.0,<5.0.0'
   url: https://conda.anaconda.org/conda-forge/noarch/rich-14.0.0-pyh29332c3_0.conda
   hash:
@@ -3446,7 +3445,7 @@ package:
   dependencies:
     markdown-it-py: '>=2.2.0'
     pygments: '>=2.13.0,<3.0.0'
-    python: '>=3.9'
+    python: ''
     typing_extensions: '>=4.0.0,<5.0.0'
   url: https://conda.anaconda.org/conda-forge/noarch/rich-14.0.0-pyh29332c3_0.conda
   hash:
@@ -3943,7 +3942,7 @@ package:
   manager: conda
   platform: osx-64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.13.2-pyh29332c3_0.conda
   hash:
     md5: 83fc6ae00127671e301c9f44254c31b8
@@ -3955,7 +3954,7 @@ package:
   manager: conda
   platform: osx-arm64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.13.2-pyh29332c3_0.conda
   hash:
     md5: 83fc6ae00127671e301c9f44254c31b8
@@ -3967,7 +3966,7 @@ package:
   manager: conda
   platform: win-64
   dependencies:
-    python: '>=3.9'
+    python: ''
   url: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.13.2-pyh29332c3_0.conda
   hash:
     md5: 83fc6ae00127671e301c9f44254c31b8
