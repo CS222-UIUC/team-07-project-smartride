@@ -27,6 +27,7 @@ conda-lock lock --mamba `
   --platform win-64 `
   --platform linux-64 `
   --platform osx-64 `
+  --platform osx-arm64 `
   --lockfile $env:CONDA_LOCK_REL_PATH 2>&1 1>$null
 Pop-Location
 

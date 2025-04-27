@@ -4,3 +4,4 @@
 .env.*
 !.env.*.example
 libraries/*
+**/node_modules/*
