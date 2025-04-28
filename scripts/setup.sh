@@ -12,13 +12,14 @@ if [[ $# -gt 0 && "$1" == --step_* ]]; then
 else
   step="step_all"
 fi
+echo "[Setup] Running setup script with step: $step"
 setupSteps=("step_rclone" "step_env" "step_cli" "step_conda" "step_drive")
-declare -A stepVersions=(
-  ["step_rclone"]="1.1"
-  ["step_env"]="1.3"
-  ["step_cli"]="1.1"
-  ["step_conda"]="1.2"
-  ["step_drive"]="1.1"
+stepVersions=(
+  "step_rclone:1.1"
+  "step_env:1.3"
+  "step_cli:1.1"
+  "step_conda:1.2"
+  "step_drive:1.1"
 )
 
 pushd "$(dirname "$0")/subscripts/setup" > /dev/null
@@ -32,7 +33,14 @@ for step in "${stepsToRun[@]}"; do
   echo "[Setup] Running $step..."
   bash "./$step.sh"
   echo "[Setup] Finished running $step...."
-  bash "./version-writer.sh" "$step" "${stepVersions[$step]}"
+  version=""
+  for versionMapping in "${stepVersions[@]}"; do
+    if [[ "$versionMapping" == "$step:"* ]]; then
+      version="${versionMapping#*:}"
+      break
+    fi
+  done
+  bash "./version-writer.sh" "$step" "$version"
 done
 popd > /dev/null
 
