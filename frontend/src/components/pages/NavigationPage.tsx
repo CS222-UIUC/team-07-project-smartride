@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button.tsx";
 import type { Point, RouteSegment } from "@/maps/manage/structure";
 import { splitRouteByPosition } from "@/utils/splitRoute";
 
+import { useSearchParams } from "react-router-dom";
+
+
+
 interface RouteData {
   points: Point[];
   segments: RouteSegment[];
@@ -17,7 +21,9 @@ const NavigationPage = () => {
     points: [],
     segments: [],
   });
-  const [routeId, setRouteId] = useState<number>(-1);
+
+  const [searchParams] = useSearchParams();
+  const routeId = parseInt(searchParams.get("id") ?? "-1");
   const [hasLoadedRoute, setHasLoadedRoute] = useState(false);
   const [userPosition, setUserPosition] = useState<[number, number] | null>(
     null,
@@ -29,7 +35,6 @@ const NavigationPage = () => {
       | undefined;
     if (state?.routeData) {
       setRouteData(state.routeData);
-      setRouteId(state.routeId);
       setHasLoadedRoute(true);
     } else {
       console.error("No routeData found in navigation state.");
@@ -85,6 +90,22 @@ const NavigationPage = () => {
       />
       <Button
         onClick={() => {
+          void navigate(`/ride-log?routeId=${routeId}`);
+        }}
+        className="bg-green-600 hover:bg-green-700 text-black px-6 py-2 rounded-md shadow-md"
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 1000,
+        }}
+      >
+        Complete Ride and Log
+      </Button>
+
+      <Button
+        onClick={() => {
           if (routeId !== -1) {
             void navigate(`/map/plan?id=${routeId.toString()}`);
           } else {
@@ -95,8 +116,7 @@ const NavigationPage = () => {
         style={{
           position: "absolute",
           bottom: "20px",
-          left: "50%",
-          transform: "translateX(-50%)",
+          right: "20px",
           zIndex: 1000,
         }}
       >
