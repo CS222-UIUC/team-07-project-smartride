@@ -4,6 +4,7 @@ import MapView from "@/maps/MapView";
 import { Button } from "@/components/ui/button.tsx";
 import type { Point, RouteSegment } from "@/maps/manage/structure";
 import { splitRouteByPosition } from "@/utils/splitRoute";
+import { getWeather, WeatherData } from "@/api/omt/get_weather";
 
 interface RouteData {
   points: Point[];
@@ -38,9 +39,11 @@ const NavigationPage = () => {
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
-      (position) => {
+      async (position) => {
         const { latitude, longitude } = position.coords;
         setUserPosition([latitude, longitude]);
+        const weather : WeatherData = await getWeather(latitude, longitude);
+        console.log(weather);
       },
       (error) => {
         console.error("Error getting position:", error);
