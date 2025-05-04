@@ -2,18 +2,18 @@ import { buildAuthHeaders } from "../jwt/compatible_token_manager";
 import { getApiRoute, OMT_OPTIONS } from "../utils/api_routes";
 
 export interface WeatherData {
-    date: string;
-    wind_speed: number;
-    wind_dir: number;
-    temp: number;
-    uv: number;
-    rain_prob: number;
+  date: string;
+  wind_speed: number;
+  wind_dir: number;
+  temp: number;
+  uv: number;
+  rain_prob: number;
 }
 
 interface WeatherResponse {
-    success: boolean;
-    message: string;
-    data: WeatherData;
+  success: boolean;
+  message: string;
+  data: WeatherData;
 }
 
 export async function getWeather(
@@ -21,7 +21,7 @@ export async function getWeather(
   lng: number,
 ): Promise<WeatherData> {
   const url = getApiRoute(OMT_OPTIONS.OMT_GET_WEATHER);
-  const body = {"lat": lat, "lng": lng,};
+  const body = { lat: lat, lng: lng };
   const headers = buildAuthHeaders({
     "Content-Type": "application/json",
   });

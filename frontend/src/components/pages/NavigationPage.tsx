@@ -39,11 +39,17 @@ const NavigationPage = () => {
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
-      async (position) => {
+      (position) => {
         const { latitude, longitude } = position.coords;
         setUserPosition([latitude, longitude]);
-        const weather : WeatherData = await getWeather(latitude, longitude);
-        console.log(weather);
+
+        // Use a separate async function to handle async work
+        const fetchWeather = async () => {
+          const weather: WeatherData = await getWeather(latitude, longitude);
+          console.log(weather);
+        };
+
+        void fetchWeather(); // Prevent unhandled promise warning
       },
       (error) => {
         console.error("Error getting position:", error);
@@ -54,6 +60,7 @@ const NavigationPage = () => {
         timeout: 10000,
       },
     );
+
     return () => {
       navigator.geolocation.clearWatch(watchId);
     };

@@ -2,7 +2,6 @@ name: smartride-backend
 channels:
   - conda-forge
 dependencies:
-  - pandas
   - coverage
   - flask
   - flask-login
@@ -11,6 +10,7 @@ dependencies:
   - flask_cors
   - geopy
   - mypy
+  - pandas
   - pyjwt
   - pytest
   - pytest-cov
