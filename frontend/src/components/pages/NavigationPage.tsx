@@ -7,8 +7,6 @@ import { splitRouteByPosition } from "@/utils/splitRoute";
 
 import { useSearchParams } from "react-router-dom";
 
-
-
 interface RouteData {
   points: Point[];
   segments: RouteSegment[];
@@ -90,7 +88,7 @@ const NavigationPage = () => {
       />
       <Button
         onClick={() => {
-          void navigate(`/ride-log?routeId=${routeId}`);
+          void navigate(`/ride-log?routeId=${routeId.toString()}`);
         }}
         className="bg-green-600 hover:bg-green-700 text-black px-6 py-2 rounded-md shadow-md"
         style={{
