@@ -10,6 +10,7 @@ dependencies:
   - flask_cors
   - geopy
   - mypy
+  - pandas
   - pyjwt
   - pytest
   - pytest-cov
