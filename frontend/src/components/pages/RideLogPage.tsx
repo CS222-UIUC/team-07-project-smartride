@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getRouteById } from "@/api/map/manage_routes";
 
 interface RideData {
   distance: number;
@@ -10,11 +11,47 @@ interface RideData {
 
 const RideLogPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const routeId = parseInt(searchParams.get("routeId") ?? "-1");
+
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [autoFilled, setAutoFilled] = useState(false);
   const [lastRide, setLastRide] = useState<RideData | null>(null);
 
-  // Load previous ride from localStorage
+  useEffect(() => {
+    if (routeId !== -1) {
+      const fetchAndComputeDistance = async () => {
+        try {
+          const res = await getRouteById(routeId);
+          if (res?.route_data) {
+            type Segment = { path: { lat: number; lng: number }[] };
+            type RouteData = { segments: Segment[] };
+
+            const routeData = (
+              typeof res.route_data === "string"
+                ? JSON.parse(res.route_data)
+                : res.route_data
+            ) as RouteData;
+
+            const segments = routeData.segments;
+
+            let totalDistance = 0;
+            for (const segment of segments) {
+              totalDistance += computeSegmentDistance(segment.path);
+            }
+
+            setDistance(Number(totalDistance.toFixed(2)));
+            setAutoFilled(true);
+          }
+        } catch (err) {
+          console.error("Failed to auto-load route data", err);
+        }
+      };
+      void fetchAndComputeDistance();
+    }
+  }, [routeId]);
+
   useEffect(() => {
     const stored = localStorage.getItem("lastRide");
     if (stored) {
@@ -24,18 +61,14 @@ const RideLogPage: React.FC = () => {
 
   const calculateCalories = (distance: number, duration: number): number => {
     const durationInHours = duration / 60;
-
     if (durationInHours === 0) return 0;
-
-    const speed = distance / durationInHours; // km/h
-
-    // Mock MET based on speed
-    let met = 4; // default low effort
+    const speed = distance / durationInHours;
+    let met = 4;
     if (speed >= 16 && speed < 20) met = 8;
     else if (speed >= 20 && speed < 25) met = 10;
     else if (speed >= 25) met = 12;
 
-    const weight = 70; // fixed for now
+    const weight = 70;
     return Math.round(met * weight * durationInHours);
   };
 
@@ -50,6 +83,8 @@ const RideLogPage: React.FC = () => {
     };
     localStorage.setItem("lastRide", JSON.stringify(ride));
     setLastRide(ride);
+
+    void navigate("/ride-log", { replace: true });
   };
 
   return (
@@ -77,6 +112,7 @@ const RideLogPage: React.FC = () => {
             onChange={(e) => {
               setDistance(Number(e.target.value));
             }}
+            disabled={autoFilled}
             required
             min={0}
             step={0.1}
@@ -85,6 +121,7 @@ const RideLogPage: React.FC = () => {
               borderRadius: "6px",
               border: "1px solid #ccc",
               width: "100%",
+              backgroundColor: autoFilled ? "#f0f0f0" : "white",
             }}
           />
         </label>
@@ -153,7 +190,9 @@ const RideLogPage: React.FC = () => {
 
       <button
         type="button"
-        onClick={() => void navigate("/home")}
+        onClick={() => {
+          void navigate("/home");
+        }}
         style={{
           marginTop: "20px",
           padding: "10px",
@@ -169,5 +208,35 @@ const RideLogPage: React.FC = () => {
     </div>
   );
 };
+
+function haversineDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number,
+): number {
+  const R = 6371;
+  const toRad = (deg: number) => (deg * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function computeSegmentDistance(path: { lat: number; lng: number }[]): number {
+  let total = 0;
+  for (let i = 1; i < path.length; i++) {
+    total += haversineDistance(
+      path[i - 1].lat,
+      path[i - 1].lng,
+      path[i].lat,
+      path[i].lng,
+    );
+  }
+  return total;
+}
 
 export default RideLogPage;

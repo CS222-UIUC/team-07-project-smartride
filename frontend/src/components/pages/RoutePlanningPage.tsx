@@ -150,7 +150,9 @@ const RoutePlanningPage = () => {
       <div style={{ marginTop: "10px" }}>
         <Button
           onClick={() => {
-            void navigate("/map/navigation", { state: { routeData, routeId } });
+            void navigate(`/map/navigation?id=${routeId.toString()}`, {
+              state: { routeData, routeId },
+            });
           }}
           className="bg-green-600 hover:bg-green-700 text-black px-6 py-2 rounded-md shadow-md"
         >
