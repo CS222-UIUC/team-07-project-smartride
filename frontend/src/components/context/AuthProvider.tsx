@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { AuthContext } from "./AuthContext.tsx";
-import { checkLoginStatus } from "@/api/auth/status.ts";
+import { checkLoginStatus } from "@/api/services/auth/status.js";
 import { clearLoginMark, hasLoggedInBefore } from "@/utils/login-marker.ts";
 import { toast } from "sonner";
 

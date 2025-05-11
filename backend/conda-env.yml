@@ -21,6 +21,7 @@ dependencies:
   - requests
   - ruff
   - sqlalchemy
+  - sqlite
   - tqdm
   - typing
   - werkzeug

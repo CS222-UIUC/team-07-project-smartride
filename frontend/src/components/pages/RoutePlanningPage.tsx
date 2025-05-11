@@ -1,105 +1,78 @@
-import MapView from "@/maps/MapView.tsx";
-
-import { CSSProperties, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useIsPhone } from "@/components/context/PhoneContext.tsx";
-import { createOrUpdateRoute, getRouteById } from "@/api/map/manage_routes";
-import { Button } from "@/components/ui/button.tsx";
-import type { Point, RouteSegment } from "@/maps/manage/structure.ts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-
-// TODO: Do not store the route data here, call operations.ts
-const MapWrapper = ({
-  onRouteDataChange,
-  initialData,
-}: {
-  onRouteDataChange: (data: {
-    points: Point[];
-    segments: RouteSegment[];
-  }) => void;
-  initialData: { points: Point[]; segments: RouteSegment[] };
-}) => {
-  const IsPhone = useIsPhone();
-  const style: CSSProperties = IsPhone
-    ? {
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }
-    : {
-        width: "60%",
-        height: "90%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      };
-
-  return (
-    <div style={style}>
-      <MapView
-        onRouteDataChange={onRouteDataChange}
-        initialData={initialData}
-      />
-    </div>
-  );
-};
+import { Button } from "@/components/ui/button";
+import MapWrapper from "@/components/maps/MapWrapper";
+import { usePlanController, useNavController } from "@/features/map/controller";
 
 const RoutePlanningPage = () => {
   const [searchParams] = useSearchParams();
-  const initialRouteId = parseInt(searchParams.get("id") || "-1");
-  const [routeId, setRouteId] = useState<number>(initialRouteId);
-  const [routeName, setRouteName] = useState<string>("New Route");
+  const routeId = parseInt(searchParams.get("id") || "-1");
 
-  const [routeData, setRouteData] = useState<{
-    points: Point[];
-    segments: RouteSegment[];
-  }>({ points: [], segments: [] });
-
-  const [hasLoadedData, setHasLoadedData] = useState(false);
   const navigate = useNavigate();
 
+  const {
+    isDirty,
+    route,
+    updateRouteToBackend,
+    loadRouteFromBackend,
+    setRouteInfo,
+    getMapBindings,
+  } = usePlanController();
+  const { injectRouteData } = useNavController();
+
+  const [isNewRoute, setIsNewRoute] = useState(routeId === -1);
+  const [routeName, setRouteName] = useState("");
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [needNewId, setNeedNewId] = useState(false);
+
+  // one-time load of route data from backend
+  useEffect(() => {
+    if (hasLoaded) {
+      return;
+    }
+    const load = async () => {
+      await loadRouteFromBackend(routeId);
+      setRouteName(route.info.name);
+      setHasLoaded(true);
+    };
+    void load();
+  }, [hasLoaded, loadRouteFromBackend, route.info.name, routeId]);
+
+  const handleInputChange = (newName: string) => {
+    setRouteName(newName);
+    setRouteInfo({ ...route.info, name: newName });
+  };
+
   const handleSave = async () => {
-    const result = await createOrUpdateRoute(routeId, routeName, routeData);
-    if (result && routeId === -1) {
-      setRouteId(result.id);
-      toast.success(`Route is successfully created.`);
-    } else if (result) {
-      toast.success(`Route is successfully updated.`);
-    } else {
-      toast.error(`Failed to create or upload the route.`);
+    try {
+      await updateRouteToBackend();
+      toast.success(
+        `${isNewRoute ? "Created" : "Updated"} route successfully.`,
+      );
+      // Note: Currently id is not updated since async nature of react state, we cannot directly navigate
+      if (isNewRoute) {
+        // Temporarily forbid everything until we navigate
+        setNeedNewId(true);
+      }
+    } catch (error) {
+      console.error("Save failed:", error);
+      toast.error("An error occurred while saving the route.");
     }
   };
+
   useEffect(() => {
-    if (routeId === -1 || hasLoadedData) return;
-
-    async function fetchRouteData() {
-      const res = await getRouteById(routeId);
-      if (res?.route_name) {
-        setRouteName(res.route_name);
-      }
-      if (res?.route_data) {
-        try {
-          const parsed =
-            typeof res.route_data === "string"
-              ? (JSON.parse(res.route_data) as {
-                  points: Point[];
-                  segments: RouteSegment[];
-                })
-              : res.route_data;
-
-          setRouteData(parsed);
-        } catch (e) {
-          console.error("Failed to parse route_data:", e);
-        }
-      }
-      setHasLoadedData(true);
+    if (isNewRoute && needNewId && route.id !== -1) {
+      void navigate(`/map/plan?id=${route.id.toString()}`, { replace: true });
+      setNeedNewId(false);
+      setIsNewRoute(false);
     }
-    void fetchRouteData();
-  }, [routeId, hasLoadedData]);
+  }, [route.id, needNewId, isNewRoute, navigate]);
+
+  const preNavigate = () => {
+    injectRouteData(route.data);
+    void navigate(`/map/navigation?id=${route.id.toString()}`);
+  };
 
   return (
     <div
@@ -114,10 +87,10 @@ const RoutePlanningPage = () => {
       <input
         type="text"
         value={routeName}
+        disabled={!hasLoaded || needNewId}
         onChange={(e) => {
-          setRouteName(e.target.value);
+          handleInputChange(e.target.value);
         }}
-        placeholder="Route Name"
         style={{
           width: "80%",
           padding: "10px",
@@ -126,22 +99,18 @@ const RoutePlanningPage = () => {
           border: "1px solid #ccc",
         }}
       />
-      {routeId === -1 || routeData.points.length > 0 ? (
-        <MapWrapper
-          initialData={routeData}
-          onRouteDataChange={(data) => {
-            setRouteData(data);
-          }}
-        />
-      ) : (
-        <div>Loading route data...</div> // or a spinner
-      )}
+
+      <MapWrapper bindings={getMapBindings()} />
+
       <div>
         <Button
           onClick={() => {
             void handleSave();
           }}
-          className="bg-blue-600 hover:bg-blue-700 text-black px-6 py-2 rounded-md shadow-md"
+          disabled={
+            !hasLoaded || !isDirty || routeName.trim() === "" || needNewId
+          }
+          className="!bg-blue-600 hover:!bg-blue-700 text-black px-6 py-2 rounded-md shadow-md"
         >
           Save/Update Route
         </Button>
@@ -149,12 +118,17 @@ const RoutePlanningPage = () => {
 
       <div style={{ marginTop: "10px" }}>
         <Button
+          disabled={
+            !hasLoaded ||
+            needNewId ||
+            isNewRoute ||
+            route.data.points.length < 2 ||
+            isDirty
+          }
           onClick={() => {
-            void navigate(`/map/navigation?id=${routeId.toString()}`, {
-              state: { routeData, routeId },
-            });
+            preNavigate();
           }}
-          className="bg-green-600 hover:bg-green-700 text-black px-6 py-2 rounded-md shadow-md"
+          className="!bg-green-600 hover:!bg-green-700 text-black px-6 py-2 rounded-md shadow-md"
         >
           Start Navigation
         </Button>

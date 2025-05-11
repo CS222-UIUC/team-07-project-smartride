@@ -1,5 +1,4 @@
 import json
-from typing import Any
 
 from flask import Blueprint, Response, request
 
@@ -11,104 +10,116 @@ from server.utils.response import api_response
 URL_PREFIX_ADDON = "/manage"
 manage_bp = Blueprint("manage_map", __name__)
 
-# TODO (Brian): Use RestAPI Methods, GET PUT POST DELETE ...
 
-
-@manage_bp.route("/get_routes_info", methods=["GET"])
+@manage_bp.route("/get_metas", methods=["GET"])
 @combined_login_required
-def get_routes() -> tuple[Response, int]:
+def get_metas() -> tuple[Response, int]:
     routes = MapRoute.query.filter_by(user_id=get_combined_current_user().id).all()
-    routes_list = [
-        {
-            "id": route.id,
-            "route_name": route.route_name,
-            # "route_data": json.loads(route.route_data) if route.route_data else None,
-        }
-        for route in routes
-    ]
-    return api_response(
-        success=True,
-        message="Routes retrieved successfully",
-        data=routes_list,
-    )
+    meta_list = []
+    for route in routes:
+        try:
+            info_dict = json.loads(route.info) if route.info else {}
+        except json.JSONDecodeError:
+            info_dict = {}
+        meta_list.append({"id": route.id, **info_dict})
+    return api_response(success=True, data=meta_list)
 
 
-@manage_bp.route("/get_route_by_id", methods=["GET"])
+@manage_bp.route("/get_info_by_id", methods=["GET"])
 @combined_login_required
-def get_route_by_id() -> tuple[Response, int]:
+def get_info_by_id() -> tuple[Response, int]:
     route_id = request.args.get("id")
     if not route_id:
         return api_response(success=False, message="Route id is required", status_code=400)
+
     route = MapRoute.query.filter_by(id=route_id, user_id=get_combined_current_user().id).first()
     if not route:
         return api_response(success=False, message="Route not found", status_code=404)
-    route_data = {
-        "id": route.id,
-        "route_name": route.route_name,
-        "route_data": json.loads(route.route_data) if route.route_data else None,
-    }
+
+    try:
+        route_info = json.loads(route.info) if route.info else {}
+    except json.JSONDecodeError:
+        route_info = {}
+
+    return api_response(success=True, data=route_info)
+
+
+@manage_bp.route("/get_data_by_id", methods=["GET"])
+@combined_login_required
+def get_data_by_id() -> tuple[Response, int]:
+    route_id = request.args.get("id")
+    if not route_id:
+        return api_response(success=False, message="Route id is required", status_code=400)
+
+    route = MapRoute.query.filter_by(id=route_id, user_id=get_combined_current_user().id).first()
+    if not route:
+        return api_response(success=False, message="Route not found", status_code=404)
+
+    try:
+        route_data = json.loads(route.data) if route.data else None
+    except json.JSONDecodeError:
+        route_data = None
+
     return api_response(success=True, data=route_data)
 
 
-def update_route(
-    user_id: int | None,
-    id: int | None,
-    new_name: str | None,
-    route_data: dict[str, Any] | None = None,
-) -> tuple[Response, int] | None:
-    if not id:
-        return api_response(success=False, message="Route id is required", status_code=400)
-    route = MapRoute.query.filter_by(id=id, user_id=user_id).first()
-    if not route:
-        return api_response(success=False, message="Route not found", status_code=404)
-    if new_name:
-        route.route_name = new_name
-    if route_data is not None:
-        route.route_data = json.dumps(route_data)
-    db.session.commit()
-    return None
-
-
-def add_route(user_id: int | None, route_name: str | None) -> tuple[Response, int] | MapRoute:
-    if not user_id:
-        return api_response(success=False, message="User id is required", status_code=400)
-    if not route_name:
-        return api_response(success=False, message="Route name is required", status_code=400)
-    new_route = MapRoute(route_name=route_name, user_id=user_id)
-    db.session.add(new_route)
-    db.session.commit()
-    return new_route
-
-
-@manage_bp.route("/set_route", methods=["POST"])
+@manage_bp.route("/create_by_info", methods=["POST"])
 @combined_login_required
-def set_route() -> tuple[Response, int]:
+def create_by_info() -> tuple[Response, int]:
     data = request.get_json()
     if not data:
         return api_response(success=False, message="Invalid JSON", status_code=400)
 
-    route_name = data.get("route_name", "Untitled Route")
-    route_id = data.get("id")
-    route_data = data.get("route_data")
-    user_id = get_combined_current_user().id
+    route_info = data.get("info")
+    if not isinstance(route_info, dict):
+        return api_response(success=False, message="`info` must be a JSON object", status_code=400)
 
-    if route_id == -1:
-        new_route = MapRoute(
-            route_name=route_name,
-            user_id=user_id,
-            route_data=json.dumps(route_data) if route_data else None,
-        )
-        db.session.add(new_route)
-        db.session.commit()
-        return api_response(
-            success=True, data={"id": new_route.id, "route_name": new_route.route_name}
-        )
-    else:
-        route = MapRoute.query.filter_by(id=route_id, user_id=user_id).first()
-        if not route:
-            return api_response(success=False, message="Route not found", status_code=404)
-        route.route_name = route_name
-        if route_data is not None:
-            route.route_data = json.dumps(route_data)
-        db.session.commit()
-        return api_response(success=True, data={"id": route.id, "route_name": route.route_name})
+    new_route = MapRoute(
+        info=json.dumps(route_info),
+        user_id=get_combined_current_user().id,
+    )
+    db.session.add(new_route)
+    db.session.commit()
+    return api_response(success=True, data=new_route.id)
+
+
+@manage_bp.route("/update_data_by_id", methods=["POST"])
+@combined_login_required
+def update_data_by_id() -> tuple[Response, int]:
+    data = request.get_json()
+    if not data:
+        return api_response(success=False, message="Invalid JSON", status_code=400)
+
+    route_id = data.get("id")
+    route_data = data.get("data")
+    if not route_id:
+        return api_response(success=False, message="Missing id", status_code=400)
+
+    route = MapRoute.query.filter_by(id=route_id, user_id=get_combined_current_user().id).first()
+    if not route:
+        return api_response(success=False, message="Route not found", status_code=404)
+
+    route.data = json.dumps(route_data) if route_data else None
+    db.session.commit()
+    return api_response(success=True)
+
+
+@manage_bp.route("/update_info_by_id", methods=["POST"])
+@combined_login_required
+def update_info_by_id() -> tuple[Response, int]:
+    data = request.get_json()
+    if not data:
+        return api_response(success=False, message="Invalid JSON", status_code=400)
+
+    route_id = data.get("id")
+    route_info = data.get("info")
+    if not route_id or not isinstance(route_info, dict):
+        return api_response(success=False, message="Missing id or invalid info", status_code=400)
+
+    route = MapRoute.query.filter_by(id=route_id, user_id=get_combined_current_user().id).first()
+    if not route:
+        return api_response(success=False, message="Route not found", status_code=404)
+
+    route.info = json.dumps(route_info)
+    db.session.commit()
+    return api_response(success=True)
