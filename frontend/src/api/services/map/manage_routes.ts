@@ -85,12 +85,16 @@ export async function createRouteByInfo(routeInfo: RouteInfo): Promise<number> {
     const headers = buildAuthHeaders({
       "Content-Type": "application/json",
     });
+    const body = {
+      info: routeInfo,
+    }
     const response = await fetch(url, {
       method: "POST",
       credentials: "include",
       headers: headers,
-      body: JSON.stringify(routeInfo),
+      body: JSON.stringify(body),
     });
+    // result.data is the id of the created route
     const result = (await response.json()) as MapGetResponse<number>;
     if (result.success && result.data) {
       return result.data;

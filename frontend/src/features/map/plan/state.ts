@@ -20,6 +20,9 @@ const getRoute = (): Route => useRouteStore.getState().route;
 const getRouteId = (): number => getRoute().id;
 const getRouteInfo = (): RouteInfo => getRoute().info;
 const getRouteData = (): RouteData => getRoute().data;
+const getOriginalRoute = (): Route => useRouteStore.getState().originalRoute;
+const getOriginalRouteInfo = (): RouteInfo => getOriginalRoute().info;
+const getOriginalRouteData = (): RouteData => getOriginalRoute().data;
 export const isNewRoute = (): boolean => getRouteId() === -1;
 
 // ========== SETTERS ==========
@@ -40,13 +43,13 @@ export const setRouteData = (data: RouteData): void => {
 
 const isInfoDirty = (): boolean =>
   JSON.stringify(getRouteInfo()) !==
-  JSON.stringify(useRouteStore.getState().originalRoute.info);
+  JSON.stringify(getOriginalRouteInfo());
 
 const isDataDirty = (): boolean =>
   JSON.stringify(getRouteData()) !==
-  JSON.stringify(useRouteStore.getState().originalRoute.data);
+  JSON.stringify(getOriginalRouteData());
 
-export const isRouteDirty = (): boolean => isInfoDirty() || isDataDirty();
+export const isRouteDirty = (): boolean => isInfoDirty() || isDataDirty() || (getRouteId() === -1); // so that we can always save a new route
 
 const markInfoClean = (): void => {
   useRouteStore.getState().setOriginalRoute((prev) => ({
@@ -112,12 +115,14 @@ const updateRouteDataToBackend = async (): Promise<void> => {
 export const updateRouteToBackend = async (): Promise<void> => {
   if (isNewRoute()) {
     await createNewRouteOnBackend(); // already sets id + markInfoClean
+    await updateRouteDataToBackend(); // always called upon create, to prevent empty route
+    return;
   }
 
   if (isDataDirty()) {
-    await updateRouteDataToBackend(); // markDataClean inside
+    await updateRouteDataToBackend();
   }
   if (isInfoDirty()) {
-    await updateRouteInfoToBackend(); // markInfoClean inside
+    await updateRouteInfoToBackend();
   }
 };

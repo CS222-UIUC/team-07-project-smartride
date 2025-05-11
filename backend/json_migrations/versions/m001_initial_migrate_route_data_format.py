@@ -3,17 +3,17 @@ from server.models.map_route import MapRoute
 
 def upgrade(session):
     """
-    Upgrade route_data format:
+    Upgrade data format:
     - Wrap lng/lat/ele into 'coordinates' object inside points
     - Ensure each path point inside segments also wraps into coordinates
     """
     routes = session.query(MapRoute).all()
 
     for route in routes:
-        if not route.route_data:
+        if not route.data:
             continue
         try:
-            data = json.loads(route.route_data)
+            data = json.loads(route.data)
 
             if "points" in data and isinstance(data["points"], list):
                 for point in data["points"]:
@@ -52,27 +52,27 @@ def upgrade(session):
 
             data["version"] = 2
 
-            route.route_data = json.dumps(data)
+            route.data = json.dumps(data)
 
         except Exception as e:
             print(f"[ERROR] Route id={route.id} migration failed: {e}")
 
-    print("[INFO] Migration 001_initial_migrate_route_data_format applied.")
+    print("[INFO] Migration 001_initial_migrate_data_format applied.")
 
 
 def downgrade(session):
     """
-    Downgrade route_data format back:
+    Downgrade data format back:
     - Flatten 'coordinates' object into lng/lat/ele fields inside points
     - Flatten each path point inside segments
     """
     routes = session.query(MapRoute).all()
 
     for route in routes:
-        if not route.route_data:
+        if not route.data:
             continue
         try:
-            data = json.loads(route.route_data)
+            data = json.loads(route.data)
 
             points_by_id = {}
             if "points" in data and isinstance(data["points"], list):
@@ -112,9 +112,9 @@ def downgrade(session):
 
             data.pop("version", None)
 
-            route.route_data = json.dumps(data)
+            route.data = json.dumps(data)
 
         except Exception as e:
             print(f"[ERROR] Route id={route.id} downgrade failed: {e}")
 
-    print("[INFO] Migration 001_initial_migrate_route_data_format rolled back.")
+    print("[INFO] Migration 001_initial_migrate_data_format rolled back.")

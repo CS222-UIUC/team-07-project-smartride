@@ -9,7 +9,6 @@ const RoutePlanningPage = () => {
   const [searchParams] = useSearchParams();
   const routeId = parseInt(searchParams.get("id") || "-1");
 
-  const isNewRoute = routeId === -1;
   const navigate = useNavigate();
 
   const {
@@ -22,8 +21,10 @@ const RoutePlanningPage = () => {
   } = usePlanController();
   const { injectRouteData } = useNavController();
 
+  const [isNewRoute, setIsNewRoute] = useState(routeId === -1);
   const [routeName, setRouteName] = useState("");
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [needNewId, setNeedNewId] = useState(false);
 
   // one-time load of route data from backend
   useEffect(() => {
@@ -47,15 +48,24 @@ const RoutePlanningPage = () => {
     try {
       await updateRouteToBackend();
       toast.success(`${isNewRoute ? "Created" : "Updated"} route successfully.`);
-
+      // Note: Currently id is not updated since async nature of react state, we cannot directly navigate
       if (isNewRoute) {
-        void navigate(`/map/plan?id=${route.id.toString()}`, { replace: true });
+        // Temporarily forbid everything until we navigate
+        setNeedNewId(true);
       }
     } catch (error) {
       console.error("Save failed:", error);
       toast.error("An error occurred while saving the route.");
     }
   };
+
+  useEffect(() => {
+    if (isNewRoute && needNewId && route.id !== -1) {
+      void navigate(`/map/plan?id=${route.id.toString()}`, { replace: true });
+      setNeedNewId(false);
+      setIsNewRoute(false);
+    }
+  }, [route.id, needNewId, isNewRoute, navigate]);
 
   const preNavigate = () => {
     injectRouteData(route.data);
@@ -76,7 +86,7 @@ const RoutePlanningPage = () => {
       <input
         type="text"
         value={routeName}
-        disabled={!hasLoaded}
+        disabled={!hasLoaded || needNewId}
         onChange={(e) => { handleInputChange(e.target.value); }}
         style={{
           width: "80%",
@@ -92,7 +102,7 @@ const RoutePlanningPage = () => {
       <div>
         <Button
           onClick={() => {void handleSave();}}
-          disabled={!hasLoaded || !isDirty || routeName.trim() === ""}
+          disabled={(!hasLoaded || !isDirty || routeName.trim() === "" || needNewId)}
           className="bg-blue-600 hover:bg-blue-700 text-black px-6 py-2 rounded-md shadow-md"
         >
           Save/Update Route
