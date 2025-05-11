@@ -2,7 +2,7 @@ import { Marker } from "react-leaflet";
 import L, { LatLngExpression } from "leaflet";
 
 const arrowIcon = new L.Icon({
-  iconUrl: "/public/navigation-arrow.png",
+  iconUrl: "/navigation-arrow.png",
   iconSize: [40, 40],
   iconAnchor: [20, 20],
 });
