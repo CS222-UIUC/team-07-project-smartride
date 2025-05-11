@@ -32,16 +32,16 @@ vi.mock("react-leaflet", () => ({
   ),
 }));
 
-vi.mock("@/api/ors/calc_route.ts", () => ({
+vi.mock("@/api/services/ors/calc_route.ts", () => ({
   calcRoute: vi.fn(() => Promise.resolve({ route: [] })),
 }));
 
 vi.mock("@/components/maps/MapView", () => {
-  const MockMapView: React.FC<{ bindings: PlanMapBindings }> = ({ bindings }) => (
+  const MockMapView: React.FC<PlanMapBindings> = (props) => (
     <div
       data-testid="map"
       onClick={() => {
-        bindings.onClickAddPoint(10 + bindings.routeData.points.length, 20);
+        props.onClickAddPoint(10 + props.routeData.points.length, 20);
       }}
     >
       [MockMapView]

@@ -53,14 +53,14 @@ describe("PointMarker components", () => {
     }; // Add 'type' property
     render(<PointMarker points={[pt]} />);
 
-    // 1 个 Marker
+    // there should be only one marker
     const markers = screen.getAllByTestId("marker");
     expect(markers).toHaveLength(1);
 
-    // 图标 URL 包含 “marker-icon-green.png”
+    // Check the marker's icon URL, should be green
     expect(markers[0].getAttribute("data-icon")).toMatch(/marker-icon-green/);
 
-    // Popup 内容正确
+    // Check whether the popup is shown
     expect(screen.getByTestId("popup")).toHaveTextContent("Start");
   });
 
@@ -74,7 +74,8 @@ describe("PointMarker components", () => {
     const markers = screen.getAllByTestId("marker");
     expect(markers).toHaveLength(2);
 
-    // 检查第一个/第二个图标 url
+    // Check the marker's icon URL
+    // 1st marker should be green, 2nd should be blue
     expect(markers[0].getAttribute("data-icon")).toMatch(/marker-icon-green/);
     expect(markers[1].getAttribute("data-icon")).toMatch(/marker-icon-blue/);
   });

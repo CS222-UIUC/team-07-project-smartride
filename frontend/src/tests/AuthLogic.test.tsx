@@ -9,18 +9,18 @@ import StartPage from "@/components/pages/StartPage.tsx";
 
 let authState = true; // true = logged in, false = logging/logged out
 
-vi.mock("@/api/auth/status", () => ({
+vi.mock("@/api/services/auth/status", () => ({
   checkLoginStatus: () => Promise.resolve(authState),
 }));
 
-vi.mock("@/api/auth/login", () => ({
+vi.mock("@/api/services/auth/login", () => ({
   loginUser: vi.fn(() => {
     authState = true;
     return Promise.resolve({ message: "Logged in" });
   }),
 }));
 
-vi.mock("@/api/auth/logout", () => ({
+vi.mock("@/api/services/auth/logout", () => ({
   logoutUser: vi.fn(() => {
     authState = false;
     return Promise.resolve({ message: "Logged out" });
