@@ -6,7 +6,7 @@ import { LatLngExpression } from "leaflet";
 interface NavStore {
   // Read-only route data
   routeData: RouteData; // raw RouteData, kept for showing points and future use
-  flatCoords: LatLngExpression[];  // RouteSegment[] after flattened, for matching and rendering
+  flatCoords: LatLngExpression[]; // RouteSegment[] after flattened, for matching and rendering
 
   // Real-time tracking
   userPosition: LatLngExpression | null;
@@ -25,7 +25,10 @@ interface NavStore {
   clearRealCoords: () => void;
 }
 
-export const useNavStore = create<NavStore, [["zustand/subscribeWithSelector", never]]>(
+export const useNavStore = create<
+  NavStore,
+  [["zustand/subscribeWithSelector", never]]
+>(
   subscribeWithSelector((set) => ({
     routeData: { points: [], segments: [] },
     flatCoords: [],
@@ -38,7 +41,7 @@ export const useNavStore = create<NavStore, [["zustand/subscribeWithSelector", n
 
     setRouteData: (data) => {
       const flat = data.segments.flatMap((seg) =>
-        seg.path.map((p) => [p.lat, p.lng] as [number, number])
+        seg.path.map((p) => [p.lat, p.lng] as [number, number]),
       );
       set({ routeData: data, flatCoords: flat, realCoords: [] });
     },
@@ -64,5 +67,5 @@ export const useNavStore = create<NavStore, [["zustand/subscribeWithSelector", n
     clearRealCoords: () => {
       set({ realCoords: [] });
     },
-  }))
+  })),
 );

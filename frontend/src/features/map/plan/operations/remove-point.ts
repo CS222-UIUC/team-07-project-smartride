@@ -6,7 +6,7 @@ import type { RouteData, RouteSegment } from "@/types/MapRoute";
  */
 export const removePoint = async (
   routeData: RouteData,
-  pointId: string
+  pointId: string,
 ): Promise<RouteData> => {
   const points = routeData.points;
   const segments = routeData.segments;
@@ -47,7 +47,7 @@ export const removePoint = async (
   const next = points[index + 1];
 
   const filteredSegments = segments.filter(
-    (seg) => seg.from !== pointId && seg.to !== pointId
+    (seg) => seg.from !== pointId && seg.to !== pointId,
   );
 
   try {

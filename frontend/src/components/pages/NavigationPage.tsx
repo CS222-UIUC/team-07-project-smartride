@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import MapWrapper from "@/components/maps/MapWrapper";
 import { useNavController } from "@/features/map/nav/controller";
-// import { getWeather, WeatherData } from "@/api/services/omt/get_weather";
 
 const NavigationPage = () => {
   const navigate = useNavigate();
-  const { getMapBindings, flatCoords/*, userPosition*/ } = useNavController();
-
-  const [hasInjected, setHasInjected] = useState(false);
-
   const [searchParams] = useSearchParams();
-  // TODO
   const routeId = parseInt(searchParams.get("id") ?? "-1");
+
+  const { getMapBindings, flatCoords } = useNavController();
+  const [hasInjected, setHasInjected] = useState(false);
 
   useEffect(() => {
     if (flatCoords.length > 0) {
@@ -21,58 +18,47 @@ const NavigationPage = () => {
     }
   }, [flatCoords]);
 
-  // ========== TEST WEATHER API ==========
-  // useEffect(() => {
-  //   const fetchWeather = async () => {
-  //     if (!userPosition) return;
-  //     if (Array.isArray(userPosition)) {
-  //       const [lat, lng] = userPosition;
-  //       try {
-  //         const weather: WeatherData = await getWeather(lat, lng);
-  //         console.log("Weather data:", weather);
-  //       } catch (err) {
-  //         console.error("Weather fetch failed:", err);
-  //       }
-  //     };
-  //   }
-  //   void fetchWeather();
-  // }, [userPosition]);
-
   if (!hasInjected) {
-    return <div>Loading route...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen text-lg text-gray-500">
+        Loading route...
+      </div>
+    );
   }
 
   return (
-    <div className="absolute inset-0">
-      <MapWrapper bindings={getMapBindings()}/>
-      <Button
-        onClick={() => {
-          void navigate(`/ride-log?routeId=${routeId.toString()}`);
-        }}
-        className="bg-green-600 hover:bg-green-700 text-black px-6 py-2 rounded-md shadow-md"
-        style={{
-          position: "absolute",
-          bottom: "20px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 1000,
-        }}
-      >
-        Complete Ride and Log
-      </Button>
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Fullscreen map */}
+      <MapWrapper bindings={getMapBindings()} />
 
-      <Button
-        onClick={() => {
-          if (routeId !== -1) {
-            void navigate(`/map/plan?id=${routeId.toString()}`);
-          } else {
-            void navigate("/map/plan");
-          }
-        }}
-        className="bg-red-600 hover:bg-red-700 text-black px-6 py-2 rounded-md shadow-md absolute bottom-5 left-1/2 transform -translate-x-1/2 z-50"
-      >
-        Exit Navigation
-      </Button>
+      {/* Exit Button - Top Left */}
+      <div className="absolute top-4 left-4 z-[1000]">
+        <Button
+          variant="outline"
+          className="border-red-500 text-red-600 hover:bg-red-100"
+          onClick={() => {
+            void navigate(
+              routeId !== -1
+                ? `/map/plan?id=${routeId.toString()}`
+                : "/map/plan",
+            );
+          }}
+        >
+          ← Exit
+        </Button>
+      </div>
+
+      {/* Complete Button - Bottom Center */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000]">
+        <Button
+          className="bg-green-600 hover:bg-green-700 text-white px-8 py-2 rounded-md shadow-lg"
+          onClick={() => {
+            void navigate(`/ride-log?routeId=${routeId.toString()}`);
+          }}
+        >
+          Complete Ride and Log
+        </Button>
+      </div>
     </div>
   );
 };

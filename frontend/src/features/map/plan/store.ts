@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-import {
-  Route,
-  NEW_ROUTE,
-} from "@/types/MapRoute";
+import { Route, NEW_ROUTE } from "@/types/MapRoute";
 
 interface RouteStore {
   route: Route;
@@ -14,28 +11,31 @@ interface RouteStore {
   setHasLoaded: (flag: boolean) => void;
 }
 
-export const useRouteStore = create<RouteStore, [["zustand/subscribeWithSelector", never]]>(
+export const useRouteStore = create<
+  RouteStore,
+  [["zustand/subscribeWithSelector", never]]
+>(
   subscribeWithSelector((set) => ({
     route: NEW_ROUTE,
     originalRoute: NEW_ROUTE,
     hasLoaded: false,
 
     setRoute: (updater) => {
-        set((store) => {
+      set((store) => {
         const updatedRoute = updater(store.route);
         return { route: updatedRoute };
-        });
+      });
     },
 
     setOriginalRoute: (updater) => {
-        set((store) => {
+      set((store) => {
         const updated = updater(store.originalRoute);
         return { originalRoute: updated };
-        });
+      });
     },
 
     setHasLoaded: (flag) => {
-        set(() => ({ hasLoaded: flag }));
+      set(() => ({ hasLoaded: flag }));
     },
-  }))
+  })),
 );

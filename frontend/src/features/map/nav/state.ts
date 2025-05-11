@@ -4,8 +4,7 @@ import type { RouteData } from "@/types/MapRoute";
 
 // ========== GETTERS ==========
 
-export const getRouteData = (): RouteData =>
-  useNavStore.getState().routeData;
+export const getRouteData = (): RouteData => useNavStore.getState().routeData;
 
 export const getFlatCoords = (): LatLngExpression[] =>
   useNavStore.getState().flatCoords;
@@ -16,8 +15,7 @@ export const getUserPosition = (): LatLngExpression | null =>
 export const getNearestIndex = (): number =>
   useNavStore.getState().nearestIndex;
 
-export const getIsFinished = (): boolean =>
-  useNavStore.getState().isFinished;
+export const getIsFinished = (): boolean => useNavStore.getState().isFinished;
 
 export const getRealCoords = (): LatLngExpression[] =>
   useNavStore.getState().realCoords;
@@ -48,7 +46,7 @@ export const clearRealCoords = (): void => {
 
 export const injectRouteData = (data: RouteData): void => {
   const flat: LatLngExpression[] = data.segments.flatMap((seg) =>
-    seg.path.map((p) => [p.lat, p.lng] as [number, number])
+    seg.path.map((p) => [p.lat, p.lng] as [number, number]),
   );
   useNavStore.setState({
     routeData: data,

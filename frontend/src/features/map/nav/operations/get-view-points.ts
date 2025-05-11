@@ -10,7 +10,7 @@ export interface ViewPoints {
  */
 export const getViewPoints = (
   coords: LatLngExpression[],
-  nearestIndex: number
+  nearestIndex: number,
 ): ViewPoints => {
   console.log("getViewPoints", coords, nearestIndex);
   return {

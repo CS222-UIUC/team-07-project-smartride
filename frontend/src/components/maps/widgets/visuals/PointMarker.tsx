@@ -37,9 +37,14 @@ const PointMarker: React.FC<PointMarkerProps> = ({ points }) => {
         else if (idx === points.length - 1) icon = icons.blue;
         return (
           <div key={pt.id}>
-            {<Marker position={[pt.coordinates.lat, pt.coordinates.lng]} icon={icon}>
-              <Popup>{pt.label}</Popup>
-            </Marker>}
+            {
+              <Marker
+                position={[pt.coordinates.lat, pt.coordinates.lng]}
+                icon={icon}
+              >
+                <Popup>{pt.label}</Popup>
+              </Marker>
+            }
           </div>
         );
       })}

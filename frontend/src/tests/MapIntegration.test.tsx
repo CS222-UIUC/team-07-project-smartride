@@ -77,7 +77,6 @@ const TestWrapper = () => {
   );
 };
 
-
 // ===== TESTS =====
 describe("map click behavior", () => {
   it("click sequence 1/2/3, PointMarker displays correct colors", async () => {
@@ -90,7 +89,7 @@ describe("map click behavior", () => {
     expect(markerElements).toHaveLength(1);
     expect(markerElements[0]).toHaveAttribute(
       "data-icon",
-      expect.stringContaining("marker-icon-green")
+      expect.stringContaining("marker-icon-green"),
     );
 
     await userEvent.click(mapElement);
@@ -98,11 +97,11 @@ describe("map click behavior", () => {
     expect(markerElements).toHaveLength(2);
     expect(markerElements[0]).toHaveAttribute(
       "data-icon",
-      expect.stringContaining("marker-icon-green")
+      expect.stringContaining("marker-icon-green"),
     );
     expect(markerElements[1]).toHaveAttribute(
       "data-icon",
-      expect.stringContaining("marker-icon-blue")
+      expect.stringContaining("marker-icon-blue"),
     );
 
     await userEvent.click(mapElement);
@@ -110,15 +109,15 @@ describe("map click behavior", () => {
     expect(markerElements).toHaveLength(3);
     expect(markerElements[0]).toHaveAttribute(
       "data-icon",
-      expect.stringContaining("marker-icon-green")
+      expect.stringContaining("marker-icon-green"),
     );
     expect(markerElements[1]).toHaveAttribute(
       "data-icon",
-      expect.stringContaining("marker-icon-grey")
+      expect.stringContaining("marker-icon-grey"),
     );
     expect(markerElements[2]).toHaveAttribute(
       "data-icon",
-      expect.stringContaining("marker-icon-blue")
+      expect.stringContaining("marker-icon-blue"),
     );
 
     const popupElements = screen.getAllByTestId("popup");

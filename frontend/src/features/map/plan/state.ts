@@ -42,14 +42,13 @@ export const setRouteData = (data: RouteData): void => {
 // ========== DIRTY CHECKS ==========
 
 const isInfoDirty = (): boolean =>
-  JSON.stringify(getRouteInfo()) !==
-  JSON.stringify(getOriginalRouteInfo());
+  JSON.stringify(getRouteInfo()) !== JSON.stringify(getOriginalRouteInfo());
 
 const isDataDirty = (): boolean =>
-  JSON.stringify(getRouteData()) !==
-  JSON.stringify(getOriginalRouteData());
+  JSON.stringify(getRouteData()) !== JSON.stringify(getOriginalRouteData());
 
-export const isRouteDirty = (): boolean => isInfoDirty() || isDataDirty() || (getRouteId() === -1); // so that we can always save a new route
+export const isRouteDirty = (): boolean =>
+  isInfoDirty() || isDataDirty() || getRouteId() === -1; // so that we can always save a new route
 
 const markInfoClean = (): void => {
   useRouteStore.getState().setOriginalRoute((prev) => ({

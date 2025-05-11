@@ -21,7 +21,7 @@ export async function getRouteDataById(id: number): Promise<RouteData> {
       toast.info(errorMessage);
       throw new Error(errorMessage);
     }
-    } catch (error) {
+  } catch (error) {
     const errorMessage = "Error fetching route: " + String(error);
     toast.info(errorMessage);
     throw new Error(errorMessage);
@@ -45,8 +45,7 @@ export async function getRouteInfoById(id: number): Promise<RouteInfo> {
       toast.info(errorMessage);
       throw new Error(errorMessage);
     }
-  }
-  catch (error) {
+  } catch (error) {
     const errorMessage = "Error fetching route: " + String(error);
     toast.info(errorMessage);
     throw new Error(errorMessage);
@@ -75,8 +74,8 @@ export async function getRoutesMeta(): Promise<RouteMeta[]> {
 }
 
 /**
- * 
- * @param routeInfo 
+ *
+ * @param routeInfo
  * @returns id of the created route
  */
 export async function createRouteByInfo(routeInfo: RouteInfo): Promise<number> {
@@ -87,7 +86,7 @@ export async function createRouteByInfo(routeInfo: RouteInfo): Promise<number> {
     });
     const body = {
       info: routeInfo,
-    }
+    };
     const response = await fetch(url, {
       method: "POST",
       credentials: "include",
@@ -110,7 +109,10 @@ export async function createRouteByInfo(routeInfo: RouteInfo): Promise<number> {
   }
 }
 
-export async function updateRouteDataById(id: number, routeData: RouteData): Promise<void> {
+export async function updateRouteDataById(
+  id: number,
+  routeData: RouteData,
+): Promise<void> {
   try {
     const url = getApiRoute(MAP_OPTIONS.MAP_UPDATE_DATA_BY_ID);
     const headers = buildAuthHeaders({
@@ -141,7 +143,10 @@ export async function updateRouteDataById(id: number, routeData: RouteData): Pro
   }
 }
 
-export async function updateRouteInfoById(id: number, routeInfo: RouteInfo): Promise<void> {
+export async function updateRouteInfoById(
+  id: number,
+  routeInfo: RouteInfo,
+): Promise<void> {
   try {
     const url = getApiRoute(MAP_OPTIONS.MAP_UPDATE_INFO_BY_ID);
     const headers = buildAuthHeaders({

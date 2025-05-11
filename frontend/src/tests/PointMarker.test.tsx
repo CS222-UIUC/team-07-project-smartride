@@ -66,8 +66,18 @@ describe("PointMarker components", () => {
 
   it("two points → first green second blue", () => {
     const pts = [
-      { id: "p1", coordinates: { lat: 1, lng: 2, ele: 10 }, label: "A", type: "main" as const },
-      { id: "p2", coordinates: { lat: 3, lng: 4, ele: 10 }, label: "B", type: "main" as const },
+      {
+        id: "p1",
+        coordinates: { lat: 1, lng: 2, ele: 10 },
+        label: "A",
+        type: "main" as const,
+      },
+      {
+        id: "p2",
+        coordinates: { lat: 3, lng: 4, ele: 10 },
+        label: "B",
+        type: "main" as const,
+      },
     ];
     render(<PointMarker points={pts} />);
 
@@ -83,22 +93,22 @@ describe("PointMarker components", () => {
   it("three points → grey in the middle", () => {
     const pts = [
       {
-      id: "p1",
-      coordinates: { lat: 0, lng: 0, ele: 100 },
-      label: "Start",
-      type: "main" as const,
+        id: "p1",
+        coordinates: { lat: 0, lng: 0, ele: 100 },
+        label: "Start",
+        type: "main" as const,
       },
       {
-      id: "p2",
-      coordinates: { lat: 5, lng: 5, ele: 100 },
-      label: "Mid",
-      type: "main" as const,
+        id: "p2",
+        coordinates: { lat: 5, lng: 5, ele: 100 },
+        label: "Mid",
+        type: "main" as const,
       },
       {
-      id: "p3",
-      coordinates: { lat: 9, lng: 9, ele: 100 },
-      label: "End",
-      type: "main" as const,
+        id: "p3",
+        coordinates: { lat: 9, lng: 9, ele: 100 },
+        label: "End",
+        type: "main" as const,
       },
     ];
     render(<PointMarker points={pts} />);
@@ -114,14 +124,14 @@ describe("PointMarker components", () => {
     const pts = Array(10)
       .fill(0)
       .map((_, i) => ({
-      id: i.toString(),
-      coordinates: {
-        lat: i,
-        lng: i,
-        ele: 100,
-      },
-      label: `P${i.toString()}`,
-      type: "main" as const,
+        id: i.toString(),
+        coordinates: {
+          lat: i,
+          lng: i,
+          ele: 100,
+        },
+        label: `P${i.toString()}`,
+        type: "main" as const,
       }));
     render(<PointMarker points={pts} />);
     expect(spyIcon).toHaveBeenCalledTimes(3);

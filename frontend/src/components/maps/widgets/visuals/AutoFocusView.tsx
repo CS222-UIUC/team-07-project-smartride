@@ -14,9 +14,12 @@ const AutoFocusView = ({ points, zoom = 13 }: Props) => {
   const allPoints = useMemo(() => {
     if (points.length === 0) return [];
     if (Array.isArray(points)) {
-      if (typeof points[0] === "object" && "path" in (points[0] as RouteSegment)) {
+      if (
+        typeof points[0] === "object" &&
+        "path" in (points[0] as RouteSegment)
+      ) {
         return (points as RouteSegment[]).flatMap((seg) =>
-          seg.path.map((p) => [p.lat, p.lng] as LatLngExpression)
+          seg.path.map((p) => [p.lat, p.lng] as LatLngExpression),
         );
       }
       return points as LatLngExpression[];

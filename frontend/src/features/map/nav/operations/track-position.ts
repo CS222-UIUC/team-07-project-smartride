@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 
 export const startPositionTracking = (
-  onUpdate: (pos: [number, number]) => void
+  onUpdate: (pos: [number, number]) => void,
 ): number => {
   return navigator.geolocation.watchPosition(
     ({ coords }) => {
@@ -9,13 +9,15 @@ export const startPositionTracking = (
     },
     (error) => {
       console.error("Geolocation error:", error);
-      toast.error("Unable to retrieve your location. Please check your device settings.");
+      toast.error(
+        "Unable to retrieve your location. Please check your device settings.",
+      );
     },
     {
       enableHighAccuracy: true,
       maximumAge: 0,
       timeout: 10000,
-    }
+    },
   );
 };
 

@@ -1,7 +1,12 @@
 import { nanoid } from "nanoid";
 import { toast } from "sonner";
 import { calcRoute } from "@/api/services/ors/calc_route";
-import type { Coordinates, Point, RouteData, RouteSegment } from "@/types/MapRoute";
+import type {
+  Coordinates,
+  Point,
+  RouteData,
+  RouteSegment,
+} from "@/types/MapRoute";
 
 /**
  * Adds a new point and a connecting segment (if applicable) to the given RouteData.
@@ -9,7 +14,7 @@ import type { Coordinates, Point, RouteData, RouteSegment } from "@/types/MapRou
  */
 export const addPoint = async (
   routeData: RouteData,
-  coordinates: Coordinates
+  coordinates: Coordinates,
 ): Promise<RouteData> => {
   const newPoint: Point = {
     id: nanoid(6),
@@ -34,7 +39,9 @@ export const addPoint = async (
       };
       updatedSegments.push(newSegment);
     } catch (err) {
-      toast.error(`Failed to calculate route from ${from.label} to ${to.label}`);
+      toast.error(
+        `Failed to calculate route from ${from.label} to ${to.label}`,
+      );
       console.error("addPoint: calcRoute failed", err);
     }
   }

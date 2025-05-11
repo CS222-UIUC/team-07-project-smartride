@@ -1,4 +1,7 @@
-import { jwtPostProcess, TOKEN_STATE } from "@/api/core/jwt/compatible_token_manager";
+import {
+  jwtPostProcess,
+  TOKEN_STATE,
+} from "@/api/core/jwt/compatible_token_manager";
 import { AUTH_OPTIONS, getApiRoute } from "@/api/api_routes";
 import { LoginResponse } from "@/types/ApiResponses";
 

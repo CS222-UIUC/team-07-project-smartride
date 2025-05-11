@@ -5,7 +5,7 @@ import { toast } from "sonner";
 export const reorderPoints = async (
   data: RouteData,
   from: number,
-  to: number
+  to: number,
 ): Promise<RouteData> => {
   const points = [...data.points];
   const [moved] = points.splice(from, 1);
@@ -19,7 +19,7 @@ export const reorderPoints = async (
   const oldSegs = data.segments.filter(
     (seg) =>
       (prevOld && seg.from === prevOld.id && seg.to === moved.id) ||
-      (nextOld && seg.from === moved.id && seg.to === nextOld.id)
+      (nextOld && seg.from === moved.id && seg.to === nextOld.id),
   );
 
   const restSegs = data.segments.filter((seg) => !oldSegs.includes(seg));

@@ -6,15 +6,18 @@ import type { PointType, RouteData } from "@/types/MapRoute";
  */
 export const togglePointType = (
   routeData: RouteData,
-  pointId: string
+  pointId: string,
 ): RouteData => {
   const updatedPoints = routeData.points.map((pt) =>
     pt.id === pointId
       ? {
           ...pt,
-          type: pt.type === "main" ? ("waypoint" as PointType) : ("main" as PointType),
+          type:
+            pt.type === "main"
+              ? ("waypoint" as PointType)
+              : ("main" as PointType),
         }
-      : pt
+      : pt,
   );
 
   return {

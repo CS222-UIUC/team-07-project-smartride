@@ -21,10 +21,7 @@ def get_metas() -> tuple[Response, int]:
             info_dict = json.loads(route.info) if route.info else {}
         except json.JSONDecodeError:
             info_dict = {}
-        meta_list.append({
-            "id": route.id,
-            **info_dict
-        })
+        meta_list.append({"id": route.id, **info_dict})
     return api_response(success=True, data=meta_list)
 
 

@@ -5,7 +5,7 @@ import type { LatLngExpression } from "leaflet";
  */
 const haversineDistance = (
   a: LatLngExpression,
-  b: LatLngExpression
+  b: LatLngExpression,
 ): number => {
   const R = 6371000; // Earth radius in meters
   const toRad = (deg: number) => (deg * Math.PI) / 180;
@@ -29,7 +29,7 @@ const haversineDistance = (
 export const findNearestIndex = (
   coords: LatLngExpression[],
   user: LatLngExpression,
-  radius: number = 1500 // TODO: default 20, now only for testing
+  radius: number = 1500, // TODO: default 20, now only for testing
 ): number => {
   let minDist = Infinity;
   let nearestIndex = -1;

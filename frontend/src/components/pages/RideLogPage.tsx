@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate/*, useSearchParams*/ } from "react-router-dom";
+import { useNavigate /*, useSearchParams*/ } from "react-router-dom";
 import { useNavStore } from "@/features/map/nav/store";
 
 interface RideData {
@@ -71,17 +71,29 @@ const RideLogPage: React.FC = () => {
 
   return (
     <div style={{ padding: "24px", fontFamily: "sans-serif" }}>
-      <h2 style={{ textAlign: "center", fontSize: "24px", marginBottom: "16px", fontWeight: "bold" }}>
+      <h2
+        style={{
+          textAlign: "center",
+          fontSize: "24px",
+          marginBottom: "16px",
+          fontWeight: "bold",
+        }}
+      >
         Log a Ride
       </h2>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+      >
         <label>
           Distance (km):
           <input
             type="number"
             value={distance}
-            onChange={(e) => { setDistance(Number(e.target.value)) }}
+            onChange={(e) => {
+              setDistance(Number(e.target.value));
+            }}
             disabled={true}
             required
             min={0}
@@ -101,7 +113,9 @@ const RideLogPage: React.FC = () => {
           <input
             type="number"
             value={duration}
-            onChange={(e) => { setDuration(Number(e.target.value)) }}
+            onChange={(e) => {
+              setDuration(Number(e.target.value));
+            }}
             required
             min={0}
             step={1}
@@ -141,16 +155,26 @@ const RideLogPage: React.FC = () => {
           }}
         >
           <h3>Last Ride:</h3>
-          <p><strong>Distance:</strong> {lastRide.distance} km</p>
-          <p><strong>Duration:</strong> {lastRide.duration} min</p>
-          <p><strong>Calories:</strong> {lastRide.calories} kcal</p>
-          <p><strong>Date:</strong> {lastRide.date}</p>
+          <p>
+            <strong>Distance:</strong> {lastRide.distance} km
+          </p>
+          <p>
+            <strong>Duration:</strong> {lastRide.duration} min
+          </p>
+          <p>
+            <strong>Calories:</strong> {lastRide.calories} kcal
+          </p>
+          <p>
+            <strong>Date:</strong> {lastRide.date}
+          </p>
         </div>
       )}
 
       <button
         type="button"
-        onClick={() => { void navigate("/home"); }}
+        onClick={() => {
+          void navigate("/home");
+        }}
         style={{
           marginTop: "20px",
           padding: "10px",
@@ -167,7 +191,12 @@ const RideLogPage: React.FC = () => {
   );
 };
 
-function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+function haversineDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number,
+): number {
   const R = 6371;
   const toRad = (deg: number) => (deg * Math.PI) / 180;
   const dLat = toRad(lat2 - lat1);

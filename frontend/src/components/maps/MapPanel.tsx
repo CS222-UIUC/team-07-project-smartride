@@ -38,7 +38,8 @@ const MapPanel: React.FC<MapPanelProps> = ({
               <div className="text-sm">
                 <div>{pt.label}</div>
                 <div className="text-muted-foreground text-xs">
-                  {pt.coordinates.lat.toFixed(5)}, {pt.coordinates.lng.toFixed(5)} ({pt.type})
+                  {pt.coordinates.lat.toFixed(5)},{" "}
+                  {pt.coordinates.lng.toFixed(5)} ({pt.type})
                 </div>
               </div>
               <div className="flex gap-1">
