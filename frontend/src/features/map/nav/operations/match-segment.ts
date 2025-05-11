@@ -29,7 +29,7 @@ const haversineDistance = (
 export const findNearestIndex = (
   coords: LatLngExpression[],
   user: LatLngExpression,
-  radius: number = 20
+  radius: number = 1500 // TODO: default 20, now only for testing
 ): number => {
   let minDist = Infinity;
   let nearestIndex = -1;
