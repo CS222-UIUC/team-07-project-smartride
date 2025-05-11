@@ -6,6 +6,7 @@ const API_URL_DIRECTORIES = {
   MOB: API_URL + "/mob",
   MAP: API_URL + "/map",
   ORS: API_URL + "/ors",
+  OMT: API_URL + "/omt",
 } as const;
 
 const API_WEB_PREFICES = {
@@ -22,6 +23,9 @@ const API_MAP_PREFICES = {
 const API_ORS_PREFICES = {
   CALC_ROUTE: API_URL_DIRECTORIES.ORS + "/calc_route",
 };
+const API_OMT_PREFICES = {
+  GET_WEATHER: API_URL_DIRECTORIES.OMT + "/get_weather",
+};
 
 // TODO (Brian): Also bind RESTAPI method, GET PUT POST DELETE ...
 const API_ROUTES = {
@@ -36,6 +40,8 @@ const API_ROUTES = {
   MOB_LOGOUT: API_MOB_PREFICES.AUTH + "/logout",
 
   ORS_CALC_ROUTE: API_ORS_PREFICES.CALC_ROUTE + "/",
+
+  OMT_GET_WEATHER: API_OMT_PREFICES.GET_WEATHER + "/",
 
   MAP_GET_INFO_BY_ID: API_MAP_PREFICES.MANAGE_ROUTES + "/get_info_by_id",
   MAP_GET_DATA_BY_ID: API_MAP_PREFICES.MANAGE_ROUTES + "/get_data_by_id",
@@ -89,11 +95,19 @@ const orsRoutes = {
   ORS_CALC_ROUTE: API_ROUTES.ORS_CALC_ROUTE,
 };
 
+export enum OMT_OPTIONS {
+  OMT_GET_WEATHER = "OMT_GET_WEATHER",
+}
+const omtRoutes = {
+  OMT_GET_WEATHER: API_ROUTES.OMT_GET_WEATHER,
+};
+
 const routeMap = {
   ...authRoutes,
   ...profileRoutes,
   ...mapRoutes,
   ...orsRoutes,
+  ...omtRoutes,
 };
 
 type OptionKeys = keyof typeof routeMap;
