@@ -1,5 +1,5 @@
-import { buildAuthHeaders } from "../jwt/compatible_token_manager";
-import { getApiRoute, OMT_OPTIONS } from "../utils/api_routes";
+import { buildAuthHeaders } from "@/api/core/jwt/compatible_token_manager";
+import { getApiRoute, OMT_OPTIONS } from "@/api/api_routes";
 
 export interface WeatherData {
   date: string;

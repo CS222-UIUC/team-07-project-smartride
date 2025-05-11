@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { getRouteById } from "@/api/map/manage_routes";
+import { useNavigate/*, useSearchParams*/ } from "react-router-dom";
+import { useNavStore } from "@/features/map/nav/store";
 
 interface RideData {
   distance: number;
@@ -11,46 +11,29 @@ interface RideData {
 
 const RideLogPage: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const routeId = parseInt(searchParams.get("routeId") ?? "-1");
+  // const [searchParams] = useSearchParams();
+  // const routeId = parseInt(searchParams.get("routeId") ?? "-1");
+
+  const realCoords = useNavStore((s) => s.realCoords) as [number, number][];
 
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [autoFilled, setAutoFilled] = useState(false);
   const [lastRide, setLastRide] = useState<RideData | null>(null);
 
   useEffect(() => {
-    if (routeId !== -1) {
-      const fetchAndComputeDistance = async () => {
-        try {
-          const res = await getRouteById(routeId);
-          if (res?.route_data) {
-            type Segment = { path: { lat: number; lng: number }[] };
-            type RouteData = { segments: Segment[] };
-
-            const routeData = (
-              typeof res.route_data === "string"
-                ? JSON.parse(res.route_data)
-                : res.route_data
-            ) as RouteData;
-
-            const segments = routeData.segments;
-
-            let totalDistance = 0;
-            for (const segment of segments) {
-              totalDistance += computeSegmentDistance(segment.path);
-            }
-
-            setDistance(Number(totalDistance.toFixed(2)));
-            setAutoFilled(true);
-          }
-        } catch (err) {
-          console.error("Failed to auto-load route data", err);
-        }
-      };
-      void fetchAndComputeDistance();
+    if (realCoords.length >= 2) {
+      let total = 0;
+      for (let i = 1; i < realCoords.length; i++) {
+        total += haversineDistance(
+          realCoords[i - 1]?.[0] ?? 0,
+          realCoords[i - 1]?.[1] ?? 0,
+          realCoords[i]?.[0] ?? 0,
+          realCoords[i]?.[1] ?? 0,
+        );
+      }
+      setDistance(Number(total.toFixed(2)));
     }
-  }, [routeId]);
+  }, [realCoords]);
 
   useEffect(() => {
     const stored = localStorage.getItem("lastRide");
@@ -83,36 +66,23 @@ const RideLogPage: React.FC = () => {
     };
     localStorage.setItem("lastRide", JSON.stringify(ride));
     setLastRide(ride);
-
     void navigate("/ride-log", { replace: true });
   };
 
   return (
     <div style={{ padding: "24px", fontFamily: "sans-serif" }}>
-      <h2
-        style={{
-          textAlign: "center",
-          fontSize: "24px",
-          marginBottom: "16px",
-          fontWeight: "bold",
-        }}
-      >
+      <h2 style={{ textAlign: "center", fontSize: "24px", marginBottom: "16px", fontWeight: "bold" }}>
         Log a Ride
       </h2>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-      >
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         <label>
           Distance (km):
           <input
             type="number"
             value={distance}
-            onChange={(e) => {
-              setDistance(Number(e.target.value));
-            }}
-            disabled={autoFilled}
+            onChange={(e) => { setDistance(Number(e.target.value)) }}
+            disabled={true}
             required
             min={0}
             step={0.1}
@@ -121,7 +91,7 @@ const RideLogPage: React.FC = () => {
               borderRadius: "6px",
               border: "1px solid #ccc",
               width: "100%",
-              backgroundColor: autoFilled ? "#f0f0f0" : "white",
+              backgroundColor: "#f0f0f0",
             }}
           />
         </label>
@@ -131,9 +101,7 @@ const RideLogPage: React.FC = () => {
           <input
             type="number"
             value={duration}
-            onChange={(e) => {
-              setDuration(Number(e.target.value));
-            }}
+            onChange={(e) => { setDuration(Number(e.target.value)) }}
             required
             min={0}
             step={1}
@@ -173,26 +141,16 @@ const RideLogPage: React.FC = () => {
           }}
         >
           <h3>Last Ride:</h3>
-          <p>
-            <strong>Distance:</strong> {lastRide.distance} km
-          </p>
-          <p>
-            <strong>Duration:</strong> {lastRide.duration} min
-          </p>
-          <p>
-            <strong>Calories:</strong> {lastRide.calories} kcal
-          </p>
-          <p>
-            <strong>Date:</strong> {lastRide.date}
-          </p>
+          <p><strong>Distance:</strong> {lastRide.distance} km</p>
+          <p><strong>Duration:</strong> {lastRide.duration} min</p>
+          <p><strong>Calories:</strong> {lastRide.calories} kcal</p>
+          <p><strong>Date:</strong> {lastRide.date}</p>
         </div>
       )}
 
       <button
         type="button"
-        onClick={() => {
-          void navigate("/home");
-        }}
+        onClick={() => { void navigate("/home"); }}
         style={{
           marginTop: "20px",
           padding: "10px",
@@ -209,12 +167,7 @@ const RideLogPage: React.FC = () => {
   );
 };
 
-function haversineDistance(
-  lat1: number,
-  lon1: number,
-  lat2: number,
-  lon2: number,
-): number {
+function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371;
   const toRad = (deg: number) => (deg * Math.PI) / 180;
   const dLat = toRad(lat2 - lat1);
@@ -224,19 +177,6 @@ function haversineDistance(
     Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
-}
-
-function computeSegmentDistance(path: { lat: number; lng: number }[]): number {
-  let total = 0;
-  for (let i = 1; i < path.length; i++) {
-    total += haversineDistance(
-      path[i - 1].lat,
-      path[i - 1].lng,
-      path[i].lat,
-      path[i].lng,
-    );
-  }
-  return total;
 }
 
 export default RideLogPage;
