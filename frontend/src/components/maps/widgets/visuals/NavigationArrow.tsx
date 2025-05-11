@@ -1,5 +1,5 @@
 import { Marker } from "react-leaflet";
-import L from "leaflet";
+import L, { LatLngExpression } from "leaflet";
 
 const arrowIcon = new L.Icon({
   iconUrl: "/public/navigation-arrow.png",
@@ -7,7 +7,7 @@ const arrowIcon = new L.Icon({
   iconAnchor: [20, 20],
 });
 
-const NavigationArrow = ({ position }: { position: [number, number] }) => {
+const NavigationArrow = ({ position }: { position: LatLngExpression }) => {
   return <Marker position={position} icon={arrowIcon} />;
 };
 

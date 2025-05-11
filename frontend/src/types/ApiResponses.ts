@@ -1,4 +1,4 @@
-import { ORSRouteData, Route } from "./MapRoute";
+import { ORSRouteData } from "./MapRoute";
 import { BasicInfoType } from "./UserProfile";
 
 export interface LogoutResponse {
@@ -7,7 +7,6 @@ export interface LogoutResponse {
 
 export interface LoginResponse {
   message: string;
-  // user?: string;
   data?: {
     token?: string;
   };
@@ -23,16 +22,10 @@ export interface BasicInfoResponse {
   data: BasicInfoType;
 }
 
-export interface MapGetRouteResponse {
-    success: boolean;
-    data?: Route;
-    message?: string;
-}
-
-export interface MapGetRoutesInfoResponse {
-    success: boolean;
-    data?: Route[];
-    message?: string;
+export interface MapGetResponse<T> {
+  success: boolean;
+  data?: T;
+  message?: string;
 }
 
 export interface OrsCalcRouteResponse {

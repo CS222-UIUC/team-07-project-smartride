@@ -1,110 +1,101 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useState, useEffect, useRef } from "react";
 
-import RoutePolyline from "./widgets/RoutePolyline.tsx";
-import PointMarker from "./widgets/PointMarker.tsx";
-import AutoFocusView from "./widgets/AutoFocusView.tsx";
-import ClickHandler from "./widgets/ClickHandler.tsx";
-import PanelButton from "./widgets/PanelButton.tsx";
-import MapPanel from "./MapPanel.tsx";
-import { useRouteOperations } from "./manage/operations.ts";
+import RoutePolyline from "./widgets/visuals/RoutePolyline";
+import PointMarker from "./widgets/visuals/PointMarker";
+import AutoFocusView from "./widgets/visuals/AutoFocusView";
+import UserFocusView from "./widgets/visuals/UserFocusView";
+import ClickHandler from "./widgets/interaction/ClickHandler";
+import PanelButton from "./widgets/interaction/PanelButton";
+import MapPanel from "./MapPanel";
+import NavigationArrow from "./widgets/visuals/NavigationArrow";
 
-import { RouteData } from "@/types/MapRoute.ts";
+import type { PlanMapBindings } from "@/features/map/plan/props";
+import type { NavMapBindings } from "@/features/map/nav/props";
+import type { UnknownBindings } from "@/features/map/unknown/props";
 
-const MapView = ({
-  onRouteDataChange,
-  initialData,
-}: {
-  onRouteDataChange: (route: RouteData) => void;
-  initialData: RouteData;
-}) => {
-  const [panelOpen, setPanelOpen] = useState(false);
+type MapBindings = PlanMapBindings | NavMapBindings | UnknownBindings;
 
-  // const [route, setRoute] = useState<RouteData>(initialData);
+const MapView = (props: MapBindings) => {
+  if (props.bindClass === "plan") {
+    const {
+      routeData,
+      userFocus,
+      onClickAddPoint,
+      onReorderPoint,
+      onTogglePointType,
+      onRemovePoint,
+      isPanelOpen,
+      onOpenPanel,
+      onClosePanel,
+    } = props;
 
-  const {
-    route,
-    addPoint,
-    removePoint,
-    reorderPoints,
-    togglePointType,
-  } = useRouteOperations(initialData);
+    return (
+      <div className="relative w-full h-full">
+        <MapContainer
+          center={[0, 0]}
+          zoom={1}
+          scrollWheelZoom
+          style={{ height: "100%", width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <ClickHandler
+            onClick={(lat, lng) => {
+              onClickAddPoint(lat, lng);
+            }}
+          />
+          <RoutePolyline processedRoute={routeData.segments} />
+          <PointMarker
+            points={routeData.points.filter((p) => p.type === "main")}
+          />
+          {userFocus ? (
+            <AutoFocusView points={routeData.segments} />
+          ) : (
+            <UserFocusView />
+          )}
+        </MapContainer>
 
-  const hasInteractedRef = useRef(false);
+        <PanelButton onClick={onOpenPanel} />
+        <MapPanel
+          isOpen={isPanelOpen}
+          onClose={onClosePanel}
+          points={routeData.points}
+          onReorder={onReorderPoint}
+          onToggleType={onTogglePointType}
+          onRemove={onRemovePoint}
+        />
+      </div>
+    );
+  } else if (props.bindClass === "nav") {
+    const { userPosition, traveledPolyline, remainingPolyline, userFocus } =
+      props;
 
-  useEffect(() => {
-    if (hasInteractedRef.current) {
-      onRouteDataChange(route);
-      hasInteractedRef.current = false;
-    }
-  }, [onRouteDataChange, route]);
-
-  const wrappedAddPoint = async (lat: number, lng: number) => {
-    await addPoint(lat, lng);
-    hasInteractedRef.current = true;
-  };
-
-  const wrappedRemovePoint = async (id: string) => {
-    await removePoint(id);
-    hasInteractedRef.current = true;
-  };
-
-  const wrappedReorderPoints = async (from: number, to: number) => {
-    await reorderPoints(from, to);
-    hasInteractedRef.current = true;
-  };
-
-  const wrappedTogglePointType = (id: string) => {
-    togglePointType(id);
-    hasInteractedRef.current = true;
-  };
-
-  return (
-    <div className="relative w-full h-full">
-      <MapContainer
-      center={[0, 0]}
-      zoom={1}
-      scrollWheelZoom
-      style={{ height: "100%", width: "100%" }}
-      >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <ClickHandler
-        onClick={(lat, lng) => {
-        void wrappedAddPoint(lat, lng);
-        }}
-      />
-      <RoutePolyline route={route} />
-      <PointMarker points={route.points.filter((p) => p.type === "main")} />
-      <AutoFocusView
-        points={route.points.map((p) => [p.coordinates.lat, p.coordinates.lng])}
-      />
-      </MapContainer>
-
-      <PanelButton
-      onClick={() => {
-        setPanelOpen(true);
-      }}
-      />
-
-      <MapPanel
-      isOpen={panelOpen}
-      onClose={() => {
-        setPanelOpen(false);
-      }}
-      points={route.points}
-      onReorder={(from, to) => {
-        void wrappedReorderPoints(from, to);
-      }}
-      onToggleType={(id) => {
-        wrappedTogglePointType(id);
-      }}
-      onRemove={(id) => {
-        void wrappedRemovePoint(id);
-      }}
-      />
-    </div>
-  );
+    return (
+      <div className="relative w-full h-full">
+        <MapContainer
+          center={[0, 0]}
+          zoom={1}
+          scrollWheelZoom
+          style={{ height: "100%", width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <RoutePolyline processedRoute={traveledPolyline} color="blue" />
+          <RoutePolyline processedRoute={remainingPolyline} color="red" />
+          <NavigationArrow position={userPosition} />
+          {userFocus ? (
+            <AutoFocusView
+              points={[...traveledPolyline, ...remainingPolyline]}
+            />
+          ) : (
+            <UserFocusView />
+          )}
+        </MapContainer>
+      </div>
+    );
+  } else {
+    // This should be unreachable if types are respected
+    throw new Error("Invalid bindClass provided to MapView.");
+  }
 };
 
 export default MapView;

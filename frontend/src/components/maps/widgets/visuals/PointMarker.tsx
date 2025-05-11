@@ -35,11 +35,12 @@ const PointMarker: React.FC<PointMarkerProps> = ({ points }) => {
         let icon = icons.grey;
         if (idx === 0) icon = icons.green;
         else if (idx === points.length - 1) icon = icons.blue;
-
         return (
-          <Marker key={pt.id} position={[pt.coordinates.lat, pt.coordinates.lng]} icon={icon}>
-            <Popup>{pt.label}</Popup>
-          </Marker>
+          <div key={pt.id}>
+            {<Marker position={[pt.coordinates.lat, pt.coordinates.lng]} icon={icon}>
+              <Popup>{pt.label}</Popup>
+            </Marker>}
+          </div>
         );
       })}
     </>

@@ -1,8 +1,9 @@
 import React from "react";
 import { vi, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import PointMarker from "@/maps/widgets/PointMarker";
+import PointMarker from "@/components/maps/widgets/visuals/PointMarker";
 import L from "leaflet";
+import { Point } from "@/types/MapRoute";
 
 // —— first mock react-leaflet's Marker/Popup
 vi.mock("react-leaflet", () => ({
@@ -44,12 +45,10 @@ describe("PointMarker components", () => {
   });
 
   it("single point - green icon", () => {
-    const pt = {
+    const pt: Point = {
       id: "p1",
-      lat: 0,
-      lng: 0,
+      coordinates: { lat: 0, lng: 0, ele: 100 },
       label: "Start",
-      ele: 100,
       type: "main" as const,
     }; // Add 'type' property
     render(<PointMarker points={[pt]} />);
@@ -67,8 +66,8 @@ describe("PointMarker components", () => {
 
   it("two points → first green second blue", () => {
     const pts = [
-      { id: "p1", lat: 1, lng: 2, label: "A", ele: 10, type: "main" as const },
-      { id: "p2", lat: 3, lng: 4, label: "B", ele: 10, type: "main" as const },
+      { id: "p1", coordinates: { lat: 1, lng: 2, ele: 10 }, label: "A", type: "main" as const },
+      { id: "p2", coordinates: { lat: 3, lng: 4, ele: 10 }, label: "B", type: "main" as const },
     ];
     render(<PointMarker points={pts} />);
 
@@ -83,28 +82,22 @@ describe("PointMarker components", () => {
   it("three points → grey in the middle", () => {
     const pts = [
       {
-        id: "p1",
-        lat: 0,
-        lng: 0,
-        label: "Start",
-        ele: 100,
-        type: "main" as const,
+      id: "p1",
+      coordinates: { lat: 0, lng: 0, ele: 100 },
+      label: "Start",
+      type: "main" as const,
       },
       {
-        id: "p2",
-        lat: 5,
-        lng: 5,
-        label: "Mid",
-        ele: 100,
-        type: "main" as const,
+      id: "p2",
+      coordinates: { lat: 5, lng: 5, ele: 100 },
+      label: "Mid",
+      type: "main" as const,
       },
       {
-        id: "p3",
-        lat: 9,
-        lng: 9,
-        label: "End",
-        ele: 100,
-        type: "main" as const,
+      id: "p3",
+      coordinates: { lat: 9, lng: 9, ele: 100 },
+      label: "End",
+      type: "main" as const,
       },
     ];
     render(<PointMarker points={pts} />);
@@ -120,12 +113,14 @@ describe("PointMarker components", () => {
     const pts = Array(10)
       .fill(0)
       .map((_, i) => ({
-        id: i.toString(),
+      id: i.toString(),
+      coordinates: {
         lat: i,
         lng: i,
-        label: `P${i.toString()}`,
         ele: 100,
-        type: "main" as const,
+      },
+      label: `P${i.toString()}`,
+      type: "main" as const,
       }));
     render(<PointMarker points={pts} />);
     expect(spyIcon).toHaveBeenCalledTimes(3);

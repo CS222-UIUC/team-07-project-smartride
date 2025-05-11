@@ -1,6 +1,6 @@
 import { buildAuthHeaders } from "@/api/core/jwt/compatible_token_manager";
 import { getApiRoute, ORS_OPTIONS } from "@/api/api_routes";
-import type { Coordinates, ORSRouteData, Route } from "@/types/MapRoute"; 
+import type { Coordinates, ORSRouteData } from "@/types/MapRoute"; 
 import { OrsCalcRouteResponse } from "@/types/ApiResponses";
 
 export async function calcRoute(
@@ -22,9 +22,4 @@ export async function calcRoute(
   }
   const raw = (await response.json()) as OrsCalcRouteResponse;
   return raw.data;
-}
-
-export interface GetRoutesResponse {
-  success: boolean;
-  data?: Route[];
 }
