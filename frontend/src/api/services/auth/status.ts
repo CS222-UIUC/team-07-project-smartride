@@ -38,7 +38,6 @@ export async function checkLoginStatus(): Promise<boolean> {
   }
 }
 
-
 export function useAuthCheck() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
