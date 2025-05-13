@@ -12,7 +12,6 @@ export const getViewPoints = (
   coords: LatLngExpression[],
   nearestIndex: number,
 ): ViewPoints => {
-  console.log("getViewPoints", coords, nearestIndex);
   return {
     traveled: coords.slice(0, nearestIndex + 1),
     remaining: coords.slice(nearestIndex), // to ensure continuity

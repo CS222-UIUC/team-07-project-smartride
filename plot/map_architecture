@@ -1,0 +1,29 @@
+digraph SmartRide_Map_Module {
+	fontsize=14 rankdir=TB
+	Plan [label="🧭 features/maps/plan" fillcolor="#CDE8FF" shape=box style=filled]
+	Nav [label="🚴 features/maps/nav" fillcolor="#FFE9B1" shape=box style=filled]
+	Controller [label="🎛️ controller.ts" fillcolor="#D9EBCF" shape=box style=filled]
+	"store.ts" [label="store.ts" fillcolor="#E6E6E6" shape=note style=filled]
+	"state.ts" [label="state.ts" fillcolor="#E6E6E6" shape=note style=filled]
+	"operations/" [label="operations/" fillcolor="#E6E6E6" shape=note style=filled]
+	Plan -> "store.ts"
+	Plan -> "state.ts"
+	Plan -> "operations/"
+	Nav -> "store.ts"
+	Nav -> "state.ts"
+	Nav -> "operations/"
+	Controller -> "state.ts"
+	Controller -> "store.ts"
+	MapView [label="🗺️ MapView.tsx" fillcolor="#F5C6EC" shape=component style=filled]
+	MapWrapper [label="📦 MapWrapper.tsx" fillcolor="#F5C6EC" shape=component style=filled]
+	Widgets [label="🎯 widgets/visuals + interaction" fillcolor="#F5C6EC" shape=component style=filled]
+	Controller -> MapWrapper
+	MapWrapper -> MapView
+	MapView -> Widgets
+	RoutePlanningPage [label="📝 RoutePlanningPage.tsx" fillcolor="#FFFACD" shape=oval style=filled]
+	NavigationPage [label="🚦 NavigationPage.tsx" fillcolor="#FFFACD" shape=oval style=filled]
+	RoutePlanningPage -> Controller
+	NavigationPage -> Controller
+	RoutePlanningPage -> MapWrapper
+	NavigationPage -> MapWrapper
+}
