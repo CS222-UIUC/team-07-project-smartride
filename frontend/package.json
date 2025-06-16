@@ -59,7 +59,7 @@
     "eslint-plugin-react-dom": "^1.42.1",
     "eslint-plugin-react-hooks": "6.0.0-rc.1",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "eslint-plugin-react-x": "^1.49.0",
+    "eslint-plugin-react-x": "^1.52.2",
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.3",
