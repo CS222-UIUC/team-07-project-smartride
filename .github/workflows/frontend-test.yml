@@ -30,7 +30,7 @@ jobs:
 
       - name: Setup Node.js
         if: steps.changes.outputs.has_frontend_change == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 18
 
